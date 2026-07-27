@@ -1,0 +1,31 @@
+<header class="navbar" [class.scrolled]="isScrolled()">
+  <div class="navbar-container">
+    <div class="navbar-logo">
+      <a routerLink="/" class="logo-link">
+        <span class="brand-text">Centro de Excelência em Metrologia</span>
+      </a>
+    </div>
+
+    <div class="navbar-nav-group">
+      <nav class="nav-links" aria-label="Navegação Principal">
+        <ul>
+          <li><a routerLink="/institucional" routerLinkActive="active">Institucional</a></li>
+          <li><a routerLink="/servicos" routerLinkActive="active">Serviços</a></li>
+          <li><a routerLink="/contato" routerLinkActive="active">Contato</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="btn-orcamento">
+        <span>Solicitar Orçamento</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

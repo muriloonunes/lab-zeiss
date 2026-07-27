@@ -1,0 +1,14 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.senai.HttpKt.configureHttp
+      - com.senai.SerializationKt.configureSerialization
+      - com.senai.SecurityKt.configureSecurity
+      - com.senai.KoinKt.configureKoin
+      - com.senai.WebsocketsKt.configureWebsockets
+      - com.senai.StatusPagesKt.configureStatusPages
+      - com.senai.HtmlDslKt.configureHtmlDsl
+      - com.senai.ResourcesKt.configureResources
+      - com.senai.RoutingKt.configureRouting
