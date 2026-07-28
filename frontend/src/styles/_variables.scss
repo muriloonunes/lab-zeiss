@@ -1,9 +1,3 @@
-$glass-bg: rgba(255, 255, 255, 0.2);
-$glass-border: rgba(255, 255, 255, 0.35);
-$glass-glow-light: rgba(255, 255, 255, 0.8);
-$glass-shadow: rgba(15, 23, 42, 0.05);
-$blur-radius: 20px;
-
 $color-bg-dark: #0b1120;
 $color-bg-light: #f4f7fb;
 $color-primary: #141e8c;
@@ -12,8 +6,34 @@ $color-text-dark: #0f172a;
 $color-text-muted: #64748b;
 $color-btn-dark: #0f172a;
 
-$nav-glass-bg: rgba(255, 255, 255, 0.18);
-$nav-glass-scrolled-bg: rgba(255, 255, 255, 0.55);
-$nav-border-light: rgba(255, 255, 255, 0.25);
-$nav-border-scrolled: rgba(255, 255, 255, 0.4);
-$nav-blur-radius: 20px;
+$card-glass-bg: rgba(255, 255, 255, 0.1);
+$card-glass-border: rgba(255, 255, 255, 0.3);
+$card-glass-blur: 25px;
+$card-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+$card-glass-glow-light: rgba(255, 255, 255, 0.8);
+$card-glass-glow-subtle: rgba(255, 255, 255, 0.3);
+$card-glass-inset-top: rgba(255, 255, 255, 0.5);
+$card-glass-inset-bottom: rgba(255, 255, 255, 0.1);
+$card-glass-inset-glow: rgba(255, 255, 255, 1);
+
+$btn-glass-bg: rgba(255, 255, 255, 0.2);
+$btn-glass-bg-hover: rgba(255, 255, 255, 0.3);
+$btn-glass-border: rgba(255, 255, 255, 0.4);
+$btn-glass-blur: 12px;
+$btn-glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+$btn-glass-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+$btn-glass-inset-top: rgba(255, 255, 255, 0.6);
+$btn-glass-inset-top-hover: rgba(255, 255, 255, 0.8);
+$btn-glass-inset-bottom: rgba(255, 255, 255, 0.2);
+$btn-glass-inset-bottom-hover: rgba(255, 255, 255, 0.3);
+$btn-glass-inset-glow: rgba(255, 255, 255, 0.5);
+
+$nav-glass-bg: rgba(255, 255, 255, 0.15);
+$nav-glass-scrolled-bg: rgba(255, 255, 255, 0.65);
+$nav-glass-blur: 20px;
+$nav-glass-scrolled-blur: 25px;
+$nav-border-light: rgba(255, 255, 255, 0.3);
+$nav-border-scrolled: rgba(255, 255, 255, 0.5);
+$nav-glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+$nav-glass-scrolled-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+$nav-glass-inset-bottom: rgba(255, 255, 255, 0.2);
