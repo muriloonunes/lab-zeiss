@@ -1,12 +1,19 @@
-<header class="navbar" [class.scrolled]="isScrolled()">
+<header class="navbar" [class.scrolled]="isScrolled()" [class.menu-open]="isMobileMenuOpen()">
   <div class="navbar-container">
     <div class="navbar-logo">
-      <a routerLink="/" class="logo-link">
-        <span class="brand-text">Centro de Excelência em Metrologia</span>
+      <a routerLink="/" class="logo-link" (click)="closeMobileMenu()" aria-label="Página Inicial - Centro de Excelência em Metrologia">
+        <img
+          ngSrc="images/cem-logo.png"
+          alt="Centro de Excelência em Metrologia SENAI ZEISS"
+          width="180"
+          height="45"
+          priority
+          class="brand-logo"
+        />
       </a>
     </div>
 
-    <div class="navbar-nav-group">
+    <div class="navbar-nav-group desktop-only">
       <nav class="nav-links" aria-label="Navegação Principal">
         <ul>
           <li><a routerLink="/institucional" routerLinkActive="active">Institucional</a></li>
@@ -15,6 +22,38 @@
         </ul>
       </nav>
       <button type="button" class="btn-orcamento">
+        <span>Solicitar Orçamento</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="btn-hamburger mobile-only"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen()"
+      aria-label="Abrir menu de navegação"
+    >
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
+
+  <div class="mobile-drawer" [class.open]="isMobileMenuOpen()">
+    <nav class="mobile-nav-links" aria-label="Navegação Mobile">
+      <ul>
+        <li><a routerLink="/institucional" routerLinkActive="active" (click)="closeMobileMenu()">Institucional</a></li>
+        <li><a routerLink="/servicos" routerLinkActive="active" (click)="closeMobileMenu()">Serviços</a></li>
+        <li><a routerLink="/contato" routerLinkActive="active" (click)="closeMobileMenu()">Contato</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-actions">
+      <button type="button" class="btn-orcamento mobile-btn-full" (click)="closeMobileMenu()">
         <span>Solicitar Orçamento</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
