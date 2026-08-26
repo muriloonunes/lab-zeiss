@@ -121,6 +121,7 @@
     }
 
     .title-main {
+      font-family: vars.$font-headline;
       font-size: clamp(2.3rem, 4.2vw, 3.6rem);
       font-weight: 900;
       letter-spacing: -0.03em;
@@ -347,6 +348,7 @@
     }
 
     .section-title {
+      font-family: vars.$font-headline;
       font-size: clamp(2.1rem, 3.8vw, 3.2rem);
       font-weight: 900;
       letter-spacing: -0.03em;
