@@ -1,4 +1,4 @@
-@use './styles/variables' as vars;
+@use './variables' as vars;
 
 * {
   box-sizing: border-box;
@@ -21,19 +21,14 @@ body {
   border-radius: 20px;
   border: 1px solid vars.$card-glass-border;
   background: vars.$card-glass-bg;
-
-  // Desfocado do fundo (com prefixo vendor)
   backdrop-filter: blur(vars.$card-glass-blur);
   -webkit-backdrop-filter: blur(vars.$card-glass-blur);
-
-  // Sombras compostas
   box-shadow:
-    vars.$card-glass-shadow,
-    inset 0 1px 0 vars.$card-glass-inset-top,
-    inset 0 -1px 0 vars.$card-glass-inset-bottom,
-    inset 0 0 20px 10px vars.$card-glass-inset-glow;
+          vars.$card-glass-shadow,
+          inset 0 1px 0 vars.$card-glass-inset-top,
+          inset 0 -1px 0 vars.$card-glass-inset-bottom,
+          inset 0 0 20px 10px vars.$card-glass-inset-glow;
 
-  // Reflexo de luz no topo
   &::before {
     content: '';
     position: absolute;
@@ -41,13 +36,9 @@ body {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg,
-        transparent,
-        vars.$card-glass-glow-light,
-        transparent);
+    background: linear-gradient(90deg, transparent, vars.$card-glass-glow-light, transparent);
   }
 
-  // Reflexo de luz na lateral esquerda
   &::after {
     content: '';
     position: absolute;
@@ -55,9 +46,6 @@ body {
     left: 0;
     width: 1px;
     height: 100%;
-    background: linear-gradient(180deg,
-        vars.$card-glass-glow-light,
-        transparent,
-        vars.$card-glass-glow-subtle);
+    background: linear-gradient(180deg, vars.$card-glass-glow-light, transparent, vars.$card-glass-glow-subtle);
   }
 }

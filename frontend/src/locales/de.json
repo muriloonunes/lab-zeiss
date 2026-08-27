@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "institutional": "Über uns",
+    "services": "Dienstleistungen",
+    "contact": "Kontakt",
+    "requestQuote": "Angebot anfordern"
+  },
+  "hero": {
+    "welcome": "Willkommen im",
+    "title": "Exzellenzzentrum für Messtechnik SENAI/ZEISS",
+    "description": "Reverse Engineering, 3D-Digitalisierung und Qualitätskontrolle mit ZEISS-Technologie.",
+    "exploreServices": "Dienstleistungen entdecken"
+  },
+  "services": {
+    "subtitle": "Unsere Dienstleistungen",
+    "mainTitle": "ZEISS-Technologie und SENAI-Fachwissen im Dienste von Präzision, Konformität und industrieller Innovation.",
+    "learnMore": "Details erfahren",
+    "items": {
+      "cmm": {
+        "title": "Koordinatenmesstechnik (KMG)",
+        "description": "Geometrische Maßprüfung und GD&T-Tolerierung auf ZEISS-Koordinatenmessgeräten."
+      },
+      "reverse": {
+        "title": "Reverse Engineering",
+        "description": "Erstellung von CAD- und STL-Modellen aus realen Bauteilen mittels 3D-Digitalisierung und Spezialsoftware."
+      },
+      "qcontrol": {
+        "title": "Qualitätskontrolle",
+        "description": "Serienprüfung, Erstmusterprüfbericht (EMPB/FAI) und Farb-Abweichungsanalyse."
+      }
+    }
+  }
+}

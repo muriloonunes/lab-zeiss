@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "institutional": "Institucional",
+    "services": "Serviços",
+    "contact": "Contato",
+    "requestQuote": "Solicitar Orçamento"
+  },
+  "hero": {
+    "welcome": "Bem-vindo ao",
+    "title": "Centro de Excelência em Metrologia SENAI/ZEISS",
+    "description": "Engenharia reversa, digitalização 3D e controle de qualidade com tecnologia ZEISS.",
+    "exploreServices": "Conheça os serviços"
+  },
+  "services": {
+    "subtitle": "Nossos serviços",
+    "mainTitle": "Tecnologia ZEISS e expertise técnica do SENAI a serviço da precisão, conformidade e inovação industrial.",
+    "learnMore": "Conhecer detalhes",
+    "items": {
+      "cmm": {
+        "title": "Medição por Coordenadas (CMM)",
+        "description": "Inspeção dimensional geométrica e toleranciamento GD&T em máquinas de medir por coordenadas ZEISS."
+      },
+      "reverse": {
+        "title": "Engenharia Reversa",
+        "description": "Criação de modelos CAD e STL a partir de peças físicas, utilizando tecnologias de digitalização 3D e softwares especializados."
+      },
+      "qcontrol": {
+        "title": "Controle de Qualidade",
+        "description": "Inspeção seriada, relatório FAI e análise de desvios dimensionais por mapa de cores."
+      }
+    }
+  }
+}

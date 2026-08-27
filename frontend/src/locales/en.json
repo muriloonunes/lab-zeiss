@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "institutional": "About Us",
+    "services": "Services",
+    "contact": "Contact",
+    "requestQuote": "Request a Quote"
+  },
+  "hero": {
+    "welcome": "Welcome to",
+    "title": "Center for Excellence in Metrology SENAI/ZEISS",
+    "description": "Reverse engineering, 3D scanning, and quality control with ZEISS technology.",
+    "exploreServices": "Explore Services"
+  },
+  "services": {
+    "subtitle": "Our Services",
+    "mainTitle": "ZEISS technology and SENAI technical expertise serving precision, compliance, and industrial innovation.",
+    "learnMore": "Learn more",
+    "items": {
+      "cmm": {
+        "title": "Coordinate Measuring (CMM)",
+        "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
+      },
+      "reverse": {
+        "title": "Reverse Engineering",
+        "description": "CAD and STL model generation from physical parts using 3D scanning technologies and specialized software."
+      },
+      "qcontrol": {
+        "title": "Quality Control",
+        "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
+      }
+    }
+  }
+}

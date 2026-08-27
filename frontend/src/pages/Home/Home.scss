@@ -1,6 +1,6 @@
-@use '../../../styles/variables' as vars;
+@use '../../styles/variables' as vars;
 
-:host {
+.home-wrapper {
   display: block;
   width: 100%;
   min-height: 100vh;
@@ -37,13 +37,7 @@
       width: 100%;
       max-width: 780px;
       height: 620px;
-      background: radial-gradient(
-        circle at 45% 45%,
-        #38bdf8 0%,
-        #0077ff 35%,
-        #141e8c 70%,
-        #1d4ed8 100%
-      );
+      background: radial-gradient(circle at 45% 45%, #38bdf8 0%, #0077ff 35%, #141e8c 70%, #1d4ed8 100%);
       filter: blur(95px);
       opacity: 0.65;
       animation: floatBlobRight 14s ease-in-out infinite alternate;
@@ -55,13 +49,7 @@
       width: 100%;
       max-width: 600px;
       height: 520px;
-      background: radial-gradient(
-        circle at 50% 50%,
-        #141e8c 15%,
-        #0052d4 40%,
-        #65c7f7 80%,
-        #9cecfb 100%
-      );
+      background: radial-gradient(circle at 50% 50%, #141e8c 15%, #0052d4 40%, #65c7f7 80%, #9cecfb 100%);
       filter: blur(100px);
       opacity: 0.4;
       animation: floatBlobLeft 16s ease-in-out infinite alternate-reverse;
@@ -69,21 +57,13 @@
   }
 
   @keyframes floatBlobRight {
-    0% {
-      transform: scale(1) rotate(0deg);
-    }
-    100% {
-      transform: scale(1.08) rotate(10deg);
-    }
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.08) rotate(10deg); }
   }
 
   @keyframes floatBlobLeft {
-    0% {
-      transform: translate(0, 0) scale(1) rotate(0deg);
-    }
-    100% {
-      transform: translate(4%, 6%) scale(1.1) rotate(-8deg);
-    }
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    100% { transform: translate(4%, 6%) scale(1.1) rotate(-8deg); }
   }
 
   .hero-container {
@@ -171,10 +151,7 @@
       background: #1e293b;
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35);
-
-      .btn-icon {
-        transform: translateX(4px);
-      }
+      .btn-icon { transform: translateX(4px); }
     }
 
     &:active {
@@ -197,17 +174,11 @@
     color: #0f172a;
     cursor: pointer;
     overflow: hidden;
-
     background: vars.$btn-glass-bg;
     backdrop-filter: blur(vars.$btn-glass-blur);
     -webkit-backdrop-filter: blur(vars.$btn-glass-blur);
     border: 1px solid vars.$btn-glass-border;
-
-    box-shadow: vars.$btn-glass-shadow,
-    inset 0 1px 0 vars.$btn-glass-inset-top,
-    inset 0 -1px 0 vars.$btn-glass-inset-bottom,
-    inset 0 0 8px vars.$btn-glass-inset-glow;
-
+    box-shadow: vars.$btn-glass-shadow, inset 0 1px 0 vars.$btn-glass-inset-top, inset 0 -1px 0 vars.$btn-glass-inset-bottom, inset 0 0 8px vars.$btn-glass-inset-glow;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     &::before {
@@ -217,20 +188,11 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.8),
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
       pointer-events: none;
     }
 
-    span,
-    svg {
-      position: relative;
-      z-index: 1;
-    }
+    span, svg { position: relative; z-index: 1; }
 
     .btn-icon {
       transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -238,14 +200,9 @@
 
     &:hover {
       background: vars.$btn-glass-bg-hover;
-      box-shadow: vars.$btn-glass-shadow-hover,
-      inset 0 1px 0 vars.$btn-glass-inset-top-hover,
-      inset 0 -1px 0 vars.$btn-glass-inset-bottom-hover;
+      box-shadow: vars.$btn-glass-shadow-hover, inset 0 1px 0 vars.$btn-glass-inset-top-hover, inset 0 -1px 0 vars.$btn-glass-inset-bottom-hover;
       transform: translateY(-2px) scale(1.02);
-
-      .btn-icon {
-        transform: translateY(3px);
-      }
+      .btn-icon { transform: translateY(3px); }
     }
 
     &:active {
@@ -271,10 +228,7 @@
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.7);
-    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12),
-    0 2px 6px rgba(15, 23, 42, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.3);
     overflow: hidden;
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
 
@@ -303,15 +257,8 @@
 
   @media (max-width: 1024px) {
     padding: 6.5rem 1.5rem 3.5rem;
-
-    .hero-container {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .hero-visual {
-      order: 2;
-    }
+    .hero-container { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-visual { order: 2; }
   }
 }
 
@@ -371,25 +318,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.85);
-
-    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06),
-    0 1px 3px rgba(15, 23, 42, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 
     &:hover {
       transform: translateY(-6px);
       background: rgba(255, 255, 255, 0.85);
       border-color: rgba(20, 30, 140, 0.35);
-      box-shadow: 0 22px 50px rgba(20, 30, 140, 0.12),
-      0 4px 10px rgba(15, 23, 42, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
+      box-shadow: 0 22px 50px rgba(20, 30, 140, 0.12), 0 4px 10px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 1);
 
       .service-icon-box {
         background: #141e8c;
@@ -426,15 +366,6 @@
     svg {
       transition: transform 0.3s ease;
     }
-  }
-
-  .service-index {
-    font-size: 1.35rem;
-    font-weight: 900;
-    color: #94a3b8;
-    letter-spacing: -0.04em;
-    font-family: monospace, system-ui, sans-serif;
-    transition: all 0.3s ease;
   }
 
   .service-card-body {
@@ -487,19 +418,8 @@
 
   @media (max-width: 768px) {
     padding: 3.5rem 1.5rem 5rem;
-
-    .section-header {
-      margin-bottom: 2.5rem;
-    }
-
-    .services-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .service-card {
-      padding: 1.75rem 1.5rem;
-      min-height: auto;
-    }
+    .section-header { margin-bottom: 2.5rem; }
+    .services-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .service-card { padding: 1.75rem 1.5rem; min-height: auto; }
   }
 }
