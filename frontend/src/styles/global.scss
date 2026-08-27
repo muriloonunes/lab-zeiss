@@ -1,22 +1,35 @@
 @use './variables' as vars;
+@import 'flag-icons/css/flag-icons.min.css';
 
-* {
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 body {
   font-family: vars.$font-subtitle;
   background-color: vars.$color-bg-light;
   color: vars.$color-text-dark;
-  overflow-x: hidden;
 }
 
 .glass-card {
   position: relative;
-  width: 240px;
-  height: 360px;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid vars.$card-glass-border;
@@ -47,5 +60,42 @@ body {
     width: 1px;
     height: 100%;
     background: linear-gradient(180deg, vars.$card-glass-glow-light, transparent, vars.$card-glass-glow-subtle);
+  }
+}
+
+.btn-orcamento {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.6rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .btn-icon {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  &:hover {
+    background: #1e293b;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35);
+
+    .btn-icon {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
   }
 }

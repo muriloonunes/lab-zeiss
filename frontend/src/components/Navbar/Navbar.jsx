@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link, NavLink} from 'react-router-dom';
 import './Navbar.scss';
-import {LanguageSwitcher} from '../LanguageSwitcher/LanguageSwitcher';
+import {LanguageSwitcher} from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import {useTranslation} from "react-i18next";
 
 export function Navbar() {
@@ -43,19 +43,21 @@ export function Navbar() {
                     <nav className="nav-links" aria-label="Navegação Principal">
                         <ul>
                             <li><NavLink to="/institucional"
-                                         className={({isActive}) => isActive ? 'active' : ''}>Institucional</NavLink>
+                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.institutional')}</NavLink>
                             </li>
                             <li><NavLink to="/servicos"
-                                         className={({isActive}) => isActive ? 'active' : ''}>Serviços</NavLink></li>
+                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.services')}</NavLink>
+                            </li>
                             <li><NavLink to="/contato"
-                                         className={({isActive}) => isActive ? 'active' : ''}>Contato</NavLink></li>
+                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.contact')}</NavLink>
+                            </li>
                         </ul>
                     </nav>
 
                     <LanguageSwitcher/>
 
                     <button type="button" className="btn-orcamento">
-                        <span>Solicitar Orçamento</span>
+                        <span>{t('nav.requestQuote')}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                              className="btn-icon">
@@ -65,33 +67,36 @@ export function Navbar() {
                     </button>
                 </div>
 
-                <button
-                    type="button"
-                    className="btn-hamburger mobile-only"
-                    onClick={toggleMobileMenu}
-                    aria-expanded={isMobileMenuOpen}
-                    aria-label="Abrir menu de navegação"
-                >
-                    <span className="hamburger-bar"></span>
-                    <span className="hamburger-bar"></span>
-                    <span className="hamburger-bar"></span>
-                </button>
+                <div className="mobile-controls mobile-only">
+                    <LanguageSwitcher/>
+                    <button
+                        type="button"
+                        className="btn-hamburger mobile-only"
+                        onClick={toggleMobileMenu}
+                        aria-expanded={isMobileMenuOpen}
+                        aria-label="Abrir menu de navegação"
+                    >
+                        <span className="hamburger-bar"></span>
+                        <span className="hamburger-bar"></span>
+                        <span className="hamburger-bar"></span>
+                    </button>
+                </div>
             </div>
 
             <div className={`mobile-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
                 <nav className="mobile-nav-links" aria-label="Navegação Mobile">
                     <ul>
                         <li><NavLink to="/institucional" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>Institucional</NavLink></li>
+                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.institutional')}</NavLink></li>
                         <li><NavLink to="/servicos" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>Serviços</NavLink></li>
+                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.services')}</NavLink></li>
                         <li><NavLink to="/contato" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>Contato</NavLink></li>
+                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.contact')}</NavLink></li>
                     </ul>
                 </nav>
                 <div className="mobile-actions">
                     <button type="button" className="btn-orcamento mobile-btn-full" onClick={closeMobileMenu}>
-                        <span>Solicitar Orçamento</span>
+                        <span>{t('nav.requestQuote')}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                              className="btn-icon">

@@ -141,7 +141,7 @@ export function Home() {
                                 </div>
                                 <div className="service-card-footer">
                                     <Link to="/servicos" className="service-link">
-                                        <span>Conhecer detalhes</span>
+                                        <span>{t('services.learnMore')}</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
