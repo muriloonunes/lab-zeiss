@@ -28,8 +28,7 @@ export function Services() {
                 return (
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path
-                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                         <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
@@ -58,12 +57,7 @@ export function Services() {
                     </svg>
                 );
             default:
-                return (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                );
+                return null;
         }
     };
 
@@ -71,30 +65,34 @@ export function Services() {
         <section className="services-section" id="servicos">
             <div className="services-container">
                 <div className="section-header">
-                    <h2 className="section-sub">{t('services.subtitle')}</h2>
-                    <p className="section-title">{t('services.mainTitle')}</p>
+                    <div className="section-eyebrow">
+                        <span className="eyebrow-line"></span>
+                        <span className="section-sub">{t('services.subtitle')}</span>
+                    </div>
+                    <h2 className="section-title">{t('services.mainTitle')}</h2>
                 </div>
+
                 <div className="services-grid">
                     {services.map((item) => (
-                        <article key={item.id} className="glass-card service-card">
-                            <div className="service-card-header">
-                                <div className="service-icon-box">
-                                    {renderIcon(item.id)}
-                                </div>
+                        <article key={item.id} className="technical-service-card">
+                            <div className="card-top-bar">
+                                <div className="tech-icon">{renderIcon(item.id)}</div>
                             </div>
-                            <div className="service-card-body">
+
+                            <div className="card-content">
                                 <h3 className="service-title">{item.title}</h3>
                                 <p className="service-description">{item.description}</p>
                             </div>
-                            <div className="service-card-footer">
+
+                            <div className="card-bottom">
                                 <Link to="/servicos" className="service-link">
                                     <span>{t('services.learnMore')}</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         viewBox="0 0 24 24" fill="none"
-                                         stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                                         strokeLinejoin="round" className="link-icon">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                         className="link-icon">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
                                     </svg>
                                 </Link>
                             </div>
