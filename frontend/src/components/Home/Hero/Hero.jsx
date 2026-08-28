@@ -2,10 +2,17 @@ import {useTranslation} from "react-i18next";
 import './Hero.scss';
 
 export function HeroSection() {
-    const {t} = useTranslation()
+    const {t} = useTranslation();
+
+    const handleScrollToServices = () => {
+        const servicesSection = document.getElementById('servicos');
+        if (servicesSection) {
+            servicesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
-        <section className="hero-section">
+        <section className="hero-section" id="hero">
             <div className="blob-container" aria-hidden="true">
                 <div className="blob blob--right"></div>
                 <div className="blob blob--left"></div>
@@ -30,7 +37,7 @@ export function HeroSection() {
                                 <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
                         </button>
-                        <button type="button" className="btn-mais">
+                        <button type="button" className="btn-mais" onClick={handleScrollToServices}>
                             <span>{t('hero.exploreServices')}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                  fill="none"

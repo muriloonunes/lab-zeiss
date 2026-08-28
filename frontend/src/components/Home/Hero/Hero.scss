@@ -9,20 +9,7 @@
   padding: clamp(2rem, 2vw, 7.5rem) clamp(1.5rem, 1.5vw, 6rem) 4rem;
   background: transparent;
 
-  .blob-container {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .blob {
-    position: absolute;
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-    will-change: transform;
-
     &.blob--right {
       top: 18%;
       right: -8%;
