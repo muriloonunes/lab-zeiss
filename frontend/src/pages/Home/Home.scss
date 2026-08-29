@@ -21,6 +21,7 @@
   position: absolute;
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
   will-change: transform;
+  filter: blur(50px);
   transform: translateZ(0);
 }
 

@@ -17,9 +17,15 @@
       max-width: 780px;
       height: 620px;
       background: radial-gradient(circle at 45% 45%, #38bdf8 0%, #0077ff 35%, #141e8c 70%, #1d4ed8 100%);
-      filter: blur(95px);
       opacity: 0.65;
       animation: floatBlobRight 14s ease-in-out infinite alternate;
+
+      @media (max-width: 768px) {
+        max-width: 320px;
+        height: 320px;
+        right: -20%;
+        top: 10%;
+      }
     }
 
     &.blob--left {
@@ -29,9 +35,15 @@
       max-width: 600px;
       height: 520px;
       background: radial-gradient(circle at 50% 50%, #141e8c 15%, #0052d4 40%, #65c7f7 80%, #9cecfb 100%);
-      filter: blur(100px);
       opacity: 0.4;
       animation: floatBlobLeft 16s ease-in-out infinite alternate-reverse;
+
+      @media (max-width: 768px) {
+        max-width: 260px;
+        height: 260px;
+        left: -20%;
+        top: 40%;
+      }
     }
   }
 
