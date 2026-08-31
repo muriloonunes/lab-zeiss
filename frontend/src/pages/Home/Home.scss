@@ -8,9 +8,6 @@
   overflow-x: hidden;
 }
 
-// -------------------------------------------------------------
-// Layout Utilitários Reutilizáveis das Seções da Home
-// -------------------------------------------------------------
 .home-section {
   position: relative;
   z-index: 2;
@@ -25,9 +22,6 @@
   width: 100%;
 }
 
-// -------------------------------------------------------------
-// Card Base Reutilizável com efeito Frosted Glass (Home)
-// -------------------------------------------------------------
 .home-frosted-card {
   position: relative;
   overflow: hidden;
@@ -52,9 +46,6 @@
   }
 }
 
-// -------------------------------------------------------------
-// Blobs e Efeitos Decorativos
-// -------------------------------------------------------------
 .blob-container {
   position: absolute;
   inset: 0;
@@ -78,9 +69,6 @@
   }
 }
 
-// -------------------------------------------------------------
-// Cabeçalhos de Seção Padronizados
-// -------------------------------------------------------------
 .section-header {
   text-align: left;
   margin-bottom: 3.5rem;
