@@ -20,19 +20,21 @@ export function Infrastructure() {
                 { name: "ATOS Q", desc: "Sensor óptico 3D de precisão com tecnologia de luz azul estruturada (Blue Light)." },
                 { name: "T-SCAN Hawk 2", desc: "Scanner a laser portátil para inspeções em campo e engenharia reversa flexível." }
             ]
+        },
+        {
+            category: "Softwares Homologados",
+            items: [
+                { name: "ZEISS CALYPSO", desc: "Programação e GD&T" },
+                { name: "ZEISS Reverse Engineering", desc: "Modelagem CAD/Superfícies" },
+                { name: "ZEISS PiWeb", desc: "Gestão e Análise Estatística" },
+                { name: "ZEISS INSPECT", desc: "Inspeção de Malhas 3D" }
+            ]
         }
     ];
 
-    const softwareStack = [
-        { name: "ZEISS CALYPSO", role: "Programação e GD&T" },
-        { name: "ZEISS Reverse Engineering", role: "Modelagem CAD/Superfícies" },
-        { name: "ZEISS PiWeb", role: "Gestão e Análise Estatística" },
-        { name: "ZEISS INSPECT", role: "Inspeção de Malhas 3D" }
-    ];
-
     return (
-        <section className="infrastructure-section" id="infraestrutura">
-            <div className="infra-container">
+        <section className="infrastructure-section home-section" id="infraestrutura">
+            <div className="infra-container home-container">
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
@@ -43,7 +45,7 @@ export function Infrastructure() {
 
                 <div className="infra-cards-grid">
                     {machineCategories.map((cat, idx) => (
-                        <article key={idx} className="infra-card">
+                        <article key={idx} className="infra-card home-frosted-card">
                             <div className="infra-card-header">
                                 <h3 className="infra-card-title">{cat.category}</h3>
                             </div>
@@ -60,23 +62,6 @@ export function Infrastructure() {
                             </div>
                         </article>
                     ))}
-
-                    <article className="infra-card software-card">
-                        <div className="infra-card-header">
-                            <h3 className="infra-card-title">Softwares Homologados</h3>
-                        </div>
-                        <p className="software-desc">
-                            Integração digital ponta a ponta desde a captura de nuvem de pontos até o relatório estatístico.
-                        </p>
-                        <div className="software-grid">
-                            {softwareStack.map((soft, i) => (
-                                <div key={i} className="software-item-box">
-                                    <span className="software-name">{soft.name}</span>
-                                    <span className="software-role">{soft.role}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </article>
                 </div>
             </div>
         </section>

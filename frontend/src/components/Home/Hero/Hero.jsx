@@ -1,5 +1,6 @@
 import {useTranslation} from "react-i18next";
 import './Hero.scss';
+import {QuoteButton} from '../../QuoteButton/QuoteButton.jsx';
 
 export function HeroSection() {
     const {t} = useTranslation();
@@ -27,16 +28,7 @@ export function HeroSection() {
                         {t('hero.description')}
                     </p>
                     <div className="hero-actions">
-                        <button type="button" className="btn-orcamento">
-                            <span>{t('nav.requestQuote')}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                                 strokeLinejoin="round" className="btn-icon">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
+                        <QuoteButton />
                         <button type="button" className="btn-mais" onClick={handleScrollToServices}>
                             <span>{t('hero.exploreServices')}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"

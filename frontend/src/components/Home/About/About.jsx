@@ -28,19 +28,19 @@ export function About() {
     ];
 
     return (
-        <section className="about-section" id="sobre">
+        <section className="about-section home-section" id="sobre">
             <div className="blob-container" aria-hidden="true">
                 <div className="blob blob--about"></div>
             </div>
-            <div className="about-container">
+            <div className="about-container home-container">
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
                         <span className="section-sub">Nosso diferencial</span>
                     </div>
-                    <div className="about-header-content">
+                    <div className="about-header-content section-header-split">
                         <h2 className="section-title">Por que o CEM SENAI / ZEISS?</h2>
-                        <p className="about-description">
+                        <p className="about-description section-description">
                             Unimos a tecnlogia alemã de ponta da Zeiss à excelência técnica do SENAI para entregar
                             soluções metrológicas completas e atender às necessidades da indústria.
                         </p>
@@ -49,7 +49,7 @@ export function About() {
 
                 <div className="about-metrics-grid">
                     {highlights.map((item, index) => (
-                        <article key={index} className="about-metric-card">
+                        <article key={index} className="about-metric-card home-frosted-card">
                             <div className="metric-header">
                                 <span className="metric-value">{item.value}</span>
                             </div>

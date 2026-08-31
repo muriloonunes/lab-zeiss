@@ -62,8 +62,8 @@ export function Services() {
     };
 
     return (
-        <section className="services-section" id="servicos">
-            <div className="services-container">
+        <section className="services-section home-section" id="servicos">
+            <div className="services-container home-container">
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
@@ -74,13 +74,12 @@ export function Services() {
 
                 <div className="services-grid">
                     {services.map((item) => (
-                        <article key={item.id} className="technical-service-card">
-                            <div className="card-top-bar">
-                                <div className="tech-icon">{renderIcon(item.id)}</div>
-                            </div>
-
+                        <article key={item.id} className="technical-service-card home-frosted-card">
                             <div className="card-content">
-                                <h3 className="service-title">{item.title}</h3>
+                                <div className="card-header">
+                                    <h3 className="service-title">{item.title}</h3>
+                                    <div className="tech-icon">{renderIcon(item.id)}</div>
+                                </div>
                                 <p className="service-description">{item.description}</p>
                             </div>
 

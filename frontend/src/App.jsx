@@ -8,13 +8,14 @@ export default function App() {
             <Navbar/>
             <main>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/home" element={<Navigate to="/" replace/>}/>
+                    <Route path="/" element={<Navigate to="/home" replace/>}/>
+                    <Route path="/home" element={<Home/>}/>
                     <Route path="/institucional"
-                           element={<div style={{padding: '8rem 2rem 4rem'}}><h2>Institucional</h2></div>}/>
+                           element={<div>
+                               <h2>Institucional</h2></div>}/>
                     <Route path="/servicos"
-                           element={<div style={{padding: '8rem 2rem 4rem'}}><h2>Catálogo de Serviços</h2></div>}/>
-                    <Route path="/contato" element={<div style={{padding: '8rem 2rem 4rem'}}><h2>Contato</h2></div>}/>
+                           element={<div><h2>Catálogo de Serviços</h2></div>}/>
+                    <Route path="/contato" element={<div><h2>Contato</h2></div>}/>
                 </Routes>
             </main>
         </>

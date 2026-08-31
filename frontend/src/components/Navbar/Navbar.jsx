@@ -3,6 +3,7 @@ import {Link, NavLink} from 'react-router-dom';
 import './Navbar.scss';
 import {LanguageSwitcher} from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import {useTranslation} from "react-i18next";
+import {QuoteButton} from '../QuoteButton/QuoteButton.jsx';
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -56,15 +57,7 @@ export function Navbar() {
 
                     <LanguageSwitcher/>
 
-                    <button type="button" className="btn-orcamento">
-                        <span>{t('nav.requestQuote')}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                             className="btn-icon">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
+                    <QuoteButton />
                 </div>
 
                 <div className="mobile-controls mobile-only">
@@ -95,15 +88,7 @@ export function Navbar() {
                     </ul>
                 </nav>
                 <div className="mobile-actions">
-                    <button type="button" className="btn-orcamento mobile-btn-full" onClick={closeMobileMenu}>
-                        <span>{t('nav.requestQuote')}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                             className="btn-icon">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
+                    <QuoteButton className="mobile-btn-full" onClick={closeMobileMenu} />
                 </div>
             </div>
         </header>
