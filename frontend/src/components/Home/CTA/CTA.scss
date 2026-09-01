@@ -1,0 +1,81 @@
+@use '../../../styles/variables' as vars;
+@use '../../../pages/Home/Home' as home;
+
+.cta-section {
+  padding-bottom: 5rem;
+  .cta-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: clamp(2.5rem, 3.5vw, 4rem) clamp(2rem, 3vw, 3.5rem);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.5rem;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(20, 30, 140, 0.25);
+    }
+  }
+
+  .cta-content {
+    max-width: 760px;
+
+    .section-eyebrow {
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-title {
+      font-family: vars.$font-headline;
+      font-size: clamp(1.85rem, 2.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin: 0 0 1rem 0;
+      background: linear-gradient(135deg, vars.$color-bg-dark 20%, vars.$color-primary 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cta-description {
+      color: vars.$color-text-body;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      font-weight: 400;
+      margin: 0;
+    }
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      width: 100%;
+
+      .cta-btn-primary,
+      .btn-mais {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .btn-mais {
+      text-decoration: none;
+      font-family: vars.$font-subtitle;
+    }
+  }
+}

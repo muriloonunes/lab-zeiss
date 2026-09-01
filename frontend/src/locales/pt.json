@@ -61,6 +61,11 @@
       }
     }
   },
+  "cta": {
+    "title": "Fale com a nossa equipe",
+    "description": "Quer garantir a tolerância, digitalização ou confirmidade das suas peças? Nossa tecnlogia ZEISS pode ajudar!",
+    "viewCatalog": "Ver Serviços"
+  },
   "footer": {
     "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",
     "navigationTitle": "Navegação",

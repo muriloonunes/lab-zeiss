@@ -4,6 +4,7 @@ import {Services} from "../../components/Home/Services/Services.jsx";
 import {Infrastructure} from "../../components/Home/Infrastructure/Infrastructure.jsx";
 import {About} from "../../components/Home/About/About.jsx";
 import {Areas} from "../../components/Home/Areas/Areas.jsx";
+import {CTA} from "../../components/Home/CTA/CTA.jsx";
 
 export function Home() {
     return (
@@ -13,6 +14,7 @@ export function Home() {
             <About/>
             <Infrastructure/>
             <Areas/>
+            <CTA/>
         </div>
     );
 }
