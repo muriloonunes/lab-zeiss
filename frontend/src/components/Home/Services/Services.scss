@@ -6,13 +6,16 @@
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     align-items: stretch;
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 680px) {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
     }
   }
 
@@ -38,15 +41,6 @@
           background: linear-gradient(135deg, vars.$color-bg-dark 20%, vars.$color-primary 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          transition: transform 0.25s ease;
-        }
-
-        .tech-icon {
-          color: vars.$color-primary;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
           transition: transform 0.25s ease;
         }
       }
@@ -92,10 +86,6 @@
 
     &:hover {
       .card-content .card-header {
-        .tech-icon {
-          transform: scale(1.08);
-        }
-
         .service-title {
           transform: scale(1.03);
         }

@@ -27,6 +27,37 @@
       "qcontrol": {
         "title": "Quality Control",
         "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
+      },
+      "prototyping": {
+        "title": "Prototyping",
+        "description": "Manufacturing parts using 3D printing technologies to validate the product before machining."
+      }
+    }
+  },
+  "whyUs": {
+    "subtitle": "Our Advantage",
+    "mainTitle": "Why the SENAI / ZEISS Center of Excellence?",
+    "description": "We combine state-of-the-art German ZEISS technology with SENAI's technical excellence to deliver complete metrological solutions and meet demanding industrial needs.",
+    "highlights": {
+      "exclusivity": {
+        "value": "1 of 5",
+        "label": "Labs in the World",
+        "detail": "Cutting-edge infrastructure with globally unique analytical and technical capabilities."
+      },
+      "accessibility": {
+        "value": "Broad Access",
+        "label": "For All Industries",
+        "detail": "World-class technology accessible to small, medium, and large-scale industrial companies."
+      },
+      "standard": {
+        "value": "100%",
+        "label": "ZEISS Standard",
+        "detail": "Internationally certified and benchmarked measuring machines and software."
+      },
+      "accuracy": {
+        "value": "GD&T",
+        "label": "High Precision",
+        "detail": "Micrometric geometric inspection with certified metrological traceability."
       }
     }
   }

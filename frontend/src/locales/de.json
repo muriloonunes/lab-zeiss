@@ -27,6 +27,37 @@
       "qcontrol": {
         "title": "Qualitätskontrolle",
         "description": "Serienprüfung, Erstmusterprüfbericht (EMPB/FAI) und Farb-Abweichungsanalyse."
+      },
+      "prototyping": {
+        "title": "Prototyping",
+        "description": "Herstellung von Teilen mit 3D-Drucktechnologien zur Validierung des Produkts vor der Bearbeitung."
+      }
+    }
+  },
+  "whyUs": {
+    "subtitle": "Unser Vorteil",
+    "mainTitle": "Warum das SENAI / ZEISS Exzellenzzentrum?",
+    "description": "Wir verbinden deutsche Spitzentechnologie von ZEISS mit dem technischen Fachwissen des SENAI, um umfassende messtechnische Lösungen für die Industrie zu bieten.",
+    "highlights": {
+      "exclusivity": {
+        "value": "1 von 5",
+        "label": "Laboren weltweit",
+        "detail": "Spitzentechnologische Infrastruktur mit weltweit einzigartiger Kapazität."
+      },
+      "accessibility": {
+        "value": "Breiter Zugang",
+        "label": "Für alle Industriezweige",
+        "detail": "Weltweit führende Technologie zugänglich für kleine, mittlere und große Industrieunternehmen."
+      },
+      "standard": {
+        "value": "100%",
+        "label": "ZEISS-Standard",
+        "detail": "International homologierte und zertifizierte Messsysteme und Software."
+      },
+      "accuracy": {
+        "value": "GD&T",
+        "label": "Höchste Präzision",
+        "detail": "Mikrometergenaue geometrische Prüfung mit rückführbarer Messtechnik."
       }
     }
   }

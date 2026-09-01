@@ -27,10 +27,38 @@
       "qcontrol": {
         "title": "Controle de Qualidade",
         "description": "Inspeção seriada, relatório FAI e análise de desvios dimensionais por mapa de cores."
+      },
+      "prototyping": {
+        "title": "Prototipagem",
+        "description": "Fabricação de peças utilizando tecnologias de impressão 3D para validação do produto antes da usinagem."
       }
     }
   },
   "whyUs": {
-
+    "subtitle": "Nosso diferencial",
+    "mainTitle": "Por que o CEM SENAI / ZEISS?",
+    "description": "Unimos a tecnlogia alemã de ponta da Zeiss à excelência técnica do SENAI para entregar soluções metrológicas completas e atender às necessidades da indústria.",
+    "highlights": {
+      "exclusivity": {
+        "value": "1 de 5",
+        "label": "Laboratórios no mundo",
+        "detail": "Infraestrutura com tecnologia de ponta e capacidade exclusiva globalmente."
+      },
+      "accessibility": {
+        "value": "Amplo Acesso",
+        "label": "Para Todas as Indústrias",
+        "detail": "Tecnologia de padrão global acessível a indústrias de pequeno, médio e grande porte."
+      },
+      "standard": {
+        "value": "100%",
+        "label": "Padrão ZEISS",
+        "detail": "Equipamentos e softwares homologados internacionalmente."
+      },
+      "accuracy": {
+        "value": "GD&T",
+        "label": "Alta Exatidão",
+        "detail": "Inspeção geométrica micrométrica com rastreabilidade metrológica."
+      }
+    }
   }
 }

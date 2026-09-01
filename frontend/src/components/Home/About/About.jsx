@@ -6,24 +6,24 @@ export function About() {
 
     const highlights = [
         {
-            value: "1 de 5",
-            label: "Laboratórios no mundo",
-            detail: "Infraestrutura com tecnologia e capacidade analítica rara globalmente."
+            value: t('whyUs.highlights.exclusivity.value'),
+            label: t('whyUs.highlights.exclusivity.label'),
+            detail: t('whyUs.highlights.exclusivity.detail')
         },
         {
-            value: "140m²",
-            label: "Ambiente Climatizado",
-            detail: "Sala limpa com controle rigoroso de temperatura (20°C ± 0,5°C) e umidade."
+            value: t('whyUs.highlights.accessibility.value'),
+            label: t('whyUs.highlights.accessibility.label'),
+            detail: t('whyUs.highlights.accessibility.detail')
         },
         {
-            value: "100%",
-            label: "Padrão ZEISS",
-            detail: "Equipamentos e softwares homologados internacionalmente."
+            value: t('whyUs.highlights.standard.value'),
+            label: t('whyUs.highlights.standard.label'),
+            detail: t('whyUs.highlights.standard.detail')
         },
         {
-            value: "GD&T",
-            label: "Alta Exatidão",
-            detail: "Inspeção geométrica micrométrica com rastreabilidade metrológica."
+            value: t('whyUs.highlights.accuracy.value'),
+            label: t('whyUs.highlights.accuracy.label'),
+            detail: t('whyUs.highlights.accuracy.detail')
         }
     ];
 
@@ -36,14 +36,11 @@ export function About() {
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
-                        <span className="section-sub">Nosso diferencial</span>
+                        <span className="section-sub">{t('whyUs.subtitle')}</span>
                     </div>
                     <div className="about-header-content section-header-split">
-                        <h2 className="section-title">Por que o CEM SENAI / ZEISS?</h2>
-                        <p className="about-description section-description">
-                            Unimos a tecnlogia alemã de ponta da Zeiss à excelência técnica do SENAI para entregar
-                            soluções metrológicas completas e atender às necessidades da indústria.
-                        </p>
+                        <h2 className="section-title">{t('whyUs.mainTitle')}</h2>
+                        <p className="about-description section-description">{t('whyUs.description')}</p>
                     </div>
                 </div>
 

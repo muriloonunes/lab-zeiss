@@ -20,46 +20,12 @@ export function Services() {
             title: t('services.items.qcontrol.title'),
             description: t('services.items.qcontrol.description'),
         },
+        {
+            id: 'prototyping',
+            title: t('services.items.prototyping.title'),
+            description: t('services.items.prototyping.description'),
+        },
     ];
-
-    const renderIcon = (id) => {
-        switch (id) {
-            case 'cmm':
-                return (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
-                    </svg>
-                );
-            case 'reverse':
-                return (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                        <path d="M12 2v20"></path>
-                    </svg>
-                );
-            case 'q-control':
-                return (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="22" y1="12" x2="18" y2="12"></line>
-                        <line x1="6" y1="12" x2="2" y2="12"></line>
-                        <line x1="12" y1="6" x2="12" y2="2"></line>
-                        <line x1="12" y1="22" x2="12" y2="18"></line>
-                        <polyline points="9 12 11 14 15 10"></polyline>
-                    </svg>
-                );
-            default:
-                return null;
-        }
-    };
 
     return (
         <section className="services-section home-section" id="servicos">
@@ -78,7 +44,6 @@ export function Services() {
                             <div className="card-content">
                                 <div className="card-header">
                                     <h3 className="service-title">{item.title}</h3>
-                                    <div className="tech-icon">{renderIcon(item.id)}</div>
                                 </div>
                                 <p className="service-description">{item.description}</p>
                             </div>

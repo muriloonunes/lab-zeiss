@@ -3,40 +3,35 @@ import "./Areas.scss"
 export function Areas() {
     const sectorsList = [
         {
+            id: "food",
+            name: "Alimentícia",
+            description: "Inspeção geométrica GD&T de componentes usinados, estamparia e conjuntos soldados.",
+            tag: "CMM & Escaneamento 3D"
+        },
+        {
             id: "automotive",
             name: "Automotivo & Autopeças",
             description: "Inspeção geométrica GD&T de componentes usinados, estamparia e conjuntos soldados.",
-            tag: "CMM & Escaneamento 3D"
         },
         {
             id: "aerospace",
             name: "Aeroespacial & Defesa",
             description: "Controle dimensional de alta exatidão, análise de pás de turbinas e conformidade estrutural.",
-            tag: "Alta Precisão"
         },
         {
             id: "medical",
             name: "Médico-Hospitalar & Implantes",
             description: "Digitalização e inspeção de próteses, dispositivos cirúrgicos e geometrias complexas.",
-            tag: "Microtomografia / Óptica"
         },
         {
             id: "tooling",
             name: "Ferramentaria & Moldes",
             description: "Engenharia reversa e validação de matrizes, moldes de injeção e ferramentas de corte.",
-            tag: "Engenharia Reversa"
-        },
-        {
-            id: "energy",
-            name: "Energia & Óleo e Gás",
-            description: "Análise de desvios e integridade de válvulas, flanges e tubulações industriais.",
-            tag: "Ensaios Não Destrutivos"
         },
         {
             id: "agro",
             name: "Máquinas Agrícolas & Linha Pesada",
             description: "Verificação de peças de grande porte, carcaças fundidas e estruturas montadas.",
-            tag: "Laser Scanner Portátil"
         }
     ];
 
