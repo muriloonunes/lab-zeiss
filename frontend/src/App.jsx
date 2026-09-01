@@ -1,6 +1,7 @@
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Navbar} from './components/Navbar/Navbar';
 import {Home} from './pages/Home/Home';
+import {Footer} from './components/Footer/Footer';
 
 export default function App() {
     return (
@@ -18,6 +19,7 @@ export default function App() {
                     <Route path="/contato" element={<div><h2>Contato</h2></div>}/>
                 </Routes>
             </main>
+            <Footer/>
         </>
     );
 }
