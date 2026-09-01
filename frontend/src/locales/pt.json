@@ -60,5 +60,22 @@
         "detail": "Inspeção geométrica micrométrica com rastreabilidade metrológica."
       }
     }
+  },
+  "footer": {
+    "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",
+    "navigationTitle": "Navegação",
+    "locationTitle": "Localização",
+    "facility": "Faculdade SENAI Ítalo Bologna",
+    "street": "Rua Armogaste José da Silveira, 612",
+    "city": "Setor Centro-Oeste — Goiânia, GO",
+    "viewOnMaps": "Ver no Google Maps",
+    "contactsTitle": "Atendimento & Contato",
+    "labCoordination": "Coordenação do Laboratório",
+    "techLead": "Responsável Técnico",
+    "phone": "Telefone",
+    "email": "E-mail",
+    "businessHours": "Seg. a Sex. das 08h às 18h",
+    "rights": "Todos os direitos reservados.",
+    "partnership": "Sistema FIEG • SENAI Goiás • Carl Zeiss"
   }
 }

@@ -60,5 +60,22 @@
         "detail": "Mikrometergenaue geometrische Prüfung mit rückführbarer Messtechnik."
       }
     }
+  },
+  "footer": {
+    "brandDesc": "Innovation, Maßhaltigkeit und messtechnische Spitzenleistungen mit deutscher ZEISS-Technologie und technischer Expertise des SENAI.",
+    "navigationTitle": "Navigation",
+    "locationTitle": "Standort",
+    "facility": "SENAI Ítalo Bologna Fakultät",
+    "street": "Rua Armogaste José da Silveira, 612",
+    "city": "Setor Centro-Oeste — Goiânia, GO, Brasilien",
+    "viewOnMaps": "Auf Google Maps anzeigen",
+    "contactsTitle": "Support & Kontakt",
+    "labCoordination": "Laborleitung",
+    "techLead": "Technischer Leiter",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "businessHours": "Mo. bis Fr. von 08:00 bis 18:00 Uhr",
+    "rights": "Alle Rechte vorbehalten.",
+    "partnership": "FIEG-System • SENAI Goiás • Carl Zeiss"
   }
 }

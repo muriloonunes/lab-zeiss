@@ -25,7 +25,7 @@ export function Navbar() {
     const {t} = useTranslation()
 
     return (
-        <header className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`}>
+        <header className={`navbar${isScrolled ? ' scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`}>
             <div className="navbar-container">
                 <div className="navbar-logo">
                     <Link to="/" className="logo-link" onClick={closeMobileMenu}

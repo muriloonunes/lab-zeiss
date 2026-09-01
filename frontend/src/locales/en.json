@@ -60,5 +60,22 @@
         "detail": "Micrometric geometric inspection with certified metrological traceability."
       }
     }
+  },
+  "footer": {
+    "brandDesc": "Innovation, dimensional compliance, and metrological excellence powered by German ZEISS technology and SENAI technical support.",
+    "navigationTitle": "Navigation",
+    "locationTitle": "Location",
+    "facility": "SENAI Ítalo Bologna Faculty",
+    "street": "612 Armogaste José da Silveira St.",
+    "city": "Setor Centro-Oeste — Goiânia, GO, Brazil",
+    "viewOnMaps": "View on Google Maps",
+    "contactsTitle": "Support & Inquiries",
+    "labCoordination": "Laboratory Management",
+    "techLead": "Technical Lead",
+    "phone": "Phone",
+    "email": "Email",
+    "businessHours": "Mon. to Fri. from 8:00 AM to 6:00 PM",
+    "rights": "All rights reserved.",
+    "partnership": "FIEG System • SENAI Goiás • Carl Zeiss"
   }
 }

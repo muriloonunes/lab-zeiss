@@ -95,18 +95,43 @@
       }
     }
 
-    .footer-contact-info {
-      font-size: 0.9rem;
-      line-height: 1.6;
+    .footer-contact-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
 
-      strong {
-        color: #e2e8f0;
+      &.mt-sub {
+        margin-top: 1.2rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-      .contact-hours {
-        margin-top: 0.5rem;
-        font-size: 0.8rem;
-        color: #64748b;
+      .contact-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #38bdf8;
+        margin-bottom: 0.2rem;
+      }
+
+      .contact-entry {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin: 0;
+
+        strong {
+          color: #e2e8f0;
+        }
+
+        .contact-link {
+          color: #94a3b8;
+          text-decoration: none;
+
+          &:hover {
+            color: #ffffff;
+          }
+        }
       }
     }
   }
