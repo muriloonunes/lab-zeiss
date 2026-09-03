@@ -61,6 +61,12 @@
       }
     }
   },
+  "cta": {
+    "title": "Bring German precision and compliance to your industry.",
+    "description": "Rely on FAI reports, reverse engineering, and international GD&T inspection at SENAI/ZEISS facilities.",
+    "requestQuote": "Request Technical Quote",
+    "exploreServices": "View Services Catalog"
+  },
   "footer": {
     "brandDesc": "Innovation, dimensional compliance, and metrological excellence powered by German ZEISS technology and SENAI technical support.",
     "navigationTitle": "Navigation",

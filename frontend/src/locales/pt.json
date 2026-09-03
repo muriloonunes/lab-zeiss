@@ -62,9 +62,10 @@
     }
   },
   "cta": {
-    "title": "Fale com a nossa equipe",
-    "description": "Quer garantir a tolerância, digitalização ou confirmidade das suas peças? Nossa tecnlogia ZEISS pode ajudar!",
-    "viewCatalog": "Ver Serviços"
+    "title": "Leve a precisão e a conformidade alemã para a sua indústria.",
+    "description": "Conte com relatórios FAI, engenharia reversa e inspeção GD&T de padrão internacional realizados em infraestrutura SENAI/ZEISS.",
+    "requestQuote": "Solicitar Orçamento Técnico",
+    "exploreServices": "Ver Catálogo de Serviços"
   },
   "footer": {
     "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",

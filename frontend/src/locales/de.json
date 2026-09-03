@@ -61,6 +61,12 @@
       }
     }
   },
+  "cta": {
+    "title": "Bringen Sie deutsche Präzision und Konformit t in Ihre Industrie.",
+    "description": "Verlassen Sie sich auf EMPB/FAI-Berichte, Reverse Engineering und GD&T-Pr fungen nach internationalem Standard am SENAI/ZEISS.",
+    "requestQuote": "Technisches Angebot anfordern",
+    "exploreServices": "Dienstleistungskatalog ansehen"
+  },
   "footer": {
     "brandDesc": "Innovation, Maßhaltigkeit und messtechnische Spitzenleistungen mit deutscher ZEISS-Technologie und technischer Expertise des SENAI.",
     "navigationTitle": "Navigation",

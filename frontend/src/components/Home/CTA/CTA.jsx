@@ -23,7 +23,7 @@ export function CTA() {
                         <QuoteButton onClick={() => navigate('/contato')}>
                             {t('cta.requestQuote')}
                         </QuoteButton>
-                        <Link to="/servicos" className="btn-secondary-link">
+                        <Link to="/servicos" className="btn-mais">
                             <span>{t('cta.exploreServices')}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
