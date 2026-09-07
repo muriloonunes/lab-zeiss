@@ -1,0 +1,51 @@
+@use '../../../styles/variables' as vars;
+
+.inst-quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  align-items: stretch;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .quote-card {
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .quote-text {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: vars.$color-text-body;
+      font-style: italic;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .quote-author {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+
+      strong {
+        font-family: vars.$font-headline;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: vars.$color-text-dark;
+        letter-spacing: -0.015em;
+      }
+
+      span {
+        font-size: 0.82rem;
+        color: vars.$color-text-muted;
+        line-height: 1.45;
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+@use '../../../styles/variables' as vars;
+
+.inst-timeline {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 2rem;
+
+  @media (min-width: 768px) {
+    padding-left: 3rem;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 8px;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      vars.$color-primary 0%,
+      rgba(20, 30, 140, 0.25) 85%,
+      transparent 100%
+    );
+
+    @media (min-width: 768px) {
+      left: 12px;
+    }
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.5rem;
+    transform: translateX(-50%);
+
+    @media (min-width: 768px) {
+      left: -3rem;
+    }
+
+    .timeline-year {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.8rem;
+      background: #ffffff;
+      border: 2px solid vars.$color-primary;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: vars.$color-primary;
+      box-shadow: 0 4px 12px rgba(20, 30, 140, 0.1);
+      white-space: nowrap;
+    }
+  }
+
+  .timeline-card {
+    padding: 1.85rem 2rem;
+
+    .timeline-title {
+      font-family: vars.$font-headline;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: vars.$color-text-dark;
+      margin-bottom: 0.6rem;
+      transition: transform 0.25s ease;
+    }
+
+    .timeline-text {
+      font-size: 0.96rem;
+      line-height: 1.65;
+      color: vars.$color-text-body;
+      margin: 0;
+    }
+
+    &:hover {
+      .timeline-title {
+        transform: scale(1.02);
+      }
+    }
+  }
+}

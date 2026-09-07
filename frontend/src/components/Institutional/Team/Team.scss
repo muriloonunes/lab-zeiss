@@ -1,0 +1,59 @@
+@use '../../../styles/variables' as vars;
+
+.inst-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .team-card {
+    padding: 2.25rem 2rem;
+
+    .team-avatar-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(20, 30, 140, 0.08);
+      color: vars.$color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .team-role {
+      font-family: vars.$font-headline;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: vars.$color-text-dark;
+      margin-bottom: 0.35rem;
+      transition: transform 0.25s ease;
+    }
+
+    .team-area {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: vars.$color-primary;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.01em;
+    }
+
+    .team-desc {
+      font-size: 0.94rem;
+      line-height: 1.65;
+      color: vars.$color-text-body;
+      margin: 0;
+    }
+
+    &:hover {
+      .team-role {
+        transform: scale(1.02);
+      }
+    }
+  }
+}

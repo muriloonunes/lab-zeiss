@@ -1,0 +1,51 @@
+@use '../../../styles/variables' as vars;
+
+.inst-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .pillar-card {
+    padding: 2.25rem 2rem;
+
+    .pillar-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(20, 30, 140, 0.08);
+      color: vars.$color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.35rem;
+    }
+
+    .pillar-card-title {
+      font-family: vars.$font-headline;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: vars.$color-text-dark;
+      margin-bottom: 0.75rem;
+      transition: transform 0.25s ease;
+    }
+
+    .pillar-card-desc {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: vars.$color-text-body;
+      margin: 0;
+    }
+
+    &:hover {
+      .pillar-card-title {
+        transform: scale(1.02);
+      }
+    }
+  }
+}
