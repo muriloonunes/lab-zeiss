@@ -6,28 +6,58 @@ export function Infrastructure() {
 
     const machineCategories = [
         {
-            category: "Sistemas CMM & Raio-X",
+            category: t("home.infrastructure.categories.cmmXray.title"),
             items: [
-                { name: "ZEISS PRISMO", desc: "Máxima exatidão e velocidade para geometrias de altíssima exigência." },
-                { name: "ZEISS DuraMax (500)", desc: "Medição por coordenadas robusta em ambiente fabril e laboratorial." },
-                { name: "ZEISS O-INSPECT", desc: "Multisensor integrando medição óptica e apalpamento por contato." },
-                { name: "ZEISS BOSELLO MAX", desc: "Inspeção não destrutiva (NDT) e análise de integridade interna por Raio-X." }
+                {
+                    name: t("home.infrastructure.categories.cmmXray.items.prismo.name"),
+                    desc: t("home.infrastructure.categories.cmmXray.items.prismo.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.cmmXray.items.duramax.name"),
+                    desc: t("home.infrastructure.categories.cmmXray.items.duramax.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.cmmXray.items.oInspect.name"),
+                    desc: t("home.infrastructure.categories.cmmXray.items.oInspect.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.cmmXray.items.bosello.name"),
+                    desc: t("home.infrastructure.categories.cmmXray.items.bosello.desc")
+                }
             ]
         },
         {
-            category: "Digitalização 3D & Óptica",
+            category: t("home.infrastructure.categories.optical3d.title"),
             items: [
-                { name: "ATOS Q", desc: "Sensor óptico 3D de precisão com tecnologia de luz azul estruturada (Blue Light)." },
-                { name: "T-SCAN Hawk 2", desc: "Scanner a laser portátil para inspeções em campo e engenharia reversa flexível." }
+                {
+                    name: t("home.infrastructure.categories.optical3d.items.atos.name"),
+                    desc: t("home.infrastructure.categories.optical3d.items.atos.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.optical3d.items.tscan.name"),
+                    desc: t("home.infrastructure.categories.optical3d.items.tscan.desc")
+                }
             ]
         },
         {
-            category: "Softwares Homologados",
+            category: t("home.infrastructure.categories.software.title"),
             items: [
-                { name: "ZEISS CALYPSO", desc: "Programação e GD&T" },
-                { name: "ZEISS Reverse Engineering", desc: "Modelagem CAD/Superfícies" },
-                { name: "ZEISS PiWeb", desc: "Gestão e Análise Estatística" },
-                { name: "ZEISS INSPECT", desc: "Inspeção de Malhas 3D" }
+                {
+                    name: t("home.infrastructure.categories.software.items.calypso.name"),
+                    desc: t("home.infrastructure.categories.software.items.calypso.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.software.items.reverseEngineering.name"),
+                    desc: t("home.infrastructure.categories.software.items.reverseEngineering.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.software.items.piweb.name"),
+                    desc: t("home.infrastructure.categories.software.items.piweb.desc")
+                },
+                {
+                    name: t("home.infrastructure.categories.software.items.inspect.name"),
+                    desc: t("home.infrastructure.categories.software.items.inspect.desc")
+                }
             ]
         }
     ];
@@ -38,9 +68,9 @@ export function Infrastructure() {
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
-                        <span className="section-sub">Nossa Infraestrutura</span>
+                        <span className="section-sub">{t("home.infrastructure.subtitle")}</span>
                     </div>
-                    <h2 className="section-title">Tecnologia ZEISS em 140m² de laboratório</h2>
+                    <h2 className="section-title">{t("home.infrastructure.mainTitle")}</h2>
                 </div>
 
                 <div className="infra-cards-grid">

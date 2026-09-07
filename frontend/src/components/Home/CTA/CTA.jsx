@@ -15,16 +15,16 @@ export function CTA() {
             <div className="cta-container home-container">
                 <article className="cta-card home-frosted-card">
                     <div className="cta-content">
-                        <h2 id="cta-heading" className="cta-title">{t('cta.title')}</h2>
-                        <p className="cta-description">{t('cta.description')}</p>
+                        <h2 id="cta-heading" className="cta-title">{t('home.cta.title')}</h2>
+                        <p className="cta-description">{t('home.cta.description')}</p>
                     </div>
 
                     <div className="cta-actions">
                         <QuoteButton onClick={() => navigate('/contato')}>
-                            {t('cta.requestQuote')}
+                            {t('home.cta.requestQuote')}
                         </QuoteButton>
                         <Link to="/servicos" className="btn-mais">
-                            <span>{t('cta.exploreServices')}</span>
+                            <span>{t('home.cta.exploreServices')}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"

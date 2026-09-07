@@ -6,24 +6,24 @@ export function About() {
 
     const highlights = [
         {
-            value: t('whyUs.highlights.exclusivity.value'),
-            label: t('whyUs.highlights.exclusivity.label'),
-            detail: t('whyUs.highlights.exclusivity.detail')
+            value: t('home.whyUs.highlights.exclusivity.value'),
+            label: t('home.whyUs.highlights.exclusivity.label'),
+            detail: t('home.whyUs.highlights.exclusivity.detail')
         },
         {
-            value: t('whyUs.highlights.accessibility.value'),
-            label: t('whyUs.highlights.accessibility.label'),
-            detail: t('whyUs.highlights.accessibility.detail')
+            value: t('home.whyUs.highlights.accessibility.value'),
+            label: t('home.whyUs.highlights.accessibility.label'),
+            detail: t('home.whyUs.highlights.accessibility.detail')
         },
         {
-            value: t('whyUs.highlights.standard.value'),
-            label: t('whyUs.highlights.standard.label'),
-            detail: t('whyUs.highlights.standard.detail')
+            value: t('home.whyUs.highlights.standard.value'),
+            label: t('home.whyUs.highlights.standard.label'),
+            detail: t('home.whyUs.highlights.standard.detail')
         },
         {
-            value: t('whyUs.highlights.accuracy.value'),
-            label: t('whyUs.highlights.accuracy.label'),
-            detail: t('whyUs.highlights.accuracy.detail')
+            value: t('home.whyUs.highlights.accuracy.value'),
+            label: t('home.whyUs.highlights.accuracy.label'),
+            detail: t('home.whyUs.highlights.accuracy.detail')
         }
     ];
 
@@ -36,11 +36,11 @@ export function About() {
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
-                        <span className="section-sub">{t('whyUs.subtitle')}</span>
+                        <span className="section-sub">{t('home.whyUs.subtitle')}</span>
                     </div>
                     <div className="about-header-content section-header-split">
-                        <h2 className="section-title">{t('whyUs.mainTitle')}</h2>
-                        <p className="about-description section-description">{t('whyUs.description')}</p>
+                        <h2 className="section-title">{t('home.whyUs.mainTitle')}</h2>
+                        <p className="about-description section-description">{t('home.whyUs.description')}</p>
                     </div>
                 </div>
 

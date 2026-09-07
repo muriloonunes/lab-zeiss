@@ -5,67 +5,213 @@
     "contact": "Contact",
     "requestQuote": "Request a Quote"
   },
-  "hero": {
-    "welcome": "Welcome to",
-    "title": "Center for Excellence in Metrology SENAI/ZEISS",
-    "description": "Reverse engineering, 3D scanning, and quality control with ZEISS technology.",
-    "exploreServices": "Explore Services"
+  "home": {
+    "hero": {
+      "welcome": "Welcome to",
+      "title": "Center for Excellence in Metrology SENAI/ZEISS",
+      "description": "Reverse engineering, 3D scanning, and quality control with ZEISS technology.",
+      "exploreServices": "Explore Services"
+    },
+    "services": {
+      "subtitle": "Our Services",
+      "mainTitle": "ZEISS technology and SENAI technical expertise serving precision, compliance, and industrial innovation.",
+      "learnMore": "Learn more",
+      "items": {
+        "cmm": {
+          "title": "Coordinate Measuring (CMM)",
+          "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
+        },
+        "reverse": {
+          "title": "Reverse Engineering",
+          "description": "CAD and STL model generation from physical parts using 3D scanning technologies and specialized software."
+        },
+        "qcontrol": {
+          "title": "Quality Control",
+          "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
+        },
+        "prototyping": {
+          "title": "Prototyping",
+          "description": "Manufacturing parts using 3D printing technologies to validate the product before machining."
+        }
+      }
+    },
+    "whyUs": {
+      "subtitle": "Our Advantage",
+      "mainTitle": "Why the SENAI / ZEISS Center of Excellence?",
+      "description": "We combine state-of-the-art German ZEISS technology with SENAI's technical excellence to deliver complete metrological solutions and meet demanding industrial needs.",
+      "highlights": {
+        "exclusivity": {
+          "value": "1 of 5",
+          "label": "Labs in the World",
+          "detail": "Cutting-edge infrastructure with globally unique analytical and technical capabilities."
+        },
+        "accessibility": {
+          "value": "Broad Access",
+          "label": "For All Industries",
+          "detail": "World-class technology accessible to small, medium, and large-scale industrial companies."
+        },
+        "standard": {
+          "value": "100%",
+          "label": "ZEISS Standard",
+          "detail": "Internationally certified and benchmarked measuring machines and software."
+        },
+        "accuracy": {
+          "value": "GD&T",
+          "label": "High Precision",
+          "detail": "Micrometric geometric inspection with certified metrological traceability."
+        }
+      }
+    },
+    "infrastructure": {
+      "subtitle": "Our Infrastructure",
+      "mainTitle": "ZEISS Technology across a 140m² Laboratory",
+      "categories": {
+        "cmmXray": {
+          "title": "CMM & X-Ray Systems",
+          "items": {
+            "prismo": {
+              "name": "ZEISS PRISMO",
+              "desc": "Maximum accuracy and speed for highly demanding geometries."
+            },
+            "duramax": {
+              "name": "ZEISS DuraMax (500)",
+              "desc": "Robust coordinate measuring in shop floor and laboratory environments."
+            },
+            "oInspect": {
+              "name": "ZEISS O-INSPECT",
+              "desc": "Multisensor system integrating optical measurement and contact probing."
+            },
+            "bosello": {
+              "name": "ZEISS BOSELLO MAX",
+              "desc": "Non-destructive testing (NDT) and internal integrity analysis with X-Ray."
+            }
+          }
+        },
+        "optical3d": {
+          "title": "3D Scanning & Optics",
+          "items": {
+            "atos": {
+              "name": "ATOS Q",
+              "desc": "High-precision 3D optical sensor with structured blue light technology."
+            },
+            "tscan": {
+              "name": "T-SCAN Hawk 2",
+              "desc": "Handheld laser scanner for on-site inspections and flexible reverse engineering."
+            }
+          }
+        },
+        "software": {
+          "title": "Certified Software",
+          "items": {
+            "calypso": {
+              "name": "ZEISS CALYPSO",
+              "desc": "Programming and GD&T"
+            },
+            "reverseEngineering": {
+              "name": "ZEISS Reverse Engineering",
+              "desc": "CAD & Surface Modeling"
+            },
+            "piweb": {
+              "name": "ZEISS PiWeb",
+              "desc": "Management and Statistical Analysis"
+            },
+            "inspect": {
+              "name": "ZEISS INSPECT",
+              "desc": "3D Mesh Inspection"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Bring German precision and compliance to your industry.",
+      "description": "Rely on FAI reports, reverse engineering, and international GD&T inspection at SENAI/ZEISS facilities.",
+      "requestQuote": "Request Technical Quote",
+      "exploreServices": "View Services Catalog"
+    }
   },
   "services": {
-    "subtitle": "Our Services",
-    "mainTitle": "ZEISS technology and SENAI technical expertise serving precision, compliance, and industrial innovation.",
-    "learnMore": "Learn more",
-    "items": {
-      "cmm": {
-        "title": "Coordinate Measuring (CMM)",
-        "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
+    "dimensional": {
+      "category": "Dimensional Inspection",
+      "title": "Measure. Compare. Verify.",
+      "description": "Coordinate measuring to verify dimensions, geometric features, and component compliance with project requirements.",
+      "applications": {
+        "dimensions": "Dimensional verification",
+        "cad": "CAD vs. Part comparison",
+        "wear": "Wear analysis",
+        "gdt": "Geometric characteristics"
+      }
+    },
+    "optical": {
+      "category": "Optical Inspection",
+      "title": "Non-contact measurement.",
+      "description": "Optical inspection for features that cannot be adequately measured by tactile probing, enabling analysis of surfaces, fine details, and contact-sensitive materials.",
+      "applications": {
+        "nonContact": "Non-contact measurement",
+        "surface": "Surface inspection",
+        "fineFeatures": "Fine details"
       },
-      "reverse": {
-        "title": "Reverse Engineering",
-        "description": "CAD and STL model generation from physical parts using 3D scanning technologies and specialized software."
+      "exampleLabel": "Application",
+      "exampleTitle": "Inspection of fabrics and surfaces",
+      "exampleDescription": "Optical technology can be used to analyze details such as seams, threads, and surface features across various materials."
+    },
+    "xray": {
+      "category": "X-Ray & Computed Tomography",
+      "title": "See what cannot be seen.",
+      "description": "Non-destructive testing of internal structures and defects that cannot be identified visually or through conventional measurement methods.",
+      "applications": {
+        "cracks": "Internal cracks",
+        "voids": "Bubbles and voids",
+        "welding": "Weld seam defects",
+        "foreign": "Internal debris and foreign materials"
       },
-      "qcontrol": {
-        "title": "Quality Control",
-        "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
-      },
-      "prototyping": {
-        "title": "Prototyping",
-        "description": "Manufacturing parts using 3D printing technologies to validate the product before machining."
+      "principleLabel": "Inspection Principle",
+      "principle": "Image formation is based on material density and absorption differences, enabling visualization of internal structures without damaging the component."
+    },
+    "scanning": {
+      "category": "3D Scanning",
+      "title": "Transform physical geometry into digital data.",
+      "description": "Three-dimensional digitizing to capture component geometry, dimensional inspection, documentation, and data utilization in reverse engineering workflows.",
+      "tscan": "Portable laser scanning system for inspections performed both in the laboratory and directly at customer facilities.",
+      "atos": "Structured blue light digitizing for smaller parts and applications requiring high-density geometric acquisition."
+    },
+    "reverse": {
+      "category": "Reverse Engineering",
+      "title": "From physical part to CAD model.",
+      "description": "We use 3D scan data as the foundation to reconstruct component geometry and generate digital models for engineering applications.",
+      "steps": {
+        "part": "Physical Part",
+        "scan": "3D Acquisition",
+        "cad": "CAD Model"
+      }
+    },
+    "selection": {
+      "eyebrow": "Application Guide",
+      "title": "Which technology meets your requirements?",
+      "description": "The choice of measurement method depends on part characteristics, inspection objectives, and the required precision level.",
+      "items": {
+        "dimensions": {
+          "title": "Need to verify dimensions?",
+          "description": "Dimensional and geometric inspection using coordinate measuring machines."
+        },
+        "nonContact": {
+          "title": "Part cannot be touched?",
+          "description": "Optical metrology allows feature analysis without physical contact."
+        },
+        "internal": {
+          "title": "Need to inspect internal structures?",
+          "description": "X-Ray and CT scanning investigate internal geometries and flaws."
+        },
+        "scanning": {
+          "title": "Need to digitize full geometry?",
+          "description": "3D scanning captures physical surfaces for inspection and engineering."
+        },
+        "cad": {
+          "title": "Need a CAD model?",
+          "description": "Reverse engineering converts measurement point clouds into clean digital geometry."
+        }
       }
     }
-  },
-  "whyUs": {
-    "subtitle": "Our Advantage",
-    "mainTitle": "Why the SENAI / ZEISS Center of Excellence?",
-    "description": "We combine state-of-the-art German ZEISS technology with SENAI's technical excellence to deliver complete metrological solutions and meet demanding industrial needs.",
-    "highlights": {
-      "exclusivity": {
-        "value": "1 of 5",
-        "label": "Labs in the World",
-        "detail": "Cutting-edge infrastructure with globally unique analytical and technical capabilities."
-      },
-      "accessibility": {
-        "value": "Broad Access",
-        "label": "For All Industries",
-        "detail": "World-class technology accessible to small, medium, and large-scale industrial companies."
-      },
-      "standard": {
-        "value": "100%",
-        "label": "ZEISS Standard",
-        "detail": "Internationally certified and benchmarked measuring machines and software."
-      },
-      "accuracy": {
-        "value": "GD&T",
-        "label": "High Precision",
-        "detail": "Micrometric geometric inspection with certified metrological traceability."
-      }
-    }
-  },
-  "cta": {
-    "title": "Bring German precision and compliance to your industry.",
-    "description": "Rely on FAI reports, reverse engineering, and international GD&T inspection at SENAI/ZEISS facilities.",
-    "requestQuote": "Request Technical Quote",
-    "exploreServices": "View Services Catalog"
   },
   "footer": {
     "brandDesc": "Innovation, dimensional compliance, and metrological excellence powered by German ZEISS technology and SENAI technical support.",

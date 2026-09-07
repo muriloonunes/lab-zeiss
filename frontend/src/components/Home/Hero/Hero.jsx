@@ -21,16 +21,16 @@ export function HeroSection() {
             <div className="hero-container">
                 <div className="hero-content">
                     <h1 className="hero-title">
-                        <span className="title-sub">{t('hero.welcome')}</span>
-                        <span className="title-main">{t('hero.title')}</span>
+                        <span className="title-sub">{t('home.hero.welcome')}</span>
+                        <span className="title-main">{t('home.hero.title')}</span>
                     </h1>
                     <p className="hero-description">
-                        {t('hero.description')}
+                        {t('home.hero.description')}
                     </p>
                     <div className="hero-actions">
                         <QuoteButton />
                         <button type="button" className="btn-mais" onClick={handleScrollToServices}>
-                            <span>{t('hero.exploreServices')}</span>
+                            <span>{t('home.hero.exploreServices')}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                  fill="none"
                                  stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"

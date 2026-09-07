@@ -5,67 +5,213 @@
     "contact": "Contato",
     "requestQuote": "Solicitar Orçamento"
   },
-  "hero": {
-    "welcome": "Bem-vindo ao",
-    "title": "Centro de Excelência em Metrologia SENAI/ZEISS",
-    "description": "Engenharia reversa, digitalização 3D e controle de qualidade com tecnologia ZEISS.",
-    "exploreServices": "Conheça os serviços"
+  "home": {
+    "hero": {
+      "welcome": "Bem-vindo ao",
+      "title": "Centro de Excelência em Metrologia SENAI/ZEISS",
+      "description": "Engenharia reversa, digitalização 3D e controle de qualidade com tecnologia ZEISS.",
+      "exploreServices": "Conheça os serviços"
+    },
+    "services": {
+      "subtitle": "Nossos serviços",
+      "mainTitle": "Tecnologia ZEISS e expertise técnica do SENAI a serviço da precisão, conformidade e inovação industrial.",
+      "learnMore": "Conhecer detalhes",
+      "items": {
+        "cmm": {
+          "title": "Medição por Coordenadas (CMM)",
+          "description": "Inspeção dimensional geométrica e toleranciamento GD&T em máquinas de medir por coordenadas ZEISS."
+        },
+        "reverse": {
+          "title": "Engenharia Reversa",
+          "description": "Criação de modelos CAD e STL a partir de peças físicas, utilizando tecnologias de digitalização 3D e softwares especializados."
+        },
+        "qcontrol": {
+          "title": "Controle de Qualidade",
+          "description": "Inspeção seriada, relatório FAI e análise de desvios dimensionais por mapa de cores."
+        },
+        "prototyping": {
+          "title": "Prototipagem",
+          "description": "Fabricação de peças utilizando tecnologias de impressão 3D para validação do produto antes da usinagem."
+        }
+      }
+    },
+    "whyUs": {
+      "subtitle": "Nosso diferencial",
+      "mainTitle": "Por que o CEM SENAI / ZEISS?",
+      "description": "Unimos a tecnlogia alemã de ponta da Zeiss à excelência técnica do SENAI para entregar soluções metrológicas completas e atender às necessidades da indústria.",
+      "highlights": {
+        "exclusivity": {
+          "value": "1 de 5",
+          "label": "Laboratórios no mundo",
+          "detail": "Infraestrutura com tecnologia de ponta e capacidade exclusiva globalmente."
+        },
+        "accessibility": {
+          "value": "Amplo Acesso",
+          "label": "Para Todas as Indústrias",
+          "detail": "Tecnologia de padrão global acessível a indústrias de pequeno, médio e grande porte."
+        },
+        "standard": {
+          "value": "100%",
+          "label": "Padrão ZEISS",
+          "detail": "Equipamentos e softwares homologados internacionalmente."
+        },
+        "accuracy": {
+          "value": "GD&T",
+          "label": "Alta Exatidão",
+          "detail": "Inspeção geométrica micrométrica com rastreabilidade metrológica."
+        }
+      }
+    },
+    "infrastructure": {
+      "subtitle": "Nossa Infraestrutura",
+      "mainTitle": "Tecnologia ZEISS em 140m² de laboratório",
+      "categories": {
+        "cmmXray": {
+          "title": "Sistemas CMM & Raio-X",
+          "items": {
+            "prismo": {
+              "name": "ZEISS PRISMO",
+              "desc": "Máxima exatidão e velocidade para geometrias de altíssima exigência."
+            },
+            "duramax": {
+              "name": "ZEISS DuraMax (500)",
+              "desc": "Medição por coordenadas robusta em ambiente fabril e laboratorial."
+            },
+            "oInspect": {
+              "name": "ZEISS O-INSPECT",
+              "desc": "Multisensor integrando medição óptica e apalpamento por contato."
+            },
+            "bosello": {
+              "name": "ZEISS BOSELLO MAX",
+              "desc": "Inspeção não destrutiva (NDT) e análise de integridade interna por Raio-X."
+            }
+          }
+        },
+        "optical3d": {
+          "title": "Digitalização 3D & Óptica",
+          "items": {
+            "atos": {
+              "name": "ATOS Q",
+              "desc": "Sensor óptico 3D de precisão com tecnologia de luz azul estruturada (Blue Light)."
+            },
+            "tscan": {
+              "name": "T-SCAN Hawk 2",
+              "desc": "Scanner a laser portátil para inspeções em campo e engenharia reversa flexível."
+            }
+          }
+        },
+        "software": {
+          "title": "Softwares Homologados",
+          "items": {
+            "calypso": {
+              "name": "ZEISS CALYPSO",
+              "desc": "Programação e GD&T"
+            },
+            "reverseEngineering": {
+              "name": "ZEISS Reverse Engineering",
+              "desc": "Modelagem CAD/Superfícies"
+            },
+            "piweb": {
+              "name": "ZEISS PiWeb",
+              "desc": "Gestão e Análise Estatística"
+            },
+            "inspect": {
+              "name": "ZEISS INSPECT",
+              "desc": "Inspeção de Malhas 3D"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Leve a precisão e a conformidade alemã para a sua indústria.",
+      "description": "Conte com relatórios FAI, engenharia reversa e inspeção GD&T de padrão internacional realizados em infraestrutura SENAI/ZEISS.",
+      "requestQuote": "Solicitar Orçamento Técnico",
+      "exploreServices": "Ver Catálogo de Serviços"
+    }
   },
   "services": {
-    "subtitle": "Nossos serviços",
-    "mainTitle": "Tecnologia ZEISS e expertise técnica do SENAI a serviço da precisão, conformidade e inovação industrial.",
-    "learnMore": "Conhecer detalhes",
-    "items": {
-      "cmm": {
-        "title": "Medição por Coordenadas (CMM)",
-        "description": "Inspeção dimensional geométrica e toleranciamento GD&T em máquinas de medir por coordenadas ZEISS."
+    "dimensional": {
+      "category": "Inspeção dimensional",
+      "title": "Medir. Comparar. Comprovar.",
+      "description": "Medição por coordenadas para verificar dimensões, características geométricas e conformidade da peça com os requisitos definidos em projeto.",
+      "applications": {
+        "dimensions": "Verificação dimensional",
+        "cad": "Comparação CAD × peça",
+        "wear": "Análise de desgaste",
+        "gdt": "Características geométricas"
+      }
+    },
+    "optical": {
+      "category": "Inspeção óptica",
+      "title": "Medição sem contato.",
+      "description": "Inspeção óptica para características que não podem ser medidas adequadamente por apalpação, permitindo analisar superfícies, pequenos detalhes e materiais sensíveis ao contato.",
+      "applications": {
+        "nonContact": "Medição sem contato",
+        "surface": "Inspeção de superfícies",
+        "fineFeatures": "Pequenos detalhes"
       },
-      "reverse": {
-        "title": "Engenharia Reversa",
-        "description": "Criação de modelos CAD e STL a partir de peças físicas, utilizando tecnologias de digitalização 3D e softwares especializados."
+      "exampleLabel": "Aplicação",
+      "exampleTitle": "Inspeção de tecidos e superfícies",
+      "exampleDescription": "A tecnologia óptica pode ser utilizada para analisar detalhes como costuras, fios e características visíveis na superfície de diferentes materiais."
+    },
+    "xray": {
+      "category": "Raio-X e tomografia",
+      "title": "Veja o que não pode ser visto.",
+      "description": "Inspeção não destrutiva de estruturas internas e defeitos que não podem ser identificados visualmente ou por métodos convencionais de medição.",
+      "applications": {
+        "cracks": "Trincas internas",
+        "voids": "Bolhas e vazios",
+        "welding": "Defeitos em soldas",
+        "foreign": "Materiais e detritos internos"
       },
-      "qcontrol": {
-        "title": "Controle de Qualidade",
-        "description": "Inspeção seriada, relatório FAI e análise de desvios dimensionais por mapa de cores."
-      },
-      "prototyping": {
-        "title": "Prototipagem",
-        "description": "Fabricação de peças utilizando tecnologias de impressão 3D para validação do produto antes da usinagem."
+      "principleLabel": "Princípio de inspeção",
+      "principle": "A formação da imagem é baseada na diferença de densidade e absorção dos materiais, permitindo visualizar estruturas internas sem danificar a peça."
+    },
+    "scanning": {
+      "category": "Digitalização 3D",
+      "title": "Transforme a geometria física em dados digitais.",
+      "description": "Digitalização tridimensional para captura da geometria de componentes, inspeção dimensional, documentação e utilização dos dados em processos de engenharia reversa.",
+      "tscan": "Sistema portátil de digitalização a laser para inspeções realizadas tanto no laboratório quanto diretamente no local do cliente.",
+      "atos": "Digitalização por luz estruturada para peças menores e aplicações que exigem uma aquisição geométrica mais detalhada."
+    },
+    "reverse": {
+      "category": "Engenharia reversa",
+      "title": "Da peça física ao modelo CAD.",
+      "description": "Utilizamos dados de digitalização tridimensional como base para reconstruir a geometria de componentes e gerar modelos digitais para aplicações de engenharia.",
+      "steps": {
+        "part": "Peça física",
+        "scan": "Aquisição 3D",
+        "cad": "Modelo CAD"
+      }
+    },
+    "selection": {
+      "eyebrow": "Aplicação",
+      "title": "Qual tecnologia atende à sua necessidade?",
+      "description": "A escolha do método de medição depende das características da peça, do objetivo da inspeção e do nível de precisão necessário.",
+      "items": {
+        "dimensions": {
+          "title": "Precisa verificar dimensões?",
+          "description": "Inspeção dimensional e geométrica por máquinas de medir por coordenadas."
+        },
+        "nonContact": {
+          "title": "A peça não pode ser tocada?",
+          "description": "A medição óptica permite analisar características sem contato físico."
+        },
+        "internal": {
+          "title": "Precisa enxergar dentro da peça?",
+          "description": "Raio-X e tomografia permitem investigar estruturas e defeitos internos."
+        },
+        "scanning": {
+          "title": "Precisa digitalizar a geometria?",
+          "description": "3D scanning captura a geometria física para inspeção e engenharia."
+        },
+        "cad": {
+          "title": "Precisa de um modelo CAD?",
+          "description": "A engenharia reversa transforma dados de medição em geometria digital."
+        }
       }
     }
-  },
-  "whyUs": {
-    "subtitle": "Nosso diferencial",
-    "mainTitle": "Por que o CEM SENAI / ZEISS?",
-    "description": "Unimos a tecnlogia alemã de ponta da Zeiss à excelência técnica do SENAI para entregar soluções metrológicas completas e atender às necessidades da indústria.",
-    "highlights": {
-      "exclusivity": {
-        "value": "1 de 5",
-        "label": "Laboratórios no mundo",
-        "detail": "Infraestrutura com tecnologia de ponta e capacidade exclusiva globalmente."
-      },
-      "accessibility": {
-        "value": "Amplo Acesso",
-        "label": "Para Todas as Indústrias",
-        "detail": "Tecnologia de padrão global acessível a indústrias de pequeno, médio e grande porte."
-      },
-      "standard": {
-        "value": "100%",
-        "label": "Padrão ZEISS",
-        "detail": "Equipamentos e softwares homologados internacionalmente."
-      },
-      "accuracy": {
-        "value": "GD&T",
-        "label": "Alta Exatidão",
-        "detail": "Inspeção geométrica micrométrica com rastreabilidade metrológica."
-      }
-    }
-  },
-  "cta": {
-    "title": "Leve a precisão e a conformidade alemã para a sua indústria.",
-    "description": "Conte com relatórios FAI, engenharia reversa e inspeção GD&T de padrão internacional realizados em infraestrutura SENAI/ZEISS.",
-    "requestQuote": "Solicitar Orçamento Técnico",
-    "exploreServices": "Ver Catálogo de Serviços"
   },
   "footer": {
     "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",

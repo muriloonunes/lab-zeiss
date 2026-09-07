@@ -7,23 +7,23 @@ export function Services() {
     const services = [
         {
             id: 'cmm',
-            title: t('services.items.cmm.title'),
-            description: t('services.items.cmm.description'),
+            title: t('home.services.items.cmm.title'),
+            description: t('home.services.items.cmm.description'),
         },
         {
             id: 'reverse',
-            title: t('services.items.reverse.title'),
-            description: t('services.items.reverse.description'),
+            title: t('home.services.items.reverse.title'),
+            description: t('home.services.items.reverse.description'),
         },
         {
             id: 'q-control',
-            title: t('services.items.qcontrol.title'),
-            description: t('services.items.qcontrol.description'),
+            title: t('home.services.items.qcontrol.title'),
+            description: t('home.services.items.qcontrol.description'),
         },
         {
             id: 'prototyping',
-            title: t('services.items.prototyping.title'),
-            description: t('services.items.prototyping.description'),
+            title: t('home.services.items.prototyping.title'),
+            description: t('home.services.items.prototyping.description'),
         },
     ];
 
@@ -33,9 +33,9 @@ export function Services() {
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
-                        <span className="section-sub">{t('services.subtitle')}</span>
+                        <span className="section-sub">{t('home.services.subtitle')}</span>
                     </div>
-                    <h2 className="section-title">{t('services.mainTitle')}</h2>
+                    <h2 className="section-title">{t('home.services.mainTitle')}</h2>
                 </div>
 
                 <div className="services-grid">
@@ -50,7 +50,7 @@ export function Services() {
 
                             <div className="card-bottom">
                                 <Link to="/servicos" className="service-link">
-                                    <span>{t('services.learnMore')}</span>
+                                    <span>{t('home.services.learnMore')}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
