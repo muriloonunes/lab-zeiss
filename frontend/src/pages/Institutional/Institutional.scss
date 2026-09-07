@@ -10,7 +10,6 @@
   color: vars.$color-text-dark;
 }
 
-/* --- BLOBS DE AMBIÊNCIA (SÓBRIOS E DISCRETOS) --- */
 .inst-blob-container {
   position: absolute;
   inset: 0;
@@ -54,7 +53,6 @@
   background: radial-gradient(circle, #0284c7 0%, #141e8c 100%);
 }
 
-/* --- ESTRUTURA GERAL DE CONTAINER E SEÇÃO --- */
 .inst-container {
   position: relative;
   z-index: 1;
@@ -69,7 +67,6 @@
   padding: clamp(3.5rem, 5vw, 5.5rem) 0;
 }
 
-/* --- CABEÇALHOS DE SEÇÃO (PADRÃO HOME - SÓBRIO) --- */
 .inst-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -124,7 +121,6 @@
   }
 }
 
-/* --- CARD DE VIDRO FROSTED (PADRÃO HOME) --- */
 .glass-panel {
   position: relative;
   overflow: hidden;
@@ -156,7 +152,6 @@
   }
 }
 
-/* --- BOTÃO GLASS SECUNDÁRIO (.btn-mais - PADRÃO HOME) --- */
 .btn-mais {
   position: relative;
   display: inline-flex;
@@ -219,9 +214,6 @@
   }
 }
 
-/* ========================================================
-   1. HERO INSTITUCIONAL
-   ======================================================== */
 .inst-hero-section {
   padding: clamp(2.5rem, 4vw, 4.5rem) 0 clamp(3.5rem, 5vw, 5rem);
 
@@ -238,13 +230,12 @@
   }
 
   .inst-hero-content {
-    max-width: 720px;
+    max-width: 930px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  /* Gradiente marcante apenas no título principal do Hero */
   .inst-hero-title {
     font-family: vars.$font-headline;
     font-size: clamp(2.1rem, 3.8vw, 3.2rem);

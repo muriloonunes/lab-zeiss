@@ -5,8 +5,10 @@ import {Infrastructure} from "../../components/Home/Infrastructure/Infrastructur
 import {About} from "../../components/Home/About/About.jsx";
 import {Areas} from "../../components/Home/Areas/Areas.jsx";
 import {CTA} from "../../components/Home/CTA/CTA.jsx";
+import {useScrollToTop} from "../../hooks/useScrollToTop.ts";
 
 export function Home() {
+    useScrollToTop();
     return (
         <div className="home-wrapper">
             <HeroSection/>
