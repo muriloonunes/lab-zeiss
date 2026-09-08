@@ -22,7 +22,7 @@ export function Navbar() {
     const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
-    const {t} = useTranslation()
+    const {t} = useTranslation();
 
     return (
         <header className={`navbar${isScrolled ? ' scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`}>
@@ -33,9 +33,15 @@ export function Navbar() {
                         <img
                             src="/images/cem-logo.png"
                             alt="Centro de Excelência em Metrologia SENAI ZEISS"
-                            width="180"
-                            height="45"
                             className="brand-logo"
+                        />
+                        <span className="brand-divider" aria-hidden="true"></span>
+                        <img
+                            src="/images/zeiss-logo-coop.png"
+                            alt="Cooperação Tecnológica ZEISS"
+                            width="123"
+                            height="65"
+                            className="brand-logo-coop"
                         />
                     </Link>
                 </div>

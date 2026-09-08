@@ -6,8 +6,8 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1.15rem clamp(1.5rem, 1vw, 5rem);
-  transition: all 0.5s vars.$ease-bounce;
+  padding: 0.85rem clamp(1.25rem, 2.5vw, 4.5rem);
+  transition: all 0.4s vars.$ease-bounce;
   background: vars.$nav-glass-bg;
   backdrop-filter: blur(vars.$nav-glass-blur);
   -webkit-backdrop-filter: blur(vars.$nav-glass-blur);
@@ -15,26 +15,50 @@
   box-shadow: vars.$nav-glass-shadow, inset 0 -1px 0 vars.$nav-glass-inset-bottom;
 
   .navbar-container {
+    max-width: 1520px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    transition: transform 0.45s vars.$ease-bounce;
+    transition: transform 0.4s vars.$ease-bounce;
   }
 
   .navbar-logo {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 
     .logo-link {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      gap: clamp(0.75rem, 1.2vw, 1.25rem);
       text-decoration: none;
-      transition: transform 0.25s ease;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.92;
+      }
     }
 
     .brand-logo {
+      display: block;
+      height: 34px;
+      width: auto;
+      object-fit: contain;
+      transition: all 0.35s vars.$ease-bounce;
+    }
+
+    .brand-divider {
+      display: inline-block;
+      width: 1px;
+      height: 28px;
+      background: rgba(15, 23, 42, 0.18);
+      flex-shrink: 0;
+      transition: height 0.35s vars.$ease-bounce;
+    }
+
+    .brand-logo-coop {
       display: block;
       height: 38px;
       width: auto;
@@ -59,14 +83,14 @@
   .navbar-nav-group {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: clamp(1.25rem, 1.8vw, 2.25rem);
   }
 
   .nav-links {
     ul {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: clamp(0.9rem, 1.3vw, 1.75rem);
       list-style: none;
       margin: 0;
       padding: 0;
@@ -75,12 +99,13 @@
     a {
       text-decoration: none;
       color: #334155;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       transition: all 0.25s ease;
       position: relative;
       padding: 0.4rem 0;
+      white-space: nowrap;
 
       &::before {
         content: '';
@@ -99,6 +124,7 @@
 
       &:hover {
         color: vars.$color-primary;
+
         &::before {
           transform: scaleX(1);
           transform-origin: left;
@@ -107,9 +133,11 @@
 
       &.active {
         color: vars.$color-primary;
+
         &::before {
           display: none;
         }
+
         &::after {
           content: '';
           position: absolute;
@@ -131,8 +159,8 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     padding: 8px;
     background: vars.$btn-glass-bg;
     backdrop-filter: blur(vars.$btn-glass-blur);
@@ -170,7 +198,7 @@
     visibility: hidden;
     flex-direction: column;
     gap: 1.25rem;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border-bottom: 1px solid vars.$nav-border-scrolled;
@@ -209,6 +237,7 @@
 
     .mobile-actions {
       padding-bottom: 0.5rem;
+
       .mobile-btn-full {
         width: 100%;
         justify-content: center;
@@ -233,53 +262,140 @@
       .hamburger-bar:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
       }
+
       .hamburger-bar:nth-child(2) {
         opacity: 0;
         transform: scaleX(0);
       }
+
       .hamburger-bar:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
       }
     }
   }
 
-  &.scrolled {
-    padding: 0.75rem 2.5rem;
-    background: vars.$nav-glass-scrolled-bg;
-    border-bottom: 1px solid vars.$nav-border-scrolled;
-    backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
-    -webkit-backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
-    box-shadow: vars.$nav-glass-scrolled-shadow;
+  @media (min-width: 1181px) {
+    &.scrolled {
+      padding: 0.55rem clamp(1.25rem, 2.5vw, 4.5rem);
+      background: vars.$nav-glass-scrolled-bg;
+      border-bottom: 1px solid vars.$nav-border-scrolled;
+      backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
+      -webkit-backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
+      box-shadow: vars.$nav-glass-scrolled-shadow;
+
+      .brand-logo {
+        height: 30px;
+      }
+
+      .brand-logo-coop {
+        height: 33px;
+      }
+
+      .brand-divider {
+        height: 22px;
+      }
+
+      .navbar-container {
+        transform: scale(0.99);
+      }
+    }
+  }
+
+  @media (max-width: 1180px) {
+    padding: 0.75rem 1.25rem;
+    .desktop-only {
+      display: none !important;
+    }
+    .mobile-only {
+      display: flex !important;
+    }
+    .mobile-drawer {
+      display: flex;
+    }
 
     .brand-logo {
-      height: 32px;
+      height: 30px;
     }
 
-    .navbar-container {
-      transform: scale(0.98);
+    .brand-logo-coop {
+      height: 34px;
     }
-  }
 
-  @media (max-width: 1050px) {
-    padding: 0.85rem 1.5rem;
-    .desktop-only { display: none !important; }
-    .mobile-only { display: flex !important; }
-    .mobile-drawer { display: flex; }
-    &.scrolled { padding: 0.65rem 1.5rem; }
-  }
-
-  @media (max-width: 520px) {
-    padding: 0.75rem 1.2rem;
-    .brand-logo { height: 30px; max-width: 200px; }
-    .btn-hamburger { width: 38px; height: 38px; }
-    &.scrolled {
-      padding: 0.6rem 1.2rem;
-      .brand-logo { height: 26px; }
+    .brand-divider {
+      height: 22px;
     }
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 640px) {
     padding: 0.65rem 0.85rem;
-    .brand-logo { height: 25px; max-width: 160px; }
+
+    .navbar-logo {
+      .logo-link {
+        gap: 0.5rem;
+      }
+
+      .brand-logo {
+        height: 15px;
+      }
+
+      .brand-logo-coop {
+        height: 28px;
+      }
+
+      .brand-divider {
+        height: 18px;
+      }
+    }
+
+    .mobile-controls {
+      gap: 0.45rem;
+    }
+
+    .btn-hamburger {
+      width: 40px;
+      height: 40px;
+      padding: 7px;
+      border-radius: 10px;
+
+      .hamburger-bar {
+        width: 18px;
+      }
+    }
+  }
+
+  @media (max-width: 380px) {
+    padding: 0.5rem 0.55rem;
+
+    .navbar-logo {
+      .logo-link {
+        gap: 0.35rem;
+      }
+
+      .brand-logo {
+        height: 14px;
+      }
+
+      .brand-logo-coop {
+        height: 23px;
+      }
+
+      .brand-divider {
+        height: 14px;
+      }
+    }
+
+    .mobile-controls {
+      gap: 0.3rem;
+    }
+
+    .btn-hamburger {
+      width: 34px;
+      height: 34px;
+      padding: 6px;
+
+      .hamburger-bar {
+        width: 16px;
+      }
+    }
   }
 }
