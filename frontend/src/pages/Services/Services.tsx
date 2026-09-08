@@ -3,43 +3,12 @@ import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {QuoteButton} from '../../components/QuoteButton/QuoteButton';
 import './Services.scss';
+import {useScrollToTop} from "../../hooks/useScrollToTop";
 
 export function Services() {
+    useScrollToTop();
     const {t} = useTranslation();
     const navigate = useNavigate();
-
-    const machinesList = [
-        {
-            name: "ZEISS PRISMO",
-            type: "CMM de Altíssima Exatidão",
-            spec: "Referência absoluta para tolerâncias micrométricas críticas"
-        },
-        {
-            name: "ZEISS DuraMax (500)",
-            type: "CMM de Chão de Fábrica e Lab",
-            spec: "Inspeção dimensional por coordenadas ágil e estável"
-        },
-        {
-            name: "ZEISS O-INSPECT",
-            type: "Sistema Multisensor Híbrido",
-            spec: "Integração óptica sem contato e apalpamento no mesmo ciclo"
-        },
-        {
-            name: "ZEISS BOSELLO MAX",
-            type: "Inspeção NDT por Raio-X",
-            spec: "Análise não destrutiva de descontinuidades e vazios internos"
-        },
-        {
-            name: "ZEISS ATOS Q",
-            type: "Digitalizador Óptico 3D",
-            spec: "Escaneamento por luz azul estruturada e malhas de alta densidade"
-        },
-        {
-            name: "ZEISS T-SCAN Hawk 2",
-            type: "Scanner a Laser Portátil",
-            spec: "Flexibilidade metrológica e aquisição dimensional de campo"
-        },
-    ];
 
     return (
         <div className="services-page">
@@ -54,13 +23,10 @@ export function Services() {
                     <div className="services-hero-content">
                         <div className="services-eyebrow">
                             <span className="services-eyebrow-line"></span>
-                            <span className="services-eyebrow-text">Nossos Serviços</span>
+                            <span className="services-eyebrow-text">{t('services.hero.eyebrow')}</span>
                         </div>
-                        <h1 className="services-hero-title">Precisão para cada desafio industrial. </h1>
-                        <p className="services-hero-description">
-                            Soluções de inspeção dimensional, medição óptica, tomografia, digitalização 3D e engenharia
-                            reversa realizadas com tecnologia ZEISS e expertise técnica SENAI.
-                        </p>
+                        <h1 className="services-hero-title">{t('services.hero.title')}</h1>
+                        <p className="services-hero-description">{t('services.hero.description')}</p>
                     </div>
                 </div>
             </section>
@@ -75,22 +41,22 @@ export function Services() {
                             <p className="service-paragraph">{t('services.dimensional.description')}</p>
 
                             <div className="service-applications-grid">
-                                <div className="app-item"><span className="app-dot"></span>{t('services.dimensional.applications.dimensions')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.dimensional.applications.cad')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.dimensional.applications.wear')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.dimensional.applications.gdt')}</div>
-                            </div>
-
-                            <div className="service-meta-footer">
-                                <span className="meta-label">Equipamentos:</span>
-                                <strong className="meta-value">ZEISS PRISMO • ZEISS DuraMax (500)</strong>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.dimensional.applications.dimensions')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.dimensional.applications.cad')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.dimensional.applications.wear')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.dimensional.applications.gdt')}</div>
                             </div>
                         </div>
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
                                 <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/Lab-DuraMax.jpg" alt="ZEISS DuraMax e PRISMO" className="service-img" />
+                                    <img src="/images/DuraMax2.jpg" alt="ZEISS DuraMax e PRISMO"
+                                         className="service-img"/>
                                     <div className="service-img-overlay"></div>
                                 </div>
                             </div>
@@ -109,27 +75,19 @@ export function Services() {
                             <p className="service-paragraph">{t('services.optical.description')}</p>
 
                             <div className="service-applications-grid">
-                                <div className="app-item"><span className="app-dot"></span>{t('services.optical.applications.nonContact')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.optical.applications.surface')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.optical.applications.fineFeatures')}</div>
-                            </div>
-
-                            <div className="service-note-box glass-panel">
-                                <span className="note-label">{t('services.optical.exampleLabel')}</span>
-                                <strong className="note-title">{t('services.optical.exampleTitle')}</strong>
-                                <p className="note-desc">{t('services.optical.exampleDescription')}</p>
-                            </div>
-
-                            <div className="service-meta-footer">
-                                <span className="meta-label">Equipamento:</span>
-                                <strong className="meta-value">ZEISS O-INSPECT</strong>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.optical.applications.nonContact')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.optical.applications.surface')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.optical.applications.fineFeatures')}</div>
                             </div>
                         </div>
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
                                 <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/Lab-OInspect.jpg" alt="ZEISS O-INSPECT" className="service-img" />
+                                    <img src="/images/OInspect1.jpg" alt="ZEISS O-INSPECT" className="service-img"/>
                                     <div className="service-img-overlay"></div>
                                 </div>
                             </div>
@@ -148,27 +106,21 @@ export function Services() {
                             <p className="service-paragraph">{t('services.xray.description')}</p>
 
                             <div className="service-applications-grid">
-                                <div className="app-item"><span className="app-dot"></span>{t('services.xray.applications.cracks')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.xray.applications.voids')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.xray.applications.welding')}</div>
-                                <div className="app-item"><span className="app-dot"></span>{t('services.xray.applications.foreign')}</div>
-                            </div>
-
-                            <div className="service-note-box glass-panel">
-                                <span className="note-label">{t('services.xray.principleLabel')}</span>
-                                <p className="note-desc">{t('services.xray.principle')}</p>
-                            </div>
-
-                            <div className="service-meta-footer">
-                                <span className="meta-label">Equipamento:</span>
-                                <strong className="meta-value">ZEISS BOSELLO MAX</strong>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.xray.applications.cracks')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.xray.applications.voids')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.xray.applications.welding')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.xray.applications.foreign')}</div>
                             </div>
                         </div>
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
                                 <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/Lab-Bosello.jpg" alt="ZEISS BOSELLO MAX" className="service-img" />
+                                    <img src="/images/Bosello3.jpg" alt="ZEISS BOSELLO MAX" className="service-img"/>
                                     <div className="service-img-overlay"></div>
                                 </div>
                             </div>
@@ -201,7 +153,8 @@ export function Services() {
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
                                 <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/Lab-Scan3D.jpg" alt="Digitalização 3D ZEISS" className="service-img" />
+                                    <img src="/images/AtosQ1.jpg" alt="Digitalização 3D ZEISS"
+                                         className="service-img"/>
                                     <div className="service-img-overlay"></div>
                                 </div>
                             </div>
@@ -225,14 +178,22 @@ export function Services() {
                             <h3 className="step-title">{t('services.reverse.steps.part')}</h3>
                         </div>
                         <div className="workflow-arrow-divider" aria-hidden="true">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
                         </div>
                         <div className="workflow-step-card glass-panel">
                             <span className="step-badge">Etapa 02</span>
                             <h3 className="step-title">{t('services.reverse.steps.scan')}</h3>
                         </div>
                         <div className="workflow-arrow-divider" aria-hidden="true">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
                         </div>
                         <div className="workflow-step-card glass-panel">
                             <span className="step-badge">Etapa 03</span>

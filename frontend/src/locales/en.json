@@ -131,6 +131,11 @@
     }
   },
   "services": {
+    "hero": {
+      "eyebrow": "Our Services",
+      "title": "Precision for every industrial challenge.",
+      "description": "Dimensional inspection, optical measurement, tomography, 3D scanning, and reverse engineering solutions delivered using ZEISS technology and SENAI technical expertise."
+    },
     "dimensional": {
       "category": "Dimensional Inspection",
       "title": "Measure. Compare. Verify.",
@@ -150,10 +155,7 @@
         "nonContact": "Non-contact measurement",
         "surface": "Surface inspection",
         "fineFeatures": "Fine details"
-      },
-      "exampleLabel": "Application",
-      "exampleTitle": "Inspection of fabrics and surfaces",
-      "exampleDescription": "Optical technology can be used to analyze details such as seams, threads, and surface features across various materials."
+      }
     },
     "xray": {
       "category": "X-Ray & Computed Tomography",

@@ -131,10 +131,15 @@
     }
   },
   "services": {
+    "hero": {
+      "eyebrow": "Nossos Serviços",
+      "title": "Precisão para cada desafio industrial.",
+      "description": "Soluções de inspeção dimensional, medição óptica, tomografia, digitalização 3D e engenharia reversa realizadas com tecnologia ZEISS e expertise técnica SENAI."
+    },
     "dimensional": {
       "category": "Inspeção dimensional",
       "title": "Medir. Comparar. Comprovar.",
-      "description": "Medição por coordenadas para verificar dimensões, características geométricas e conformidade da peça com os requisitos definidos em projeto.",
+      "description": "Com a ZEISS DuraMax, fazemos medição por coordenadas para verificar dimensões, características geométricas e conformidade da peça com os requisitos definidos em projetos com tolerância acima de 0,02mm. Precisa de uma tolerância ainda mais rigorosa? A ZEISS PRISMO é a solução para geometrias de altíssima exigência.",
       "applications": {
         "dimensions": "Verificação dimensional",
         "cad": "Comparação CAD × peça",
@@ -145,28 +150,23 @@
     "optical": {
       "category": "Inspeção óptica",
       "title": "Medição sem contato.",
-      "description": "Inspeção óptica para características que não podem ser medidas adequadamente por apalpação, permitindo analisar superfícies, pequenos detalhes e materiais sensíveis ao contato.",
+      "description": "Usamos a ZEISS O-Inspect para inspeção óptica em características que não podem ser medidas adequadamente por apalpação, permitindo analisar superfícies, pequenos detalhes e materiais sensíveis ao contato. Ela conta também com o sensor DotScan, que permite a captura da topografia de peças que outros sensores não conseguem.",
       "applications": {
         "nonContact": "Medição sem contato",
         "surface": "Inspeção de superfícies",
         "fineFeatures": "Pequenos detalhes"
-      },
-      "exampleLabel": "Aplicação",
-      "exampleTitle": "Inspeção de tecidos e superfícies",
-      "exampleDescription": "A tecnologia óptica pode ser utilizada para analisar detalhes como costuras, fios e características visíveis na superfície de diferentes materiais."
+      }
     },
     "xray": {
       "category": "Raio-X e tomografia",
       "title": "Veja o que não pode ser visto.",
-      "description": "Inspeção não destrutiva de estruturas internas e defeitos que não podem ser identificados visualmente ou por métodos convencionais de medição.",
+      "description": "Nossa ZEISS Bosello faz inspeção não destrutiva de estruturas internas e defeitos que não podem ser identificados visualmente ou por métodos convencionais de medição. A visualização da imagem é feita com base na diferença de densidade dos materiais da peça.",
       "applications": {
         "cracks": "Trincas internas",
         "voids": "Bolhas e vazios",
         "welding": "Defeitos em soldas",
         "foreign": "Materiais e detritos internos"
-      },
-      "principleLabel": "Princípio de inspeção",
-      "principle": "A formação da imagem é baseada na diferença de densidade e absorção dos materiais, permitindo visualizar estruturas internas sem danificar a peça."
+      }
     },
     "scanning": {
       "category": "Digitalização 3D",

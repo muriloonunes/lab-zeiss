@@ -131,6 +131,11 @@
     }
   },
   "services": {
+    "hero": {
+      "eyebrow": "Unsere Dienstleistungen",
+      "title": "Präzision für jede industrielle Herausforderung.",
+      "description": "Lösungen für Maßprüfung, optische Messung, Tomografie, 3D-Scanning und Reverse Engineering – realisiert durch ZEISS-Technologie und die technische Expertise von SENAI."
+    },
     "dimensional": {
       "category": "Dimensionelle Messtechnik",
       "title": "Messen. Vergleichen. Nachweisen.",
@@ -150,10 +155,7 @@
         "nonContact": "Berührungslose Messung",
         "surface": "Oberflächenprüfung",
         "fineFeatures": "Feinstrukturen & Details"
-      },
-      "exampleLabel": "Anwendungsbeispiel",
-      "exampleTitle": "Prüfung von Textilien und Oberflächen",
-      "exampleDescription": "Optische Sensoren analysieren feinste Details wie Nähte, Gewebestrukturen und Oberflächendefekte verschiedenster Materialien."
+      }
     },
     "xray": {
       "category": "Röntgen & Computertomographie",

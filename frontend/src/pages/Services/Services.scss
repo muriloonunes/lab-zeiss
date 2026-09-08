@@ -206,7 +206,7 @@
     align-items: flex-start;
 
     .service-index-num {
-      font-family: monospace, system-ui;
+      font-family: vars.$font-headline;
       font-size: 1.4rem;
       font-weight: 900;
       color: vars.$color-primary;
@@ -241,30 +241,6 @@
 
       &:last-of-type {
         margin-bottom: 1.75rem;
-      }
-    }
-
-    .service-meta-footer {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(15, 23, 42, 0.08);
-
-      .meta-label {
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: vars.$color-text-muted;
-      }
-
-      .meta-value {
-        font-size: 0.88rem;
-        font-weight: 800;
-        color: vars.$color-text-dark;
       }
     }
   }
@@ -340,39 +316,6 @@
   }
 }
 
-.service-note-box {
-  padding: 1.25rem 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 1.75rem;
-  width: 100%;
-
-  .note-label {
-    display: block;
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: vars.$color-primary;
-    margin-bottom: 0.3rem;
-  }
-
-  .note-title {
-    display: block;
-    font-family: vars.$font-headline;
-    font-size: 1rem;
-    font-weight: 700;
-    color: vars.$color-text-dark;
-    margin-bottom: 0.25rem;
-  }
-
-  .note-desc {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: vars.$color-text-body;
-    margin: 0;
-  }
-}
-
 .scanning-equipments-list {
   display: flex;
   flex-direction: column;
@@ -413,7 +356,7 @@
 
     .service-index-num {
       display: block;
-      font-family: monospace, system-ui;
+      font-family: vars.$font-headline;
       font-size: 1.4rem;
       font-weight: 900;
       color: vars.$color-primary;
