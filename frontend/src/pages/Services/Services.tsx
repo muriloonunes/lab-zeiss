@@ -4,11 +4,17 @@ import {useTranslation} from 'react-i18next';
 import {QuoteButton} from '../../components/QuoteButton/QuoteButton';
 import './Services.scss';
 import {useScrollToTop} from "../../hooks/useScrollToTop";
+import {ImageCarousel} from "../../components/ImageCarousel/ImageCarousel";
 
 export function Services() {
     useScrollToTop();
     const {t} = useTranslation();
     const navigate = useNavigate();
+
+    const OInspectImages = [
+        {src: '/images/OInspect1.jpg', alt: 'OInspect'},
+        {src: '/images/OInspect2.jpg', alt: 'OInspect'},
+    ]
 
     return (
         <div className="services-page">
@@ -86,10 +92,7 @@ export function Services() {
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
-                                <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/OInspect1.jpg" alt="ZEISS O-INSPECT" className="service-img"/>
-                                    <div className="service-img-overlay"></div>
-                                </div>
+                                <ImageCarousel images={OInspectImages}/>
                             </div>
                         </div>
                     </div>

@@ -5,13 +5,12 @@ export function Areas() {
         {
             id: "food",
             name: "Alimentícia",
-            description: "Inspeção geométrica GD&T de componentes usinados, estamparia e conjuntos soldados.",
-            tag: "CMM & Escaneamento 3D"
+            description: "Mapa de desgaste de peças e inspeção de equipamentos de processamento e envase.",
         },
         {
             id: "automotive",
             name: "Automotivo & Autopeças",
-            description: "Inspeção geométrica GD&T de componentes usinados, estamparia e conjuntos soldados.",
+            description: "Engenharia reversa e prototipagem de novas peças de alta performance.",
         },
         {
             id: "aerospace",
