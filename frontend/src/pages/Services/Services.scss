@@ -254,12 +254,12 @@
       padding: 0.65rem;
       border-radius: 20px;
       width: 100%;
-      max-width: 440px;
+      max-width: 580px;
 
       .service-img-wrapper.portrait-3-4 {
         position: relative;
         width: 100%;
-        aspect-ratio: 3 / 4;
+        aspect-ratio: 16 / 10;
         height: auto;
         overflow: hidden;
         border-radius: 14px;
@@ -468,6 +468,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+
+    @media (min-width: 1680px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
 
     @media (max-width: 1024px) {
       grid-template-columns: repeat(2, 1fr);
