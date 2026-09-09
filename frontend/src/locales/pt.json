@@ -134,22 +134,22 @@
     "hero": {
       "eyebrow": "Nossos Serviços",
       "title": "Precisão para cada desafio industrial.",
-      "description": "Soluções de inspeção dimensional, medição óptica, tomografia, digitalização 3D e engenharia reversa realizadas com tecnologia ZEISS e expertise técnica SENAI."
+      "description": "Soluções de inspeção dimensional, metrologia óptica, tomografia, digitalização 3D e engenharia reversa realizadas com tecnologia ZEISS e expertise técnica SENAI."
     },
     "dimensional": {
-      "category": "Inspeção dimensional",
+      "category": "Inspeção dimensional por coordenadas",
       "title": "Medir. Comparar. Comprovar.",
-      "description": "Com a ZEISS DuraMax, fazemos medição por coordenadas para verificar dimensões, características geométricas e conformidade da peça com os requisitos definidos em projetos com tolerância acima de 0,02mm. Precisa de uma tolerância ainda mais rigorosa? A ZEISS PRISMO é a solução para geometrias de altíssima exigência.",
+      "description": "Usamos Máquinas de Medição por Coordenadas (CMM) para fazer inspeções por contato e avaliar dimensões lineares, formas e tolerâncias geométricas complexas. Com a ZEISS DuraMax, atendemos os requisitos definidos em projetos com tolerância acima de 0,02mm. Precisa de uma tolerância ainda mais rigorosa? A ZEISS PRISMO é a solução para geometrias de altíssima exigência.",
       "applications": {
-        "dimensions": "Verificação dimensional",
-        "cad": "Comparação CAD × peça",
+        "dimensions": "Verificação dimensional e linear",
+        "cad": "Comparação nominal vs. real (CAD × Peça)",
         "wear": "Análise de desgaste",
-        "gdt": "Características geométricas"
+        "gdt": "Análise de tolerâncias geométricas (GD&T)"
       }
     },
     "optical": {
-      "category": "Inspeção óptica",
-      "title": "Medição sem contato.",
+      "category": "Inspeção e metrologia óptica",
+      "title": "Medição sem contato de alta resolução.",
       "description": "Usamos a ZEISS O-Inspect para inspeção óptica em características que não podem ser medidas adequadamente por apalpação, permitindo analisar superfícies, pequenos detalhes e materiais sensíveis ao contato. Ela conta também com o sensor DotScan, que permite a captura da topografia de peças que outros sensores não conseguem.",
       "applications": {
         "nonContact": "Medição sem contato",
@@ -171,19 +171,12 @@
     "scanning": {
       "category": "Digitalização 3D",
       "title": "Transforme a geometria física em dados digitais.",
-      "description": "Digitalização tridimensional para captura da geometria de componentes, inspeção dimensional, documentação e utilização dos dados em processos de engenharia reversa.",
-      "tscan": "Sistema portátil de digitalização a laser para inspeções realizadas tanto no laboratório quanto diretamente no local do cliente.",
-      "atos": "Digitalização por luz estruturada para peças menores e aplicações que exigem uma aquisição geométrica mais detalhada."
+      "description": "Com nossos scanners, capturamos a geometria de componentes para recriá-los em um modelo tridimensional digital, permitindo análise dimensional, inspeção de qualidade e engenharia reversa. Nosso T-SCAN Hawk 2 fornece versatilidade para digitalizações em campo, enquanto o ATOS Q oferece alta precisão para peças menores e aplicações que exigem aquisição geométrica detalhada."
     },
     "reverse": {
       "category": "Engenharia reversa",
       "title": "Da peça física ao modelo CAD.",
-      "description": "Utilizamos dados de digitalização tridimensional como base para reconstruir a geometria de componentes e gerar modelos digitais para aplicações de engenharia.",
-      "steps": {
-        "part": "Peça física",
-        "scan": "Aquisição 3D",
-        "cad": "Modelo CAD"
-      }
+      "description": "Utilizamos dados de digitalização tridimensional como base para reconstruir a geometria de componentes e gerar modelos digitais para aplicações de engenharia."
     },
     "selection": {
       "eyebrow": "Aplicação",
@@ -204,7 +197,7 @@
         },
         "scanning": {
           "title": "Precisa digitalizar a geometria?",
-          "description": "3D scanning captura a geometria física para inspeção e engenharia."
+          "description": "O escaneamento 3D captura a geometria física para inspeção e engenharia."
         },
         "cad": {
           "title": "Precisa de um modelo CAD?",

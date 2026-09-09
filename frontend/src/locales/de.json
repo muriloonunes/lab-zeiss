@@ -166,26 +166,17 @@
         "voids": "Lunker und Poren",
         "welding": "Schweißnahtfehler",
         "foreign": "Einschlüsse und Fremdkörper"
-      },
-      "principleLabel": "Prüfprinzip",
-      "principle": "Die Bildgebung basiert auf Dichte- und Absorptionsunterschieden der Materialien und ermöglicht die Analyse innerer Strukturen ohne Beschädigung des Bauteils."
+      }
     },
     "scanning": {
       "category": "3D-Digitalisierung",
       "title": "Reale Geometrie in digitale Daten verwandeln.",
-      "description": "Dreidimensionale Digitalisierung zur Erfassung komplexer Geometrien, Maßprüfung, Bauteildokumentation und Weiterverarbeitung im Reverse Engineering.",
-      "tscan": "Mobiles Laserscansystem für flexible Prüfungen im Labor sowie direkt vor Ort beim Kunden.",
-      "atos": "Streifenlicht-Scanner für anspruchsvolle Bauteile und hochpräzise geometrische Detailerfassung."
+      "description": "Dreidimensionale Digitalisierung zur Erfassung komplexer Geometrien, Maßprüfung, Bauteildokumentation und Weiterverarbeitung im Reverse Engineering."
     },
     "reverse": {
       "category": "Reverse Engineering",
       "title": "Vom physischen Bauteil zum CAD-Modell.",
-      "description": "Wir nutzen 3D-Messdaten als Basis für die präzise geometrische Rekonstruktion und Erstellung parametrischer CAD-Modelle.",
-      "steps": {
-        "part": "Reales Bauteil",
-        "scan": "3D-Erfassung",
-        "cad": "CAD-Modell"
-      }
+      "description": "Wir nutzen 3D-Messdaten als Basis für die präzise geometrische Rekonstruktion und Erstellung parametrischer CAD-Modelle."
     },
     "selection": {
       "eyebrow": "Technologie-Leitfaden",

@@ -32,6 +32,10 @@ export function Services() {
         {src: '/images/AtosQ2.jpg', alt: 'Atos Q', objectPosition: 'center 60%'},
     ]
 
+    const ReverseEngineeringImages: CarouselImage[] = [
+        {src: '/images/Senai-Laboratorio-2.jpg', alt: 'Engenharia Reversa'},
+    ]
+
     return (
         <div className="services-page">
             <div className="services-blob-container" aria-hidden="true">
@@ -149,17 +153,6 @@ export function Services() {
                             <span className="service-category-tag">{t('services.scanning.category')}</span>
                             <h2 className="service-row-title">{t('services.scanning.title')}</h2>
                             <p className="service-paragraph">{t('services.scanning.description')}</p>
-
-                            <div className="scanning-equipments-list">
-                                <div className="scan-eq-card glass-panel">
-                                    <strong>T-SCAN hawk 2:</strong>
-                                    <p>{t('services.scanning.tscan')}</p>
-                                </div>
-                                <div className="scan-eq-card glass-panel">
-                                    <strong>ATOS Q:</strong>
-                                    <p>{t('services.scanning.atos')}</p>
-                                </div>
-                            </div>
                         </div>
 
                         <div className="service-visual-side">
@@ -171,41 +164,20 @@ export function Services() {
                 </div>
             </section>
 
-            <section className="service-workflow-section" id="engenharia-reversa">
+            <section className="service-row-section">
                 <div className="services-container">
-                    <div className="workflow-header">
-                        <span className="service-index-num">05</span>
-                        <span className="service-category-tag">{t('services.reverse.category')}</span>
-                        <h2 className="service-row-title">{t('services.reverse.title')}</h2>
-                        <p className="service-paragraph">{t('services.reverse.description')}</p>
-                    </div>
+                    <div className="service-row-split">
+                        <div className="service-text-side">
+                            <span className="service-index-num">05</span>
+                            <span className="service-category-tag">{t('services.reverse.category')}</span>
+                            <h2 className="service-row-title">{t('services.reverse.title')}</h2>
+                            <p className="service-paragraph">{t('services.reverse.description')}</p>
+                        </div>
 
-                    <div className="workflow-steps-grid">
-                        <div className="workflow-step-card glass-panel">
-                            <span className="step-badge">Etapa 01</span>
-                            <h3 className="step-title">{t('services.reverse.steps.part')}</h3>
-                        </div>
-                        <div className="workflow-arrow-divider" aria-hidden="true">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </div>
-                        <div className="workflow-step-card glass-panel">
-                            <span className="step-badge">Etapa 02</span>
-                            <h3 className="step-title">{t('services.reverse.steps.scan')}</h3>
-                        </div>
-                        <div className="workflow-arrow-divider" aria-hidden="true">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </div>
-                        <div className="workflow-step-card glass-panel">
-                            <span className="step-badge">Etapa 03</span>
-                            <h3 className="step-title">{t('services.reverse.steps.cad')}</h3>
+                        <div className="service-visual-side">
+                            <div className="service-image-card glass-panel">
+                                <ImageCarousel images={ReverseEngineeringImages}/>
+                            </div>
                         </div>
                     </div>
                 </div>
