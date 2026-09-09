@@ -6,7 +6,7 @@
   min-height: 100vh;
   background-color: vars.$color-bg-light;
   overflow-x: hidden;
-  padding-top: 5.5rem; // space for navbar
+  padding-top: 5.5rem;
   color: vars.$color-text-dark;
 }
 
@@ -58,6 +58,7 @@
   z-index: 1;
   margin: 0 auto;
   width: 100%;
+  max-width: vars.$container-max-width;
   padding: 0 clamp(1.5rem, 1.5vw, 6rem);
 }
 

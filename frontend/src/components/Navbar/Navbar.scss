@@ -15,7 +15,7 @@
   box-shadow: vars.$nav-glass-shadow, inset 0 -1px 0 vars.$nav-glass-inset-bottom;
 
   .navbar-container {
-    max-width: 1520px;
+    max-width: vars.$container-max-width;
     margin: 0 auto;
     display: flex;
     align-items: center;

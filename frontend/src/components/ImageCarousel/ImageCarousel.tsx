@@ -65,7 +65,7 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
     if (images.length === 1) {
         return (
             <div className="carousel-container">
-                <div className="service-img-wrapper portrait-3-4">
+                <div className="service-img-wrapper img-frame">
                     <img src={images[0].src} alt={images[0].alt} className="service-img"/>
                     <div className="service-img-overlay"/>
                 </div>
@@ -82,7 +82,7 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
         >
-            <div className="service-img-wrapper portrait-3-4">
+            <div className="service-img-wrapper img-frame">
                 <div
                     className="carousel-track"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}

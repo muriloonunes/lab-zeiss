@@ -153,6 +153,17 @@ export function Services() {
                             <span className="service-category-tag">{t('services.scanning.category')}</span>
                             <h2 className="service-row-title">{t('services.scanning.title')}</h2>
                             <p className="service-paragraph">{t('services.scanning.description')}</p>
+
+                            <div className="service-applications-grid">
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.scanning.applications.fieldScanning')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.scanning.applications.highResolution')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.scanning.applications.colorMap')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.scanning.applications.digitization')}</div>
+                            </div>
                         </div>
 
                         <div className="service-visual-side">
@@ -172,6 +183,17 @@ export function Services() {
                             <span className="service-category-tag">{t('services.reverse.category')}</span>
                             <h2 className="service-row-title">{t('services.reverse.title')}</h2>
                             <p className="service-paragraph">{t('services.reverse.description')}</p>
+
+                            <div className="service-applications-grid">
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.reverse.applications.legacyParts')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.reverse.applications.cadGeneration')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.reverse.applications.tooling')}</div>
+                                <div className="app-item"><span
+                                    className="app-dot"></span>{t('services.reverse.applications.optimization')}</div>
+                            </div>
                         </div>
 
                         <div className="service-visual-side">
