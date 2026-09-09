@@ -5,15 +5,31 @@ import {QuoteButton} from '../../components/QuoteButton/QuoteButton';
 import './Services.scss';
 import {useScrollToTop} from "../../hooks/useScrollToTop";
 import {ImageCarousel} from "../../components/ImageCarousel/ImageCarousel";
+import {CarouselImage} from "../../components/ImageCarousel/CarouselImage";
 
 export function Services() {
     useScrollToTop();
     const {t} = useTranslation();
     const navigate = useNavigate();
 
-    const OInspectImages = [
-        {src: '/images/OInspect1.jpg', alt: 'OInspect'},
-        {src: '/images/OInspect2.jpg', alt: 'OInspect'},
+    const DuraMaxImages: CarouselImage[] = [
+        {src: '/images/DuraMax1.jpg', alt: 'DuraMax'},
+        {src: '/images/DuraMax2.jpg', alt: 'DuraMax', objectPosition: 'center 70%'},
+    ]
+
+    const OInspectImages: CarouselImage[] = [
+        {src: '/images/OInspect1.jpg', alt: 'OInspect', objectPosition: 'center 63%'},
+        {src: '/images/OInspect2.jpg', alt: 'OInspect', objectPosition: 'center 57%'},
+    ]
+
+    const BoselloImages: CarouselImage[] = [
+        {src: '/images/Bosello1.jpg', alt: 'Bosello'},
+        {src: '/images/Bosello2.jpg', alt: 'Bosello', objectPosition: 'center 70%'},
+    ]
+
+    const ScannerImages: CarouselImage[] = [
+        {src: '/images/AtosQ1.jpg', alt: 'Atos Q'},
+        {src: '/images/AtosQ2.jpg', alt: 'Atos Q', objectPosition: 'center 60%'},
     ]
 
     return (
@@ -60,11 +76,7 @@ export function Services() {
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
-                                <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/DuraMax2.jpg" alt="ZEISS DuraMax e PRISMO"
-                                         className="service-img"/>
-                                    <div className="service-img-overlay"></div>
-                                </div>
+                                <ImageCarousel images={DuraMaxImages}/>
                             </div>
                         </div>
                     </div>
@@ -122,10 +134,7 @@ export function Services() {
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
-                                <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/Bosello3.jpg" alt="ZEISS BOSELLO MAX" className="service-img"/>
-                                    <div className="service-img-overlay"></div>
-                                </div>
+                                <ImageCarousel images={BoselloImages}/>
                             </div>
                         </div>
                     </div>
@@ -155,11 +164,7 @@ export function Services() {
 
                         <div className="service-visual-side">
                             <div className="service-image-card glass-panel">
-                                <div className="service-img-wrapper portrait-3-4">
-                                    <img src="/images/AtosQ1.jpg" alt="Digitalização 3D ZEISS"
-                                         className="service-img"/>
-                                    <div className="service-img-overlay"></div>
-                                </div>
+                                <ImageCarousel images={ScannerImages}/>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,34 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './ImageCarousel.scss'
+import {CarouselImage} from "./CarouselImage";
 
-export function ImageCarousel({images}) {
+export interface ImageCarouselProps {
+    images: CarouselImage[];
+    intervalTime?: number,
+    autoPlay?: boolean,
+}
+
+export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: ImageCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const prevSlide = useCallback(() => {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    }, [images.length]);
+
+    const nextSlide = useCallback(() => {
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, [images.length]);
+
+    useEffect(() => {
+        if (!autoPlay || !images || images.length <= 1 || isHovered) return;
+
+        const timer = setInterval(() => {
+            nextSlide();
+        }, intervalTime);
+
+        return () => clearInterval(timer);
+    }, [currentIndex, isHovered, autoPlay, intervalTime, nextSlide, images]);
 
     if (!images || images.length === 0) return null;
 
@@ -16,23 +42,30 @@ export function ImageCarousel({images}) {
             </div>
         );
     }
-    const prevSlide = () => {
-        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    }
-
-    const nextSlide = () => {
-        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }
 
     return (
-        <div className="carousel-container">
+        <div
+            className="carousel-container"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <div className="service-img-wrapper portrait-3-4">
-                <img
-                    src={images[currentIndex].src}
-                    alt={images[currentIndex].alt}
-                    className="service-img"
-                />
-                <div className="service-img-overlay" />
+                <div
+                    className="carousel-track"
+                    style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                    {images.map((img, idx) => (
+                        <div key={idx} className="carousel-slide">
+                            <img
+                                src={img.src}
+                                alt={img.alt}
+                                className="service-img"
+                                style={{ objectPosition: img.objectPosition || 'center' }}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <div className="service-img-overlay"/>
                 <button
                     type="button"
                     className="carousel-btn carousel-btn--prev"
