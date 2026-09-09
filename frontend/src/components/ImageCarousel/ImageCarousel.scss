@@ -1,4 +1,6 @@
 .carousel-container {
+  touch-action: pan-y;
+  user-select: none;
   position: relative;
   width: 100%;
 
