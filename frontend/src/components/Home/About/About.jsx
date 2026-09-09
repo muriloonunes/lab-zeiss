@@ -38,7 +38,7 @@ export function About() {
                         <span className="eyebrow-line"></span>
                         <span className="section-sub">{t('home.whyUs.subtitle')}</span>
                     </div>
-                    <div className="about-header-content section-header-split">
+                    <div className="section-header-split">
                         <h2 className="section-title">{t('home.whyUs.mainTitle')}</h2>
                         <p className="about-description section-description">{t('home.whyUs.description')}</p>
                     </div>

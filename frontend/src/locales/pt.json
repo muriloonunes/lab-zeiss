@@ -134,79 +134,90 @@
     "hero": {
       "eyebrow": "Nossos Serviços",
       "title": "Precisão para cada desafio industrial.",
-      "description": "Soluções de inspeção dimensional, metrologia óptica, tomografia, digitalização 3D e engenharia reversa realizadas com tecnologia ZEISS e expertise técnica SENAI."
+      "description": "Soluções de inspeção dimensional, metrologia óptica, tomografia, digitalização 3D e engenharia reversa com a confiabilidade da tecnologia ZEISS e a excelência técnica do SENAI."
     },
     "dimensional": {
       "category": "Inspeção dimensional por coordenadas",
       "title": "Medir. Comparar. Comprovar.",
-      "description": "Usamos Máquinas de Medição por Coordenadas (CMM) para fazer inspeções por contato e avaliar dimensões lineares, formas e tolerâncias geométricas complexas. Com a ZEISS DuraMax, atendemos os requisitos definidos em projetos com tolerância acima de 0,02mm. Precisa de uma tolerância ainda mais rigorosa? A ZEISS PRISMO é a solução para geometrias de altíssima exigência.",
+      "description": "Utilizamos Máquinas de Medição por Coordenadas (CMM) para inspeções por contato em dimensões lineares, formas e tolerâncias geométricas complexas. Com a ZEISS DuraMax, atendemos projetos com tolerâncias gerais (≥ 0,02 mm). Para requisitos ainda mais críticos e geometrias de alta exigência, aplicamos a ZEISS PRISMO de altíssima precisão.",
       "applications": {
         "dimensions": "Verificação dimensional e linear",
         "cad": "Comparação nominal vs. real (CAD × Peça)",
-        "wear": "Análise de desgaste",
+        "wear": "Análise de desgaste e fadiga",
         "gdt": "Análise de tolerâncias geométricas (GD&T)"
       }
     },
     "optical": {
       "category": "Inspeção e metrologia óptica",
       "title": "Medição sem contato de alta resolução.",
-      "description": "Usamos a ZEISS O-Inspect para inspeção óptica em características que não podem ser medidas adequadamente por apalpação, permitindo analisar superfícies, pequenos detalhes e materiais sensíveis ao contato. Ela conta também com o sensor DotScan, que permite a captura da topografia de peças que outros sensores não conseguem.",
+      "description": "Com a ZEISS O-Inspect, inspecionamos peças e componentes sensíveis que não podem sofrer apalpação mecânica. O sistema integra medição óptica e por contato, além do sensor DotScan, capaz de capturar a topografia de superfícies reflexivas, transparentes ou de difícil leitura.",
       "applications": {
-        "nonContact": "Medição sem contato",
-        "surface": "Inspeção de superfícies",
-        "fineFeatures": "Pequenos detalhes"
+        "nonContact": "Medição sem contato físico",
+        "surface": "Inspeção e rugosidade de superfícies",
+        "fineFeatures": "Microgeometrias e detalhes de alta densidade"
       }
     },
     "xray": {
-      "category": "Raio-X e tomografia",
+      "category": "Raio-X e tomografia industrial",
       "title": "Veja o que não pode ser visto.",
-      "description": "Nossa ZEISS Bosello faz inspeção não destrutiva de estruturas internas e defeitos que não podem ser identificados visualmente ou por métodos convencionais de medição. A visualização da imagem é feita com base na diferença de densidade dos materiais da peça.",
+      "description": "Com a ZEISS Bosello, realizamos ensaios não destrutivos para avaliar estruturas internas e descontinuidades invisíveis a métodos convencionais, mapeando falhas a partir da densidade dos materiais.",
       "applications": {
-        "cracks": "Trincas internas",
-        "voids": "Bolhas e vazios",
-        "welding": "Defeitos em soldas",
-        "foreign": "Materiais e detritos internos"
+        "cracks": "Trincas e descontinuidades internas",
+        "voids": "Bolhas, porosidades e rechupes",
+        "welding": "Qualidade e penetração de soldas",
+        "foreign": "Detecção de materiais e inclusões estranhas"
       }
     },
     "scanning": {
       "category": "Digitalização 3D",
       "title": "Transforme a geometria física em dados digitais.",
-      "description": "Com nossos scanners, capturamos a geometria de componentes para recriá-los em um modelo tridimensional digital, permitindo análise dimensional, inspeção de qualidade e engenharia reversa. Nosso T-SCAN Hawk 2 fornece versatilidade para digitalizações em campo, enquanto o ATOS Q oferece alta precisão para peças menores e aplicações que exigem aquisição geométrica detalhada."
+      "description": "Capturamos geometrias complexas para criar modelos tridimensionais de alta fidelidade para análise dimensional, controle de qualidade e engenharia reversa. O T-SCAN Hawk 2 garante mobilidade para medições em campo, enquanto o ATOS Q entrega máxima densidade de pontos para componentes detalhados.",
+      "applications": {
+        "fieldScanning": "Digitalização portátil em campo ou fábrica",
+        "highResolution": "Digitalização óptica de alta resolução (ATOS Q)",
+        "colorMap": "Relatórios de desvio 3D com mapa de cores",
+        "digitization": "Geração de malhas poligonais (STL/OBJ)"
+      }
     },
     "reverse": {
       "category": "Engenharia reversa",
-      "title": "Da peça física ao modelo CAD.",
-      "description": "Utilizamos dados de digitalização tridimensional como base para reconstruir a geometria de componentes e gerar modelos digitais para aplicações de engenharia."
+      "title": "Da peça física ao modelo CAD paramétrico.",
+      "description": "Reconstruímos a geometria exata de componentes a partir de nuvens de pontos e malhas 3D, gerando modelos CAD sólidos ou superficiais prontos para fabricação, reposição ou aprimoramento de projeto.",
+      "applications": {
+        "legacyParts": "Reconstituição de peças sobressalentes sem desenho",
+        "cadGeneration": "Modelagem CAD paramétrica (STEP, IGES, Parasolid)",
+        "tooling": "Adequação de moldes, matrizes e ferramental",
+        "optimization": "Redesenho e otimização geométrica"
+      }
     },
     "selection": {
-      "eyebrow": "Aplicação",
+      "eyebrow": "Guia de Aplicação",
       "title": "Qual tecnologia atende à sua necessidade?",
-      "description": "A escolha do método de medição depende das características da peça, do objetivo da inspeção e do nível de precisão necessário.",
+      "description": "A escolha ideal depende da geometria da peça, da acessibilidade das regiões críticas e do nível de tolerância do projeto.",
       "items": {
         "dimensions": {
-          "title": "Precisa verificar dimensões?",
-          "description": "Inspeção dimensional e geométrica por máquinas de medir por coordenadas."
+          "title": "Precisa verificar tolerâncias rígidas?",
+          "description": "Inspeção dimensional e geométrica precisa por contato (CMM)."
         },
         "nonContact": {
-          "title": "A peça não pode ser tocada?",
-          "description": "A medição óptica permite analisar características sem contato físico."
+          "title": "A peça é flexível ou não pode ser tocada?",
+          "description": "Metrologia óptica sem deformação do material e em alta velocidade."
         },
         "internal": {
-          "title": "Precisa enxergar dentro da peça?",
-          "description": "Raio-X e tomografia permitem investigar estruturas e defeitos internos."
+          "title": "Precisa enxergar o interior da peça?",
+          "description": "Tomografia e Raio-X para defeitos internos sem danificar a peça."
         },
         "scanning": {
-          "title": "Precisa digitalizar a geometria?",
-          "description": "O escaneamento 3D captura a geometria física para inspeção e engenharia."
+          "title": "Precisa digitalizar superfícies livres e formas complexas?",
+          "description": "Escaneamento 3D para capturar geometrias completas no chão de fábrica."
         },
         "cad": {
-          "title": "Precisa de um modelo CAD?",
-          "description": "A engenharia reversa transforma dados de medição em geometria digital."
+          "title": "Não possui o desenho técnico ou arquivo 3D?",
+          "description": "Engenharia reversa para recriar o modelo digital a partir da peça física."
         }
       }
     }
-  },
-  "footer": {
+  },  "footer": {
     "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",
     "navigationTitle": "Navegação",
     "locationTitle": "Localização",

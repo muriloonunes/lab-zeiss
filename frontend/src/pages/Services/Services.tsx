@@ -190,8 +190,10 @@ export function Services() {
                             <span className="services-eyebrow-line"></span>
                             <span className="services-eyebrow-text">{t('services.selection.eyebrow')}</span>
                         </div>
-                        <h2 className="services-section-title">{t('services.selection.title')}</h2>
-                        <p className="services-section-desc">{t('services.selection.description')}</p>
+                        <div className="section-header-split">
+                            <h2 className="services-section-title">{t('services.selection.title')}</h2>
+                            <p className="services-section-desc">{t('services.selection.description')}</p>
+                        </div>
                     </div>
 
                     <div className="selection-grid">
