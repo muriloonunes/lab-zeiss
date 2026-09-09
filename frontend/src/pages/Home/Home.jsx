@@ -1,6 +1,6 @@
 import './Home.scss';
 import {HeroSection} from "../../components/Home/Hero/Hero.jsx";
-import {Services} from "../../components/Home/Services/Services.jsx";
+import {HomeServices} from "../../components/Home/Services/HomeServices.jsx";
 import {Infrastructure} from "../../components/Home/Infrastructure/Infrastructure.jsx";
 import {About} from "../../components/Home/About/About.jsx";
 import {Areas} from "../../components/Home/Areas/Areas.jsx";
@@ -12,7 +12,7 @@ export function Home() {
     return (
         <div className="home-wrapper">
             <HeroSection/>
-            <Services/>
+            <HomeServices/>
             <About/>
             <Infrastructure/>
             <Areas/>

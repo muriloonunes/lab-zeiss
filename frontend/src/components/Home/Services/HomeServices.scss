@@ -4,6 +4,13 @@
 .services-section {
   scroll-margin-top: 5rem;
 
+  .home-services-container {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    width: 100%;
+  }
+
   .services-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import "./Services.scss";
+import "./HomeServices.scss";
 
-export function Services() {
+export function HomeServices() {
     const {t} = useTranslation()
     const services = [
         {
@@ -29,7 +29,7 @@ export function Services() {
 
     return (
         <section className="services-section home-section" id="servicos">
-            <div className="services-container home-container">
+            <div className="home-services-container home-container">
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
