@@ -134,74 +134,86 @@
     "hero": {
       "eyebrow": "Unsere Dienstleistungen",
       "title": "Präzision für jede industrielle Herausforderung.",
-      "description": "Lösungen für Maßprüfung, optische Messung, Tomografie, 3D-Scanning und Reverse Engineering – realisiert durch ZEISS-Technologie und die technische Expertise von SENAI."
+      "description": "Lösungen für dimensionelle Prüfung, optische Messtechnik, industrielle Computertomographie, 3D-Digitalisierung und Reverse Engineering – gestützt auf die Zuverlässigkeit der ZEISS-Technologie und die technische Kompetenz des SENAI."
     },
     "dimensional": {
-      "category": "Dimensionelle Messtechnik",
+      "category": "Taktile Koordinatenmesstechnik",
       "title": "Messen. Vergleichen. Nachweisen.",
-      "description": "Koordinatenmesstechnik zur Überprüfung von Maßen, geometrischen Form- und Lagetoleranzen sowie Bauteilkonformität gemäß Zeichnungsvorgaben.",
+      "description": "Wir setzen Koordinatenmessgeräte (KMG) zur taktilen Prüfung linearer Abmessungen, Formen und komplexer geometrischer Toleranzen ein. Mit der ZEISS DuraMax bedienen wir Projekte mit Standardtoleranzen (≥ 0,02 mm). Für noch anspruchsvollere Anforderungen und hochkomplexe Geometrien nutzen wir die hochpräzise ZEISS PRISMO.",
       "applications": {
-        "dimensions": "Maßprüfung",
-        "cad": "CAD-Soll-Ist-Vergleich",
-        "wear": "Verschleißanalyse",
-        "gdt": "Form- und Lagetoleranzen (GD&T)"
+        "dimensions": "Dimensionelle und lineare Prüfung",
+        "cad": "Soll-Ist-Vergleich (CAD × Bauteil)",
+        "wear": "Verschleiß- und Ermüdungsanalyse",
+        "gdt": "Form- und Lagetoleranzprüfung (GD&T)"
       }
     },
     "optical": {
-      "category": "Optische Messtechnik",
-      "title": "Berührungslose Messung.",
-      "description": "Optische Inspektion für Merkmale, die taktil nicht erfasst werden können – ideal für Oberflächenanalysen, Mikrostrukturen und berührungsempfindliche Bauteile.",
+      "category": "Optische Inspektion und Messtechnik",
+      "title": "Berührungslose Messung in hoher Auflösung.",
+      "description": "Mit der ZEISS O-Inspect prüfen wir empfindliche Bauteile, die nicht mechanisch angetastet werden dürfen. Das System kombiniert optische und taktile Messverfahren sowie den DotScan-Sensor zur Erfassung von reflektierenden, transparenten oder schwer messbaren Oberflächen.",
       "applications": {
         "nonContact": "Berührungslose Messung",
-        "surface": "Oberflächenprüfung",
-        "fineFeatures": "Feinstrukturen & Details"
+        "surface": "Oberflächenprüfung und Rauheitsmessung",
+        "fineFeatures": "Mikrogeometrien und hochdichte Detailmerkmale"
       }
     },
     "xray": {
-      "category": "Röntgen & Computertomographie",
-      "title": "Sehen, was sonst verborgen bleibt.",
-      "description": "Zerstörungsfreie Prüfung von inneren Strukturen und Defekten, die visuell oder mit konventionellen Messmethoden nicht erkennbar sind.",
+      "category": "Röntgen und industrielle Computertomographie",
+      "title": "Sichtbar machen, was verborgen bleibt.",
+      "description": "Mit ZEISS Bosello führen wir zerstörungsfreie Prüfungen durch, um innere Strukturen und Inhomogenitäten darzustellen, die mit konventionellen Methoden nicht erfassbar sind – basierend auf der Materialdichte.",
       "applications": {
-        "cracks": "Innere Risse",
-        "voids": "Lunker und Poren",
-        "welding": "Schweißnahtfehler",
-        "foreign": "Einschlüsse und Fremdkörper"
+        "cracks": "Innere Risse und Diskontinuitäten",
+        "voids": "Lunker, Poren und Gasblasen",
+        "welding": "Schweißnahtqualität und Durchschweißung",
+        "foreign": "Erkennung von Fremdkörpern und Einschlüssen"
       }
     },
     "scanning": {
       "category": "3D-Digitalisierung",
-      "title": "Reale Geometrie in digitale Daten verwandeln.",
-      "description": "Dreidimensionale Digitalisierung zur Erfassung komplexer Geometrien, Maßprüfung, Bauteildokumentation und Weiterverarbeitung im Reverse Engineering."
+      "title": "Physische Geometrien in digitale Daten verwandeln.",
+      "description": "Wir erfassen komplexe Geometrien zur Erstellung hochpräziser 3D-Modelle für Maßanalysen, Qualitätskontrolle und Reverse Engineering. Der T-SCAN Hawk 2 bietet Flexibilität für mobile Messungen vor Ort, während der ATOS Q höchste Punktedichte für detailreiche Komponenten liefert.",
+      "applications": {
+        "fieldScanning": "Mobiles Scannen vor Ort oder in der Fertigung",
+        "highResolution": "Hochauflösende optische Digitalisierung (ATOS Q)",
+        "colorMap": "3D-Falschfarben-Abweichungsanalysen",
+        "digitization": "Erzeugung von Polygonnetzen (STL/OBJ)"
+      }
     },
     "reverse": {
       "category": "Reverse Engineering",
-      "title": "Vom physischen Bauteil zum CAD-Modell.",
-      "description": "Wir nutzen 3D-Messdaten als Basis für die präzise geometrische Rekonstruktion und Erstellung parametrischer CAD-Modelle."
+      "title": "Vom physischen Bauteil zum parametrischen CAD-Modell.",
+      "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für Ersatzteilfertigung oder Konstruktionsoptimierung.",
+      "applications": {
+        "legacyParts": "Rekonstruktion von Ersatzteilen ohne Zeichnung",
+        "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES, Parasolid)",
+        "tooling": "Anpassung von Formen, Gesenken und Werkzeugen",
+        "optimization": "Geometrische Neukonstruktion und Optimierung"
+      }
     },
     "selection": {
-      "eyebrow": "Technologie-Leitfaden",
+      "eyebrow": "Anwendungsleitfaden",
       "title": "Welche Technologie passt zu Ihrer Anforderung?",
-      "description": "Die Wahl des richtigen Messverfahrens hängt von den Bauteileigenschaften, den Prüfzielen und den geforderten Toleranzen ab.",
+      "description": "Die optimale Wahl richtet sich nach Bauteilgeometrie, Zugänglichkeit kritischer Bereiche und geforderten Projekttoleranzen.",
       "items": {
         "dimensions": {
-          "title": "Maße und Toleranzen prüfen?",
-          "description": "Dimensionelle und geometrische Prüfung auf hochpräzisen Koordinatenmessgeräten."
+          "title": "Müssen enge Toleranzen nachgewiesen werden?",
+          "description": "Präzise taktile Maß- und Formprüfung (KMG)."
         },
         "nonContact": {
-          "title": "Bauteil darf nicht berührt werden?",
-          "description": "Optische Messtechnik ermöglicht eine berührungslose und materialschonende Prüfung."
+          "title": "Ist das Bauteil flexibel oder berührungsempfindlich?",
+          "description": "Schnelle optische Messtechnik ohne Materialverformung."
         },
         "internal": {
-          "title": "In das Bauteilinnere blicken?",
-          "description": "Röntgen und CT machen innere Hohlräume, Strukturen und Fehler sichtbar."
+          "title": "Müssen innenliegende Strukturen geprüft werden?",
+          "description": "Computertomographie und Röntgen für zerstörungsfreie Innenprüfung."
         },
         "scanning": {
-          "title": "Komplette Geometrie digitalisieren?",
-          "description": "3D-Scanning erfasst freie Formen und Flächen für Inspektion und Konstruktion."
+          "title": "Müssen Freiformflächen und komplexe Formen erfasst werden?",
+          "description": "3D-Scannen zur vollständigen Geometrieerfassung direkt im Fertigungsumfeld."
         },
         "cad": {
-          "title": "Ein CAD-Modell benötigt?",
-          "description": "Reverse Engineering überführt Messpunktwolken in saubere CAD-Flächen."
+          "title": "Liegen keine Zeichnungen oder 3D-Daten vor?",
+          "description": "Reverse Engineering zur Neuerstellung des digitalen Modells anhand des realen Teils."
         }
       }
     }

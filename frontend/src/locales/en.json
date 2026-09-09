@@ -134,74 +134,86 @@
     "hero": {
       "eyebrow": "Our Services",
       "title": "Precision for every industrial challenge.",
-      "description": "Dimensional inspection, optical measurement, tomography, 3D scanning, and reverse engineering solutions delivered using ZEISS technology and SENAI technical expertise."
+      "description": "Dimensional inspection, optical metrology, computed tomography, 3D scanning, and reverse engineering solutions powered by ZEISS technology reliability and SENAI technical excellence."
     },
     "dimensional": {
-      "category": "Dimensional Inspection",
+      "category": "Coordinate dimensional inspection",
       "title": "Measure. Compare. Verify.",
-      "description": "Coordinate measuring to verify dimensions, geometric features, and component compliance with project requirements.",
+      "description": "We utilize Coordinate Measuring Machines (CMM) for tactile inspection of linear dimensions, form, and complex geometric tolerances. With the ZEISS DuraMax, we handle general-tolerance projects (≥ 0.02 mm). For tighter requirements and high-demand geometries, we deploy the ultra-high-precision ZEISS PRISMO.",
       "applications": {
-        "dimensions": "Dimensional verification",
-        "cad": "CAD vs. Part comparison",
-        "wear": "Wear analysis",
-        "gdt": "Geometric characteristics"
+        "dimensions": "Dimensional and linear verification",
+        "cad": "Nominal vs. actual comparison (CAD × Part)",
+        "wear": "Wear and fatigue analysis",
+        "gdt": "Geometric Dimensioning and Tolerancing (GD&T) analysis"
       }
     },
     "optical": {
-      "category": "Optical Inspection",
-      "title": "Non-contact measurement.",
-      "description": "Optical inspection for features that cannot be adequately measured by tactile probing, enabling analysis of surfaces, fine details, and contact-sensitive materials.",
+      "category": "Optical inspection and metrology",
+      "title": "High-resolution non-contact measurement.",
+      "description": "Using the ZEISS O-Inspect, we inspect sensitive parts and components that cannot undergo mechanical probing. The system combines optical and tactile measurement, alongside the DotScan sensor, capable of capturing the topography of reflective, transparent, or hard-to-read surfaces.",
       "applications": {
-        "nonContact": "Non-contact measurement",
-        "surface": "Surface inspection",
-        "fineFeatures": "Fine details"
+        "nonContact": "Non-contact physical measurement",
+        "surface": "Surface inspection and roughness evaluation",
+        "fineFeatures": "Micro-geometries and high-density details"
       }
     },
     "xray": {
-      "category": "X-Ray & Computed Tomography",
+      "category": "X-ray and industrial computed tomography",
       "title": "See what cannot be seen.",
-      "description": "Non-destructive testing of internal structures and defects that cannot be identified visually or through conventional measurement methods.",
+      "description": "With ZEISS Bosello, we perform non-destructive testing to evaluate internal structures and discontinuities invisible to conventional methods, identifying defects based on material density.",
       "applications": {
-        "cracks": "Internal cracks",
-        "voids": "Bubbles and voids",
-        "welding": "Weld seam defects",
-        "foreign": "Internal debris and foreign materials"
+        "cracks": "Internal cracks and discontinuities",
+        "voids": "Pores, voids, and shrinkage cavities",
+        "welding": "Weld quality and penetration",
+        "foreign": "Foreign material and inclusion detection"
       }
     },
     "scanning": {
-      "category": "3D Scanning",
+      "category": "3D scanning",
       "title": "Transform physical geometry into digital data.",
-      "description": "Three-dimensional digitizing to capture component geometry, dimensional inspection, documentation, and data utilization in reverse engineering workflows."
+      "description": "We capture complex geometries to produce high-fidelity 3D models for dimensional analysis, quality control, and reverse engineering. The T-SCAN Hawk 2 provides portable flexibility for on-site measurement, while the ATOS Q delivers maximum point density for intricate components.",
+      "applications": {
+        "fieldScanning": "Portable scanning on-site or on the shop floor",
+        "highResolution": "High-resolution optical scanning (ATOS Q)",
+        "colorMap": "3D color-map deviation reports",
+        "digitization": "Polygon mesh generation (STL/OBJ)"
+      }
     },
     "reverse": {
-      "category": "Reverse Engineering",
-      "title": "From physical part to CAD model.",
-      "description": "We use 3D scan data as the foundation to reconstruct component geometry and generate digital models for engineering applications."
+      "category": "Reverse engineering",
+      "title": "From physical part to parametric CAD model.",
+      "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for manufacturing, replacement, or design optimization.",
+      "applications": {
+        "legacyParts": "Recreation of spare parts without technical drawings",
+        "cadGeneration": "Parametric CAD modeling (STEP, IGES, Parasolid)",
+        "tooling": "Mold, die, and tooling adaptation",
+        "optimization": "Redesign and geometric optimization"
+      }
     },
     "selection": {
       "eyebrow": "Application Guide",
-      "title": "Which technology meets your requirements?",
-      "description": "The choice of measurement method depends on part characteristics, inspection objectives, and the required precision level.",
+      "title": "Which technology fits your needs?",
+      "description": "The ideal choice depends on part geometry, accessibility of critical regions, and project tolerance requirements.",
       "items": {
         "dimensions": {
-          "title": "Need to verify dimensions?",
-          "description": "Dimensional and geometric inspection using coordinate measuring machines."
+          "title": "Need to verify tight tolerances?",
+          "description": "High-precision tactile dimensional and geometric inspection (CMM)."
         },
         "nonContact": {
-          "title": "Part cannot be touched?",
-          "description": "Optical metrology allows feature analysis without physical contact."
+          "title": "Is the part flexible or contact-sensitive?",
+          "description": "High-speed optical metrology without material deformation."
         },
         "internal": {
-          "title": "Need to inspect internal structures?",
-          "description": "X-Ray and CT scanning investigate internal geometries and flaws."
+          "title": "Need to inspect internal features?",
+          "description": "Computed tomography and X-ray for non-destructive internal defect detection."
         },
         "scanning": {
-          "title": "Need to digitize full geometry?",
-          "description": "3D scanning captures physical surfaces for inspection and engineering."
+          "title": "Need to digitize freeform surfaces and complex shapes?",
+          "description": "3D scanning to capture complete geometries directly on the shop floor."
         },
         "cad": {
-          "title": "Need a CAD model?",
-          "description": "Reverse engineering converts measurement point clouds into clean digital geometry."
+          "title": "Missing technical drawings or 3D files?",
+          "description": "Reverse engineering to recreate the digital model directly from the physical part."
         }
       }
     }
