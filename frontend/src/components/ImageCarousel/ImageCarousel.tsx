@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import './ImageCarousel.scss'
 import {CarouselImage} from "./CarouselImage";
 
@@ -12,6 +12,9 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
 
+    const touchStartX = useRef<number | null>(null);
+    const touchEndX = useRef<number | null>(null);
+
     const prevSlide = useCallback(() => {
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     }, [images.length]);
@@ -19,6 +22,33 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
     const nextSlide = useCallback(() => {
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, [images.length]);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+        touchEndX.current = null;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStartX.current || !touchEndX.current) return;
+
+        const distance = touchStartX.current - touchEndX.current;
+        const minSwipeDistance = 50; // Mínimo de pixels para disparar a troca
+
+        if (distance > minSwipeDistance) {
+            // Arrastou para a esquerda -> próximo slide
+            nextSlide();
+        } else if (distance < -minSwipeDistance) {
+            // Arrastou para a direita -> slide anterior
+            prevSlide();
+        }
+
+        touchStartX.current = null;
+        touchEndX.current = null;
+    };
 
     useEffect(() => {
         if (!autoPlay || !images || images.length <= 1 || isHovered) return;
@@ -48,6 +78,9 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
             className="carousel-container"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
         >
             <div className="service-img-wrapper portrait-3-4">
                 <div
