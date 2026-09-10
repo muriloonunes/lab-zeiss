@@ -33,7 +33,8 @@ export function Services() {
     ]
 
     const ReverseEngineeringImages: CarouselImage[] = [
-        {src: '/images/Senai-Laboratorio-2.jpg', alt: 'Engenharia Reversa'},
+        {src: '/images/ZRE1.png', alt: 'Engenharia Reversa'},
+        {src: '/images/ZRE2.png', alt: 'Engenharia Reversa'},
     ]
 
     return (
