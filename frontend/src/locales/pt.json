@@ -218,6 +218,29 @@
       }
     }
   },
+  "contact": {
+    "hero": {
+      "eyebrow": "Atendimento Técnico & Orçamento",
+      "title": "Inicie seu projeto metrológico com a nossa equipe.",
+      "description": "Submeta os requisitos do seu componente para orçamento ou solicite uma visita técnica às instalações do laboratório na Faculdade SENAI Ítalo Bologna."
+    },
+    "form": {
+      "title": "Solicitar Orçamento ou Análise",
+      "subtitle": "Preencha as informações básicas do seu componente ou demanda dimensional. Retornamos em até 24 horas úteis.",
+      "nameLabel": "Nome Completo",
+      "namePlaceholder": "Seu nome",
+      "companyLabel": "Empresa / Indústria",
+      "companyPlaceholder": "Razão social ou marca",
+      "emailLabel": "E-mail Corporativo",
+      "phoneLabel": "Telefone / WhatsApp",
+      "serviceLabel": "Serviço de Interesse Principal",
+      "otherOption": "Outro / Consultoria Dimensional",
+      "messageLabel": "Descrição da Demanda / Tolerâncias",
+      "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, norma aplicável e prazos desejados.",
+      "submitButton": "Enviar Solicitação Técnica",
+      "sentNotice": "Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato."
+    }
+  },
   "footer": {
     "brandDesc": "Inovação, conformidade dimensional e excelência metrológica com tecnologia alemã ZEISS e suporte técnico SENAI.",
     "navigationTitle": "Navegação",
