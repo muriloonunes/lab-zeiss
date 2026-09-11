@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {QuoteButton} from '../../components/QuoteButton/QuoteButton';
 import './Services.scss';
@@ -84,6 +84,15 @@ export function Services() {
                                 <ImageCarousel images={DuraMaxImages}/>
                             </div>
                         </div>
+                    </div>
+                    <div className="service-meta-footer">
+                        <Link to="/servicos/cmm" className="btn-mais">
+                            <span>Ver Especificações Completas</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </Link>
                     </div>
                 </div>
             </section>

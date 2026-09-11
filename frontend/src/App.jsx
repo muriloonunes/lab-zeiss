@@ -5,6 +5,7 @@ import {Institutional} from './pages/Institutional/Institutional';
 import {Footer} from './components/Footer/Footer';
 import {Contact} from "./pages/Contact/Contact.tsx";
 import {Services} from "./pages/Services/Services.tsx";
+import {ServiceDetail} from "./pages/ServiceDetail/ServiceDetail.tsx";
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/institucional" element={<Institutional/>}/>
                     <Route path="/servicos" element={<Services/>}/>
+                    <Route path="/servicos/:serviceId" element={<ServiceDetail />} />
                     <Route path="/contato" element={<Contact/>}/>
                 </Routes>
             </main>
