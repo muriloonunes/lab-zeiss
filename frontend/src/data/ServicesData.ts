@@ -152,15 +152,18 @@ export const servicesData: Record<string, ServiceData> = {
         machines: [
             {
                 name: 'ZEISS BOSELLO MAX',
-                category: 'Sistema de Inspeção Radioscópica 2D/3D',
-                volume: 'Capacidade para amostras de até 600 × 900 mm e 50 kg',
-                accuracy: 'Resolução focal microfoco com detecção de defeitos submilimétricos',
-                sensor: 'Detector digital de tela plana (Flat Panel) de alto contraste',
-                software: 'ZEISS Inspect / Visualização Radioscópica',
+                category: 'Sistema de Inspeção Radioscópica 2D Industrial & CT-Ready',
+                volume: 'Cilindro de inspeção de Ø 700 × 1200 mm até Ø 1000 × 2000 mm | Peças de até 250 kg',
+                accuracy: 'Microfoco de alta resolução para detecção de trincas, vazios e porosidades submilimétricas',
+                sensor: 'Detector digital de tela plana (Flat Panel) de 8" a 16" + Tubo de alta penetração (160 a 450 kV)',
+                software: 'Software Integrado ZEISS Bosello / ZEISS INSPECT X-Ray (CT-Ready)',
                 features: [
-                    'Cabine blindada com máxima segurança operacional radiológica',
-                    'Manipulador robotizado de eixos para rotação angular completa da peça',
-                    'Filtros digitais em tempo real para redução de ruído e aumento de borda'
+                    'Capacidade de penetração em ligas leves de alumínio e peças fundidas de aço/ferro fundido de até 50 mm',
+                    'Mesa giratória de 360° com translação externa às portas para carregamento ergonômico de peças pesadas',
+                    'Configuração exclusiva de C-arm virtual controlado por software para alinhamento preciso entre fonte e detector',
+                    'CT-Ready: preparado para aquisição de imagens tomográficas e reconstrução de modelos 3D com análise espacial de defeitos',
+                    'Suporte a ciclos CNC automatizados e Reconhecimento Automático de Defeitos (ADR) conforme normas ASTM',
+                    'Gabinete autônomo com cabine de proteção radiológica integrada e visores de monitoramento em tempo real'
                 ]
             }
         ],
@@ -196,28 +199,33 @@ export const servicesData: Record<string, ServiceData> = {
         machines: [
             {
                 name: 'ZEISS ATOS Q',
-                category: 'Sensor Óptico 3D por Luz Azul Estruturada',
-                volume: 'Volumes de medição intercambiáveis (100 a 500 mm por campo)',
-                accuracy: 'Resolução de até 2 × 12 milhões de pontos por tomada',
-                sensor: 'Câmeras estereoscópicas com tecnologia Blue Light Equalizer',
+                category: 'Digitalizador Óptico 3D por Luz Azul Estruturada',
+                volume: 'Lentes intercambiáveis (MV 50, 100, 170, 270, 350 e 500) | Áreas de 100 × 70 até 500 × 370 mm²',
+                accuracy: 'Distância entre pontos de 0,03 a 0,15 mm | Resolução de até 2 × 12 milhões de pontos por scan',
+                sensor: 'Câmeras estereoscópicas com Blue Light Equalizer e Triple Scan Principle',
                 software: 'ZEISS INSPECT Optical 3D',
                 features: [
-                    'Resistente a poeira e respingos d’água para operação fabril (IP52)',
-                    'Braço de fibra de carbono com estabilização térmica de ótica',
-                    'Mesa giratória automatizada sincronizada para aquisição 360°'
+                    'Princípio Triple Scan: captura 3 vistas por medição, ideal para peças reflexivas, brilhantes e com reentrâncias',
+                    'Blue Light Equalizer com projeção ultrarrápida de franjas imune à luz ambiente residual',
+                    'Gabinete selado de 4 kg resistente a poeira e respingos para operação confiável no chão de fábrica',
+                    'Transmissão de altíssima velocidade por cabo de fibra óptica de 10 metros',
+                    'Operação manual em tripé ou semiautomatizada integrada à mesa rotativa motorizada GOM ROT 350'
                 ]
             },
             {
-                name: 'ZEISS T-SCAN Hawk 2',
-                category: 'Scanner a Laser Portátil 3D',
-                volume: 'Alcance flexível para componentes de 50 mm até mais de 4 metros',
-                accuracy: 'Exatidão volumétrica com fotogrametria integrada',
-                sensor: 'Multi-linhas de laser azul de alta velocidade',
+                name: 'ZEISS T-SCAN hawk 2',
+                category: 'Scanner 3D a Laser Portátil',
+                volume: 'Volume flexível e escalável: de pequenos componentes até múltiplos metros via Modo Satélite',
+                accuracy: 'Exatidão volumétrica de 0,02 mm + 0,015 mm/m (ensaio de aceitação baseado na ISO 10360)',
+                sensor: 'Múltiplas cruzes de laser azul + linha única dedicada para canais e bolsões profundos (Laser Classe 2 seguro)',
                 software: 'ZEISS INSPECT',
                 features: [
-                    'Design leve, operado com uma só mão para inspeção de campo',
-                    'Capaz de capturar superfícies reflexivas, escuras ou usinadas sem spray',
-                    'Modo de linha única para áreas profundas, furos e fendas estreitas'
+                    'Modo Satélite inovador: digitalização de peças grandes sem necessidade de fotogrametria com alvos codificados',
+                    'Radar de distância integrado com projeção de marcador laser vermelho para ajuste do foco em tempo real',
+                    'Design ultraleve (< 1 kg) com controle total do fluxo por 4 botões na empunhadura sem tocar no laptop',
+                    'Rastreabilidade comprovada com padrões de comprimento em fibra de carbono calibrados DAkkS (ISO/IEC 17025)',
+                    'Recalibração rápida em tomada única através da ferramenta de precisão HyperScale',
+                    'Forte aderência em superfícies escuras, cromadas ou usinadas sem uso obrigatório de spray antirreflexo'
                 ]
             }
         ],

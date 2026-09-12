@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {Link, NavLink} from 'react-router-dom';
+import {useEffect, useState, useRef} from 'react';
+import {Link, NavLink, useLocation} from 'react-router-dom';
 import './Navbar.scss';
 import {LanguageSwitcher} from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import {useTranslation} from "react-i18next";
@@ -8,6 +8,11 @@ import {QuoteButton} from '../QuoteButton/QuoteButton.jsx';
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+    const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+    const location = useLocation();
+    const {t} = useTranslation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,10 +24,48 @@ export function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
-    const closeMobileMenu = () => setIsMobileMenuOpen(false);
+    // Close menus when route changes
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+        setIsMobileServicesOpen(false);
+        setIsServicesDropdownOpen(false);
+    }, [location.pathname]);
 
-    const {t} = useTranslation();
+    // Close desktop dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsServicesDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(prev => !prev);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+        setIsMobileServicesOpen(false);
+    };
+
+    const toggleMobileServices = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsMobileServicesOpen(prev => !prev);
+    };
+
+    const isServicesActive = location.pathname.startsWith('/servicos');
+
+    const serviceItems = [
+        { id: 'cmm', path: '/servicos/cmm', key: 'cmm' },
+        { id: 'optica', path: '/servicos/optica', key: 'optica' },
+        { id: 'raio-x', path: '/servicos/raio-x', key: 'raioX' },
+        { id: 'digitalizacao-3d', path: '/servicos/digitalizacao-3d', key: 'scan3d' },
+        { id: 'engenharia-reversa', path: '/servicos/engenharia-reversa', key: 'reverseEng' },
+    ];
 
     return (
         <header className={`navbar${isScrolled ? ' scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`}>
@@ -49,14 +92,81 @@ export function Navbar() {
                 <div className="navbar-nav-group desktop-only">
                     <nav className="nav-links" aria-label="Navegação Principal">
                         <ul>
-                            <li><NavLink to="/institucional"
-                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.institutional')}</NavLink>
+                            <li>
+                                <NavLink
+                                    to="/institucional"
+                                    className={({isActive}) => isActive ? 'active' : ''}
+                                >
+                                    {t('nav.institutional')}
+                                </NavLink>
                             </li>
-                            <li><NavLink to="/servicos"
-                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.services')}</NavLink>
+
+                            <li
+                                className={`nav-item-dropdown ${isServicesActive ? 'parent-active' : ''} ${isServicesDropdownOpen ? 'dropdown-open' : ''}`}
+                                ref={dropdownRef}
+                                onMouseEnter={() => setIsServicesDropdownOpen(true)}
+                                onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                            >
+                                <NavLink
+                                    to="/servicos"
+                                    className={({isActive}) => (isActive || isServicesActive) ? 'active nav-link-with-arrow' : 'nav-link-with-arrow'}
+                                    aria-haspopup="true"
+                                    aria-expanded={isServicesDropdownOpen}
+                                >
+                                    <span>{t('nav.services')}</span>
+                                    <svg
+                                        className="nav-arrow-icon"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </NavLink>
+
+                                <div className="nav-dropdown-menu" role="menu">
+                                    <div className="dropdown-inner">
+                                        <NavLink
+                                            to="/servicos"
+                                            end
+                                            className={({isActive}) => `dropdown-item overview-item ${isActive ? 'active' : ''}`}
+                                            role="menuitem"
+                                            onClick={() => setIsServicesDropdownOpen(false)}
+                                        >
+                                            <span className="item-dot"></span>
+                                            <span className="item-text">{t('nav.allServices', 'Todos os Serviços')}</span>
+                                        </NavLink>
+                                        <div className="dropdown-divider" aria-hidden="true"></div>
+                                        {serviceItems.map((item) => (
+                                            <NavLink
+                                                key={item.id}
+                                                to={item.path}
+                                                className={({isActive}) => `dropdown-item ${isActive ? 'active' : ''}`}
+                                                role="menuitem"
+                                                onClick={() => setIsServicesDropdownOpen(false)}
+                                            >
+                                                <span className="item-dot"></span>
+                                                <span className="item-text">{t(`nav.servicesList.${item.key}`, item.id)}</span>
+                                            </NavLink>
+                                        ))}
+                                    </div>
+                                </div>
                             </li>
-                            <li><NavLink to="/contato"
-                                         className={({isActive}) => isActive ? 'active' : ''}>{t('nav.contact')}</NavLink>
+
+                            <li>
+                                <NavLink
+                                    to="/contato"
+                                    className={({isActive}) => isActive ? 'active' : ''}
+                                >
+                                    {t('nav.contact')}
+                                </NavLink>
                             </li>
                         </ul>
                     </nav>
@@ -85,12 +195,81 @@ export function Navbar() {
             <div className={`mobile-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
                 <nav className="mobile-nav-links" aria-label="Navegação Mobile">
                     <ul>
-                        <li><NavLink to="/institucional" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.institutional')}</NavLink></li>
-                        <li><NavLink to="/servicos" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.services')}</NavLink></li>
-                        <li><NavLink to="/contato" onClick={closeMobileMenu}
-                                     className={({isActive}) => isActive ? 'active' : ''}>{t('nav.contact')}</NavLink></li>
+                        <li>
+                            <NavLink
+                                to="/institucional"
+                                onClick={closeMobileMenu}
+                                className={({isActive}) => isActive ? 'active' : ''}
+                            >
+                                {t('nav.institutional')}
+                            </NavLink>
+                        </li>
+
+                        <li className={`mobile-nav-item-dropdown ${isMobileServicesOpen ? 'expanded' : ''}`}>
+                            <div className="mobile-nav-row">
+                                <NavLink
+                                    to="/servicos"
+                                    onClick={closeMobileMenu}
+                                    className={({isActive}) => (isActive || isServicesActive) ? 'active mobile-parent-link' : 'mobile-parent-link'}
+                                >
+                                    {t('nav.services')}
+                                </NavLink>
+                                <button
+                                    type="button"
+                                    className={`btn-mobile-arrow ${isMobileServicesOpen ? 'rotated' : ''}`}
+                                    onClick={toggleMobileServices}
+                                    aria-label="Expandir submenu de serviços"
+                                    aria-expanded={isMobileServicesOpen}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div className={`mobile-submenu ${isMobileServicesOpen ? 'expanded' : ''}`}>
+                                <NavLink
+                                    to="/servicos"
+                                    end
+                                    onClick={closeMobileMenu}
+                                    className={({isActive}) => `mobile-sub-link ${isActive ? 'active' : ''}`}
+                                >
+                                    <span className="mobile-sub-bullet"></span>
+                                    <span>{t('nav.allServices', 'Todos os Serviços')}</span>
+                                </NavLink>
+                                {serviceItems.map((item) => (
+                                    <NavLink
+                                        key={item.id}
+                                        to={item.path}
+                                        onClick={closeMobileMenu}
+                                        className={({isActive}) => `mobile-sub-link ${isActive ? 'active' : ''}`}
+                                    >
+                                        <span className="mobile-sub-bullet"></span>
+                                        <span>{t(`nav.servicesList.${item.key}`, item.id)}</span>
+                                    </NavLink>
+                                ))}
+                            </div>
+                        </li>
+
+                        <li>
+                            <NavLink
+                                to="/contato"
+                                onClick={closeMobileMenu}
+                                className={({isActive}) => isActive ? 'active' : ''}
+                            >
+                                {t('nav.contact')}
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
                 <div className="mobile-actions">

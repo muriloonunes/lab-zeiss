@@ -17,7 +17,7 @@ export function Alliance() {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="inst-alliance-content">
                         <div className="inst-eyebrow">
                             <span className="inst-eyebrow-line"></span>
                             <span className="inst-eyebrow-text">Aliança Estratégica</span>

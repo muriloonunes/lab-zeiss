@@ -2,6 +2,14 @@
   "nav": {
     "institutional": "About Us",
     "services": "Services",
+    "allServices": "All Services",
+    "servicesList": {
+      "cmm": "Coordinate Measuring (CMM)",
+      "optica": "Optical & Multisensor Inspection",
+      "raioX": "X-Ray Inspection (NDT)",
+      "scan3d": "3D Optical Digitization",
+      "reverseEng": "Reverse Engineering & CAD"
+    },
     "contact": "Contact",
     "requestQuote": "Request a Quote"
   },
@@ -136,6 +144,7 @@
       "title": "Precision for every industrial challenge.",
       "description": "Dimensional inspection, optical metrology, computed tomography, 3D scanning, and reverse engineering solutions powered by ZEISS technology reliability and SENAI technical excellence."
     },
+    "learnMore": "Learn more",
     "dimensional": {
       "category": "Coordinate dimensional inspection",
       "title": "Measure. Compare. Verify.",
@@ -216,6 +225,280 @@
           "description": "Reverse engineering to recreate the digital model directly from the physical part."
         }
       }
+    }
+  },
+  "serviceDetail": {
+    "breadcrumb": "Services",
+    "actions": {
+      "requestQuote": "Request a Quote for this Service",
+      "viewSpecs": "View Technical Specifications"
+    },
+    "sections": {
+      "audienceTitle": "Target Audience & Segments",
+      "applicationsTitle": "Typical Applications",
+      "deliverablesTitle": "Client Deliverables",
+      "installedCapacity": "Installed Capacity",
+      "specsTitle": "ZEISS Certified Equipment Specifications",
+      "specsDesc": "Bench test technical data and operational parameters guaranteed in the climate-controlled laboratory at the SENAI Ítalo Bologna Faculty.",
+      "operationalDifferentiators": "Operational Differentiators:"
+    },
+    "specLabels": {
+      "volume": "Measuring Volume (X/Y/Z)",
+      "accuracy": "Accuracy / Resolution (ISO 10360)",
+      "sensor": "Sensor / Probing System",
+      "software": "Metrology Software"
+    },
+    "services": {
+      "cmm": {
+        "categoryTag": "Tactile & Dimensional Metrology",
+        "title": "Coordinate Measuring (CMM) & GD&T",
+        "headline": "Sub-micrometric accuracy for critical geometries and rigorous geometric compliance.",
+        "overview": "Service dedicated to 3D geometric and linear characterization of high-demand mechanical parts. Utilizing continuous-contact CMM systems (tactile scanning), we evaluate form, orientation, and location deviations according to ISO 1101 and ASME Y14.5 standards.",
+        "targetAudience": [
+          "Precision machining and die & mold making facilities",
+          "Automotive OEMs and Tier 1 / Tier 2 suppliers",
+          "Aerospace and defense industries requiring formal traceability",
+          "Serial parts manufacturers requiring First Article Inspection (FAI)"
+        ],
+        "applications": [
+          "Dimensional and linear inspection of engine blocks and housings",
+          "Complete GD&T inspection (runout, circularity, flatness)",
+          "First Article Inspection (FAI) validation of machined components",
+          "Process repeatability and capability studies (Cp, Cpk)"
+        ],
+        "deliverables": [
+          "Detailed point-by-point analytical metrology report",
+          "Nominal vs. actual numerical comparison with tolerance bands",
+          "Certificate of conformity signed by the technical lead"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS PRISMO",
+            "category": "Ultra-High Precision Bridge CMM",
+            "volume": "700 × 900 × 500 mm",
+            "accuracy": "E0 starting at 0.9 + L/350 µm",
+            "sensor": "ZEISS VAST Gold & ZEISS RDS",
+            "software": "ZEISS CALYPSO with VAST Navigator, VAST Probing & FlyScan",
+            "features": [
+              "Zerodur®/Robax® glass-ceramic scales with 200 nm resolution impervious to thermal expansion",
+              "Computer-Aided Accuracy (CAA) for dynamic error correction during high-speed scanning (up to 300 mm/s)",
+              "ZEISS VAST Performance package with FlyScan (up to 70% cycle reduction) and QuickChange stylus system",
+              "C99m controller with automatic energy and compressed air shutdown (PowerSaver & AirSaver)"
+            ]
+          },
+          {
+            "name": "ZEISS DuraMax",
+            "category": "Shop Floor & Laboratory CMM",
+            "volume": "500 × 500 × 500 mm",
+            "accuracy": "E0 of 2.4 + L/300 µm",
+            "sensor": "ZEISS VAST XXT",
+            "software": "ZEISS CALYPSO",
+            "features": [
+              "100% all-electric operation with no compressed air supply required",
+              "Glass-ceramic scales guaranteeing thermal stability from 18 °C to 30 °C",
+              "ShopFloor base structure with IP54 dust and splash sealing",
+              "Ergonomic 3-sided and overhead part loading"
+            ]
+          }
+        ]
+      },
+      "optica": {
+        "categoryTag": "Non-Contact Multisensor Metrology",
+        "title": "Combined Optical & Tactile Inspection",
+        "headline": "High-resolution non-contact measurement for flexible components and micro-geometries.",
+        "overview": "Integrates high-definition optical cameras with telecentric lenses and continuous tactile probing on a single machine. Eliminates contact pressure deformation on elastomers, thin polymers, technical textiles, and electronic circuits.",
+        "targetAudience": [
+          "Medical device, implant, and prosthesis manufacturers",
+          "Thin-walled injection molded plastic parts manufacturers",
+          "Electronics and precision micro-connector industries",
+          "Technical textile and polymer packaging sectors"
+        ],
+        "applications": [
+          "Non-contact inspection of micro-holes and sharp edges",
+          "Evaluation of micro-deformations and radii on elastic components",
+          "Rapid 2D/3D combined measurement in a single setup without reclamping"
+        ],
+        "deliverables": [
+          "Optical dimensional analysis report with magnified images",
+          "2D contour deviation maps against vector drawings (DXF/CAD)",
+          "Technical certificate of edge and profile conformity"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS O-INSPECT",
+            "category": "Multisensor & Optical Measuring System",
+            "volume": "500 × 400 × 300 mm",
+            "accuracy": "1D: 1.4 + L/250 µm | 2D: 1.6 + L/250 µm | 3D: 1.9 + L/250 µm (ISO 10360)",
+            "sensor": "ZEISS Discovery.V12 Camera + VAST XXT Contact Sensor",
+            "software": "ZEISS CALYPSO Multisensor",
+            "features": [
+              "ZEISS Discovery.V12 zoom lens with 4× wider field of view and zero peripheral distortion",
+              "Versatile illumination system with 4 concentric rings and blue/red LEDs across 8 independent segments",
+              "Continuous tactile probing with VAST XXT supporting star and radial stylus configurations",
+              "Ready for coupling with ZEISS DotScan chromatic white light sensor",
+              "Pneumatic vibration isolation against ground structural vibrations"
+            ]
+          }
+        ]
+      },
+      "raio-x": {
+        "categoryTag": "Non-Destructive Testing (NDT)",
+        "title": "X-Ray Inspection & Structural Analysis",
+        "headline": "Internal volumetric investigation and integrity verification without sectioning or destroying samples.",
+        "overview": "2D radioscopic inspection and non-destructive tomography to identify hidden internal discontinuities. Evaluates cast components, welds, and sealed assemblies based on material density and radiological absorption.",
+        "targetAudience": [
+          "Aluminum, cast iron, and specialty alloy foundries",
+          "Manufacturers of critical welded assemblies for energy and oil & gas",
+          "Assemblers of sealed or shielded electromechanical devices",
+          "Forensic engineering and warranty failure analysis labs"
+        ],
+        "applications": [
+          "Detection of internal porosities, gas voids, shrinkage cavities, and cracks",
+          "Inspection of weld root penetration and quality",
+          "Component positioning verification inside sealed enclosures",
+          "Mapping of metallurgical inclusions and discontinuities"
+        ],
+        "deliverables": [
+          "High-resolution digital radiographs with defect and void identification",
+          "Porosity analysis report compliant with industrial standards",
+          "Technical structural integrity inspection report"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS BOSELLO MAX",
+            "category": "Industrial 2D Radioscopic & CT-Ready System",
+            "volume": "Inspection cylinder Ø 700 × 1200 mm up to Ø 1000 × 2000 mm | Parts up to 250 kg",
+            "accuracy": "High-resolution microfocus for submillimeter crack, void, and porosity detection",
+            "sensor": "8\" to 16\" digital Flat Panel detector + High-penetration X-ray tube (160 to 450 kV)",
+            "software": "ZEISS Bosello Integrated Software / ZEISS INSPECT X-Ray (CT-Ready)",
+            "features": [
+              "High penetration capability for light aluminum alloys and cast iron/steel parts up to 50 mm thick",
+              "360° rotary table extending outside the cabinet doors for ergonomic crane/forklift loading",
+              "Exclusive software-controlled virtual C-arm configuration for precise source-detector alignment",
+              "CT-Ready: prepared for tomographic scan acquisition and 3D reconstruction with defect spatial analysis",
+              "Automated CNC inspection cycles and Automatic Defect Recognition (ADR) according to ASTM standards",
+              "Self-contained cabinet with fully integrated radiation shielding and real-time operator viewing"
+            ]
+          }
+        ]
+      },
+      "digitalizacao-3d": {
+        "categoryTag": "3D Scanning & Photogrammetry",
+        "title": "3D Optical Scanning & Color Map Analysis",
+        "headline": "Full-field non-contact geometric capture for dimensional inspection and tooling verification.",
+        "overview": "High-density 3D digitization using structured blue light and portable laser triangulation. Generates high-fidelity point clouds for full-surface comparison against the nominal CAD model.",
+        "targetAudience": [
+          "Automotive OEMs, stamping plants, and progressive die tooling makers",
+          "Foundries and forging facilities for medium-to-large components",
+          "Footwear, packaging, and consumer products with complex organic geometries",
+          "Quality control teams requiring on-site shop floor inspection"
+        ],
+        "applications": [
+          "Full 3D deviation color-map reports (Nominal CAD vs. Actual Scan)",
+          "Rapid inspection of warpage, twist, and spring-back",
+          "In-situ scanning of large components that cannot be moved",
+          "Generation of watertight polygonal STL meshes for dimensional control"
+        ],
+        "deliverables": [
+          "3D color map deviation report illustrating excess and deficient material zones",
+          "Cleaned, aligned polygon mesh (STL, OBJ, PLY)",
+          "Full freeform surface dimensional deviation report"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS ATOS Q",
+            "category": "Structured Blue Light 3D Optical Digitizer",
+            "volume": "Interchangeable measuring volumes (MV 50, 100, 170, 270, 350, 500) | 100 × 70 to 500 × 370 mm²",
+            "accuracy": "Point spacing from 0.03 to 0.15 mm | Resolution up to 2 × 12 million points per scan",
+            "sensor": "Stereoscopic cameras with Blue Light Equalizer and Triple Scan Principle",
+            "software": "ZEISS INSPECT Optical 3D",
+            "features": [
+              "Triple Scan Principle: captures 3 distinct perspectives per shot, ideal for shiny, reflective, and undercut areas",
+              "Blue Light Equalizer with ultra-fast fringe projection insensitive to ambient workshop lighting",
+              "Sealed 4 kg housing resistant to dust and splashes for reliable shop floor operation",
+              "Ultra-high-speed data transmission over a 10-meter fiber optic cable",
+              "Tripod manual operation or semi-automated inspection on the motorized GOM ROT 350 rotary table"
+            ]
+          },
+          {
+            "name": "ZEISS T-SCAN hawk 2",
+            "category": "Handheld Laser 3D Scanner",
+            "volume": "Flexible and scalable volume: from small components to multi-meter structures via Satellite Mode",
+            "accuracy": "Volumetric accuracy 0.02 mm + 0.015 mm/m (acceptance test based on ISO 10360)",
+            "sensor": "Multiple blue laser crosses + dedicated single line for deep channels and pockets (Eye-safe Class 2)",
+            "software": "ZEISS INSPECT",
+            "features": [
+              "Innovative Satellite Mode: large object scanning without separate photogrammetry or coded target setups",
+              "Integrated distance radar with red laser projection for real-time optimal working distance feedback",
+              "Ultralight ergonomic design (< 1 kg) with complete 4-button handle control without touching the computer",
+              "Proven traceability with DAkkS-calibrated carbon fiber length artifacts (ISO/IEC 17025)",
+              "Rapid single-shot on-site recalibration using the precision HyperScale bar",
+              "High performance on dark, reflective, or machined surfaces without mandatory anti-reflective spray"
+            ]
+          }
+        ]
+      },
+      "engenharia-reversa": {
+        "categoryTag": "Parametric Digital Modeling",
+        "title": "Reverse Engineering & CAD Reconstruction",
+        "headline": "Transforming raw scan data into production-ready parametric solid models.",
+        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or modified empirically in the toolroom.",
+        "targetAudience": [
+          "Industrial plant maintenance needing replacement of obsolete legacy parts",
+          "Mining and agribusiness operations with imported heavy machinery",
+          "High-performance product and prototype developers",
+          "Tool and mold manufacturers needing original geometry recovery"
+        ],
+        "applications": [
+          "Parametric CAD modeling from polygon meshes (Mesh to CAD)",
+          "Recovery of worn or broken components with missing geometry reconstruction",
+          "Geometric adaptation for modernization and operational efficiency upgrades",
+          "Extraction of design intents, 2D cross-sections, and feature trees"
+        ],
+        "deliverables": [
+          "Parametric solid and surface CAD models in STEP, IGES, or Parasolid formats",
+          "2D manufacturing technical drawings in PDF and DWG with GD&T",
+          "CAD deviation report comparing reconstructed model against measured scan mesh"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS Reverse Engineering Ecosystem",
+            "category": "Specialized CAD Modeling & Reconstruction Software Suite",
+            "volume": "No model size limitation",
+            "accuracy": "Class-A surfaces with G1/G2 curvature continuity",
+            "sensor": "Powered by 3D scan data from ZEISS ATOS Q and T-SCAN Hawk 2",
+            "software": "ZEISS Reverse Engineering",
+            "features": [
+              "Automatic surface segmentation for regular geometric entities (planes, cylinders, cones)",
+              "Precision freeform surface fitting with real-time residual deviation control",
+              "Native export compatibility with SolidWorks, Siemens NX, CATIA, and Autodesk Inventor"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Support & Technical Inquiry",
+      "title": "Start your metrology project with our team.",
+      "description": "Submit your component requirements for a quote or request a technical visit to the laboratory facilities at the SENAI Ítalo Bologna Faculty."
+    },
+    "form": {
+      "title": "Request a Quote or Analysis",
+      "subtitle": "Fill in the basic information about your component or dimensional requirement. We will get back to you within 24 business hours.",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Your name",
+      "companyLabel": "Company / Industry",
+      "companyPlaceholder": "Company name or brand",
+      "emailLabel": "Corporate Email",
+      "phoneLabel": "Phone / WhatsApp",
+      "serviceLabel": "Primary Service of Interest",
+      "otherOption": "Other / Dimensional Consulting",
+      "messageLabel": "Project Description / Tolerances",
+      "messagePlaceholder": "Provide details such as approximate dimensions, part material, applicable standard, and desired deadlines.",
+      "submitButton": "Submit Technical Request",
+      "sentNotice": "Request sent successfully! Our technical team will get in touch."
     }
   },
   "footer": {

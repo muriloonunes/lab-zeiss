@@ -1,4 +1,3 @@
-import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {QuoteButton} from '../../components/QuoteButton/QuoteButton';
@@ -12,30 +11,34 @@ export function Services() {
     const {t} = useTranslation();
     const navigate = useNavigate();
 
-    const DuraMaxImages: CarouselImage[] = [
-        {src: '/images/DuraMax1.jpg', alt: 'DuraMax'},
-        {src: '/images/DuraMax2.jpg', alt: 'DuraMax', objectPosition: 'center 70%'},
-    ]
+    const DuraMaxImages: CarouselImage[] = [{src: '/images/DuraMax1.jpg', alt: 'DuraMax'}, {
+        src: '/images/DuraMax2.jpg',
+        alt: 'DuraMax',
+        objectPosition: 'center 70%'
+    },];
 
-    const OInspectImages: CarouselImage[] = [
-        {src: '/images/OInspect1.jpg', alt: 'OInspect', objectPosition: 'center 63%'},
-        {src: '/images/OInspect2.jpg', alt: 'OInspect', objectPosition: 'center 57%'},
-    ]
+    const OInspectImages: CarouselImage[] = [{
+        src: '/images/OInspect1.jpg',
+        alt: 'OInspect',
+        objectPosition: 'center 63%'
+    }, {src: '/images/OInspect2.jpg', alt: 'OInspect', objectPosition: 'center 57%'},];
 
-    const BoselloImages: CarouselImage[] = [
-        {src: '/images/Bosello1.jpg', alt: 'Bosello'},
-        {src: '/images/Bosello2.jpg', alt: 'Bosello', objectPosition: 'center 70%'},
-    ]
+    const BoselloImages: CarouselImage[] = [{src: '/images/Bosello1.jpg', alt: 'Bosello'}, {
+        src: '/images/Bosello2.jpg',
+        alt: 'Bosello',
+        objectPosition: 'center 70%'
+    },];
 
-    const ScannerImages: CarouselImage[] = [
-        {src: '/images/AtosQ1.jpg', alt: 'Atos Q'},
-        {src: '/images/AtosQ2.jpg', alt: 'Atos Q', objectPosition: 'center 60%'},
-    ]
+    const ScannerImages: CarouselImage[] = [{src: '/images/AtosQ1.jpg', alt: 'Atos Q'}, {
+        src: '/images/AtosQ2.jpg',
+        alt: 'Atos Q',
+        objectPosition: 'center 60%'
+    },];
 
-    const ReverseEngineeringImages: CarouselImage[] = [
-        {src: '/images/ZRE1.png', alt: 'Engenharia Reversa'},
-        {src: '/images/ZRE2.png', alt: 'Engenharia Reversa'},
-    ]
+    const ReverseEngineeringImages: CarouselImage[] = [{
+        src: '/images/ZRE1.png',
+        alt: 'Engenharia Reversa'
+    }, {src: '/images/ZRE2.png', alt: 'Engenharia Reversa'},];
 
     return (
         <div className="services-page">
@@ -73,6 +76,18 @@ export function Services() {
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.dimensional.applications.gdt')}</div>
                             </div>
+
+                            <div className="service-action">
+                                <Link to="/servicos/cmm" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="service-visual-side">
@@ -80,15 +95,6 @@ export function Services() {
                                 <ImageCarousel images={DuraMaxImages}/>
                             </div>
                         </div>
-                    </div>
-                    <div className="service-meta-footer">
-                        <Link to="/servicos/cmm" className="btn-mais">
-                            <span>Ver Especificações Completas</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </Link>
                     </div>
                 </div>
             </section>
@@ -109,6 +115,18 @@ export function Services() {
                                     className="app-dot"></span>{t('services.optical.applications.surface')}</div>
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.optical.applications.fineFeatures')}</div>
+                            </div>
+
+                            <div className="service-action">
+                                <Link to="/servicos/optica" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
 
@@ -140,6 +158,18 @@ export function Services() {
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.xray.applications.foreign')}</div>
                             </div>
+
+                            <div className="service-action">
+                                <Link to="/servicos/raio-x" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="service-visual-side">
@@ -164,11 +194,24 @@ export function Services() {
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.scanning.applications.fieldScanning')}</div>
                                 <div className="app-item"><span
-                                    className="app-dot"></span>{t('services.scanning.applications.highResolution')}</div>
+                                    className="app-dot"></span>{t('services.scanning.applications.highResolution')}
+                                </div>
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.scanning.applications.colorMap')}</div>
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.scanning.applications.digitization')}</div>
+                            </div>
+
+                            <div className="service-action">
+                                <Link to="/servicos/digitalizacao-3d" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
 
@@ -199,6 +242,18 @@ export function Services() {
                                     className="app-dot"></span>{t('services.reverse.applications.tooling')}</div>
                                 <div className="app-item"><span
                                     className="app-dot"></span>{t('services.reverse.applications.optimization')}</div>
+                            </div>
+
+                            <div className="service-action">
+                                <Link to="/servicos/engenharia-reversa" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
                             </div>
                         </div>
 

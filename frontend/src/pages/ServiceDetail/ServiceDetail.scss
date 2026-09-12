@@ -6,7 +6,7 @@
   min-height: 100vh;
   background-color: vars.$color-bg-light;
   overflow-x: hidden;
-  padding-top: 5.5rem;
+  padding-top: 4.5rem;
   color: vars.$color-text-dark;
 
   @media (max-width: 768px) {
@@ -33,7 +33,7 @@
   transform: translateZ(0);
 
   &--top {
-    top: 3rem;
+    top: 2rem;
     left: 10%;
     width: 500px;
     height: 450px;
@@ -55,50 +55,87 @@
   margin: 0 auto;
   width: 100%;
   max-width: vars.$container-max-width;
-  padding: 0 clamp(1.5rem, 1.5vw, 6rem);
+  padding: 0 clamp(1.5rem, 3vw, 4.5rem);
+}
+
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-top: 2px solid rgba(15, 23, 42, 0.14);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+  transition: all 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+    pointer-events: none;
+  }
 }
 
 .detail-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.85rem;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.84rem;
   font-weight: 600;
 
   a {
     color: vars.$color-primary;
     text-decoration: none;
-    &:hover { text-decoration: underline; }
+    transition: color 0.2s ease;
+    &:hover {
+      text-decoration: underline;
+      color: vars.$color-primary-hover;
+    }
   }
 
   span { color: vars.$color-text-muted; }
-  .current { color: vars.$color-text-dark; }
+  .current { color: vars.$color-text-dark; font-weight: 700; }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+  }
 }
 
 .detail-tag {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: #0284c7;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
 }
 
-/* Hero */
+/* Hero Section */
 .detail-hero-section {
-  padding: clamp(2rem, 3.5vw, 3.5rem) 0 clamp(3rem, 4vw, 4.5rem);
+  padding: 0.5rem 0 2.25rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 0 2.5rem;
+  }
 
   .detail-hero-grid {
     display: grid;
     grid-template-columns: 1.15fr 0.95fr;
-    gap: clamp(2.5rem, 4.5vw, 5rem);
+    gap: clamp(2rem, 3.5vw, 3.5rem);
     align-items: center;
 
     @media (max-width: 1024px) {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 2rem;
     }
   }
 
@@ -110,35 +147,36 @@
 
   .detail-title {
     font-family: vars.$font-headline;
-    font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+    font-size: clamp(2.1rem, 3.2vw, 2.9rem);
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.18;
+    line-height: 1.15;
     background: linear-gradient(135deg, vars.$color-bg-dark 15%, vars.$color-primary 65%, #0284c7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 0.3rem 0 1rem 0;
+    margin: 0 0 0.65rem 0;
   }
 
   .detail-headline {
-    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    font-size: clamp(1.02rem, 1.15vw, 1.15rem);
     font-weight: 600;
     color: vars.$color-primary;
-    line-height: 1.55;
-    margin: 0 0 1.25rem 0;
+    line-height: 1.45;
+    margin: 0 0 0.75rem 0;
   }
 
   .detail-overview {
-    font-size: 1.02rem;
-    line-height: 1.7;
+    font-size: 0.96rem;
+    line-height: 1.62;
     color: vars.$color-text-body;
-    margin: 0 0 2rem 0;
+    margin: 0 0 1.5rem 0;
+    max-width: 680px;
   }
 
   .detail-hero-actions {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
     flex-wrap: wrap;
 
     @media (max-width: 600px) {
@@ -150,22 +188,83 @@
 
   .detail-hero-visual {
     width: 100%;
+
     .detail-carousel-card {
-      padding: 0.65rem;
-      border-radius: 20px;
+      padding: 0.45rem;
+      border-radius: 16px;
+      overflow: hidden;
+
+      .service-img-wrapper {
+        border-radius: 12px;
+        aspect-ratio: 16 / 10.5;
+        max-height: 420px;
+      }
     }
+  }
+}
+
+.btn-mais {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: vars.$color-text-dark;
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  background: vars.$btn-glass-bg;
+  backdrop-filter: blur(vars.$btn-glass-blur);
+  -webkit-backdrop-filter: blur(vars.$btn-glass-blur);
+  border: 1px solid vars.$btn-glass-border;
+  box-shadow: vars.$btn-glass-shadow,
+              inset 0 1px 0 vars.$btn-glass-inset-top,
+              inset 0 -1px 0 vars.$btn-glass-inset-bottom,
+              inset 0 0 8px vars.$btn-glass-inset-glow;
+  transition: all 0.3s vars.$ease-bounce;
+
+  .btn-icon {
+    transition: transform 0.25s vars.$ease-bounce;
+  }
+
+  &:hover {
+    background: vars.$btn-glass-bg-hover;
+    border-color: rgba(20, 30, 140, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: vars.$btn-glass-shadow-hover,
+                inset 0 1px 0 vars.$btn-glass-inset-top-hover,
+                inset 0 -1px 0 vars.$btn-glass-inset-bottom-hover,
+                inset 0 0 12px vars.$btn-glass-inset-glow;
+
+    .btn-icon {
+      transform: translateY(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 }
 
 /* Escopo (3 Colunas) */
 .detail-scope-section {
-  padding: clamp(3rem, 4.5vw, 4.5rem) 0;
+  padding: clamp(2.25rem, 3.5vw, 3.25rem) 0;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
+
+  @media (max-width: 768px) {
+    padding: 2.5rem 0;
+  }
 
   .scope-cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
 
     @media (max-width: 992px) {
       grid-template-columns: 1fr;
@@ -173,19 +272,38 @@
   }
 
   .scope-card {
-    padding: 2.25rem 2rem;
+    padding: 1.5rem 1.6rem;
     display: flex;
     flex-direction: column;
 
-    .scope-title {
-      font-family: vars.$font-headline;
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: vars.$color-text-dark;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
+    .scope-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.6rem;
       border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+
+      .scope-icon-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(20, 30, 140, 0.08);
+        color: vars.$color-primary;
+        flex-shrink: 0;
+      }
+
+      .scope-title {
+        font-family: vars.$font-headline;
+        font-size: 1.08rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: vars.$color-text-dark;
+        margin: 0;
+      }
     }
 
     .scope-list {
@@ -194,22 +312,22 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 0.65rem;
 
       li {
         display: flex;
         align-items: flex-start;
-        gap: 0.65rem;
-        font-size: 0.92rem;
-        line-height: 1.6;
+        gap: 0.6rem;
+        font-size: 0.89rem;
+        line-height: 1.5;
         color: vars.$color-text-body;
 
         .scope-dot {
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
           background-color: vars.$color-primary;
-          margin-top: 0.5rem;
+          margin-top: 0.45rem;
           flex-shrink: 0;
         }
       }
@@ -219,26 +337,30 @@
 
 /* Seção de Máquinas / Specs */
 .detail-tech-section {
-  padding: clamp(3.5rem, 5vw, 5.5rem) 0;
+  padding: clamp(2.5rem, 3.8vw, 3.75rem) 0;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
 
+  @media (max-width: 768px) {
+    padding: 2.75rem 0;
+  }
+
   .section-header-detail {
-    max-width: 780px;
-    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-bottom: 1.75rem;
 
     .detail-tech-title {
       font-family: vars.$font-headline;
-      font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+      font-size: clamp(1.6rem, 2.3vw, 2.2rem);
       font-weight: 800;
       letter-spacing: -0.025em;
       color: vars.$color-text-dark;
-      margin: 0.4rem 0 0.75rem 0;
+      margin: 0.2rem 0 0.5rem 0;
     }
 
     .detail-tech-desc {
       color: vars.$color-text-body;
-      font-size: 1.02rem;
-      line-height: 1.65;
+      font-size: 0.96rem;
+      line-height: 1.55;
       margin: 0;
     }
   }
@@ -246,23 +368,23 @@
   .machines-specs-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .machine-spec-card {
-    padding: 2.25rem 2.5rem;
+    padding: 1.75rem 2rem;
     border-top: 2px solid vars.$color-primary;
 
     @media (max-width: 680px) {
-      padding: 1.75rem 1.5rem;
+      padding: 1.5rem 1.25rem;
     }
 
     .machine-header-strip {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 
       .machine-title-group {
@@ -272,14 +394,15 @@
 
         .machine-name {
           font-family: vars.$font-headline;
-          font-size: 1.5rem;
+          font-size: 1.35rem;
           font-weight: 800;
           color: vars.$color-text-dark;
           margin: 0;
         }
 
+        .machine-cat-badge,
         .machine-cat {
-          font-size: 0.85rem;
+          font-size: 0.84rem;
           font-weight: 700;
           color: vars.$color-primary;
         }
@@ -289,8 +412,8 @@
     .specs-parameters-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.75rem;
-      margin-bottom: 2rem;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
 
       @media (max-width: 1024px) {
         grid-template-columns: repeat(2, 1fr);
@@ -303,10 +426,10 @@
       .param-item {
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.25rem;
 
         .param-label {
-          font-size: 0.76rem;
+          font-size: 0.74rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -314,26 +437,26 @@
         }
 
         .param-value {
-          font-size: 0.95rem;
+          font-size: 0.92rem;
           font-weight: 700;
           color: vars.$color-text-dark;
-          line-height: 1.45;
+          line-height: 1.4;
         }
       }
     }
 
     .machine-features-strip {
-      padding-top: 1.25rem;
+      padding-top: 1rem;
       border-top: 1px solid rgba(15, 23, 42, 0.06);
 
       .features-label {
         display: block;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: #0284c7;
-        margin-bottom: 0.65rem;
+        margin-bottom: 0.5rem;
       }
 
       .features-list {
@@ -342,73 +465,23 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.45rem;
+        gap: 0.4rem;
 
         li {
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           color: vars.$color-text-body;
-          position: relative;
-          padding-left: 1.2rem;
+          line-height: 1.45;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
 
-          &::before {
-            content: '—';
-            position: absolute;
-            left: 0;
-            color: vars.$color-primary;
-            font-weight: 700;
+          .feature-check-icon {
+            color: #0284c7;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-right: 0.15rem;
           }
         }
-      }
-    }
-  }
-}
-
-/* CTA */
-.detail-cta-section {
-  padding: 0 0 clamp(4.5rem, 7vw, 6.5rem) 0;
-
-  .detail-cta-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
-    padding: clamp(2.5rem, 3.5vw, 4rem) clamp(2rem, 3vw, 3.5rem);
-    border-radius: 16px;
-    border-top: 2px solid vars.$color-primary;
-
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2rem;
-    }
-
-    .cta-content {
-      max-width: 760px;
-
-      .cta-title {
-        font-family: vars.$font-headline;
-        font-size: clamp(1.8rem, 2.5vw, 2.4rem);
-        font-weight: 800;
-        letter-spacing: -0.025em;
-        line-height: 1.22;
-        color: vars.$color-text-dark;
-        margin: 0.4rem 0 0.85rem 0;
-      }
-
-      .cta-description {
-        color: vars.$color-text-body;
-        font-size: 1.05rem;
-        line-height: 1.65;
-        font-weight: 400;
-        margin: 0;
-      }
-    }
-
-    .cta-actions {
-      flex-shrink: 0;
-      @media (max-width: 600px) {
-        width: 100%;
-        .btn-orcamento { width: 100%; justify-content: center; }
       }
     }
   }

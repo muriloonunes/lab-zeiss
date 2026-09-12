@@ -2,6 +2,14 @@
   "nav": {
     "institutional": "Über uns",
     "services": "Dienstleistungen",
+    "allServices": "Alle Dienstleistungen",
+    "servicesList": {
+      "cmm": "Koordinatenmesstechnik (KMG)",
+      "optica": "Optische & Multisensor-Prüfung",
+      "raioX": "Röntgenprüfung (ZfP)",
+      "scan3d": "Optische 3D-Digitalisierung",
+      "reverseEng": "Reverse Engineering & CAD"
+    },
     "contact": "Kontakt",
     "requestQuote": "Angebot anfordern"
   },
@@ -136,6 +144,7 @@
       "title": "Präzision für jede industrielle Herausforderung.",
       "description": "Lösungen für dimensionelle Prüfung, optische Messtechnik, industrielle Computertomographie, 3D-Digitalisierung und Reverse Engineering – gestützt auf die Zuverlässigkeit der ZEISS-Technologie und die technische Kompetenz des SENAI."
     },
+    "learnMore": "Mehr erfahren",
     "dimensional": {
       "category": "Taktile Koordinatenmesstechnik",
       "title": "Messen. Vergleichen. Nachweisen.",
@@ -216,6 +225,280 @@
           "description": "Reverse Engineering zur Neuerstellung des digitalen Modells anhand des realen Teils."
         }
       }
+    }
+  },
+  "serviceDetail": {
+    "breadcrumb": "Dienstleistungen",
+    "actions": {
+      "requestQuote": "Angebot für diese Dienstleistung anfordern",
+      "viewSpecs": "Technische Spezifikationen ansehen"
+    },
+    "sections": {
+      "audienceTitle": "Zielgruppe & Branchen",
+      "applicationsTitle": "Typische Anwendungen",
+      "deliverablesTitle": "Kunden-Lieferumfang",
+      "installedCapacity": "Installierte Kapazität",
+      "specsTitle": "Spezifikationen der zertifizierten ZEISS-Messgeräte",
+      "specsDesc": "Technische Labordaten und garantierte Betriebsparameter im klimatisierten Messlabor der SENAI Ítalo Bologna Fakultät.",
+      "operationalDifferentiators": "Betriebliche Vorteile:"
+    },
+    "specLabels": {
+      "volume": "Messbereich (X/Y/Z)",
+      "accuracy": "Genauigkeit / Auflösung (ISO 10360)",
+      "sensor": "Sensorsystem / Tastsystem",
+      "software": "Messtechnik-Software"
+    },
+    "services": {
+      "cmm": {
+        "categoryTag": "Taktile & Dimensionelle Messtechnik",
+        "title": "Koordinatenmesstechnik (KMG) & GD&T",
+        "headline": "Submikrometer-Genauigkeit für anspruchsvolle Geometrien und strenge Form- und Lagetoleranzen.",
+        "overview": "Dienstleistung zur präzisen dreidimensionalen geometrischen und linearen Charakterisierung hochbeanspruchter mechanischer Bauteile. Mittels kontinuierlichem taktilem Scanning erfassen wir Form-, Richtungs- und Lageabweichungen nach ISO 1101 und ASME Y14.5.",
+        "targetAudience": [
+          "Präzisionszerspanung und Werkzeug- und Formenbau",
+          "Automobilhersteller und Zulieferer (Tier 1 / Tier 2)",
+          "Luft- und Raumfahrt sowie Verteidigungsindustrie mit lückenloser Rückführbarkeit",
+          "Serienfertiger mit Bedarf an Erstmusterprüfberichten (EMPB / FAI)"
+        ],
+        "applications": [
+          "Dimensionelle und lineare Prüfung von Motorblöcken und Gehäusen",
+          "Vollständige GD&T-Inspektion (Rundlauf, Zylinderform, Ebenheit)",
+          "Erstmusterprüfung (EMPB / FAI) bearbeiteter Teile",
+          "Wiederholpräzisions- und Prozessfähigkeitsanalysen (Cp, Cpk)"
+        ],
+        "deliverables": [
+          "Detaillierter punktweiser metrologischer Prüfbericht",
+          "Numerischer Soll-Ist-Vergleich mit Toleranzbändern",
+          "Konformitätszertifikat unterzeichnet von der technischen Laborleitung"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS PRISMO",
+            "category": "Ultrahochpräzises Portal-Koordinatenmessgerät",
+            "volume": "700 × 900 × 500 mm",
+            "accuracy": "E0 ab 0,9 + L/350 µm",
+            "sensor": "ZEISS VAST Gold & ZEISS RDS",
+            "software": "ZEISS CALYPSO mit VAST Navigator, VAST Probing & FlyScan",
+            "features": [
+              "Glaskeramik-Maßstäbe Robax® mit 200 nm Auflösung – thermisch neutral und dehnungsfrei",
+              "Computer-Aided Accuracy (CAA) zur dynamischen Fehlerkorrektur bei High-Speed-Scanning (bis zu 300 mm/s)",
+              "ZEISS VAST Performance Paket mit FlyScan (bis zu 70 % Zykluszeitreduzierung) und automatischem Tasterwechsler QuickChange",
+              "C99m Steuerung mit automatischer Energie- und Druckluftabschaltung (PowerSaver & AirSaver)"
+            ]
+          },
+          {
+            "name": "ZEISS DuraMax",
+            "category": "KMG für Fertigungsumgebung und Labor",
+            "volume": "500 × 500 × 500 mm",
+            "accuracy": "E0 von 2,4 + L/300 µm",
+            "sensor": "ZEISS VAST XXT",
+            "software": "ZEISS CALYPSO",
+            "features": [
+              "100 % elektrischer Betrieb ohne erforderliche Druckluftversorgung",
+              "Glaskeramik-Maßstäbe mit garantierter thermischer Stabilität von 18 °C bis 30 °C",
+              "ShopFloor-Grundaufbau mit IP54 Staub- und Spritzwasserschutz",
+              "Ergonomische Bauteilbeladung von drei Seiten und von oben"
+            ]
+          }
+        ]
+      },
+      "optica": {
+        "categoryTag": "Berührungslose Multisensor-Messtechnik",
+        "title": "Kombinierte optische & taktile Prüfung",
+        "headline": "Hochauflösende berührungslose Messung für elastische Bauteile und Mikrogeometrien.",
+        "overview": "Kombiniert hochauflösende optische Kameras mit telezentrischen Objektiven und kontinuierlicher taktiler Antastung in einem System. Verhindert Verformungen durch Antastkräfte bei Elastomeren, dünnwandigen Polymeren, technischen Textilien und elektronischen Schaltungen.",
+        "targetAudience": [
+          "Medizintechnik, Implantat- und Prothesenhersteller",
+          "Hersteller dünnwandiger Kunststoffspritzgussteile",
+          "Elektro- und Elektronikindustrie sowie Mikrokontakt-Fertigung",
+          "Technische Textilien und Polymer-Verpackungsindustrie"
+        ],
+        "applications": [
+          "Berührungslose Prüfung von Mikrobohrungen und scharfen Kanten",
+          "Analyse von Mikro-Verformungen und Radien an elastischen Komponenten",
+          "Schnelle kombinierte 2D/3D-Messung in einer Aufspannung ohne Umrüsten"
+        ],
+        "deliverables": [
+          "Optischer Maßprüfbericht mit hochauflösenden vergrößerten Detailbildern",
+          "2D-Konturabweichungskarten gegen Vektordaten (DXF/CAD)",
+          "Technisches Gutachten zur Kanten- und Profilkonformität"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS O-INSPECT",
+            "category": "Optisches & Multisensor-Messsystem",
+            "volume": "500 × 400 × 300 mm",
+            "accuracy": "1D: 1,4 + L/250 µm | 2D: 1,6 + L/250 µm | 3D: 1,9 + L/250 µm (ISO 10360)",
+            "sensor": "ZEISS Discovery.V12 Kamera + VAST XXT Kontaktsensor",
+            "software": "ZEISS CALYPSO Multisensor",
+            "features": [
+              "ZEISS Discovery.V12 Zoom-Optik mit 4-fach größerem Sichtfeld und verzerrungsfreier Randerfassung",
+              "Vielseitiges 4-Ring-Beleuchtungssystem mit blauen und roten LEDs in 8 unabhängigen Segmenten",
+              "Kontinuierliche taktile Messung mit VAST XXT für Stern- und Radialtasterkonfigurationen",
+              "Vorbereitet zur Anbindung des chromatischen Weißlichtsensors ZEISS DotScan",
+              "Pneumatische Schwingungsisolierung gegen Bodenvibrationen"
+            ]
+          }
+        ]
+      },
+      "raio-x": {
+        "categoryTag": "Zerstörungsfreie Prüfung (ZfP / NDT)",
+        "title": "Röntgenprüfung & Strukturanalyse",
+        "headline": "Volumetrische Innenprüfung und Strukturintegrität ohne Zerstörung oder Trennung der Probe.",
+        "overview": "2D-Radioskopie und zerstörungsfreie Computertomographie zur Erkennung verdeckter innerer Fehlstellen. Bewertet Gussteile, Schweißnähte und versiegelte Baugruppen basierend auf Röntgendichte und Materialabsorption.",
+        "targetAudience": [
+          "Aluminium-, Grauguss- und Speziallegierungs-Gießereien",
+          "Hersteller sicherheitskritischer Schweißkonstruktionen für Energie und Öl & Gas",
+          "Montagebetriebe für versiegelte oder gekapselte elektromechanische Module",
+          "Schadensanalyse- und Forensik-Labore für Gewährleistungsprüfungen"
+        ],
+        "applications": [
+          "Erkennung von Lunkern, Poren, Gasblasen und inneren Rissen",
+          "Prüfung von Wurzeldurchschweißung und Schweißnahtgüte",
+          "Lage- und Vollständigkeitsprüfung in geschlossenen Baugruppen",
+          "Erfassung metallurgischer Einschlüsse und Gefügeinhomogenitäten"
+        ],
+        "deliverables": [
+          "Hochauflösende digitale Röntgenbilder mit Fehlstellenkennzeichnung",
+          "Porositätsanalyse-Prüfbericht nach internationalen Industriestandards",
+          "Technisches Gutachten zur inneren Strukturintegrität"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS BOSELLO MAX",
+            "category": "Industrielles 2D-Radioskopie- & CT-Ready-System",
+            "volume": "Prüfzylinder Ø 700 × 1200 mm bis Ø 1000 × 2000 mm | Bauteilgewicht bis 250 kg",
+            "accuracy": "Hochauflösender Mikrofokus zur Detektion submillimetergroßer Risse, Poren und Lunker",
+            "sensor": "Digitaler Flachbilddetektor (Flat Panel) 8\" bis 16\" + Hochleistungs-Röntgenröhre (160 bis 450 kV)",
+            "software": "Integrierte ZEISS Bosello Software / ZEISS INSPECT X-Ray (CT-Ready)",
+            "features": [
+              "Hohe Durchstrahlungsleistung für Leichtmetalle und Stahl-/Gussteile bis zu 50 mm Wandstärke",
+              "360°-Drehtisch mit Außenausfahrbarkeit vor die Schutztüren für ergonomische Kranbeladung",
+              "Softwaregesteuerter virtueller C-Bogen zur hochpräzisen Ausrichtung zwischen Quelle und Detektor",
+              "CT-Ready: vorbereitet für tomographische 3D-Rekonstruktionen und räumliche Defektanalysen",
+              "Automatisierte CNC-Prüfabläufe und automatische Fehlererkennung (ADR) nach ASTM-Normen",
+              "Vollgeschützte autonome Strahlenschutzkabine mit Echtzeit-Bedienerüberwachung"
+            ]
+          }
+        ]
+      },
+      "digitalizacao-3d": {
+        "categoryTag": "3D-Digitalisierung & Photogrammetrie",
+        "title": "Optische 3D-Digitalisierung & Falschfarbenanalyse",
+        "headline": "Ganzheitliche berührungslose Geometrieerfassung für Maßkontrolle und Werkzeugabstimmung.",
+        "overview": "Hochdichte 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Erzeugt hochpräzise Punktwolken für den direkten Soll-Ist-Flächenvergleich gegen das CAD-Modell.",
+        "targetAudience": [
+          "Automobil-OEMs, Stanzwerke und Umformwerkzeugbauer",
+          "Gießereien und Schmiedebetriebe für mittlere und große Bauteile",
+          "Schuh-, Verpackungs- und Konsumgüterindustrie mit organischen Freiformflächen",
+          "Qualitätssicherungsteams mit Bedarf an Messungen direkt in der Fertigung"
+        ],
+        "applications": [
+          "Vollständige 3D-Falschfarben-Abweichungsberichte (CAD Soll vs. Ist)",
+          "Schnelle Prüfung von Verzug, Torsion und elastischer Rückfederung (Spring-Back)",
+          "Vor-Ort-Digitalisierung großer Bauteile, die nicht transportiert werden können",
+          "Erzeugung wasserdichter STL-Polygonnetze zur dimensionellen Kontrolle"
+        ],
+        "deliverables": [
+          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß- und Untermaßzonen",
+          "Aufbereitete und ausgerichtete Polygonnetze (STL, OBJ, PLY)",
+          "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS ATOS Q",
+            "category": "Optischer 3D-Digitalisierer mit strukturierter Blaulicht-Technologie",
+            "volume": "Wechselobjektive (MV 50, 100, 170, 270, 350, 500) | Messfelder von 100 × 70 bis 500 × 370 mm²",
+            "accuracy": "Punktabstand von 0,03 bis 0,15 mm | Auflösung bis zu 2 × 12 Millionen Punkte pro Scan",
+            "sensor": "Stereokameras mit Blue Light Equalizer und Triple-Scan-Prinzip",
+            "software": "ZEISS INSPECT Optical 3D",
+            "features": [
+              "Triple-Scan-Prinzip: erfasst 3 Ansichten pro Messung, ideal für glänzende Oberflächen und Hinterschneidungen",
+              "Blue Light Equalizer mit extrem schneller Streifenprojektion, unempfindlich gegenüber Umgebungseinflüssen",
+              "Staub- und spritzwassergeschütztes 4-kg-Gehäuse für zuverlässigen Industrieeinsatz",
+              "Ultraschnelle Datenübertragung über 10-Meter-Glasfaserkabel",
+              "Manueller Betrieb auf Stativ oder halbautomatisch mit dem Motordrehtisch GOM ROT 350"
+            ]
+          },
+          {
+            "name": "ZEISS T-SCAN hawk 2",
+            "category": "Handgeführter 3D-Laserscanner",
+            "volume": "Flexibler, skalierbarer Messbereich: von kleinen Bauteilen bis zu mehreren Metern via Satellitenmodus",
+            "accuracy": "Volumetrische Genauigkeit 0,02 mm + 0,015 mm/m (Abnahmeprüfung nach ISO 10360)",
+            "sensor": "Mehrere blaue Laserkreuze + dedizierte Einzellinie für tiefe Nuten und Taschen (augensicherer Laser Klasse 2)",
+            "software": "ZEISS INSPECT",
+            "features": [
+              "Innovativer Satellitenmodus: Scannen großer Objekte ohne separate Photogrammetrie-Aufbauten",
+              "Integrierter Abstandsrader mit roter Laserprojektion zur Echtzeit-Fokuseinstellung",
+              "Ultraleichtes ergonomisches Design (< 1 kg) mit 4-Tasten-Bedienung direkt am Griff",
+              "Nachgewiesene Rückführbarkeit durch DAkkS-kalibrierte Carbonfaser-Längenmaßstäbe (ISO/IEC 17025)",
+              "Schnelle Ein-Schuss-Nachkalibrierung vor Ort mit dem HyperScale-Präzisionsstab",
+              "Hohe Zuverlässigkeit auf dunklen, verchromten oder bearbeiteten Oberflächen ohne zwingendes Mattierungsspray"
+            ]
+          }
+        ]
+      },
+      "engenharia-reversa": {
+        "categoryTag": "Parametrische digitale Modellierung",
+        "title": "Reverse Engineering & CAD-Flächenrückführung",
+        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle.",
+        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder manuell im Werkzeugbau angepasst wurden.",
+        "targetAudience": [
+          "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen",
+          "Bergbau- und Agrarunternehmen mit importierten Maschinenkomponenten",
+          "Entwickler von Hochleistungsprodukten und Prototypen",
+          "Formen- und Gesenkhersteller zur Wiederherstellung von Ursprungsgeometrien"
+        ],
+        "applications": [
+          "Parametrische CAD-Modellierung aus Polygonnetzen (Mesh to CAD)",
+          "Instandsetzung beschädigter Bauteile durch Rekonstruktion fehlender Geometrien",
+          "Geometrische Anpassung zur Modernisierung und Leistungssteigerung",
+          "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und Konstruktionsbäumen"
+        ],
+        "deliverables": [
+          "Parametrische Volumen- und Flächen-CAD-Modelle in STEP-, IGES- oder Parasolid-Formaten",
+          "Technische 2D-Fertigungszeichnungen in PDF und DWG mit Form- und Lagetoleranzen",
+          "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan"
+        ],
+        "machines": [
+          {
+            "name": "ZEISS Reverse Engineering System",
+            "category": "Spezialisierte CAD-Modellierungs- & Flächenrückführungssoftware",
+            "volume": "Keine Modellgrößenbeschränkung",
+            "accuracy": "Class-A-Flächen mit G1/G2-Krümmungsstetigkeit",
+            "sensor": "Gespeist durch Scandaten von ZEISS ATOS Q und T-SCAN Hawk 2",
+            "software": "ZEISS Reverse Engineering",
+            "features": [
+              "Automatische Segmentierung von Regelgeometrien (Ebenen, Zylinder, Kegel)",
+              "Präzise Freiformflächenanpassung mit numerischer Restfehlerüberwachung",
+              "Nativer CAD-Export kompatibel mit SolidWorks, Siemens NX, CATIA und Autodesk Inventor"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Support & Kontakt",
+      "title": "Starten Sie Ihr Messtechnik-Projekt mit unserem Team.",
+      "description": "Reichen Sie die Anforderungen für Ihr Bauteil für ein Angebot ein oder fordern Sie einen technischen Besuch im Labor der SENAI Ítalo Bologna Fakultät an."
+    },
+    "form": {
+      "title": "Angebot oder Analyse anfordern",
+      "subtitle": "Geben Sie die grundlegenden Daten Ihres Bauteils oder Ihrer Messanforderung ein. Wir melden uns innerhalb von 24 Arbeitsstunden bei Ihnen.",
+      "nameLabel": "Vollständiger Name",
+      "namePlaceholder": "Ihr Name",
+      "companyLabel": "Unternehmen / Industrie",
+      "companyPlaceholder": "Firmenname oder Marke",
+      "emailLabel": "Geschäftliche E-Mail",
+      "phoneLabel": "Telefon / WhatsApp",
+      "serviceLabel": "Gewünschte Hauptdienstleistung",
+      "otherOption": "Sonstiges / Dimensionelle Beratung",
+      "messageLabel": "Projektbeschreibung / Toleranzen",
+      "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, anwendbare Norm und gewünschte Fristen an.",
+      "submitButton": "Technische Anfrage absenden",
+      "sentNotice": "Anfrage erfolgreich gesendet! Unser technisches Team wird sich mit Ihnen in Verbindung setzen."
     }
   },
   "footer": {
