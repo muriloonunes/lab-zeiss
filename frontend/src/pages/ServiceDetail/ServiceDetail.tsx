@@ -58,10 +58,11 @@ export function ServiceDetail() {
                 <div className="detail-blob detail-blob--bottom"></div>
             </div>
 
-            {/* Hero */}
             <section className="detail-hero-section">
                 <div className="detail-container">
                     <nav className="detail-breadcrumb" aria-label="Breadcrumb">
+                        <Link to="/">{t('nav.home', 'Início')}</Link>
+                        <span className="separator">/</span>
                         <Link to="/servicos">{t('serviceDetail.breadcrumb', 'Serviços')}</Link>
                         <span className="separator">/</span>
                         <span className="current">{title}</span>
@@ -75,7 +76,7 @@ export function ServiceDetail() {
                             <p className="detail-overview">{overview}</p>
 
                             <div className="detail-hero-actions">
-                                <QuoteButton onClick={() => navigate('/contato')}>
+                                <QuoteButton onClick={() => navigate(`/contato?service=${serviceId}`, { state: { serviceId } })}>
                                     {t('serviceDetail.actions.requestQuote', 'Solicitar Cotação para este Serviço')}
                                 </QuoteButton>
                                 <a href="#especificacoes" className="btn-mais">
@@ -97,63 +98,70 @@ export function ServiceDetail() {
                 </div>
             </section>
 
-            {/* Scope (3 Colunas) */}
-            <section className="detail-scope-section">
+            <section className="detail-info-section">
                 <div className="detail-container">
-                    <div className="scope-cards-grid">
-                        <div className="scope-card glass-panel">
-                            <div className="scope-card-header">
-                                <span className="scope-icon-wrap" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <div className="detail-info-grid">
+                        <div className="info-column glass-panel">
+                            <div className="info-column-header">
+                                <div className="info-icon-badge" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                     </svg>
-                                </span>
-                                <h2 className="scope-title">{t('serviceDetail.sections.audienceTitle', 'Público-Alvo & Segmentos')}</h2>
+                                </div>
+                                <h2 className="info-column-title">{t('serviceDetail.sections.targetAudience', 'Para quem é indicado')}</h2>
                             </div>
-                            <ul className="scope-list">
-                                {targetAudience.map((item, i) => (
-                                    <li key={i}><span className="scope-dot"></span><span>{item}</span></li>
+                            <ul className="info-pills-list">
+                                {targetAudience.map((item, idx) => (
+                                    <li key={idx} className="info-pill-item">
+                                        <span className="pill-dot"></span>
+                                        <span>{item}</span>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="scope-card glass-panel">
-                            <div className="scope-card-header">
-                                <span className="scope-icon-wrap" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                        <polyline points="2 17 12 22 22 17"></polyline>
-                                        <polyline points="2 12 12 17 22 12"></polyline>
+                        <div className="info-column glass-panel">
+                            <div className="info-column-header">
+                                <div className="info-icon-badge" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                                     </svg>
-                                </span>
-                                <h2 className="scope-title">{t('serviceDetail.sections.applicationsTitle', 'Aplicações Típicas')}</h2>
+                                </div>
+                                <h2 className="info-column-title">{t('serviceDetail.sections.applications', 'Aplicações Típicas')}</h2>
                             </div>
-                            <ul className="scope-list">
-                                {applications.map((item, i) => (
-                                    <li key={i}><span className="scope-dot"></span><span>{item}</span></li>
+                            <ul className="info-pills-list">
+                                {applications.map((item, idx) => (
+                                    <li key={idx} className="info-pill-item">
+                                        <span className="pill-dot"></span>
+                                        <span>{item}</span>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="scope-card glass-panel">
-                            <div className="scope-card-header">
-                                <span className="scope-icon-wrap" aria-hidden="true">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <div className="info-column glass-panel highlight-column">
+                            <div className="info-column-header">
+                                <div className="info-icon-badge accent" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                         <polyline points="14 2 14 8 20 8"></polyline>
                                         <line x1="16" y1="13" x2="8" y2="13"></line>
                                         <line x1="16" y1="17" x2="8" y2="17"></line>
                                         <polyline points="10 9 9 9 8 9"></polyline>
                                     </svg>
-                                </span>
-                                <h2 className="scope-title">{t('serviceDetail.sections.deliverablesTitle', 'Entregáveis ao Cliente')}</h2>
+                                </div>
+                                <h2 className="info-column-title">{t('serviceDetail.sections.deliverables', 'Entregáveis & Relatórios')}</h2>
                             </div>
-                            <ul className="scope-list">
-                                {deliverables.map((item, i) => (
-                                    <li key={i}><span className="scope-dot"></span><span>{item}</span></li>
+                            <ul className="info-pills-list">
+                                {deliverables.map((item, idx) => (
+                                    <li key={idx} className="info-pill-item">
+                                        <span className="pill-check">✓</span>
+                                        <span>{item}</span>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -161,12 +169,14 @@ export function ServiceDetail() {
                 </div>
             </section>
 
-            {/* Seção de Máquinas / Specs */}
-            <section className="detail-tech-section" id="especificacoes">
+            <section className="detail-specs-section" id="especificacoes">
                 <div className="detail-container">
-                    <div className="section-header-detail">
-                        <span className="detail-tag">{t('serviceDetail.sections.installedCapacity', 'Capacidade Instalada')}</span>
-                        <h2 className="detail-tech-title">{t('serviceDetail.sections.specsTitle', 'Especificações do Equipamento Homologado ZEISS')}</h2>
+                    <div className="detail-specs-header">
+                        <div className="specs-eyebrow">
+                            <span className="specs-eyebrow-line"></span>
+                            <span className="specs-eyebrow-text">{t('serviceDetail.sections.specsEyebrow', 'Capacidade Tecnológica')}</span>
+                        </div>
+                        <h2 className="detail-specs-title">{t('serviceDetail.sections.specsTitle', 'Equipamentos e Especificações do Laboratório')}</h2>
                         <p className="detail-tech-desc">
                             {t('serviceDetail.sections.specsDesc', 'Dados técnicos de bancada e parâmetros operacionais garantidos no laboratório climatizado da Faculdade SENAI Ítalo Bologna.')}
                         </p>

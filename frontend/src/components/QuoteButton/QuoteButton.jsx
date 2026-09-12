@@ -1,19 +1,30 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export function QuoteButton({
     className = "",
     onClick,
+    to = "/contato",
     children,
     type = "button",
     ...props
 }) {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+
+    const handleClick = (e) => {
+        if (onClick) {
+            onClick(e);
+        } else if (to) {
+            navigate(to);
+        }
+    };
 
     return (
         <button
             type={type}
             className={`btn-orcamento ${className}`.trim()}
-            onClick={onClick}
+            onClick={handleClick}
             {...props}
         >
             <span>{children || t('nav.requestQuote')}</span>

@@ -487,6 +487,8 @@
     "form": {
       "title": "Angebot oder Analyse anfordern",
       "subtitle": "Geben Sie die grundlegenden Daten Ihres Bauteils oder Ihrer Messanforderung ein. Wir melden uns innerhalb von 24 Arbeitsstunden bei Ihnen.",
+      "contextBadge": "Gezieltes Angebot für:",
+      "contextReset": "Dienstleistung ändern",
       "nameLabel": "Vollständiger Name",
       "namePlaceholder": "Ihr Name",
       "companyLabel": "Unternehmen / Industrie",
@@ -494,9 +496,26 @@
       "emailLabel": "Geschäftliche E-Mail",
       "phoneLabel": "Telefon / WhatsApp",
       "serviceLabel": "Gewünschte Hauptdienstleistung",
+      "partQuantityLabel": "Stückzahl / Losgröße",
+      "partQuantityPlaceholder": "Z.B.: 1 Prototyp, Pilotlos von 10 Teilen, Serie von 500 Stk...",
+      "drawingLabel": "Technische Zeichnung oder 3D-Modell (Optional)",
+      "dropzoneTitle": "Klicken oder technische Datei hierher ziehen",
+      "dropzoneHint": "Formate: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP (Max. 25MB)",
+      "dropzoneDragActive": "Datei hier ablegen",
+      "fileSizeError": "Die Datei überschreitet die Höchstgrenze von 25MB.",
+      "removeFile": "Anhang entfernen",
+      "confidentialityNotice": "Industrielle Geheimhaltung: Ihre Entwürfe, Geometrien und CAD-Modelle sind durch strenge technische Vertraulichkeitsstandards geschützt.",
+      "services": {
+        "cmm": "Koordinatenmesstechnik (KMG) & GD&T",
+        "optica": "Optische & Multisensorische Inspektion",
+        "raio-x": "Röntgenprüfung & Computertomographie (NDT)",
+        "digitalizacao-3d": "Optische 3D-Digitalisierung & Farbvergleich",
+        "engenharia-reversa": "Reverse Engineering & CAD-Rekonstruktion",
+        "consultoria": "Sonstiges / Messtechnische Beratung & Schulung"
+      },
       "otherOption": "Sonstiges / Dimensionelle Beratung",
       "messageLabel": "Projektbeschreibung / Toleranzen",
-      "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, anwendbare Norm und gewünschte Fristen an.",
+      "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, kritische Toleranzen, anwendbare Norm und gewünschte Fristen an.",
       "submitButton": "Technische Anfrage absenden",
       "sentNotice": "Anfrage erfolgreich gesendet! Unser technisches Team wird sich mit Ihnen in Verbindung setzen."
     }

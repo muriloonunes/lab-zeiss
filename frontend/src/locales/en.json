@@ -487,6 +487,8 @@
     "form": {
       "title": "Request a Quote or Analysis",
       "subtitle": "Fill in the basic information about your component or dimensional requirement. We will get back to you within 24 business hours.",
+      "contextBadge": "Targeted quote for:",
+      "contextReset": "Change service",
       "nameLabel": "Full Name",
       "namePlaceholder": "Your name",
       "companyLabel": "Company / Industry",
@@ -494,9 +496,26 @@
       "emailLabel": "Corporate Email",
       "phoneLabel": "Phone / WhatsApp",
       "serviceLabel": "Primary Service of Interest",
+      "partQuantityLabel": "Part Quantity / Batch Type",
+      "partQuantityPlaceholder": "E.g., 1 prototype, pilot batch of 10 parts, 500 units series...",
+      "drawingLabel": "Technical Drawing or 3D Model (Optional)",
+      "dropzoneTitle": "Click or drag your technical file here",
+      "dropzoneHint": "Formats: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP (Max. 25MB)",
+      "dropzoneDragActive": "Drop file here to attach",
+      "fileSizeError": "File exceeds the maximum allowable limit of 25MB.",
+      "removeFile": "Remove attachment",
+      "confidentialityNotice": "Industrial Confidentiality: Your drawings, geometries, and CAD models are protected under strict technical non-disclosure standards.",
+      "services": {
+        "cmm": "Coordinate Measuring (CMM) & GD&T",
+        "optica": "Optical & Multisensor Inspection",
+        "raio-x": "X-Ray & CT Inspection (NDT)",
+        "digitalizacao-3d": "3D Optical Scanning & Color Map",
+        "engenharia-reversa": "Reverse Engineering & CAD Reconstruction",
+        "consultoria": "Other / Metrology Consulting & Training"
+      },
       "otherOption": "Other / Dimensional Consulting",
       "messageLabel": "Project Description / Tolerances",
-      "messagePlaceholder": "Provide details such as approximate dimensions, part material, applicable standard, and desired deadlines.",
+      "messagePlaceholder": "Provide details such as approximate dimensions, part material, critical tolerances, applicable standard, and desired deadlines.",
       "submitButton": "Submit Technical Request",
       "sentNotice": "Request sent successfully! Our technical team will get in touch."
     }

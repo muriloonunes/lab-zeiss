@@ -252,7 +252,7 @@
       "cmm": {
         "categoryTag": "Metrologia Tátil e Dimensional",
         "title": "Medição por Coordenadas (CMM) & GD&T",
-        "headline": "Exatidão submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
+        "headline": "Exatid\u00e3o submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
         "overview": "Serviço voltado à caracterização geométrica e linear tridimensional de peças de alta exigência mecânica. Utilizando sistemas CMM por contato contínuo (scanning tátil), avaliamos desvios de forma, orientação e posição segundo as normas ISO 1101 e ASME Y14.5.",
         "targetAudience": [
           "Usinagens de precisão e ferramentarias de matrizes",
@@ -487,6 +487,8 @@
     "form": {
       "title": "Solicitar Orçamento ou Análise",
       "subtitle": "Preencha as informações básicas do seu componente ou demanda dimensional. Retornamos em até 24 horas úteis.",
+      "contextBadge": "Orçamento direcionado:",
+      "contextReset": "Alterar serviço",
       "nameLabel": "Nome Completo",
       "namePlaceholder": "Seu nome",
       "companyLabel": "Empresa / Indústria",
@@ -494,9 +496,26 @@
       "emailLabel": "E-mail Corporativo",
       "phoneLabel": "Telefone / WhatsApp",
       "serviceLabel": "Serviço de Interesse Principal",
+      "partQuantityLabel": "Quantidade de Peças / Tipo de Lote",
+      "partQuantityPlaceholder": "Ex: 1 protótipo, lote piloto de 10 peças, série de 500 un...",
+      "drawingLabel": "Desenho Técnico ou Modelo 3D (Opcional)",
+      "dropzoneTitle": "Clique ou arraste seu arquivo técnico aqui",
+      "dropzoneHint": "Formatos: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP (Máx. 25MB)",
+      "dropzoneDragActive": "Solte o arquivo para anexar",
+      "fileSizeError": "O arquivo excede o limite máximo permitido de 25MB.",
+      "removeFile": "Remover anexo",
+      "confidentialityNotice": "Sigilo Industrial: Seus projetos, geometrias e modelos CAD são protegidos sob protocolo de estrita confidencialidade técnica.",
+      "services": {
+        "cmm": "Medição por Coordenadas (CMM) & GD&T",
+        "optica": "Inspeção Óptica & Multissensor",
+        "raio-x": "Inspeção por Raio-X & Tomografia (NDT)",
+        "digitalizacao-3d": "Digitalização Óptica 3D & Mapa de Cores",
+        "engenharia-reversa": "Engenharia Reversa & Reconstrução CAD",
+        "consultoria": "Outro / Consultoria & Treinamento Metrológico"
+      },
       "otherOption": "Outro / Consultoria Dimensional",
       "messageLabel": "Descrição da Demanda / Tolerâncias",
-      "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, norma aplicável e prazos desejados.",
+      "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, tolerâncias críticas, norma aplicável e prazos desejados.",
       "submitButton": "Enviar Solicitação Técnica",
       "sentNotice": "Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato."
     }

@@ -252,53 +252,62 @@
   }
 }
 
-/* Escopo (3 Colunas) */
-.detail-scope-section {
+/* Informações e Escopo (3 Colunas / Cards) */
+.detail-info-section {
   padding: clamp(2.25rem, 3.5vw, 3.25rem) 0;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
 
   @media (max-width: 768px) {
-    padding: 2.5rem 0;
+    padding: 2rem 0;
   }
 
-  .scope-cards-grid {
+  .detail-info-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
 
     @media (max-width: 992px) {
       grid-template-columns: 1fr;
     }
   }
 
-  .scope-card {
-    padding: 1.5rem 1.6rem;
+  .info-column {
+    padding: 1.6rem 1.75rem;
     display: flex;
     flex-direction: column;
 
-    .scope-card-header {
+    &.highlight-column {
+      border-top: 2px solid vars.$color-primary;
+    }
+
+    .info-column-header {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 0.85rem;
-      padding-bottom: 0.6rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 
-      .scope-icon-wrap {
+      .info-icon-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         background: rgba(20, 30, 140, 0.08);
         color: vars.$color-primary;
         flex-shrink: 0;
+
+        &.accent {
+          background: rgba(2, 132, 199, 0.1);
+          color: #0284c7;
+        }
       }
 
-      .scope-title {
+      .info-column-title {
         font-family: vars.$font-headline;
-        font-size: 1.08rem;
+        font-size: 1.1rem;
         font-weight: 800;
         letter-spacing: -0.02em;
         color: vars.$color-text-dark;
@@ -306,28 +315,37 @@
       }
     }
 
-    .scope-list {
+    .info-pills-list {
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.75rem;
 
-      li {
+      .info-pill-item {
         display: flex;
         align-items: flex-start;
-        gap: 0.6rem;
-        font-size: 0.89rem;
+        gap: 0.65rem;
+        font-size: 0.9rem;
         line-height: 1.5;
         color: vars.$color-text-body;
 
-        .scope-dot {
-          width: 5px;
-          height: 5px;
+        .pill-dot {
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           background-color: vars.$color-primary;
           margin-top: 0.45rem;
+          flex-shrink: 0;
+        }
+
+        .pill-check {
+          color: #0284c7;
+          font-weight: 800;
+          font-size: 0.95rem;
+          line-height: 1;
+          margin-top: 0.15rem;
           flex-shrink: 0;
         }
       }
@@ -336,19 +354,41 @@
 }
 
 /* Seção de Máquinas / Specs */
-.detail-tech-section {
+.detail-specs-section {
   padding: clamp(2.5rem, 3.8vw, 3.75rem) 0;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
 
   @media (max-width: 768px) {
-    padding: 2.75rem 0;
+    padding: 2.5rem 0;
   }
 
-  .section-header-detail {
+  .detail-specs-header {
     max-width: 800px;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
 
-    .detail-tech-title {
+    .specs-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 0.4rem;
+
+      .specs-eyebrow-line {
+        width: 20px;
+        height: 2px;
+        background-color: vars.$color-primary;
+        border-radius: 2px;
+      }
+
+      .specs-eyebrow-text {
+        color: vars.$color-primary;
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+    }
+
+    .detail-specs-title {
       font-family: vars.$font-headline;
       font-size: clamp(1.6rem, 2.3vw, 2.2rem);
       font-weight: 800;
@@ -368,7 +408,7 @@
   .machines-specs-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   .machine-spec-card {
@@ -485,11 +525,4 @@
       }
     }
   }
-}
-
-.service-detail-notfound {
-  padding: 8rem 0;
-  text-align: center;
-  h2 { font-family: vars.$font-headline; font-size: 2rem; margin-bottom: 1rem; }
-  p { margin-bottom: 2rem; color: vars.$color-text-body; }
 }
