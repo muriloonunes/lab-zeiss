@@ -136,14 +136,12 @@ export function Navbar() {
                                         <NavLink
                                             to="/servicos"
                                             end
-                                            className={({isActive}) => `dropdown-item overview-item ${isActive ? 'active' : ''}`}
+                                            className={({isActive}) => `dropdown-item ${isActive ? 'active' : ''}`}
                                             role="menuitem"
                                             onClick={() => setIsServicesDropdownOpen(false)}
                                         >
-                                            <span className="item-dot"></span>
-                                            <span className="item-text">{t('nav.allServices', 'Todos os Serviços')}</span>
+                                            {t('nav.allServices', 'Todos os Serviços')}
                                         </NavLink>
-                                        <div className="dropdown-divider" aria-hidden="true"></div>
                                         {serviceItems.map((item) => (
                                             <NavLink
                                                 key={item.id}
@@ -152,8 +150,7 @@ export function Navbar() {
                                                 role="menuitem"
                                                 onClick={() => setIsServicesDropdownOpen(false)}
                                             >
-                                                <span className="item-dot"></span>
-                                                <span className="item-text">{t(`nav.servicesList.${item.key}`, item.id)}</span>
+                                                {t(`nav.servicesList.${item.key}`, item.id)}
                                             </NavLink>
                                         ))}
                                     </div>
@@ -210,8 +207,7 @@ export function Navbar() {
                                 <NavLink
                                     to="/servicos"
                                     onClick={closeMobileMenu}
-                                    className={({isActive}) => (isActive || isServicesActive) ? 'active mobile-parent-link' : 'mobile-parent-link'}
-                                >
+                                    className={({isActive}) => (isActive || isServicesActive) ? 'active mobile-parent-link' : 'mobile-parent-link'}                                >
                                     {t('nav.services')}
                                 </NavLink>
                                 <button
@@ -244,8 +240,7 @@ export function Navbar() {
                                     onClick={closeMobileMenu}
                                     className={({isActive}) => `mobile-sub-link ${isActive ? 'active' : ''}`}
                                 >
-                                    <span className="mobile-sub-bullet"></span>
-                                    <span>{t('nav.allServices', 'Todos os Serviços')}</span>
+                                    {t('nav.allServices', 'Todos os Serviços')}
                                 </NavLink>
                                 {serviceItems.map((item) => (
                                     <NavLink
@@ -254,8 +249,7 @@ export function Navbar() {
                                         onClick={closeMobileMenu}
                                         className={({isActive}) => `mobile-sub-link ${isActive ? 'active' : ''}`}
                                     >
-                                        <span className="mobile-sub-bullet"></span>
-                                        <span>{t(`nav.servicesList.${item.key}`, item.id)}</span>
+                                        {t(`nav.servicesList.${item.key}`, item.id)}
                                     </NavLink>
                                 ))}
                             </div>

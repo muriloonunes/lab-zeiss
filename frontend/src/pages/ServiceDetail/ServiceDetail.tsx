@@ -1,3 +1,4 @@
+import {MouseEvent} from "react";
 import {useScrollToTop} from "../../hooks/useScrollToTop";
 import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
 import {servicesData} from "../../data/ServicesData";
@@ -11,6 +12,14 @@ export function ServiceDetail() {
     const {serviceId} = useParams<{ serviceId: string }>();
     const navigate = useNavigate();
     const {t} = useTranslation();
+
+    const handleScrollToSpecs = (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const element = document.getElementById('especificacoes');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
 
     const serviceData = serviceId ? servicesData[serviceId] : null;
 
@@ -79,7 +88,7 @@ export function ServiceDetail() {
                                 <QuoteButton onClick={() => navigate(`/contato?service=${serviceId}`, { state: { serviceId } })}>
                                     {t('serviceDetail.actions.requestQuote', 'Solicitar Cotação para este Serviço')}
                                 </QuoteButton>
-                                <a href="#especificacoes" className="btn-mais">
+                                <a href="#especificacoes" onClick={handleScrollToSpecs} className="btn-mais">
                                     <span>{t('serviceDetail.actions.viewSpecs', 'Ver Especificações Técnicas')}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="btn-icon" aria-hidden="true">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
