@@ -36,10 +36,6 @@ export function Contact() {
             <section className="contact-hero-section">
                 <div className="contact-container">
                     <div className="contact-hero-content">
-                        <div className="contact-eyebrow">
-                            <span className="contact-eyebrow-line"></span>
-                            <span className="contact-eyebrow-text">{t('contact.hero.eyebrow')}</span>
-                        </div>
                         <h1 className="contact-hero-title">{t('contact.hero.title')}</h1>
                         <p className="contact-hero-description">{t('contact.hero.description')}</p>
                     </div>

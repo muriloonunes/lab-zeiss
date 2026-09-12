@@ -8,6 +8,10 @@
   overflow-x: hidden;
   padding-top: 5.5rem;
   color: vars.$color-text-dark;
+
+  @media (max-width: 768px) {
+    padding-top: 2.5rem;
+  }
 }
 
 .detail-blob-container {

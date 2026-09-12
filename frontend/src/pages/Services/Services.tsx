@@ -48,10 +48,6 @@ export function Services() {
             <section className="services-hero-section">
                 <div className="services-container">
                     <div className="services-hero-content">
-                        <div className="services-eyebrow">
-                            <span className="services-eyebrow-line"></span>
-                            <span className="services-eyebrow-text">{t('services.hero.eyebrow')}</span>
-                        </div>
                         <h1 className="services-hero-title">{t('services.hero.title')}</h1>
                         <p className="services-hero-description">{t('services.hero.description')}</p>
                     </div>
