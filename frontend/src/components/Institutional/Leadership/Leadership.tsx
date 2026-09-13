@@ -4,16 +4,18 @@ export function Leadership() {
     return (
         <section className="inst-section" id="liderancas">
             <div className="inst-container">
-                <div className="inst-header-center">
+                <div className="inst-section-header">
                     <div className="inst-eyebrow">
                         <span className="inst-eyebrow-line"></span>
                         <span className="inst-eyebrow-text">Chancela Institucional</span>
                     </div>
-                    <h2 className="inst-section-title">A visão dos realizadores da aliança</h2>
-                    <p className="inst-section-desc">
-                        Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a
-                        produtividade e competitividade fabril.
-                    </p>
+                    <div className="inst-header-split">
+                        <h2 className="inst-section-title">A visão dos realizadores da aliança</h2>
+                        <p className="inst-section-desc">
+                            Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a
+                            produtividade e competitividade fabril.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="inst-quotes-grid">

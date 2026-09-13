@@ -536,5 +536,12 @@
     "businessHours": "Mon. to Fri. from 8:00 AM to 6:00 PM",
     "rights": "All rights reserved.",
     "partnership": "FIEG System • SENAI Goiás • Carl Zeiss"
+  },
+  "institutional": {
+    "hero": {
+      "title": "German precision and Brazilian technical expertise serving high-demand industry.",
+      "description": "Located at the SENAI Ítalo Bologna Faculty in Goiânia, the Center for Excellence in Metrology is the result of a strategic alliance between the FIEG System / SENAI Goiás and Carl Zeiss. We operate as one of only five global centers with this capability, delivering comprehensive solutions in 3D measurement, reverse engineering, and dimensional compliance.",
+      "imageAlt": "Laboratory Facade"
+    }
   }
 }

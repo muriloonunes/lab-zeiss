@@ -4,18 +4,19 @@ export function Team() {
     return (
         <section className="inst-section" id="equipe">
             <div className="inst-container">
-                <div className="inst-header-center">
+                <div className="inst-section-header">
                     <div className="inst-eyebrow">
                         <span className="inst-eyebrow-line"></span>
                         <span className="inst-eyebrow-text">Corpo Técnico</span>
                     </div>
-                    <h2 className="inst-section-title">
-                        Especialistas dedicados à resolução de desafios complexos
-                    </h2>
-                    <p className="inst-section-desc">
-                        Por trás de cada leitura e modelo tridimensional, há um time de engenheiros e técnicos
-                        habilitados para interpretar normas e orientar processos fabris.
-                    </p>
+                    <div className="inst-header-split">
+                        <h2 className="inst-section-title">
+                            Especialistas dedicados à resolução de desafios complexos
+                        </h2>
+                        <p className="inst-section-desc">
+                            Por trás de cada leitura e modelo tridimensional, há um time de engenheiros e técnicos
+                            habilitados para interpretar normas e orientar processos fabris.
+                        </p></div>
                 </div>
 
                 <div className="inst-team-grid">

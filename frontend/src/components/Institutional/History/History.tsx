@@ -4,7 +4,7 @@ export function History() {
     return (
         <section className="inst-section" id="historia">
             <div className="inst-container">
-                <div className="inst-header-center">
+                <div className="inst-section-header">
                     <div className="inst-eyebrow">
                         <span className="inst-eyebrow-line"></span>
                         <span className="inst-eyebrow-text">Nossa Trajetória</span>

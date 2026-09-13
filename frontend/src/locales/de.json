@@ -536,5 +536,12 @@
     "businessHours": "Mo. bis Fr. von 08:00 bis 18:00 Uhr",
     "rights": "Alle Rechte vorbehalten.",
     "partnership": "FIEG-System • SENAI Goiás • Carl Zeiss"
+  },
+  "institutional": {
+    "hero": {
+      "title": "Deutsche Präzision und brasilianische Fachkompetenz im Dienste anspruchsvoller Industriezweige.",
+      "description": "Das an der Fakultät SENAI Ítalo Bologna in Goiânia ansässige Exzellenzzentrum für Messtechnik ist das Ergebnis einer strategischen Allianz zwischen dem FIEG-System / SENAI Goiás und Carl Zeiss. Als eines von weltweit nur fünf Zentren mit dieser Kapazität bieten wir ganzheitliche Lösungen in der 3D-Koordinatenmesstechnik, im Reverse Engineering und in der Maßhaltigkeitsprüfung.",
+      "imageAlt": "Laborfassade"
+    }
   }
 }

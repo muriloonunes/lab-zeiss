@@ -252,7 +252,7 @@
       "cmm": {
         "categoryTag": "Metrologia Tátil e Dimensional",
         "title": "Medição por Coordenadas (CMM) & GD&T",
-        "headline": "Exatid\u00e3o submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
+        "headline": "Exatidão submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
         "overview": "Serviço voltado à caracterização geométrica e linear tridimensional de peças de alta exigência mecânica. Utilizando sistemas CMM por contato contínuo (scanning tátil), avaliamos desvios de forma, orientação e posição segundo as normas ISO 1101 e ASME Y14.5.",
         "targetAudience": [
           "Usinagens de precisão e ferramentarias de matrizes",
@@ -536,5 +536,12 @@
     "businessHours": "Seg. a Sex. das 08h às 18h",
     "rights": "Todos os direitos reservados.",
     "partnership": "Sistema FIEG • SENAI Goiás • Carl Zeiss"
+  },
+  "institutional": {
+    "hero": {
+      "title": "Precisão alemã e expertise técnica brasileira a serviço da indústria de alta exigência.",
+      "description": "Instalado na Faculdade SENAI Ítalo Bologna, em Goiânia, o Centro de Excelência em Metrologia é resultado de uma aliança estratégica entre o Sistema FIEG / SENAI Goiás e a Carl Zeiss. Atuamos como um dos cinco centros globais com esta capacidade para oferecer soluções completas em medição tridimensional, engenharia reversa e conformidade dimensional.",
+      "imageAlt": "Fachada do Laboratório"
+    }
   }
 }

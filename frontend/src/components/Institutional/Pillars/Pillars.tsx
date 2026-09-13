@@ -4,18 +4,20 @@ export function Pillars() {
     return (
         <section className="inst-section" id="pilares">
             <div className="inst-container">
-                <div className="inst-header-center">
+                <div className="inst-section-header">
                     <div className="inst-eyebrow">
                         <span className="inst-eyebrow-line"></span>
                         <span className="inst-eyebrow-text">Princípios & Valores</span>
                     </div>
-                    <h2 className="inst-section-title">
-                        Os pilares que sustentam cada relatório emitido
-                    </h2>
-                    <p className="inst-section-desc">
-                        Metrologia é a ciência da confiança. Nossos compromissos operacionais garantem segurança
-                        jurídica e técnica para o produto final.
-                    </p>
+                    <div className="inst-header-split">
+                        <h2 className="inst-section-title">
+                            Os pilares que sustentam cada relatório emitido
+                        </h2>
+                        <p className="inst-section-desc">
+                            Metrologia é a ciência da confiança. Nossos compromissos operacionais garantem segurança
+                            jurídica e técnica para o produto final.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="inst-pillars-grid">
