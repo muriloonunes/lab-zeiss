@@ -382,8 +382,8 @@ export function Contact() {
                                         </p>
                                         <p className="contact-line">
                                             <strong>{t('footer.email')}:</strong>{' '}
-                                            <a href="mailto:metrologia.zeiss@senaigo.com.br"
-                                               className="contact-link">metrologia.zeiss@senaigo.com.br</a>
+                                            <a href="mailto:cem.senaizeiss@fieg.com.br"
+                                               className="contact-link">cem.senaizeiss@fieg.com.br</a>
                                         </p>
                                     </div>
 
