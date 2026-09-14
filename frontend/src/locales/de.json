@@ -385,23 +385,25 @@
       "digitalizacao-3d": {
         "categoryTag": "3D-Digitalisierung & Photogrammetrie",
         "title": "Optische 3D-Digitalisierung & Falschfarbenanalyse",
-        "headline": "Ganzheitliche berührungslose Geometrieerfassung für Maßkontrolle und Werkzeugabstimmung.",
-        "overview": "Hochdichte 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Erzeugt hochpräzise Punktwolken für den direkten Soll-Ist-Flächenvergleich gegen das CAD-Modell.",
+        "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen und zur Maßkontrolle.",
+        "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – bereit für 3D-Druck, maßliche Falschfarbenprüfung oder als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
         "targetAudience": [
-          "Automobil-OEMs, Stanzwerke und Umformwerkzeugbauer",
-          "Gießereien und Schmiedebetriebe für mittlere und große Bauteile",
-          "Schuh-, Verpackungs- und Konsumgüterindustrie mit organischen Freiformflächen",
-          "Qualitätssicherungsteams mit Bedarf an Messungen direkt in der Fertigung"
+          "Jeder mit einem physischen Bauteil, der ein digitales 3D-Netzmodell (.STL) benötigt",
+          "Konstrukteure und Anwender mit Bedarf an wasserdichten 3D-Druck-Dateien",
+          "Instandhaltung und Werkzeugbau zur digitalen Archivierung oder Bauteilduplikation",
+          "Qualitätssicherungsteams mit Bedarf an 3D-Falschfarben-Soll-Ist-Vergleichen",
+          "Projekte, die ein 3D-Netz als Basis für weiterführendes Reverse Engineering (CAD) benötigen"
         ],
         "applications": [
-          "Vollständige 3D-Falschfarben-Abweichungsberichte (CAD Soll vs. Ist)",
-          "Schnelle Prüfung von Verzug, Torsion und elastischer Rückfederung (Spring-Back)",
-          "Vor-Ort-Digitalisierung großer Bauteile, die nicht transportiert werden können",
-          "Erzeugung wasserdichter STL-Polygonnetze zur dimensionellen Kontrolle"
+          "Erzeugung wasserdichter STL- und OBJ-Polygonnetze für den 3D-Druck",
+          "3D-Falschfarben-Abweichungsanalysen (Soll-CAD vs. Ist-Bauteil)",
+          "Mobiles Scannen vor Ort für mittelgroße und große Komponenten",
+          "Schnelle Prüfung von Verzug, Torsion und Oberflächenverschleiß",
+          "Hochdichte Netzbasis für parametrisches Reverse Engineering"
         ],
         "deliverables": [
-          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß- und Untermaßzonen",
-          "Aufbereitete und ausgerichtete Polygonnetze (STL, OBJ, PLY)",
+          "Aufbereitetes, geschlossenes und ausgerichtetes Polygonnetz (.STL, .OBJ, .PLY)",
+          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß- und Untermaßzonen (falls zutreffend)",
           "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen"
         ],
         "machines": [
@@ -415,7 +417,6 @@
             "features": [
               "Triple-Scan-Prinzip: erfasst 3 Ansichten pro Messung, ideal für glänzende Oberflächen und Hinterschneidungen",
               "Blue Light Equalizer mit extrem schneller Streifenprojektion, unempfindlich gegenüber Umgebungseinflüssen",
-              "Staub- und spritzwassergeschütztes 4-kg-Gehäuse für zuverlässigen Industrieeinsatz",
               "Ultraschnelle Datenübertragung über 10-Meter-Glasfaserkabel",
               "Manueller Betrieb auf Stativ oder halbautomatisch mit dem Motordrehtisch GOM ROT 350"
             ]
@@ -430,7 +431,6 @@
             "features": [
               "Innovativer Satellitenmodus: Scannen großer Objekte ohne separate Photogrammetrie-Aufbauten",
               "Integrierter Abstandsrader mit roter Laserprojektion zur Echtzeit-Fokuseinstellung",
-              "Ultraleichtes ergonomisches Design (< 1 kg) mit 4-Tasten-Bedienung direkt am Griff",
               "Nachgewiesene Rückführbarkeit durch DAkkS-kalibrierte Carbonfaser-Längenmaßstäbe (ISO/IEC 17025)",
               "Schnelle Ein-Schuss-Nachkalibrierung vor Ort mit dem HyperScale-Präzisionsstab",
               "Hohe Zuverlässigkeit auf dunklen, verchromten oder bearbeiteten Oberflächen ohne zwingendes Mattierungsspray"

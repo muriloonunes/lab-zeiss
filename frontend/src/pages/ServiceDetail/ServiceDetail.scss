@@ -276,10 +276,6 @@
     display: flex;
     flex-direction: column;
 
-    &.highlight-column {
-      border-top: 2px solid vars.$color-primary;
-    }
-
     .info-column-header {
       display: flex;
       align-items: center;

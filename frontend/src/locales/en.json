@@ -385,24 +385,26 @@
       "digitalizacao-3d": {
         "categoryTag": "3D Scanning & Photogrammetry",
         "title": "3D Optical Scanning & Color Map Analysis",
-        "headline": "Full-field non-contact geometric capture for dimensional inspection and tooling verification.",
-        "overview": "High-density 3D digitization using structured blue light and portable laser triangulation. Generates high-fidelity point clouds for full-surface comparison against the nominal CAD model.",
+        "headline": "Full geometric capture to produce 3D STL meshes and dimensional control.",
+        "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), ready for 3D printing, color-map dimensional inspection, or as the baseline dataset for parametric Reverse Engineering (CAD).",
         "targetAudience": [
-          "Automotive OEMs, stamping plants, and progressive die tooling makers",
-          "Foundries and forging facilities for medium-to-large components",
-          "Footwear, packaging, and consumer products with complex organic geometries",
-          "Quality control teams requiring on-site shop floor inspection"
+          "Anyone holding a physical part who needs its 3D digital model (.STL)",
+          "Designers and makers requiring watertight meshes for 3D printing and prototyping",
+          "Maintenance teams and workshops creating digital archives or part replicas",
+          "Quality inspection teams needing CAD vs. part 3D color-map reports",
+          "Projects needing a digitized mesh as the starting foundation for Reverse Engineering (CAD)"
         ],
         "applications": [
-          "Full 3D deviation color-map reports (Nominal CAD vs. Actual Scan)",
-          "Rapid inspection of warpage, twist, and spring-back",
-          "In-situ scanning of large components that cannot be moved",
-          "Generation of watertight polygonal STL meshes for dimensional control"
+          "Generation of watertight STL and OBJ meshes ready for 3D printing",
+          "3D color-map deviation analysis (Nominal CAD vs. actual part)",
+          "On-site portable scanning for medium and large components",
+          "Rapid inspection of warpage, twist, and surface wear",
+          "High-density mesh baseline for parametric Reverse Engineering"
         ],
         "deliverables": [
-          "3D color map deviation report illustrating excess and deficient material zones",
-          "Cleaned, aligned polygon mesh (STL, OBJ, PLY)",
-          "Full freeform surface dimensional deviation report"
+          "Cleaned, closed, and aligned polygonal mesh (.STL, .OBJ, .PLY)",
+          "3D color-map deviation report indicating material excess and deficit zones (when applicable)",
+          "Comparative dimensional report for freeform surfaces"
         ],
         "machines": [
           {
@@ -415,7 +417,6 @@
             "features": [
               "Triple Scan Principle: captures 3 distinct perspectives per shot, ideal for shiny, reflective, and undercut areas",
               "Blue Light Equalizer with ultra-fast fringe projection insensitive to ambient workshop lighting",
-              "Sealed 4 kg housing resistant to dust and splashes for reliable shop floor operation",
               "Ultra-high-speed data transmission over a 10-meter fiber optic cable",
               "Tripod manual operation or semi-automated inspection on the motorized GOM ROT 350 rotary table"
             ]
@@ -430,7 +431,6 @@
             "features": [
               "Innovative Satellite Mode: large object scanning without separate photogrammetry or coded target setups",
               "Integrated distance radar with red laser projection for real-time optimal working distance feedback",
-              "Ultralight ergonomic design (< 1 kg) with complete 4-button handle control without touching the computer",
               "Proven traceability with DAkkS-calibrated carbon fiber length artifacts (ISO/IEC 17025)",
               "Rapid single-shot on-site recalibration using the precision HyperScale bar",
               "High performance on dark, reflective, or machined surfaces without mandatory anti-reflective spray"

@@ -385,23 +385,25 @@
       "digitalizacao-3d": {
         "categoryTag": "Digitalização 3D e Fotogrametria",
         "title": "Digitalização Óptica 3D & Análise por Mapa de Cores",
-        "headline": "Captura geométrica integral sem contato para controle dimensional e ajuste de matrizes.",
-        "overview": "Digitalização tridimensional de alta densidade através de luz azul estruturada e triangulação a laser portátil. Gera nuvens de pontos de altíssima fidelidade para comparação direta contra o modelo nominal (CAD vs. Peça).",
+        "headline": "Captura geométrica integral ou parcial para geração de arquivos STL/malhas 3D e controle dimensional.",
+        "overview": "Digitalização tridimensional de alta precisão por luz azul estruturada e triangulação a laser. Converte qualquer peça física em uma réplica tridimensional idêntica em formato de malha poligonal (.STL / .OBJ), pronta para impressão 3D, inspeção dimensional por mapa de cores ou como base para posterior Engenharia Reversa em CAD.",
         "targetAudience": [
-          "Montadoras, estamparias e ferramentarias de corte e dobra",
-          "Fabricantes de peças fundidas e forjadas de médio e grande porte",
-          "Indústria de calçados, embalagens e geometrias orgânicas",
-          "Equipes de controle de qualidade que demandam inspeção em chão de fábrica"
+          "Qualquer pessoa ou empresa que possua uma peça física e precise do modelo 3D digital (.STL)",
+          "Projetistas e entusiastas que necessitam de malhas 3D para impressão 3D e manufatura aditiva",
+          "Manutenção e ferramentarias precisando de acervo digital ou clonagem dimensional de peças",
+          "Equipes de controle de qualidade que realizam inspeção comparativa de desvios (nominal vs. real)",
+          "Clientes com primeiro passo definido antes de avançar para a Engenharia Reversa paramétrica (CAD)"
         ],
         "applications": [
-          "Geração de mapas colorimétricos de desvio (Color Map nominal vs. real)",
-          "Inspeção rápida de empenamento, torção e retorno elástico (spring-back)",
-          "Digitalização in-loco em peças de grande porte que não podem se deslocar",
-          "Geração de arquivos STL de malha fechada para controle dimensional"
+          "Geração de arquivos STL/OBJ estanques (watertight) para impressão 3D",
+          "Comparação dimensional com mapa de cores (Color Map nominal CAD vs. peça real)",
+          "Digitalização in-loco de componentes no chão de fábrica ou campo",
+          "Inspeção rápida de torção, empenamento e desgaste",
+          "Base de malha poligonal de alta densidade para engenharia reversa"
         ],
         "deliverables": [
-          "Relatório com mapa de cores 3D demonstrando zonas de excesso e falta",
-          "Malha poligonal tratada e alinhada (STL, OBJ, PLY)",
+          "Malha poligonal tratada, fechada e alinhada (.STL, .OBJ, .PLY)",
+          "Relatório com mapa de cores 3D demonstrando zonas de excesso e falta (quando aplicável)",
           "Laudo comparativo de desvios dimensionais de superfícies livres"
         ],
         "machines": [
@@ -415,7 +417,6 @@
             "features": [
               "Princípio Triple Scan: captura 3 vistas por medição, ideal para peças reflexivas, brilhantes e com reentrâncias",
               "Blue Light Equalizer com projeção ultrarrápida de franjas imune à luz ambiente residual",
-              "Gabinete selado de 4 kg resistente a poeira e respingos para operação confiável no chão de fábrica",
               "Transmissão de altíssima velocidade por cabo de fibra óptica de 10 metros",
               "Operação manual em tripé ou semiautomatizada integrada à mesa rotativa motorizada GOM ROT 350"
             ]
@@ -430,7 +431,6 @@
             "features": [
               "Modo Satélite inovador: digitalização de peças grandes sem necessidade de fotogrametria com alvos codificados",
               "Radar de distância integrado com projeção de marcador laser vermelho para ajuste do foco em tempo real",
-              "Design ultraleve (< 1 kg) com controle total do fluxo por 4 botões na empunhadura sem tocar no laptop",
               "Rastreabilidade comprovada com padrões de comprimento em fibra de carbono calibrados DAkkS (ISO/IEC 17025)",
               "Recalibração rápida em tomada única através da ferramenta de precisão HyperScale",
               "Forte aderência em superfícies escuras, cromadas ou usinadas sem uso obrigatório de spray antirreflexo"
