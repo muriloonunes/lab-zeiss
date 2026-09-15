@@ -13,6 +13,14 @@ backend/target/
 *.war
 .mvn/wrapper/maven-wrapper.jar
 
+backend/.quarkus/cli/plugins/
+backend/.certs/
+backend/.factorypath
+backend/nb-configuration.xml
+backend/release.properties
+backend/.flattened-pom.xml
+backend/pom.xml.*
+
 **/node_modules/
 frontend/node_modules/
 **/dist/
