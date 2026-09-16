@@ -1,5 +1,6 @@
-package com.senai.model;
+package com.senai.usuario;
 
+import com.senai.common.Auditavel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

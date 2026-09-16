@@ -1,4 +1,4 @@
-package com.senai.model;
+package com.senai.usuario;
 
 /**
  *

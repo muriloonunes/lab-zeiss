@@ -1,4 +1,4 @@
-package com.senai.model;
+package com.senai.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

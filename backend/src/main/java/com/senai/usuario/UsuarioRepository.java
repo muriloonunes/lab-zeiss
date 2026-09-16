@@ -1,6 +1,5 @@
-package com.senai.repository;
+package com.senai.usuario;
 
-import com.senai.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -15,6 +14,8 @@ import java.util.Optional;
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario> {
     public Optional<Usuario> findAtivoByUsernameOrEmail(String login) {
-        return find("ativo = true and (username = ?1 or email = ?1)", login).firstResultOptional();
+        String normalizado = login.trim().toLowerCase();
+        return find("ativo = true and (lower(username) = ?1 or lower(email) = ?1)", normalizado)
+                .firstResultOptional();
     }
 }
