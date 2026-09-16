@@ -1,13 +1,13 @@
 package com.senai.auth;
 
 import com.senai.auth.dto.LoginRequest;
+import com.senai.auth.dto.SessaoResponse;
+import io.quarkus.security.Authenticated;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
@@ -26,6 +26,9 @@ public class AuthResource {
     @Inject
     AuthService authService;
 
+    @Inject
+    SecurityIdentity identity;
+
     @ConfigProperty(name = "app.cookie.secure", defaultValue = "false")
     boolean cookieSecure;
 
@@ -38,6 +41,14 @@ public class AuthResource {
     public Response login(@Valid LoginRequest request) {
         String token = authService.autenticar(request);
         return Response.noContent().cookie(criarCookie(token)).build();
+    }
+
+    @GET
+    @Path("/me")
+    @Authenticated
+    public SessaoResponse me() {
+        Long id = Long.parseLong(identity.getPrincipal().getName());
+        return authService.buscarSessao(id);
     }
 
     @POST

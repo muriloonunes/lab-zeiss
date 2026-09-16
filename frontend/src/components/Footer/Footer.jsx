@@ -26,6 +26,7 @@ export function Footer() {
                             <li><Link to="/institucional">{t('nav.institutional')}</Link></li>
                             <li><Link to="/servicos">{t('nav.services')}</Link></li>
                             <li><Link to="/contato">{t('nav.contact')}</Link></li>
+                            <li><Link to="/login">{t('footer.internalArea')}</Link></li>
                         </ul>
                     </div>
 
@@ -91,7 +92,7 @@ export function Footer() {
                 </div>
 
                 <div className="footer-bottom-bar">
-                    <p>© {new Date().getFullYear()} {t('hero.title')}. {t('footer.rights')}</p>
+                    <p>© {new Date().getFullYear()} {t('home.hero.title')}. {t('footer.rights')}</p>
                     <p className="partnership-tag">{t('footer.partnership')}</p>
                 </div>
             </div>
