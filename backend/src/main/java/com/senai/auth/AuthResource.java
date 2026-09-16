@@ -57,7 +57,7 @@ public class AuthResource {
     public Response logout() {
         NewCookie cookie = new NewCookie.Builder(cookieName)
                 .value("")
-                .path("/")
+                .path("/api")
                 .maxAge(0)
                 .httpOnly(true)
                 .secure(cookieSecure)
@@ -69,7 +69,7 @@ public class AuthResource {
     private NewCookie criarCookie(String token) {
         return new NewCookie.Builder(cookieName)
                 .value(token)
-                .path("/")
+                .path("/api")
                 .maxAge(8 * 60 * 60)
                 .httpOnly(true)
                 .secure(cookieSecure)
