@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {login} from '../../services/authService';
+import {login, me} from '../../services/authService';
 import {ApiError} from '../../types/api';
 import {useScrollToTop} from '../../hooks/useScrollToTop';
 import './Login.scss';
@@ -10,6 +10,7 @@ export function Login() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [verificandoSessao, setVerificandoSessao] = useState(true);
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -17,6 +18,26 @@ export function Login() {
     const [erro, setErro] = useState<string | null>(null);
 
     const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/interno';
+
+    useEffect(() => {
+        let ativo = true;
+
+        me()
+            .then(() => {
+                if (ativo) {
+                    navigate(from, {replace: true});
+                }
+            })
+            .catch(() => {
+                if (ativo) {
+                    setVerificandoSessao(false);
+                }
+            });
+
+        return () => {
+            ativo = false;
+        };
+    }, [navigate, from]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,6 +63,39 @@ export function Login() {
             setCarregando(false);
         }
     };
+
+    if (verificandoSessao) {
+        return (
+            <div className="login-page">
+                <div className="login-card" style={{alignItems: 'center', justifyContent: 'center', minHeight: '300px'}}>
+                    <div className="login-logos">
+                        <img
+                            src="/images/cem-logo.png"
+                            alt="Centro de Excelência em Metrologia SENAI ZEISS"
+                            className="logo-cem"
+                        />
+                        <span className="logo-divider" aria-hidden="true"/>
+                        <img
+                            src="/images/zeiss-logo-coop.png"
+                            alt="Cooperação Tecnológica ZEISS"
+                            className="logo-zeiss"
+                        />
+                    </div>
+                    <div style={{marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem'}}>
+                        <span className="spinner" style={{
+                            width: '24px',
+                            height: '24px',
+                            border: '3px solid #e2e8f0',
+                            borderTopColor: '#002060',
+                            borderRadius: '50%',
+                            animation: 'spin 0.8s linear infinite'
+                        }}/>
+                        <span style={{fontSize: '0.9rem', color: '#64748b'}}>Verificando autenticação...</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="login-page">

@@ -3,7 +3,6 @@ package com.senai.auth;
 import com.senai.auth.dto.LoginRequest;
 import com.senai.auth.dto.SessaoResponse;
 import io.quarkus.security.Authenticated;
-import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -12,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 /**
  *
@@ -27,7 +27,7 @@ public class AuthResource {
     AuthService authService;
 
     @Inject
-    SecurityIdentity identity;
+    JsonWebToken jwt;
 
     @ConfigProperty(name = "app.cookie.secure", defaultValue = "false")
     boolean cookieSecure;
@@ -47,7 +47,7 @@ public class AuthResource {
     @Path("/me")
     @Authenticated
     public SessaoResponse me() {
-        Long id = Long.parseLong(identity.getPrincipal().getName());
+        Long id = Long.parseLong(jwt.getSubject());
         return authService.buscarSessao(id);
     }
 
