@@ -243,4 +243,46 @@ public class UsuarioFlowTest {
                 .then()
                 .statusCode(409);
     }
+
+    @Test
+    @Order(11)
+    public void testAdminDesativaUsuario() {
+        String adminCookie = realizarLogin("admin", "reputation");
+
+        given()
+                .cookie(COOKIE_NAME, adminCookie)
+                .when()
+                .delete("/api/usuarios/2")
+                .then()
+                .statusCode(204);
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(new LoginRequest("tecnico", "senhaForcadaAdmin123"))
+                .when()
+                .post("/api/auth/login")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    @Order(12)
+    public void testAdminReativaUsuario() {
+        String adminCookie = realizarLogin("admin", "reputation");
+
+        given()
+                .cookie(COOKIE_NAME, adminCookie)
+                .when()
+                .put("/api/usuarios/2/reativar")
+                .then()
+                .statusCode(204);
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(new LoginRequest("tecnico", "senhaForcadaAdmin123"))
+                .when()
+                .post("/api/auth/login")
+                .then()
+                .statusCode(204);
+    }
 }

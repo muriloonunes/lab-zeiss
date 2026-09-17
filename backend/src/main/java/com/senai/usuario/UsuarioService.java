@@ -124,4 +124,12 @@ public class UsuarioService {
 
         usuario.setAtivo(false);
     }
+
+    @Transactional
+    public void reativar(Long id) {
+        var usuario = repository.findByIdOptional(id)
+                .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+
+        usuario.setAtivo(true);
+    }
 }

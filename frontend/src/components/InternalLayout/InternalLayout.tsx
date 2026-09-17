@@ -55,7 +55,6 @@ export const InternalLayout: React.FC = () => {
                 aria-hidden="true"
             />
 
-            {/* Sidebar de Navegação */}
             <aside className={`internal-sidebar ${sidebarAberta ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-branding">
@@ -65,16 +64,6 @@ export const InternalLayout: React.FC = () => {
                                 alt="CEM"
                                 className="sidebar-logo-cem"
                             />
-                            <span className="sidebar-logo-divider" aria-hidden="true" />
-                            <img
-                                src="/images/zeiss-logo-coop.png"
-                                alt="ZEISS"
-                                className="sidebar-logo-zeiss"
-                            />
-                        </div>
-                        <div className="brand-text">
-                            <span className="brand-title">CEM ZEISS</span>
-                            <span className="brand-subtitle">Área Interna</span>
                         </div>
                     </div>
                     <button
@@ -90,7 +79,6 @@ export const InternalLayout: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Card do Usuário Logado */}
                 <div className="sidebar-user-card">
                     <div className="user-info-row">
                         <div className="user-avatar" title={usuario?.nome || 'Usuário'}>
@@ -110,7 +98,6 @@ export const InternalLayout: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Links de Navegação */}
                 <nav className="sidebar-nav">
                     <span className="nav-section-title">Menu Principal</span>
 
@@ -148,7 +135,6 @@ export const InternalLayout: React.FC = () => {
                                 </svg>
                                 <span>Gerenciar Usuários</span>
                             </div>
-                            <span className="admin-tag">ADM</span>
                         </NavLink>
                     )}
 
@@ -168,7 +154,6 @@ export const InternalLayout: React.FC = () => {
                     </NavLink>
                 </nav>
 
-                {/* Rodapé da Sidebar */}
                 <div className="sidebar-footer">
                     <Link to="/home" className="footer-action-btn" title="Voltar ao portal institucional público">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -192,7 +177,6 @@ export const InternalLayout: React.FC = () => {
                 </div>
             </aside>
 
-            {/* Conteúdo Principal */}
             <div className="internal-main">
                 <header className="internal-topbar">
                     <div className="topbar-left">
@@ -224,12 +208,6 @@ export const InternalLayout: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="topbar-right">
-                        <div className="session-status" title="Sessão autenticada via Cookie JWT Seguro">
-                            <span className="status-pulse" />
-                            <span>Sessão Ativa</span>
-                        </div>
-                    </div>
                 </header>
 
                 <main className="internal-page-container">

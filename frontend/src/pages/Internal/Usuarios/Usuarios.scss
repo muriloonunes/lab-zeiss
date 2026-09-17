@@ -208,6 +208,16 @@
             background-color: #f8fafc;
           }
 
+          &.row-inativo {
+            background-color: #fafbfc;
+            opacity: 0.85;
+
+            &:hover {
+              background-color: #f1f5f9;
+              opacity: 1;
+            }
+          }
+
           &:last-child {
             border-bottom: none;
           }
@@ -360,10 +370,17 @@
           border-color: #d97706;
         }
 
+        &.btn-deactivate:hover,
         &.btn-delete:hover {
           color: #dc2626;
           border-color: #dc2626;
           background-color: #fef2f2;
+        }
+
+        &.btn-activate:hover {
+          color: #16a34a;
+          border-color: #16a34a;
+          background-color: #f0fdf4;
         }
       }
     }
@@ -545,6 +562,14 @@
 
               &:hover:not(:disabled) {
                 background-color: #b91c1c;
+              }
+            }
+
+            &.btn-success {
+              background-color: #16a34a;
+
+              &:hover:not(:disabled) {
+                background-color: #15803d;
               }
             }
 

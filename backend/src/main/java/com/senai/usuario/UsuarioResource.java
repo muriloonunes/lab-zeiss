@@ -55,6 +55,14 @@ public class UsuarioResource {
     }
 
     @PUT
+    @Path("/{id}/reativar")
+    @RolesAllowed("ADMINISTRADOR")
+    public Response reativar(@PathParam("id") Long id) {
+        service.reativar(id);
+        return Response.noContent().build();
+    }
+
+    @PUT
     @Path("/{id}")
     @RolesAllowed("ADMINISTRADOR")
     public UsuarioResponse atualizar(@PathParam("id") Long id, @Valid AtualizarUsuarioRequest request) {

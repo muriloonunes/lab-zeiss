@@ -33,3 +33,7 @@ export async function redefinirSenha(id: number, novaSenha: string): Promise<voi
 export async function desativarUsuario(id: number): Promise<void> {
     await request<void>(`/api/usuarios/${id}`, { method: 'DELETE' });
 }
+
+export async function reativarUsuario(id: number): Promise<void> {
+    await request<void>(`/api/usuarios/${id}/reativar`, { method: 'PUT' });
+}

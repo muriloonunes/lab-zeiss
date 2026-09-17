@@ -7,7 +7,6 @@
   color: vars.$color-text-dark;
   position: relative;
 
-  // Backdrop para mobile quando a sidebar estiver aberta
   .sidebar-backdrop {
     position: fixed;
     inset: 0;
@@ -28,7 +27,6 @@
     }
   }
 
-  // Sidebar
   .internal-sidebar {
     width: 280px;
     background-color: #0b1120;
@@ -83,18 +81,6 @@
             width: auto;
             filter: brightness(0) invert(1);
           }
-
-          .sidebar-logo-divider {
-            width: 1px;
-            height: 18px;
-            background: rgba(255, 255, 255, 0.2);
-          }
-
-          .sidebar-logo-zeiss {
-            height: 16px;
-            width: auto;
-            filter: brightness(0) invert(1);
-          }
         }
 
         .brand-text {
@@ -140,7 +126,6 @@
       }
     }
 
-    // Card do Usuário Logado
     .sidebar-user-card {
       padding: 1.25rem;
       margin: 1rem 1rem 0.5rem;
@@ -235,7 +220,6 @@
       }
     }
 
-    // Navegação Principal
     .sidebar-nav {
       flex: 1;
       padding: 1rem 0.75rem;
@@ -279,16 +263,6 @@
           }
         }
 
-        .admin-tag {
-          font-size: 0.65rem;
-          font-weight: 700;
-          padding: 0.15rem 0.4rem;
-          border-radius: 4px;
-          background-color: rgba(20, 30, 140, 0.4);
-          color: #93c5fd;
-          border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
         &:hover {
           color: #ffffff;
           background: rgba(255, 255, 255, 0.06);
@@ -311,7 +285,6 @@
       }
     }
 
-    // Rodapé da Sidebar
     .sidebar-footer {
       padding: 1rem 0.75rem;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -363,7 +336,6 @@
     }
   }
 
-  // Conteúdo Principal
   .internal-main {
     flex: 1;
     display: flex;
@@ -441,35 +413,8 @@
         }
       }
 
-      .topbar-right {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        .session-status {
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          font-size: 0.775rem;
-          color: #10b981;
-          background: #ecfdf5;
-          padding: 0.25rem 0.65rem;
-          border-radius: 50px;
-          border: 1px solid #a7f3d0;
-          font-weight: 600;
-
-          .status-pulse {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #10b981;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-          }
-        }
-      }
     }
 
-    // Área renderizada pelo Outlet
     .internal-page-container {
       flex: 1;
       padding: 1.5rem;
