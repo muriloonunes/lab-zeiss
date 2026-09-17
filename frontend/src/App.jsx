@@ -1,38 +1,73 @@
-import {Navigate, Route, Routes, Outlet} from 'react-router-dom';
-import {Navbar} from './components/Navbar/Navbar';
-import {Footer} from './components/Footer/Footer';
-import {Home} from './pages/Home/Home';
-import {Institutional} from './pages/Institutional/Institutional';
-import {Contact} from "./pages/Contact/Contact.tsx";
-import {Services} from "./pages/Services/Services.tsx";
-import {ServiceDetail} from "./pages/ServiceDetail/ServiceDetail.tsx";
-import {Login} from "./pages/Login/Login.tsx";
+import { Navigate, Route, Routes, Outlet } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import { InternalLayout } from './components/InternalLayout/InternalLayout';
+import { Navbar } from './components/Navbar/Navbar';
+import { Footer } from './components/Footer/Footer';
+import { Home } from './pages/Home/Home';
+import { Institutional } from './pages/Institutional/Institutional';
+import { Contact } from './pages/Contact/Contact';
+import { Services } from './pages/Services/Services';
+import { ServiceDetail } from './pages/ServiceDetail/ServiceDetail';
+import { Login } from './pages/Login/Login';
+import { Dashboard } from './pages/Internal/Dashboard/Dashboard';
+import { Perfil } from './pages/Internal/Perfil/Perfil';
+import { Usuarios } from './pages/Internal/Usuarios/Usuarios';
 
 function PublicLayout() {
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <main>
-                <Outlet/>
+                <Outlet />
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }
 
 export default function App() {
     return (
-        <Routes>
-            <Route element={<PublicLayout/>}>
-                <Route path="/" element={<Navigate to="/home" replace/>}/>
-                <Route path="/home" element={<Home/>}/>
-                <Route path="/institucional" element={<Institutional/>}/>
-                <Route path="/servicos" element={<Services/>}/>
-                <Route path="/servicos/:serviceId" element={<ServiceDetail/>}/>
-                <Route path="/contato" element={<Contact/>}/>
-            </Route>
+        <AuthProvider>
+            <Routes>
+                {/* Rotas Públicas */}
+                <Route element={<PublicLayout />}>
+                    <Route path="/" element={<Navigate to="/home" replace />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/institucional" element={<Institutional />} />
+                    <Route path="/servicos" element={<Services />} />
+                    <Route path="/servicos/:serviceId" element={<ServiceDetail />} />
+                    <Route path="/contato" element={<Contact />} />
+                </Route>
 
-            <Route path="/login" element={<Login/>}/>
-        </Routes>
+                {/* Rota de Login */}
+                <Route path="/login" element={<Login />} />
+
+                {/* Rotas Protegidas da Área Interna */}
+                <Route
+                    path="/interno"
+                    element={
+                        <ProtectedRoute>
+                            <InternalLayout />
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route index element={<Dashboard />} />
+                    <Route path="perfil" element={<Perfil />} />
+                    <Route
+                        path="usuarios"
+                        element={
+                            <ProtectedRoute roles={['ADMINISTRADOR']}>
+                                <Usuarios />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route path="*" element={<Navigate to="/interno" replace />} />
+                </Route>
+
+                {/* Fallback Geral */}
+                <Route path="*" element={<Navigate to="/home" replace />} />
+            </Routes>
+        </AuthProvider>
     );
 }

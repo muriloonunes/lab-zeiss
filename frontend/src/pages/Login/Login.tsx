@@ -1,43 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {login, me} from '../../services/authService';
-import {ApiError} from '../../types/api';
-import {useScrollToTop} from '../../hooks/useScrollToTop';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { ApiError } from '../../types/api';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import './Login.scss';
 
 export function Login() {
     useScrollToTop();
     const navigate = useNavigate();
-    const location = useLocation();
+    const { login, autenticado, carregando: verificandoSessao } = useAuth();
 
-    const [verificandoSessao, setVerificandoSessao] = useState(true);
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
 
-    const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/interno';
-
     useEffect(() => {
-        let ativo = true;
-
-        me()
-            .then(() => {
-                if (ativo) {
-                    navigate(from, {replace: true});
-                }
-            })
-            .catch(() => {
-                if (ativo) {
-                    setVerificandoSessao(false);
-                }
-            });
-
-        return () => {
-            ativo = false;
-        };
-    }, [navigate, from]);
+        if (!verificandoSessao && autenticado) {
+            navigate('/interno', { replace: true });
+        }
+    }, [verificandoSessao, autenticado, navigate]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -52,7 +35,7 @@ export function Login() {
 
         try {
             await login(usuario.trim(), senha);
-            navigate(from, {replace: true});
+            navigate('/interno', { replace: true });
         } catch (err: unknown) {
             if (err instanceof ApiError) {
                 setErro(err.message || 'Usuário ou senha incorretos.');
@@ -67,21 +50,21 @@ export function Login() {
     if (verificandoSessao) {
         return (
             <div className="login-page">
-                <div className="login-card" style={{alignItems: 'center', justifyContent: 'center', minHeight: '300px'}}>
+                <div className="login-card" style={{ alignItems: 'center', justifyContent: 'center', minHeight: '300px' }}>
                     <div className="login-logos">
                         <img
                             src="/images/cem-logo.png"
                             alt="Centro de Excelência em Metrologia SENAI ZEISS"
                             className="logo-cem"
                         />
-                        <span className="logo-divider" aria-hidden="true"/>
+                        <span className="logo-divider" aria-hidden="true" />
                         <img
                             src="/images/zeiss-logo-coop.png"
                             alt="Cooperação Tecnológica ZEISS"
                             className="logo-zeiss"
                         />
                     </div>
-                    <div style={{marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem'}}>
+                    <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
                         <span className="spinner" style={{
                             width: '24px',
                             height: '24px',
@@ -89,8 +72,8 @@ export function Login() {
                             borderTopColor: '#002060',
                             borderRadius: '50%',
                             animation: 'spin 0.8s linear infinite'
-                        }}/>
-                        <span style={{fontSize: '0.9rem', color: '#64748b'}}>Verificando autenticação...</span>
+                        }} />
+                        <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Verificando autenticação...</span>
                     </div>
                 </div>
             </div>
@@ -106,7 +89,7 @@ export function Login() {
                         alt="Centro de Excelência em Metrologia SENAI ZEISS"
                         className="logo-cem"
                     />
-                    <span className="logo-divider" aria-hidden="true"/>
+                    <span className="logo-divider" aria-hidden="true" />
                     <img
                         src="/images/zeiss-logo-coop.png"
                         alt="Cooperação Tecnológica ZEISS"
@@ -122,9 +105,9 @@ export function Login() {
                     <div className="login-error" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
                         </svg>
                         <span>{erro}</span>
                     </div>
@@ -169,15 +152,15 @@ export function Login() {
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                          strokeLinejoin="round">
                                         <path
-                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                                        <line x1="1" y1="1" x2="23" y2="23"/>
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
                                     </svg>
                                 ) : (
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                          strokeLinejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
                                     </svg>
                                 )}
                             </button>
@@ -187,7 +170,7 @@ export function Login() {
                     <button type="submit" className="submit-btn" disabled={carregando}>
                         {carregando ? (
                             <>
-                                <span className="spinner"/>
+                                <span className="spinner" />
                                 <span>Entrando...</span>
                             </>
                         ) : (

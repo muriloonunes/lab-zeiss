@@ -1,0 +1,16 @@
+@use '../../../styles/variables' as vars;
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+
+  .dashboard-header {
+    .dashboard-greeting {
+      font-family: vars.$font-headline;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: vars.$color-text-dark;
+    }
+  }
+}

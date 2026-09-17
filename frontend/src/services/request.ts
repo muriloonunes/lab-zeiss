@@ -29,8 +29,9 @@ export async function request<T>(endpoint: string, options: RequestInit = {}): P
     // 204: sucesso sem corpo (login, logout, alterações de senha)
     if (response.status === 204) return null as T;
 
-    // 401 fora do fluxo de auth = sessão expirou — avisa o app inteiro
-    if (response.status === 401 && !endpoint.includes('/api/auth/')) {
+    // 401 fora dos fluxos com validação de senha própria = sessão expirou — avisa o app inteiro
+    const isValidationEndpoint = endpoint.includes('/api/auth/') || endpoint.includes('/api/usuarios/me/senha');
+    if (response.status === 401 && !isValidationEndpoint) {
         window.dispatchEvent(new Event('sessao-expirada'));
     }
 
