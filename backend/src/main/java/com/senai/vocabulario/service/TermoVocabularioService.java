@@ -1,5 +1,6 @@
 package com.senai.vocabulario.service;
 
+import com.senai.common.exception.NaoEncontradoException;
 import com.senai.vocabulario.ClasseVocabulario;
 import com.senai.vocabulario.TermoVocabulario;
 import com.senai.vocabulario.VocabularioMapper;
@@ -9,7 +10,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -47,13 +47,13 @@ public class TermoVocabularioService {
 
     public TermoResponse buscarPorId(Long id) {
         var termo = termoRepository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Termo de vocabulário não encontrado."));
+                .orElseThrow(() -> new NaoEncontradoException("Termo de vocabulário não encontrado."));
         return mapper.toResponse(termo);
     }
 
     private TermoVocabulario buscarEntityPorId(Long id) {
         return termoRepository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Termo de vocabulário não encontrado."));
+                .orElseThrow(() -> new NaoEncontradoException("Termo de vocabulário não encontrado."));
     }
 
     @Transactional

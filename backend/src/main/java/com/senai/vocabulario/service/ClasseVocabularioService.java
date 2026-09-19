@@ -1,5 +1,6 @@
 package com.senai.vocabulario.service;
 
+import com.senai.common.exception.NaoEncontradoException;
 import com.senai.vocabulario.ClasseVocabulario;
 import com.senai.vocabulario.VocabularioMapper;
 import com.senai.vocabulario.dto.ClasseResponse;
@@ -9,7 +10,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -42,13 +42,13 @@ public class ClasseVocabularioService {
 
     public ClasseResponse buscarPorId(Long id) {
         var classe = classeRepository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Classe de vocabulário não encontrada."));
+                .orElseThrow(() -> new NaoEncontradoException("Classe de vocabulário não encontrada."));
         return mapper.toResponse(classe);
     }
 
     public ClasseVocabulario buscarEntityPorId(Long id) {
         return classeRepository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Classe de vocabulário não encontrada."));
+                .orElseThrow(() -> new NaoEncontradoException("Classe de vocabulário não encontrada."));
     }
 
     @Transactional
