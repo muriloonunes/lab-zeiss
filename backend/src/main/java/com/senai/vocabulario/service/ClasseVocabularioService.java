@@ -1,6 +1,8 @@
 package com.senai.vocabulario.service;
 
+import com.senai.common.exception.ConflitoException;
 import com.senai.common.exception.NaoEncontradoException;
+import com.senai.common.exception.RequisicaoInvalidaException;
 import com.senai.vocabulario.ClasseVocabulario;
 import com.senai.vocabulario.VocabularioMapper;
 import com.senai.vocabulario.dto.ClasseResponse;
@@ -9,7 +11,6 @@ import com.senai.vocabulario.repository.TermoVocabularioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BadRequestException;
 
 import java.util.List;
 
@@ -35,6 +36,11 @@ public class ClasseVocabularioService {
         return mapper.toClasseResponseList(ativas);
     }
 
+    public List<ClasseResponse> listarAtivasOuComAssinaturaDoUsuario(Long usuarioId) {
+        var ativas = classeRepository.findAllAtivoOrComAssinaturaDoUsuario(usuarioId);
+        return mapper.toClasseResponseList(ativas);
+    }
+
     public List<ClasseResponse> listarTodas() {
         var classes = classeRepository.list("order by nome asc");
         return mapper.toClasseResponseList(classes);
@@ -56,7 +62,7 @@ public class ClasseVocabularioService {
         String nomeFormatado = sanitizarTexto(nome);
 
         if (classeRepository.existsByNome(nomeFormatado)) {
-            throw new BadRequestException("Já existe uma classe de vocabulário cadastrada com este nome: " + nomeFormatado);
+            throw new ConflitoException("Já existe uma classe de vocabulário cadastrada com este nome: " + nomeFormatado);
         }
 
         ClasseVocabulario novaClasse = new ClasseVocabulario();
@@ -74,11 +80,11 @@ public class ClasseVocabularioService {
         String nomeFormatado = sanitizarTexto(novoNome);
 
         if (!classe.getNome().equalsIgnoreCase(nomeFormatado) && classeRepository.existsByNome(nomeFormatado)) {
-            throw new BadRequestException("Já existe outra classe com o nome: " + nomeFormatado);
+            throw new ConflitoException("Já existe outra classe com o nome: " + nomeFormatado);
         }
 
         if (classe.isClasseBase()) {
-            throw new BadRequestException("Classes-base do sistema não podem ter o nome alterado.");
+            throw new RequisicaoInvalidaException("Classes-base do sistema não podem ter o nome alterado.");
         }
 
         classe.setNome(nomeFormatado);
@@ -90,7 +96,7 @@ public class ClasseVocabularioService {
         ClasseVocabulario classe = buscarEntityPorId(id);
 
         if (!ativo && classe.isClasseBase()) {
-            throw new BadRequestException("Classes-base do sistema não podem ser desativadas.");
+            throw new RequisicaoInvalidaException("Classes-base do sistema não podem ser desativadas.");
         }
 
         classe.setAtivo(ativo);
@@ -102,7 +108,7 @@ public class ClasseVocabularioService {
 
     private String sanitizarTexto(String texto) {
         if (texto == null || texto.isBlank()) {
-            throw new BadRequestException("O nome da classe não pode ser vazio.");
+            throw new RequisicaoInvalidaException("O nome da classe não pode ser vazio.");
         }
         return texto.trim();
     }

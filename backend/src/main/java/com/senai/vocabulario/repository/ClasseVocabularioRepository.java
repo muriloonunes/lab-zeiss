@@ -19,6 +19,16 @@ public class ClasseVocabularioRepository implements PanacheRepository<ClasseVoca
         return list("ativo = true order by nome asc");
     }
 
+    public List<ClasseVocabulario> findAllAtivoOrComAssinaturaDoUsuario(Long usuarioId) {
+        if (usuarioId == null) {
+            return findAllAtivo();
+        }
+        return list(
+                "ativo = true or id in (select a.termo.classe.id from AssinaturaAssunto a where a.usuarioId = ?1) order by nome asc",
+                usuarioId
+        );
+    }
+
     public Optional<ClasseVocabulario> findByNomeIgnoreCase(String nome) {
         return find("lower(nome) = lower(?1)", nome.trim()).firstResultOptional();
     }

@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.reactive.RestQuery;
 
 import java.util.List;
@@ -31,10 +32,26 @@ public class ClasseResource {
     @Inject
     TermoVocabularioService termoService;
 
+    @Inject
+    JsonWebToken jwt;
+
+    private Long getUsuarioIdAutenticado() {
+        try {
+            if (jwt != null && jwt.getSubject() != null) {
+                return Long.parseLong(jwt.getSubject());
+            }
+        } catch (Exception ignored) {
+        }
+        return null;
+    }
+
     @GET
     @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public List<ClasseResponse> listarClasses(@RestQuery @DefaultValue("true") boolean apenasAtivas) {
-        return apenasAtivas ? classeService.listarAtivas() : classeService.listarTodas();
+        Long usuarioId = getUsuarioIdAutenticado();
+        return apenasAtivas
+                ? classeService.listarAtivasOuComAssinaturaDoUsuario(usuarioId)
+                : classeService.listarTodas();
     }
 
     @GET
@@ -51,7 +68,10 @@ public class ClasseResource {
             @PathParam("id") Long id,
             @RestQuery @DefaultValue("true") boolean apenasAtivos
     ) {
-        return apenasAtivos ? termoService.listarAtivosPorClasse(id) : termoService.listarTodosPorClasse(id);
+        Long usuarioId = getUsuarioIdAutenticado();
+        return apenasAtivos
+                ? termoService.listarAtivosOuAssinadosPorClasse(id, usuarioId)
+                : termoService.listarTodosPorClasse(id);
     }
 
     @POST

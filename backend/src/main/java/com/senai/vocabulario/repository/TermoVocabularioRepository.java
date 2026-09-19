@@ -17,11 +17,22 @@ import java.util.Optional;
 @ApplicationScoped
 public class TermoVocabularioRepository implements PanacheRepository<TermoVocabulario> {
     public List<TermoVocabulario> listActiveByClasseId(Long classeId) {
-        return list("classe.id = ?1 and ativo = true order by descricao asc", classeId);
+        return list("classe.id = ?1 and ativo = true order by id desc", classeId);
+    }
+
+    public List<TermoVocabulario> listActiveOrAssinadoByUsuarioAndClasseId(Long classeId, Long usuarioId) {
+        if (usuarioId == null) {
+            return listActiveByClasseId(classeId);
+        }
+        return list(
+                "classe.id = ?1 and (ativo = true or id in (select a.termo.id from AssinaturaAssunto a where a.usuarioId = ?2)) order by id desc",
+                classeId,
+                usuarioId
+        );
     }
 
     public List<TermoVocabulario> listActiveByClasseNome(String nomeClasse) {
-        return list("lower(classe.nome) = lower(?1) and ativo = true order by descricao asc", nomeClasse.trim());
+        return list("lower(classe.nome) = lower(?1) and ativo = true order by id desc", nomeClasse.trim());
     }
 
     public Optional<TermoVocabulario> findByDescricaoAndClasseId(String descricao, Long classeId) {

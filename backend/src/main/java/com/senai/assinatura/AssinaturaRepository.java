@@ -15,14 +15,14 @@ import java.util.Optional;
 @ApplicationScoped
 public class AssinaturaRepository implements PanacheRepository<AssinaturaAssunto> {
     public List<AssinaturaAssunto> listarPorUsuario(Long idUsuario) {
-        return list("usuario.id = ?1", idUsuario);
+        return list("usuarioId = ?1", idUsuario);
     }
 
     public Optional<AssinaturaAssunto> listarPorUsuarioETermo(Long idUsuario, Long idTermo) {
-        return find("usuario.id = ?1 and termo.id = ?2", idUsuario, idTermo).firstResultOptional();
+        return find("usuarioId = ?1 and termo.id = ?2", idUsuario, idTermo).firstResultOptional();
     }
 
     public long deleteByUsuarioETermo(Long idUsuario, Long termoId) {
-        return delete("usuario.id = ?1 and termo.id = ?2", idUsuario, termoId);
+        return delete("usuarioId = ?1 and termo.id = ?2", idUsuario, termoId);
     }
 }

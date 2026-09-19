@@ -1,12 +1,12 @@
 package com.senai.assinatura;
 
 import com.senai.common.exception.NaoEncontradoException;
+import com.senai.common.exception.RequisicaoInvalidaException;
 import com.senai.vocabulario.TermoVocabulario;
 import com.senai.vocabulario.repository.TermoVocabularioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.BadRequestException;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class AssinaturaService {
                 .orElseThrow(() -> new NaoEncontradoException("Termo não encontrado"));
 
         if (!termo.isAtivo()) {
-            throw new BadRequestException("Não é possível assinar um termo inativo.");
+            throw new RequisicaoInvalidaException("Não é possível assinar um termo inativo.");
         }
 
         AssinaturaAssunto assinatura = new AssinaturaAssunto();
