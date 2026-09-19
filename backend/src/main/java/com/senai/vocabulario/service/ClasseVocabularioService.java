@@ -52,7 +52,7 @@ public class ClasseVocabularioService {
     }
 
     @Transactional
-    public ClasseVocabulario criar(String nome, boolean isClasseBase) {
+    public ClasseResponse criar(String nome, boolean isClasseBase) {
         String nomeFormatado = sanitizarTexto(nome);
 
         if (classeRepository.existsByNome(nomeFormatado)) {
@@ -65,11 +65,11 @@ public class ClasseVocabularioService {
         novaClasse.setClasseBase(isClasseBase);
 
         classeRepository.persist(novaClasse);
-        return novaClasse;
+        return mapper.toResponse(novaClasse);
     }
 
     @Transactional
-    public ClasseVocabulario atualizarNome(Long id, String novoNome) {
+    public ClasseResponse atualizarNome(Long id, String novoNome) {
         ClasseVocabulario classe = buscarEntityPorId(id);
         String nomeFormatado = sanitizarTexto(novoNome);
 
@@ -82,7 +82,7 @@ public class ClasseVocabularioService {
         }
 
         classe.setNome(nomeFormatado);
-        return classe;
+        return mapper.toResponse(classe);
     }
 
     @Transactional

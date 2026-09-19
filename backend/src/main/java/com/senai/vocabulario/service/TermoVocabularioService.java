@@ -2,6 +2,8 @@ package com.senai.vocabulario.service;
 
 import com.senai.vocabulario.ClasseVocabulario;
 import com.senai.vocabulario.TermoVocabulario;
+import com.senai.vocabulario.VocabularioMapper;
+import com.senai.vocabulario.dto.TermoResponse;
 import com.senai.vocabulario.repository.TermoVocabularioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,25 +27,37 @@ public class TermoVocabularioService {
     @Inject
     ClasseVocabularioService classeService;
 
-    public List<TermoVocabulario> listarAtivosPorClasse(Long classeId) {
-        return termoRepository.listActiveByClasseId(classeId);
+    @Inject
+    VocabularioMapper mapper;
+
+    public List<TermoResponse> listarAtivosPorClasse(Long classeId) {
+        var ativos = termoRepository.listActiveByClasseId(classeId);
+        return mapper.toTermoResponseList(ativos);
     }
 
-    public List<TermoVocabulario> listarAtivosPorNomeClasse(String nomeClasse) {
-        return termoRepository.listActiveByClasseNome(nomeClasse);
+    public List<TermoResponse> listarAtivosPorNomeClasse(String nomeClasse) {
+        var termos = termoRepository.listActiveByClasseNome(nomeClasse);
+        return mapper.toTermoResponseList(termos);
     }
 
-    public List<TermoVocabulario> listarTodosPorClasse(Long classeId) {
-        return termoRepository.list("classe.id = ?1 order by descricao asc", classeId);
+    public List<TermoResponse> listarTodosPorClasse(Long classeId) {
+        var todos = termoRepository.list("classe.id = ?1 order by descricao asc", classeId);
+        return mapper.toTermoResponseList(todos);
     }
 
-    public TermoVocabulario buscarPorId(Long id) {
+    public TermoResponse buscarPorId(Long id) {
+        var termo = termoRepository.findByIdOptional(id)
+                .orElseThrow(() -> new NotFoundException("Termo de vocabulário não encontrado."));
+        return mapper.toResponse(termo);
+    }
+
+    private TermoVocabulario buscarEntityPorId(Long id) {
         return termoRepository.findByIdOptional(id)
                 .orElseThrow(() -> new NotFoundException("Termo de vocabulário não encontrado."));
     }
 
     @Transactional
-    public TermoVocabulario criar(Long classeId, String descricao) {
+    public TermoResponse criar(Long classeId, String descricao) {
         ClasseVocabulario classe = classeService.buscarEntityPorId(classeId);
 
         if (!classe.isAtivo()) {
@@ -63,12 +77,12 @@ public class TermoVocabularioService {
         novoTermo.setAtivo(true);
 
         termoRepository.persist(novoTermo);
-        return novoTermo;
+        return mapper.toResponse(novoTermo);
     }
 
     @Transactional
-    public TermoVocabulario atualizarDescricao(Long id, String novaDescricao) {
-        TermoVocabulario termo = buscarPorId(id);
+    public TermoResponse atualizar(Long id, String novaDescricao) {
+        TermoVocabulario termo = buscarEntityPorId(id);
         String descricaoFormatada = sanitizarTexto(novaDescricao);
 
         if (!termo.getDescricao().equalsIgnoreCase(descricaoFormatada)) {
@@ -79,12 +93,12 @@ public class TermoVocabularioService {
             termo.setDescricao(descricaoFormatada);
         }
 
-        return termo;
+        return mapper.toResponse(termo);
     }
 
     @Transactional
     public void alternarStatus(Long id, boolean ativo) {
-        TermoVocabulario termo = buscarPorId(id);
+        TermoVocabulario termo = buscarEntityPorId(id);
 
         if (ativo && !termo.getClasse().isAtivo()) {
             throw new BadRequestException("Não é possível ativar um termo de uma classe inativa. Ative a classe primeiro.");
