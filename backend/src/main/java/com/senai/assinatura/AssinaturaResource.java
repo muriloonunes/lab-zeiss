@@ -36,6 +36,13 @@ public class AssinaturaResource {
         return assinaturaService.listarIdsTermosAssinados(getUsuarioIdAutenticado());
     }
 
+    @GET
+    @Path("/minhas/classes")
+    @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})
+    public List<Long> minhasClassesAssinadas() {
+        return assinaturaService.listarIdsClassesComAssinatura(getUsuarioIdAutenticado());
+    }
+
     @POST
     @Path("/termos/{termoId}")
     @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})

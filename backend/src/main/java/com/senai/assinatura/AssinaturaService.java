@@ -30,6 +30,13 @@ public class AssinaturaService {
                 .toList();
     }
 
+    public List<Long> listarIdsClassesComAssinatura(Long usuarioId) {
+        return assinaturaRepository.listarPorUsuario(usuarioId).stream()
+                .map(a -> a.getTermo().getClasse().getId())
+                .distinct()
+                .toList();
+    }
+
     @Transactional
     public void assinar(Long usuarioId, Long termoId) {
         if (assinaturaRepository.listarPorUsuarioETermo(usuarioId, termoId).isPresent()) {

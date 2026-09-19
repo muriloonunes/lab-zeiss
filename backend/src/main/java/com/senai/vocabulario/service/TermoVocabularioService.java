@@ -89,6 +89,11 @@ public class TermoVocabularioService {
     @Transactional
     public TermoResponse atualizar(Long id, String novaDescricao) {
         TermoVocabulario termo = buscarEntityPorId(id);
+
+        if (!termo.isAtivo()) {
+            throw new RequisicaoInvalidaException("Não é possível editar a descrição de um termo inativo. Reative o termo primeiro.");
+        }
+
         String descricaoFormatada = sanitizarTexto(novaDescricao);
 
         if (!termo.getDescricao().equalsIgnoreCase(descricaoFormatada)) {

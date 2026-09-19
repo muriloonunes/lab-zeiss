@@ -1,32 +1,34 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { ClasseVocabulario, TermoVocabulario } from '../../../types/vocabulario';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useAuth} from '../../../context/AuthContext';
+import {ClasseVocabulario, TermoVocabulario} from '../../../types/vocabulario';
 import {
+    alternarStatusClasse,
+    alternarStatusTermo,
+    atualizarNomeClasse,
+    atualizarTermo,
+    criarClasse,
+    criarTermo,
     listarClasses,
     listarTermosPorClasse,
-    criarClasse,
-    atualizarNomeClasse,
-    alternarStatusClasse,
-    criarTermo,
-    atualizarTermo,
-    alternarStatusTermo,
 } from '../../../services/vocabularioService';
 import {
-    listarMinhasAssinaturas,
     assinarTermo,
     desassinarTermo,
+    listarMinhasAssinaturas,
+    listarMinhasClassesAssinadas,
 } from '../../../services/assinaturaService';
-import { ApiError } from '../../../types/api';
+import {ApiError} from '../../../types/api';
 import './Vocabulario.scss';
 
 export const Vocabulario: React.FC = () => {
-    const { isAdmin } = useAuth();
+    const {isAdmin} = useAuth();
 
     // Dados principais
     const [classes, setClasses] = useState<ClasseVocabulario[]>([]);
     const [classeSelecionada, setClasseSelecionada] = useState<ClasseVocabulario | null>(null);
     const [termos, setTermos] = useState<TermoVocabulario[]>([]);
     const [minhasAssinaturas, setMinhasAssinaturas] = useState<number[]>([]);
+    const [classesComAssinatura, setClassesComAssinatura] = useState<number[]>([]);
 
     // Ref para preservar a classe selecionada durante recargas (ex: alternar inativos)
     const classeSelecionadaRef = useRef<ClasseVocabulario | null>(null);
@@ -38,7 +40,6 @@ export const Vocabulario: React.FC = () => {
     const [carregandoClasses, setCarregandoClasses] = useState(true);
     const [carregandoTermos, setCarregandoTermos] = useState(false);
     const [salvandoModal, setSalvandoModal] = useState(false);
-    const [processandoAssinaturaId, setProcessandoAssinaturaId] = useState<number | null>(null);
 
     // Filtros e busca (exibirInativos com persistência em localStorage)
     const [buscaClasse, setBuscaClasse] = useState('');
@@ -75,15 +76,19 @@ export const Vocabulario: React.FC = () => {
     const [erroModal, setErroModal] = useState<string | null>(null);
 
     const mostrarToast = (tipo: 'success' | 'error', mensagem: string) => {
-        setToast({ tipo, mensagem });
+        setToast({tipo, mensagem});
         setTimeout(() => setToast(null), 4000);
     };
 
-    // Carregar assinaturas do usuário
+    // Carregar assinaturas e classes com assinatura do usuário
     const carregarAssinaturas = async () => {
         try {
-            const ids = await listarMinhasAssinaturas();
-            setMinhasAssinaturas(ids);
+            const [termosIds, classesIds] = await Promise.all([
+                listarMinhasAssinaturas(),
+                listarMinhasClassesAssinadas(),
+            ]);
+            setMinhasAssinaturas(termosIds);
+            setClassesComAssinatura(classesIds);
         } catch {
             // falha silenciosa nas assinaturas
         }
@@ -140,13 +145,46 @@ export const Vocabulario: React.FC = () => {
     }, [classeSelecionada, carregarTermos]);
 
     // Filtro de Classes
+    // REGRA 1: Na aba "Todos os Termos", classes inativas NUNCA aparecem (exceto se admin marcou exibirInativos).
+    // REGRA 2: Na aba "Meus Assuntos de Interesse", aparecem APENAS as classes em que o usuário possui ao menos um assunto assinado.
     const classesFiltradas = useMemo(() => {
         return classes.filter((c) => {
             const matchBusca = !buscaClasse.trim() ||
                 c.nome.toLowerCase().includes(buscaClasse.toLowerCase().trim());
-            return matchBusca;
+
+            if (!matchBusca) return false;
+
+            if (filtroAba === 'TODOS') {
+                if (!c.ativo && (!isAdmin || !exibirInativos)) {
+                    return false;
+                }
+                return true;
+            }
+
+            if (filtroAba === 'ASSINADOS') {
+                return classesComAssinatura.includes(c.id);
+            }
+
+            return true;
         });
-    }, [classes, buscaClasse]);
+    }, [classes, buscaClasse, filtroAba, isAdmin, exibirInativos, classesComAssinatura]);
+
+    // Gerenciamento da classe selecionada ao alternar abas
+    useEffect(() => {
+        if (filtroAba === 'TODOS') {
+            if (classeSelecionada && !classeSelecionada.ativo && (!isAdmin || !exibirInativos)) {
+                const primeiraAtiva = classes.find((c) => c.ativo);
+                setClasseSelecionada(primeiraAtiva || null);
+            }
+        } else if (filtroAba === 'ASSINADOS') {
+            // Se a classe atual não possuir assinaturas do usuário, seleciona a primeira que possui
+            const classeAtualTemAssinatura = classeSelecionada && classesComAssinatura.includes(classeSelecionada.id);
+            if (!classeAtualTemAssinatura) {
+                const primeiraComAssinatura = classes.find((c) => classesComAssinatura.includes(c.id));
+                setClasseSelecionada(primeiraComAssinatura || null);
+            }
+        }
+    }, [filtroAba, classeSelecionada, classes, classesComAssinatura, isAdmin, exibirInativos]);
 
     // Filtro de Termos
     const termosFiltrados = useMemo(() => {
@@ -163,9 +201,9 @@ export const Vocabulario: React.FC = () => {
         return minhasAssinaturas.length;
     }, [minhasAssinaturas]);
 
-    // ==========================================
-    // Assinar / Desassinar Assunto (Termo)
-    // ==========================================
+    // ==========================================================
+    // Assinar / Desassinar Assunto (Termo) com Atualização Otimista
+    // ==========================================================
     const handleToggleAssinatura = async (termo: TermoVocabulario) => {
         const jaAssinado = minhasAssinaturas.includes(termo.id);
 
@@ -174,32 +212,53 @@ export const Vocabulario: React.FC = () => {
             return;
         }
 
-        setProcessandoAssinaturaId(termo.id);
+        // 1. Guardar estado anterior para rollback em caso de falha de rede
+        const assinaturasAnteriores = [...minhasAssinaturas];
+        const classesAnteriores = [...classesComAssinatura];
+
+        // 2. Atualização Otimista Imediata (resposta instantânea na UI)
+        if (jaAssinado) {
+            setMinhasAssinaturas((prev) => prev.filter((id) => id !== termo.id));
+        } else {
+            setMinhasAssinaturas((prev) => [...prev, termo.id]);
+            if (classeSelecionada && !classesComAssinatura.includes(classeSelecionada.id)) {
+                setClassesComAssinatura((prev) => [...prev, classeSelecionada.id]);
+            }
+        }
 
         try {
+            // 3. Efetuar requisição em segundo plano
             if (jaAssinado) {
                 await desassinarTermo(termo.id);
-                setMinhasAssinaturas((prev) => prev.filter((id) => id !== termo.id));
                 mostrarToast('success', `Assinatura de "${termo.descricao}" removida.`);
 
-                // Se o termo estiver inativo e o usuário não for admin com inativos ligados,
-                // remove o termo desassinado da visualização recarregando os termos
+                // Sincroniza classes com assinatura do backend após desassinar
+                const classesAtualizadas = await listarMinhasClassesAssinadas();
+                setClassesComAssinatura(classesAtualizadas);
+
+                // Se o termo desassinado for inativo e o usuário não for admin com inativos ligados,
+                // sincroniza a lista da classe para remover o item inativo da visualização
                 if (!termo.ativo && (!isAdmin || !exibirInativos) && classeSelecionada) {
                     await carregarTermos(classeSelecionada.id);
                 }
             } else {
                 await assinarTermo(termo.id);
-                setMinhasAssinaturas((prev) => [...prev, termo.id]);
                 mostrarToast('success', `Você assinou o assunto "${termo.descricao}".`);
+
+                // Sincroniza classes com assinatura
+                const classesAtualizadas = await listarMinhasClassesAssinadas();
+                setClassesComAssinatura(classesAtualizadas);
             }
         } catch (err: unknown) {
+            // 4. Rollback: desfaz a alteração local caso ocorra erro no servidor
+            setMinhasAssinaturas(assinaturasAnteriores);
+            setClassesComAssinatura(classesAnteriores);
+
             if (err instanceof ApiError) {
                 mostrarToast('error', err.message);
             } else {
-                mostrarToast('error', 'Falha ao atualizar assinatura.');
+                mostrarToast('error', 'Falha ao atualizar assinatura. Tente novamente.');
             }
-        } finally {
-            setProcessandoAssinaturaId(null);
         }
     };
 
@@ -224,7 +283,7 @@ export const Vocabulario: React.FC = () => {
 
         setSalvandoModal(true);
         try {
-            const nova = await criarClasse({ nome });
+            const nova = await criarClasse({nome});
             setModalCriarClasseAberto(false);
             mostrarToast('success', `Classe "${nova.nome}" criada com sucesso!`);
             await carregarClasses(nova.id);
@@ -241,10 +300,17 @@ export const Vocabulario: React.FC = () => {
 
     const abrirModalEditarClasse = (classe: ClasseVocabulario, e: React.MouseEvent) => {
         e.stopPropagation();
+
+        if (!classe.ativo) {
+            mostrarToast('error', 'Não é possível editar uma classe inativa. Reative-a primeiro.');
+            return;
+        }
+
         if (classe.classeBase) {
             mostrarToast('error', 'Classes-base do sistema não podem ter o nome alterado.');
             return;
         }
+
         setClasseEmAcao(classe);
         setFormClasseNome(classe.nome);
         setErroModal(null);
@@ -256,6 +322,11 @@ export const Vocabulario: React.FC = () => {
         if (!classeEmAcao) return;
         setErroModal(null);
 
+        if (!classeEmAcao.ativo) {
+            setErroModal('Não é possível editar uma classe inativa.');
+            return;
+        }
+
         const nome = formClasseNome.trim();
         if (!nome) {
             setErroModal('O nome da classe não pode ser vazio.');
@@ -264,7 +335,7 @@ export const Vocabulario: React.FC = () => {
 
         setSalvandoModal(true);
         try {
-            await atualizarNomeClasse(classeEmAcao.id, { nome });
+            await atualizarNomeClasse(classeEmAcao.id, {nome});
             setModalEditarClasseAberto(false);
             mostrarToast('success', 'Nome da classe atualizado com sucesso!');
             await carregarClasses(classeEmAcao.id);
@@ -344,7 +415,7 @@ export const Vocabulario: React.FC = () => {
 
         setSalvandoModal(true);
         try {
-            const novo = await criarTermo(classeSelecionada.id, { descricao });
+            const novo = await criarTermo(classeSelecionada.id, {descricao});
             setModalCriarTermoAberto(false);
             mostrarToast('success', `Termo "${descricao}" adicionado com sucesso!`);
             setTermos((prev) => [novo, ...prev]);
@@ -360,6 +431,10 @@ export const Vocabulario: React.FC = () => {
     };
 
     const abrirModalEditarTermo = (termo: TermoVocabulario) => {
+        if (!termo.ativo) {
+            mostrarToast('error', 'Não é possível editar a descrição de um termo inativo. Reative-o primeiro.');
+            return;
+        }
         setTermoEmAcao(termo);
         setFormTermoDescricao(termo.descricao);
         setErroModal(null);
@@ -371,6 +446,11 @@ export const Vocabulario: React.FC = () => {
         if (!termoEmAcao || !classeSelecionada) return;
         setErroModal(null);
 
+        if (!termoEmAcao.ativo) {
+            setErroModal('Não é possível editar a descrição de um termo inativo.');
+            return;
+        }
+
         const descricao = formTermoDescricao.trim();
         if (!descricao) {
             setErroModal('A descrição do termo não pode ser vazia.');
@@ -379,7 +459,7 @@ export const Vocabulario: React.FC = () => {
 
         setSalvandoModal(true);
         try {
-            const atualizado = await atualizarTermo(termoEmAcao.id, { descricao });
+            const atualizado = await atualizarTermo(termoEmAcao.id, {descricao});
             setModalEditarTermoAberto(false);
             mostrarToast('success', 'Descrição do termo atualizada.');
             setTermos((prev) => prev.map((t) => (t.id === atualizado.id ? atualizado : t)));
@@ -442,17 +522,19 @@ export const Vocabulario: React.FC = () => {
                 <div className={`toast-alert ${toast.tipo}`} role="alert">
                     <div className="toast-content">
                         {toast.tipo === 'success' ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                 fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                <polyline points="22 4 12 14.01 9 11.01" />
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
                         ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                 fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" y1="8" x2="12" y2="12" />
-                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
                             </svg>
                         )}
                         <span>{toast.mensagem}</span>
@@ -460,8 +542,8 @@ export const Vocabulario: React.FC = () => {
                     <button className="btn-close-toast" onClick={() => setToast(null)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
                         </svg>
                     </button>
                 </div>
@@ -493,7 +575,8 @@ export const Vocabulario: React.FC = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                              fill={filtroAba === 'ASSINADOS' ? 'currentColor' : 'none'}
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                         </svg>
                         <span>Meus Assuntos de Interesse</span>
                         <span className="tab-count">{totalAssinados}</span>
@@ -514,9 +597,7 @@ export const Vocabulario: React.FC = () => {
                 )}
             </div>
 
-            {/* Layout Principal: 2 Colunas */}
             <div className="vocabulario-main-layout">
-                {/* Coluna 1: Lista de Classes */}
                 <div className="classes-panel">
                     <div className="panel-header">
                         <span className="panel-title">Classes</span>
@@ -529,8 +610,8 @@ export const Vocabulario: React.FC = () => {
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
                                 </svg>
                                 <span>Nova Classe</span>
                             </button>
@@ -539,9 +620,10 @@ export const Vocabulario: React.FC = () => {
 
                     <div className="panel-search">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="11" cy="11" r="8" />
-                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                             fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                             strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                         </svg>
                         <input
                             type="text"
@@ -555,7 +637,11 @@ export const Vocabulario: React.FC = () => {
                         {carregandoClasses ? (
                             <div className="empty-classes">Carregando classes...</div>
                         ) : classesFiltradas.length === 0 ? (
-                            <div className="empty-classes">Nenhuma classe encontrada.</div>
+                            <div className="empty-classes">
+                                {filtroAba === 'ASSINADOS'
+                                    ? 'Você ainda não possui nenhum assunto de interesse assinado.'
+                                    : 'Nenhuma classe encontrada.'}
+                            </div>
                         ) : (
                             classesFiltradas.map((classe) => {
                                 const isSelected = classeSelecionada?.id === classe.id;
@@ -574,22 +660,24 @@ export const Vocabulario: React.FC = () => {
 
                                         {isAdmin && (
                                             <div className="classe-item-actions">
-                                                {!classe.classeBase && (
+                                                {!classe.classeBase && classe.ativo && (
                                                     <button
                                                         type="button"
                                                         className="btn-icon-classe"
                                                         onClick={(e) => abrirModalEditarClasse(classe, e)}
                                                         title="Editar nome da classe"
                                                     >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                             fill="none"
+                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                                             strokeLinejoin="round">
                                                             <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                                                             <path d="m15 5 4 4"/>
                                                         </svg>
                                                     </button>
                                                 )}
 
-                                                <button
+                                                {!classe.classeBase && (<button
                                                     type="button"
                                                     className={`btn-icon-classe ${classe.ativo ? 'btn-delete' : 'btn-activate'}`}
                                                     onClick={(e) => abrirModalStatusClasse(classe, e)}
@@ -601,19 +689,23 @@ export const Vocabulario: React.FC = () => {
                                                     }
                                                 >
                                                     {classe.ativo ? (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                             fill="none"
+                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                                             strokeLinejoin="round">
                                                             <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
                                                             <line x1="12" y1="2" x2="12" y2="12"/>
                                                         </svg>
                                                     ) : (
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                             fill="none"
+                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                                             strokeLinejoin="round">
                                                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                                             <polyline points="22 4 12 14.01 9 11.01"/>
                                                         </svg>
                                                     )}
-                                                </button>
+                                                </button>)}
                                             </div>
                                         )}
                                     </div>
@@ -638,7 +730,9 @@ export const Vocabulario: React.FC = () => {
                                     ? classeSelecionada.ativo
                                         ? 'Selecione e assine os assuntos de seu interesse para receber atualizações.'
                                         : 'Esta classe está inativa. Seus termos encontram-se desabilitados.'
-                                    : 'Selecione uma classe à esquerda para gerenciar seus termos.'}
+                                    : filtroAba === 'ASSINADOS'
+                                        ? 'Nenhum assunto de interesse assinado. Navegue em "Todos os Termos" para assinar assuntos.'
+                                        : 'Selecione uma classe à esquerda para gerenciar seus termos.'}
                             </span>
                         </div>
 
@@ -646,9 +740,10 @@ export const Vocabulario: React.FC = () => {
                             <div className="termos-actions">
                                 <button className="btn-novo-termo" onClick={abrirModalCriarTermo}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="12" y1="5" x2="12" y2="19" />
-                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
                                     </svg>
                                     <span>Novo Termo</span>
                                 </button>
@@ -660,9 +755,10 @@ export const Vocabulario: React.FC = () => {
                         <div className="termos-filter-bar">
                             <div className="search-termo-box">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="11" cy="11" r="8" />
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                     strokeLinejoin="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                                 </svg>
                                 <input
                                     type="text"
@@ -681,7 +777,22 @@ export const Vocabulario: React.FC = () => {
                     <div className="termos-list">
                         {!classeSelecionada ? (
                             <div className="empty-termos">
-                                <p>Selecione uma classe de vocabulário para visualizar os termos.</p>
+                                {filtroAba === 'ASSINADOS' ? (
+                                    <>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+                                             strokeLinejoin="round">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                        </svg>
+                                        <p>Você ainda não possui nenhum assunto assinado.</p>
+                                        <p style={{fontSize: '0.8rem', color: '#94a3b8'}}>
+                                            Vá até a aba "Todos os Termos" para assinar assuntos de seu interesse.
+                                        </p>
+                                    </>
+                                ) : (
+                                    <p>Selecione uma classe de vocabulário para visualizar os termos.</p>
+                                )}
                             </div>
                         ) : carregandoTermos ? (
                             <div className="empty-termos">
@@ -690,13 +801,14 @@ export const Vocabulario: React.FC = () => {
                         ) : termosFiltrados.length === 0 ? (
                             <div className="empty-termos">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                     stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+                                     strokeLinejoin="round">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                                     <polyline points="14 2 14 8 20 8"/>
                                     <line x1="9" y1="15" x2="15" y2="15"/>
                                 </svg>
                                 {filtroAba === 'ASSINADOS' ? (
-                                    <p>Você ainda não assinou nenhum termo nesta classe.</p>
+                                    <p>Você não possui assuntos de interesse assinados nesta classe.</p>
                                 ) : (
                                     <p>Nenhum termo cadastrado nesta classe.</p>
                                 )}
@@ -704,7 +816,6 @@ export const Vocabulario: React.FC = () => {
                         ) : (
                             termosFiltrados.map((termo) => {
                                 const assinado = minhasAssinaturas.includes(termo.id);
-                                const processando = processandoAssinaturaId === termo.id;
                                 const isTermoInativoAssinado = !termo.ativo && assinado;
 
                                 return (
@@ -713,7 +824,7 @@ export const Vocabulario: React.FC = () => {
                                         className={`termo-card ${assinado ? 'assinado' : ''} ${!termo.ativo ? 'inativo' : ''} ${isTermoInativoAssinado ? 'inativo-assinado' : ''}`}
                                     >
                                         <div className="termo-content">
-                                            <span className="termo-bullet" />
+                                            <span className="termo-bullet"/>
                                             <span className="termo-desc">{termo.descricao}</span>
                                             {!termo.ativo && (
                                                 <span
@@ -726,12 +837,12 @@ export const Vocabulario: React.FC = () => {
                                         </div>
 
                                         <div className="termo-card-actions">
-                                            {/* Botão de Assinatura: permite desassinar mesmo que o termo esteja inativo */}
+                                            {/* Botão de Assinatura com Atualização Otimista */}
                                             <button
                                                 type="button"
                                                 className={`btn-assinatura ${assinado ? 'ativo' : ''} ${isTermoInativoAssinado ? 'inativo-assinado' : ''}`}
                                                 onClick={() => handleToggleAssinatura(termo)}
-                                                disabled={processando || (!termo.ativo && !assinado)}
+                                                disabled={!termo.ativo && !assinado}
                                                 title={
                                                     !termo.ativo
                                                         ? assinado
@@ -751,7 +862,8 @@ export const Vocabulario: React.FC = () => {
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                 >
-                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                    <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                                 </svg>
                                                 <span>{assinado ? 'Assinado' : 'Assinar'}</span>
                                             </button>
@@ -759,18 +871,24 @@ export const Vocabulario: React.FC = () => {
                                             {/* Ações do Administrador */}
                                             {isAdmin && (
                                                 <div className="admin-termo-actions">
-                                                    <button
-                                                        type="button"
-                                                        className="btn-action-termo"
-                                                        onClick={() => abrirModalEditarTermo(termo)}
-                                                        title="Editar descrição do termo"
-                                                    >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
-                                                            <path d="m15 5 4 4"/>
-                                                        </svg>
-                                                    </button>
+                                                    {/* Termos inativos não podem ser editados */}
+                                                    {termo.ativo && (
+                                                        <button
+                                                            type="button"
+                                                            className="btn-action-termo"
+                                                            onClick={() => abrirModalEditarTermo(termo)}
+                                                            title="Editar descrição do termo"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                 fill="none"
+                                                                 stroke="currentColor" strokeWidth="2"
+                                                                 strokeLinecap="round" strokeLinejoin="round">
+                                                                <path
+                                                                    d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                                                <path d="m15 5 4 4"/>
+                                                            </svg>
+                                                        </button>
+                                                    )}
 
                                                     <button
                                                         type="button"
@@ -779,14 +897,18 @@ export const Vocabulario: React.FC = () => {
                                                         title={termo.ativo ? 'Inativar termo' : 'Reativar termo'}
                                                     >
                                                         {termo.ativo ? (
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                 fill="none"
+                                                                 stroke="currentColor" strokeWidth="2"
+                                                                 strokeLinecap="round" strokeLinejoin="round">
                                                                 <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
                                                                 <line x1="12" y1="2" x2="12" y2="12"/>
                                                             </svg>
                                                         ) : (
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                                 fill="none"
+                                                                 stroke="currentColor" strokeWidth="2"
+                                                                 strokeLinecap="round" strokeLinejoin="round">
                                                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                                                 <polyline points="22 4 12 14.01 9 11.01"/>
                                                             </svg>
@@ -814,10 +936,11 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>Criar Nova Classe de Vocabulário</h2>
                             <button className="btn-close-modal" onClick={() => setModalCriarClasseAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
@@ -838,13 +961,14 @@ export const Vocabulario: React.FC = () => {
                             </div>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalCriarClasseAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalCriarClasseAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button type="submit" className="btn-salvar" disabled={salvandoModal}>
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Criando...</span>
                                         </>
                                     ) : (
@@ -864,10 +988,11 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>Editar Nome da Classe</h2>
                             <button className="btn-close-modal" onClick={() => setModalEditarClasseAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
@@ -887,13 +1012,14 @@ export const Vocabulario: React.FC = () => {
                             </div>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalEditarClasseAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalEditarClasseAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button type="submit" className="btn-salvar" disabled={salvandoModal}>
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Salvando...</span>
                                         </>
                                     ) : (
@@ -913,22 +1039,23 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>{classeEmAcao.ativo ? 'Inativar Classe' : 'Reativar Classe'}</h2>
                             <button className="btn-close-modal" onClick={() => setModalStatusClasseAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
                         <div className="modal-form">
                             {erroModal && <div className="modal-error">{erroModal}</div>}
 
-                            <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: '1.5', margin: 0 }}>
+                            <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.5', margin: 0}}>
                                 {classeEmAcao.ativo ? (
                                     <>
                                         Deseja realmente inativar a classe <strong>{classeEmAcao.nome}</strong>?
-                                        <br /><br />
-                                        <span style={{ color: '#dc2626', fontWeight: 600 }}>
+                                        <br/><br/>
+                                        <span style={{color: '#dc2626', fontWeight: 600}}>
                                             Atenção: Ao inativar uma classe, todos os seus termos vinculados serão automaticamente inativados.
                                         </span>
                                     </>
@@ -940,7 +1067,8 @@ export const Vocabulario: React.FC = () => {
                             </p>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalStatusClasseAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalStatusClasseAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button
@@ -951,7 +1079,7 @@ export const Vocabulario: React.FC = () => {
                                 >
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Processando...</span>
                                         </>
                                     ) : (
@@ -975,10 +1103,11 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>Novo Termo em {classeSelecionada.nome}</h2>
                             <button className="btn-close-modal" onClick={() => setModalCriarTermoAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
@@ -999,13 +1128,14 @@ export const Vocabulario: React.FC = () => {
                             </div>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalCriarTermoAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalCriarTermoAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button type="submit" className="btn-salvar" disabled={salvandoModal}>
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Salvando...</span>
                                         </>
                                     ) : (
@@ -1025,10 +1155,11 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>Editar Termo</h2>
                             <button className="btn-close-modal" onClick={() => setModalEditarTermoAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
@@ -1048,13 +1179,14 @@ export const Vocabulario: React.FC = () => {
                             </div>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalEditarTermoAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalEditarTermoAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button type="submit" className="btn-salvar" disabled={salvandoModal}>
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Salvando...</span>
                                         </>
                                     ) : (
@@ -1074,23 +1206,25 @@ export const Vocabulario: React.FC = () => {
                         <div className="modal-header">
                             <h2>{termoEmAcao.ativo ? 'Inativar Termo' : 'Reativar Termo'}</h2>
                             <button className="btn-close-modal" onClick={() => setModalStatusTermoAberto(false)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none"
                                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </button>
                         </div>
                         <div className="modal-form">
                             {erroModal && <div className="modal-error">{erroModal}</div>}
 
-                            <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: '1.5', margin: 0 }}>
+                            <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.5', margin: 0}}>
                                 Deseja realmente {termoEmAcao.ativo ? 'inativar' : 'reativar'} o termo{' '}
                                 <strong>"{termoEmAcao.descricao}"</strong>?
                             </p>
 
                             <div className="modal-actions">
-                                <button type="button" className="btn-cancelar" onClick={() => setModalStatusTermoAberto(false)}>
+                                <button type="button" className="btn-cancelar"
+                                        onClick={() => setModalStatusTermoAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button
@@ -1101,7 +1235,7 @@ export const Vocabulario: React.FC = () => {
                                 >
                                     {salvandoModal ? (
                                         <>
-                                            <span className="spinner" />
+                                            <span className="spinner"/>
                                             <span>Processando...</span>
                                         </>
                                     ) : (

@@ -77,6 +77,11 @@ public class ClasseVocabularioService {
     @Transactional
     public ClasseResponse atualizarNome(Long id, String novoNome) {
         ClasseVocabulario classe = buscarEntityPorId(id);
+
+        if (!classe.isAtivo()) {
+            throw new RequisicaoInvalidaException("Não é possível editar o nome de uma classe inativa. Reative a classe primeiro.");
+        }
+
         String nomeFormatado = sanitizarTexto(novoNome);
 
         if (!classe.getNome().equalsIgnoreCase(nomeFormatado) && classeRepository.existsByNome(nomeFormatado)) {
