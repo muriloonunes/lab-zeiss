@@ -4,6 +4,7 @@ import com.senai.usuario.dto.CriarUsuarioRequest;
 import com.senai.usuario.dto.UsuarioResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 /**
  *
@@ -11,7 +12,7 @@ import org.mapstruct.Mapping;
  * @date 15/09/2026
  * @brief Interface UsuarioMapper
  */
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = MappingConstants.ComponentModel.CDI)
 public interface UsuarioMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "senhaHash", ignore = true)

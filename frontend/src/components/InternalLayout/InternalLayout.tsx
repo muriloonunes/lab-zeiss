@@ -40,6 +40,7 @@ export const InternalLayout: React.FC = () => {
 
     const getPageTitle = () => {
         if (location.pathname === '/interno/usuarios') return 'Gerenciamento de Usuários';
+        if (location.pathname === '/interno/vocabulario') return 'Vocabulário Controlado';
         if (location.pathname === '/interno/perfil') return 'Meu Perfil & Segurança';
         return 'Visão Geral';
     };
@@ -116,6 +117,22 @@ export const InternalLayout: React.FC = () => {
                                 <rect width="7" height="5" x="3" y="16" rx="1"/>
                             </svg>
                             <span>Visão Geral</span>
+                        </div>
+                    </NavLink>
+
+                    <NavLink
+                        to="/interno/vocabulario"
+                        onClick={fecharSidebar}
+                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                    >
+                        <div className="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                <path d="M6 6h10"/>
+                                <path d="M6 10h10"/>
+                            </svg>
+                            <span>Vocabulário</span>
                         </div>
                     </NavLink>
 

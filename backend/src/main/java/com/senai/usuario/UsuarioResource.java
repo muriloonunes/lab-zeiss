@@ -30,7 +30,7 @@ public class UsuarioResource {
     @RolesAllowed("ADMINISTRADOR")
     public Response criar(@Valid CriarUsuarioRequest request) {
         UsuarioResponse response = service.criar(request);
-        return Response.status(201).entity(response).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @GET
