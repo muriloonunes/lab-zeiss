@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
+import { useToast } from '../../../components/Toast';
 import { alterarSenhaPropria } from '../../../services/authService';
 import { ApiError } from '../../../types/api';
 import './Perfil.scss';
 
 export const Perfil: React.FC = () => {
     const { usuario } = useAuth();
+    const { mostrarToast } = useToast();
 
     const [senhaAtual, setSenhaAtual] = useState('');
     const [novaSenha, setNovaSenha] = useState('');
@@ -49,19 +51,21 @@ export const Perfil: React.FC = () => {
         try {
             await alterarSenhaPropria(senhaAtual, novaSenha);
             setSucesso('Sua senha foi alterada com sucesso!');
+            mostrarToast('success', 'Sua senha foi alterada com sucesso!');
             setSenhaAtual('');
             setNovaSenha('');
             setConfirmarNovaSenha('');
         } catch (err: unknown) {
+            let msg = 'Erro de comunicação com o servidor.';
             if (err instanceof ApiError) {
                 if (err.status === 401 || err.message?.toLowerCase().includes('inválid')) {
-                    setErro('A senha atual informada está incorreta.');
+                    msg = 'A senha atual informada está incorreta.';
                 } else {
-                    setErro(err.message || 'Erro ao alterar a senha.');
+                    msg = err.message || 'Erro ao alterar a senha.';
                 }
-            } else {
-                setErro('Erro de comunicação com o servidor.');
             }
+            setErro(msg);
+            mostrarToast('error', msg);
         } finally {
             setCarregando(false);
         }
@@ -230,7 +234,6 @@ export const Perfil: React.FC = () => {
                                     </svg>
                                 </button>
                             </div>
-                            <span className="input-hint">A senha deve conter no mínimo 8 caracteres.</span>
                         </div>
 
                         <div className="form-group">
@@ -270,14 +273,18 @@ export const Perfil: React.FC = () => {
                             </div>
                         </div>
 
-                        <button type="submit" className="submit-btn" disabled={carregando}>
+                        <button
+                            type="submit"
+                            className="submit-btn"
+                            disabled={carregando}
+                        >
                             {carregando ? (
                                 <>
                                     <span className="spinner" />
-                                    <span>Salvando Nova Senha...</span>
+                                    <span>Atualizando senha...</span>
                                 </>
                             ) : (
-                                'Atualizar Minha Senha'
+                                <span>Salvar Nova Senha</span>
                             )}
                         </button>
                     </form>

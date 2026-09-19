@@ -1,25 +1,24 @@
-import React, {useEffect, useState, useMemo} from 'react';
-import {Usuario, TipoUsuario, TIPOS_USUARIO} from '../../../types/usuario';
+import React, { useEffect, useMemo, useState } from 'react';
+import { TIPOS_USUARIO, TipoUsuario, Usuario } from '../../../types/usuario';
 import {
-    listarUsuarios,
-    criarUsuario,
     atualizarUsuario,
-    redefinirSenha,
+    criarUsuario,
     desativarUsuario,
-    reativarUsuario
+    listarUsuarios,
+    reativarUsuario,
+    redefinirSenha
 } from '../../../services/usuarioService';
-import {ApiError} from '../../../types/api';
+import { ApiError } from '../../../types/api';
+import { useToast } from '../../../components/Toast';
 import './Usuarios.scss';
 
 export const Usuarios: React.FC = () => {
+    const { mostrarToast } = useToast();
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [busca, setBusca] = useState('');
     const [filtroTipo, setFiltroTipo] = useState<string>('TODOS');
     const [filtroStatus, setFiltroStatus] = useState<string>('TODOS');
-
-    // Toasts / Feedback
-    const [toast, setToast] = useState<{ tipo: 'success' | 'error'; mensagem: string } | null>(null);
 
     // Modais
     const [modalCriarAberto, setModalCriarAberto] = useState(false);
@@ -72,13 +71,6 @@ export const Usuarios: React.FC = () => {
     useEffect(() => {
         carregarLista();
     }, []);
-
-    const mostrarToast = (tipo: 'success' | 'error', mensagem: string) => {
-        setToast({tipo, mensagem});
-        setTimeout(() => {
-            setToast(null);
-        }, 4000);
-    };
 
     // Filtros de busca
     const usuariosFiltrados = useMemo(() => {
@@ -200,7 +192,7 @@ export const Usuarios: React.FC = () => {
     // Abrir modal de redefinir senha
     const abrirModalSenha = (u: Usuario) => {
         setUsuarioSelecionado(u);
-        setFormSenha({novaSenha: '', confirmarSenha: ''});
+        setFormSenha({ novaSenha: '', confirmarSenha: '' });
         setErroModal(null);
         setModalSenhaAberto(true);
     };
@@ -312,36 +304,6 @@ export const Usuarios: React.FC = () => {
                 </button>
             </div>
 
-            {toast && (<div className={`toast-alert ${toast.tipo}`} role="alert">
-                    <div className="toast-content">
-                        {toast.tipo === 'success' ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                <polyline points="22 4 12 14.01 9 11.01"/>
-                            </svg>
-                        ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="8" x2="12" y2="12"/>
-                                <line x1="12" y1="16" x2="12.01" y2="16"/>
-                            </svg>
-                        )}
-                        <span>{toast.mensagem}</span>
-                    </div>
-                    <button className="btn-close-toast" onClick={() => setToast(null)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"/>
-                            <line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                    </button>
-                </div>
-            )}
-
             {/* Filtros e Busca */}
             <div className="usuarios-filters-bar">
                 <div className="search-input-wrapper">
@@ -405,7 +367,7 @@ export const Usuarios: React.FC = () => {
                                 <th>Perfil</th>
                                 <th>Status</th>
                                 <th>Criado em</th>
-                                <th style={{textAlign: 'right'}}>Ações</th>
+                                <th style={{ textAlign: 'right' }}>Ações</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -436,7 +398,7 @@ export const Usuarios: React.FC = () => {
                                     </td>
                                     <td>{formatarData(u.dataCriacao)}</td>
                                     <td>
-                                        <div className="table-actions" style={{justifyContent: 'flex-end'}}>
+                                        <div className="table-actions" style={{ justifyContent: 'flex-end' }}>
                                             <button
                                                 className="btn-action"
                                                 onClick={() => abrirModalEditar(u)}
@@ -527,7 +489,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Ex: João da Silva"
                                     value={formCriar.nome}
-                                    onChange={(e) => setFormCriar({...formCriar, nome: e.target.value})}
+                                    onChange={(e) => setFormCriar({ ...formCriar, nome: e.target.value })}
                                 />
                             </div>
 
@@ -538,7 +500,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Ex: jsilva"
                                     value={formCriar.username}
-                                    onChange={(e) => setFormCriar({...formCriar, username: e.target.value})}
+                                    onChange={(e) => setFormCriar({ ...formCriar, username: e.target.value })}
                                 />
                             </div>
 
@@ -549,7 +511,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Ex: joao.silva@senaigo.com.br"
                                     value={formCriar.email}
-                                    onChange={(e) => setFormCriar({...formCriar, email: e.target.value})}
+                                    onChange={(e) => setFormCriar({ ...formCriar, email: e.target.value })}
                                 />
                             </div>
 
@@ -575,7 +537,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Digite a senha temporária"
                                     value={formCriar.senha}
-                                    onChange={(e) => setFormCriar({...formCriar, senha: e.target.value})}
+                                    onChange={(e) => setFormCriar({ ...formCriar, senha: e.target.value })}
                                 />
                             </div>
 
@@ -624,7 +586,7 @@ export const Usuarios: React.FC = () => {
                                     type="text"
                                     required
                                     value={formEditar.nome}
-                                    onChange={(e) => setFormEditar({...formEditar, nome: e.target.value})}
+                                    onChange={(e) => setFormEditar({ ...formEditar, nome: e.target.value })}
                                 />
                             </div>
 
@@ -634,7 +596,7 @@ export const Usuarios: React.FC = () => {
                                     type="text"
                                     required
                                     value={formEditar.username}
-                                    onChange={(e) => setFormEditar({...formEditar, username: e.target.value})}
+                                    onChange={(e) => setFormEditar({ ...formEditar, username: e.target.value })}
                                 />
                             </div>
 
@@ -644,7 +606,7 @@ export const Usuarios: React.FC = () => {
                                     type="email"
                                     required
                                     value={formEditar.email}
-                                    onChange={(e) => setFormEditar({...formEditar, email: e.target.value})}
+                                    onChange={(e) => setFormEditar({ ...formEditar, email: e.target.value })}
                                 />
                             </div>
 
@@ -702,7 +664,7 @@ export const Usuarios: React.FC = () => {
                         <form onSubmit={handleRedefinirSenha} className="modal-form">
                             {erroModal && <div className="modal-error">{erroModal}</div>}
 
-                            <p style={{fontSize: '0.85rem', color: '#64748b', margin: 0}}>
+                            <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>
                                 Você está definindo uma nova senha para a
                                 conta <strong>@{usuarioSelecionado.username}</strong>.
                             </p>
@@ -714,7 +676,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Digite a nova senha"
                                     value={formSenha.novaSenha}
-                                    onChange={(e) => setFormSenha({...formSenha, novaSenha: e.target.value})}
+                                    onChange={(e) => setFormSenha({ ...formSenha, novaSenha: e.target.value })}
                                 />
                             </div>
 
@@ -725,7 +687,7 @@ export const Usuarios: React.FC = () => {
                                     required
                                     placeholder="Repita a nova senha"
                                     value={formSenha.confirmarSenha}
-                                    onChange={(e) => setFormSenha({...formSenha, confirmarSenha: e.target.value})}
+                                    onChange={(e) => setFormSenha({ ...formSenha, confirmarSenha: e.target.value })}
                                 />
                             </div>
 
@@ -768,7 +730,7 @@ export const Usuarios: React.FC = () => {
                         <div className="modal-form">
                             {erroModal && <div className="modal-error">{erroModal}</div>}
 
-                            <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.5'}}>
+                            <p style={{ fontSize: '0.9rem', color: '#334155', lineHeight: '1.5' }}>
                                 {usuarioSelecionado.ativo ? (
                                     <>
                                         Deseja realmente desativar o acesso do

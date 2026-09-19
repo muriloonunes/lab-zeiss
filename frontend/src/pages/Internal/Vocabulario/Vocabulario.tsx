@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useAuth} from '../../../context/AuthContext';
+import {useToast} from '../../../components/Toast';
 import {ClasseVocabulario, TermoVocabulario} from '../../../types/vocabulario';
 import {
     alternarStatusClasse,
@@ -22,6 +23,7 @@ import './Vocabulario.scss';
 
 export const Vocabulario: React.FC = () => {
     const {isAdmin} = useAuth();
+    const {mostrarToast} = useToast();
 
     // Dados principais
     const [classes, setClasses] = useState<ClasseVocabulario[]>([]);
@@ -54,9 +56,6 @@ export const Vocabulario: React.FC = () => {
         localStorage.setItem('vocabulario_exibir_inativos', String(checked));
     };
 
-    // Toast de notificação
-    const [toast, setToast] = useState<{ tipo: 'success' | 'error'; mensagem: string } | null>(null);
-
     // Modais
     const [modalCriarClasseAberto, setModalCriarClasseAberto] = useState(false);
     const [modalEditarClasseAberto, setModalEditarClasseAberto] = useState(false);
@@ -74,11 +73,6 @@ export const Vocabulario: React.FC = () => {
     const [formClasseNome, setFormClasseNome] = useState('');
     const [formTermoDescricao, setFormTermoDescricao] = useState('');
     const [erroModal, setErroModal] = useState<string | null>(null);
-
-    const mostrarToast = (tipo: 'success' | 'error', mensagem: string) => {
-        setToast({tipo, mensagem});
-        setTimeout(() => setToast(null), 4000);
-    };
 
     // Carregar assinaturas e classes com assinatura do usuário
     const carregarAssinaturas = async () => {
@@ -155,10 +149,8 @@ export const Vocabulario: React.FC = () => {
             if (!matchBusca) return false;
 
             if (filtroAba === 'TODOS') {
-                if (!c.ativo && (!isAdmin || !exibirInativos)) {
-                    return false;
-                }
-                return true;
+                return !(!c.ativo && (!isAdmin || !exibirInativos));
+
             }
 
             if (filtroAba === 'ASSINADOS') {
@@ -516,38 +508,6 @@ export const Vocabulario: React.FC = () => {
                     <p>Taxonomia de metrologia, termos técnicos e gerenciamento de assuntos de interesse.</p>
                 </div>
             </div>
-
-            {/* Toasts */}
-            {toast && (
-                <div className={`toast-alert ${toast.tipo}`} role="alert">
-                    <div className="toast-content">
-                        {toast.tipo === 'success' ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                <polyline points="22 4 12 14.01 9 11.01"/>
-                            </svg>
-                        ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="8" x2="12" y2="12"/>
-                                <line x1="12" y1="16" x2="12.01" y2="16"/>
-                            </svg>
-                        )}
-                        <span>{toast.mensagem}</span>
-                    </div>
-                    <button className="btn-close-toast" onClick={() => setToast(null)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"/>
-                            <line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                    </button>
-                </div>
-            )}
 
             {/* Toolbar com Abas de Assinaturas e Opções de Administrador */}
             <div className="vocabulario-toolbar">

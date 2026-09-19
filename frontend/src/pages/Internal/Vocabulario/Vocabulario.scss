@@ -26,47 +26,6 @@
     }
   }
 
-  // Toasts
-  .toast-alert {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.85rem 1.25rem;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    font-weight: 500;
-
-    &.success {
-      background-color: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
-    }
-
-    &.error {
-      background-color: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .toast-content {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .btn-close-toast {
-      background: none;
-      border: none;
-      color: currentColor;
-      cursor: pointer;
-      opacity: 0.7;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-
   // Barra de ferramentas e filtros
   .vocabulario-toolbar {
     background: #ffffff;

@@ -2,6 +2,7 @@ import { Navigate, Route, Routes, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import { InternalLayout } from './components/InternalLayout/InternalLayout';
+import { ToastProvider } from './components/Toast';
 import { Navbar } from './components/Navbar/Navbar';
 import { Footer } from './components/Footer/Footer';
 import { Home } from './pages/Home/Home';
@@ -49,7 +50,9 @@ export default function App() {
                     path="/interno"
                     element={
                         <ProtectedRoute>
-                            <InternalLayout />
+                            <ToastProvider>
+                                <InternalLayout />
+                            </ToastProvider>
                         </ProtectedRoute>
                     }
                 >
