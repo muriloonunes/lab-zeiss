@@ -25,8 +25,37 @@ const formatFileSize = (bytes: number): string => {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
-const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
-const ACCEPTED_EXTENSIONS = '.pdf,.step,.stp,.iges,.igs,.dwg,.dxf,.stl,.zip,.rar';
+export const formatPhoneNumber = (value: string): string => {
+    let digits = value.replace(/\D/g, '');
+
+    // Strip Brazil country code (55) if pasted with full international format
+    if (digits.length > 11 && digits.startsWith('55')) {
+        digits = digits.slice(2);
+    }
+
+    if (digits.length === 0) return '';
+    if (digits.length === 1) return `(${digits}`;
+    if (digits.length === 2) return `(${digits}) `;
+
+    const ddd = digits.slice(0, 2);
+    let rest = digits.slice(2);
+
+    // Auto-insert mandatory 9 digit if user starts typing a number without 9
+    if (rest.length > 0 && rest[0] !== '9') {
+        rest = '9' + rest;
+    }
+
+    rest = rest.slice(0, 9);
+
+    if (rest.length <= 5) {
+        return `(${ddd}) ${rest}`;
+    }
+    return `(${ddd}) ${rest.slice(0, 5)}-${rest.slice(5)}`;
+};
+
+const MAX_FILES = 5;
+const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024; // 25MB total
+const ACCEPTED_EXTENSIONS = '.pdf,.step,.stp,.iges,.igs,.dwg,.dxf,.stl,.zip,.rar,application/pdf,application/zip,application/x-zip-compressed,application/x-rar-compressed,model/stl,model/step,model/iges';
 
 export function Contact() {
     useScrollToTop();
@@ -42,7 +71,7 @@ export function Contact() {
     const [isTargeted, setIsTargeted] = useState<boolean>(hasInitialTarget);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [fileError, setFileError] = useState<string | null>(null);
-    const [attachedFile, setAttachedFile] = useState<File | null>(null);
+    const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
 
     const [formState, setFormState] = useState({
         name: '',
@@ -67,24 +96,62 @@ export function Contact() {
         setFormState({...formState, [e.target.name]: e.target.value});
     };
 
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const raw = e.target.value;
+        if (formState.phone.length > raw.length && (raw.endsWith(')') || raw.endsWith('(') || raw.endsWith(' '))) {
+            const digits = raw.replace(/\D/g, '');
+            const trimmed = digits.slice(0, -1);
+            setFormState(prev => ({...prev, phone: formatPhoneNumber(trimmed)}));
+            return;
+        }
+        setFormState(prev => ({...prev, phone: formatPhoneNumber(raw)}));
+    };
+
     const handleServiceSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const val = e.target.value as ServiceKey;
         setFormState({...formState, service: val});
         setIsTargeted(false);
     };
 
-    const validateAndSetFile = (file: File) => {
+    const validateAndAddFiles = (incomingFiles: FileList | File[]) => {
         setFileError(null);
-        if (file.size > MAX_FILE_SIZE) {
-            setFileError(t('contact.form.fileSizeError') || 'O arquivo excede o limite máximo permitido de 25MB.');
+        const incomingArray = Array.from(incomingFiles);
+        if (incomingArray.length === 0) return;
+
+        const combinedFiles = [...attachedFiles];
+        const existingKeys = new Set(combinedFiles.map(f => `${f.name}-${f.size}`));
+        const filesToAdd: File[] = [];
+
+        for (const file of incomingArray) {
+            const key = `${file.name}-${file.size}`;
+            if (!existingKeys.has(key)) {
+                filesToAdd.push(file);
+                existingKeys.add(key);
+            }
+        }
+
+        if (combinedFiles.length + filesToAdd.length > MAX_FILES) {
+            setFileError(t('contact.form.maxFilesError') || 'Você pode anexar no máximo 5 arquivos no total.');
             return;
         }
-        setAttachedFile(file);
+
+        const nextFiles = [...combinedFiles, ...filesToAdd];
+        const totalSize = nextFiles.reduce((acc, f) => acc + f.size, 0);
+
+        if (totalSize > MAX_TOTAL_FILE_SIZE) {
+            setFileError(t('contact.form.totalFileSizeError') || 'A soma dos arquivos selecionados excede o limite máximo de 25MB.');
+            return;
+        }
+
+        setAttachedFiles(nextFiles);
     };
 
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            validateAndSetFile(e.target.files[0]);
+        if (e.target.files && e.target.files.length > 0) {
+            validateAndAddFiles(e.target.files);
+        }
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
         }
     };
 
@@ -104,14 +171,13 @@ export function Contact() {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(false);
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            validateAndSetFile(e.dataTransfer.files[0]);
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            validateAndAddFiles(e.dataTransfer.files);
         }
     };
 
-    const handleRemoveFile = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setAttachedFile(null);
+    const handleRemoveFile = (indexToRemove: number) => {
+        setAttachedFiles(prev => prev.filter((_, idx) => idx !== indexToRemove));
         setFileError(null);
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
@@ -124,6 +190,7 @@ export function Contact() {
     };
 
     const currentServiceName = t(`contact.form.services.${formState.service}`, {defaultValue: formState.service});
+    const totalAttachedSize = attachedFiles.reduce((acc, f) => acc + f.size, 0);
 
     return (
         <div className="contact-page">
@@ -213,8 +280,9 @@ export function Contact() {
                                             name="phone"
                                             required
                                             value={formState.phone}
-                                            onChange={handleChange}
-                                            placeholder="(00) 00000-0000"
+                                            onChange={handlePhoneChange}
+                                            placeholder="(00) 90000-0000"
+                                            maxLength={16}
                                         />
                                     </div>
                                 </div>
@@ -249,7 +317,7 @@ export function Contact() {
                                     </div>
                                 </div>
 
-                                {/* Drag & Drop CAD / Technical Drawing Upload Zone */}
+                                {/* Drag & Drop CAD / Technical Drawing Upload Zone (Max 5 files / 25MB total) */}
                                 <div className="form-field">
                                     <label htmlFor="technical-file-input">{t('contact.form.drawingLabel')}</label>
                                     <input
@@ -258,10 +326,11 @@ export function Contact() {
                                         ref={fileInputRef}
                                         onChange={handleFileInputChange}
                                         accept={ACCEPTED_EXTENSIONS}
+                                        multiple
                                         style={{display: 'none'}}
                                     />
 
-                                    {!attachedFile ? (
+                                    {attachedFiles.length === 0 ? (
                                         <div
                                             className={`dropzone-box ${isDragging ? 'drag-active' : ''}`}
                                             onClick={() => fileInputRef.current?.click()}
@@ -290,36 +359,89 @@ export function Contact() {
                                             <span className="dropzone-hint">{t('contact.form.dropzoneHint')}</span>
                                         </div>
                                     ) : (
-                                        <div className="file-preview-card">
-                                            <div className="file-preview-info">
-                                                <div className="file-icon-badge">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                                                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                                                        <polyline points="10 9 9 9 8 9"></polyline>
-                                                    </svg>
-                                                </div>
-                                                <div className="file-text-details">
-                                                    <strong className="file-name" title={attachedFile.name}>
-                                                        {attachedFile.name}
-                                                    </strong>
-                                                    <span className="file-size">{formatFileSize(attachedFile.size)}</span>
-                                                </div>
+                                        <div className="attached-files-container">
+                                            <div className="files-summary-bar">
+                                                <span className="summary-text">
+                                                    {t('contact.form.filesSummary', {
+                                                        count: attachedFiles.length,
+                                                        max: MAX_FILES,
+                                                        size: formatFileSize(totalAttachedSize)
+                                                    })}
+                                                </span>
+                                                {attachedFiles.length < MAX_FILES && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                        className="btn-add-more"
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        </svg>
+                                                        <span>{t('contact.form.addMoreFiles')}</span>
+                                                    </button>
+                                                )}
                                             </div>
-                                            <button
-                                                type="button"
-                                                onClick={handleRemoveFile}
-                                                className="btn-remove-file"
-                                                aria-label={t('contact.form.removeFile')}
-                                                title={t('contact.form.removeFile')}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                            </button>
+
+                                            <div className="files-list">
+                                                {attachedFiles.map((file, index) => (
+                                                    <div key={`${file.name}-${index}`} className="file-preview-card">
+                                                        <div className="file-preview-info">
+                                                            <div className="file-icon-badge">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                                                </svg>
+                                                            </div>
+                                                            <div className="file-text-details">
+                                                                <strong className="file-name" title={file.name}>
+                                                                    {file.name}
+                                                                </strong>
+                                                                <span className="file-size">{formatFileSize(file.size)}</span>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleRemoveFile(index)}
+                                                            className="btn-remove-file"
+                                                            aria-label={t('contact.form.removeFile')}
+                                                            title={t('contact.form.removeFile')}
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {attachedFiles.length < MAX_FILES && (
+                                                <div
+                                                    className={`compact-dropzone-box ${isDragging ? 'drag-active' : ''}`}
+                                                    onClick={() => fileInputRef.current?.click()}
+                                                    onDragOver={handleDragOver}
+                                                    onDragLeave={handleDragLeave}
+                                                    onDrop={handleDrop}
+                                                    role="button"
+                                                    tabIndex={0}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter' || e.key === ' ') {
+                                                            fileInputRef.current?.click();
+                                                        }
+                                                    }}
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                                    </svg>
+                                                    <span>{isDragging ? t('contact.form.dropzoneDragActive') : t('contact.form.addMoreFiles')}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
 
