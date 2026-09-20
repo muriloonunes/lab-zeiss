@@ -3,6 +3,9 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useLocation, useSearchParams} from 'react-router-dom';
 import {useScrollToTop} from "../../hooks/useScrollToTop";
 import {useTranslation} from "react-i18next";
+import {enviarSolicitacaoPublica} from "../../services/solicitacaoService";
+import {Solicitacao} from "../../types/solicitacao";
+import {ApiError} from "../../types/api";
 
 const SERVICE_KEYS = ['cmm', 'optica', 'raio-x', 'digitalizacao-3d', 'engenharia-reversa', 'consultoria'] as const;
 type ServiceKey = typeof SERVICE_KEYS[number];
@@ -72,6 +75,12 @@ export function Contact() {
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [fileError, setFileError] = useState<string | null>(null);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
+
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
+    const [successData, setSuccessData] = useState<Solicitacao | null>(null);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const [copiado, setCopiado] = useState<boolean>(false);
 
     const [formState, setFormState] = useState({
         name: '',
@@ -184,13 +193,83 @@ export function Contact() {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleCopiarProtocolo = () => {
+        if (!successData) return;
+        navigator.clipboard.writeText(successData.codigo);
+        setCopiado(true);
+        setTimeout(() => setCopiado(false), 2500);
+    };
+
+    const handleResetForm = () => {
+        setFormState({
+            name: '',
+            company: '',
+            email: '',
+            phone: '',
+            service: 'cmm',
+            partQuantity: '',
+            message: ''
+        });
+        setAttachedFiles([]);
+        setFileError(null);
+        setSubmitError(null);
+        setSubmitSuccess(false);
+        setSuccessData(null);
+        setCopiado(false);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert(t('contact.form.sentNotice') || 'Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato.');
+        setSubmitError(null);
+
+        if (!formState.name.trim() || !formState.company.trim() || !formState.email.trim() || !formState.phone.trim()) {
+            setSubmitError(t('contact.success.validationError', {defaultValue: 'Por favor, preencha todos os campos obrigatórios.'}));
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const formData = new FormData();
+            formData.append('nome', formState.name.trim());
+            formData.append('empresa', formState.company.trim());
+            formData.append('email', formState.email.trim());
+            formData.append('telefone', formState.phone.trim());
+            formData.append('servico', formState.service);
+
+            if (formState.partQuantity.trim()) {
+                formData.append('quantidadePecas', formState.partQuantity.trim());
+            }
+
+            if (formState.message.trim()) {
+                formData.append('mensagem', formState.message.trim());
+            }
+
+            for (const file of attachedFiles) {
+                formData.append('files', file);
+            }
+
+            const response = await enviarSolicitacaoPublica(formData);
+            setSuccessData(response);
+            setSubmitSuccess(true);
+        } catch (err: unknown) {
+            if (err instanceof ApiError) {
+                setSubmitError(err.message || 'Erro ao enviar a solicitação. Verifique os dados informados.');
+            } else {
+                setSubmitError(t('contact.success.connectionError', {defaultValue: 'Não foi possível conectar ao servidor. Tente novamente em instantes.'}));
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const currentServiceName = t(`contact.form.services.${formState.service}`, {defaultValue: formState.service});
     const totalAttachedSize = attachedFiles.reduce((acc, f) => acc + f.size, 0);
+
+    const whatsappMessageText = successData ? t('contact.success.whatsappMessage', {
+        codigo: successData.codigo,
+        defaultValue: `Olá, gostaria de informações sobre a minha solicitação de orçamento (Protocolo: ${successData.codigo})`
+    }) : '';
 
     return (
         <div className="contact-page">
@@ -214,214 +293,203 @@ export function Contact() {
                     <div className="contact-layout-split">
 
                         <div className="contact-form-side glass-panel">
-                            {isTargeted && (
-                                <div className="context-badge-banner">
-                                    <div className="context-badge-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="context-icon" aria-hidden="true">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12 6 12 12 14 14"></polyline>
+                            {submitSuccess && successData ? (
+                                <div className="contact-success-simple">
+                                    <div className="success-icon-wrap">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="20 6 9 17 4 12" />
                                         </svg>
-                                        <span>
-                                            <strong>{t('contact.form.contextBadge')}</strong> {currentServiceName}
-                                        </span>
                                     </div>
-                                </div>
-                            )}
 
-                            <h2 className="form-title">{t('contact.form.title')}</h2>
-                            <p className="form-subtitle">{t('contact.form.subtitle')}</p>
+                                    <h2 className="success-title">{t('contact.success.title', {defaultValue: 'Solicitação Enviada!'})}</h2>
+                                    <p className="success-subtitle">
+                                        {t('contact.success.subtitle', {defaultValue: 'Recebemos sua solicitação com sucesso. Nossa equipe técnica analisará as informações e entrará em contato em breve.'})}
+                                    </p>
 
-                            <form className="quote-form" onSubmit={handleSubmit}>
-                                <div className="form-group-row">
-                                    <div className="form-field">
-                                        <label htmlFor="name">{t('contact.form.nameLabel')}</label>
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            name="name"
-                                            required
-                                            value={formState.name}
-                                            onChange={handleChange}
-                                            placeholder={t('contact.form.namePlaceholder')}
-                                        />
-                                    </div>
-                                    <div className="form-field">
-                                        <label htmlFor="company">{t('contact.form.companyLabel')}</label>
-                                        <input
-                                            type="text"
-                                            id="company"
-                                            name="company"
-                                            required
-                                            value={formState.company}
-                                            onChange={handleChange}
-                                            placeholder={t('contact.form.companyPlaceholder')}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="form-group-row">
-                                    <div className="form-field">
-                                        <label htmlFor="email">{t('contact.form.emailLabel')}</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            required
-                                            value={formState.email}
-                                            onChange={handleChange}
-                                            placeholder="exemplo@empresa.com.br"
-                                        />
-                                    </div>
-                                    <div className="form-field">
-                                        <label htmlFor="phone">{t('contact.form.phoneLabel')}</label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            required
-                                            value={formState.phone}
-                                            onChange={handlePhoneChange}
-                                            placeholder="(00) 90000-0000"
-                                            maxLength={16}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="form-group-row">
-                                    <div className="form-field">
-                                        <label htmlFor="service">{t('contact.form.serviceLabel')}</label>
-                                        <select
-                                            id="service"
-                                            name="service"
-                                            value={formState.service}
-                                            onChange={handleServiceSelectChange}
-                                        >
-                                            <option value="cmm">{t('contact.form.services.cmm')}</option>
-                                            <option value="optica">{t('contact.form.services.optica')}</option>
-                                            <option value="raio-x">{t('contact.form.services.raio-x')}</option>
-                                            <option value="digitalizacao-3d">{t('contact.form.services.digitalizacao-3d')}</option>
-                                            <option value="engenharia-reversa">{t('contact.form.services.engenharia-reversa')}</option>
-                                            <option value="consultoria">{t('contact.form.services.consultoria')}</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-field">
-                                        <label htmlFor="partQuantity">{t('contact.form.partQuantityLabel')}</label>
-                                        <input
-                                            type="text"
-                                            id="partQuantity"
-                                            name="partQuantity"
-                                            value={formState.partQuantity}
-                                            onChange={handleChange}
-                                            placeholder={t('contact.form.partQuantityPlaceholder')}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Drag & Drop CAD / Technical Drawing Upload Zone (Max 5 files / 25MB total) */}
-                                <div className="form-field">
-                                    <label htmlFor="technical-file-input">{t('contact.form.drawingLabel')}</label>
-                                    <input
-                                        type="file"
-                                        id="technical-file-input"
-                                        ref={fileInputRef}
-                                        onChange={handleFileInputChange}
-                                        accept={ACCEPTED_EXTENSIONS}
-                                        multiple
-                                        style={{display: 'none'}}
-                                    />
-
-                                    {attachedFiles.length === 0 ? (
-                                        <div
-                                            className={`dropzone-box ${isDragging ? 'drag-active' : ''}`}
-                                            onClick={() => fileInputRef.current?.click()}
-                                            onDragOver={handleDragOver}
-                                            onDragLeave={handleDragLeave}
-                                            onDrop={handleDrop}
-                                            role="button"
-                                            tabIndex={0}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter' || e.key === ' ') {
-                                                    fileInputRef.current?.click();
-                                                }
-                                            }}
-                                            aria-label={t('contact.form.dropzoneTitle')}
-                                        >
-                                            <div className="dropzone-icon-wrap">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                    <polyline points="17 8 12 3 7 8"></polyline>
-                                                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                                                </svg>
-                                            </div>
-                                            <p className="dropzone-title">
-                                                {isDragging ? t('contact.form.dropzoneDragActive') : t('contact.form.dropzoneTitle')}
-                                            </p>
-                                            <span className="dropzone-hint">{t('contact.form.dropzoneHint')}</span>
-                                        </div>
-                                    ) : (
-                                        <div className="attached-files-container">
-                                            <div className="files-summary-bar">
-                                                <span className="summary-text">
-                                                    {t('contact.form.filesSummary', {
-                                                        count: attachedFiles.length,
-                                                        max: MAX_FILES,
-                                                        size: formatFileSize(totalAttachedSize)
-                                                    })}
-                                                </span>
-                                                {attachedFiles.length < MAX_FILES && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => fileInputRef.current?.click()}
-                                                        className="btn-add-more"
-                                                    >
+                                    <div className="success-protocol-box">
+                                        <span className="protocol-label">{t('contact.success.protocolLabel', {defaultValue: 'Número de Protocolo'})}</span>
+                                        <div className="protocol-row">
+                                            <strong className="protocol-code">{successData.codigo}</strong>
+                                            <button
+                                                type="button"
+                                                onClick={handleCopiarProtocolo}
+                                                className={`btn-copy-protocol ${copiado ? 'copied' : ''}`}
+                                                title={t('contact.success.copyTitle', {defaultValue: 'Copiar Protocolo'})}
+                                            >
+                                                {copiado ? (
+                                                    <>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                            <polyline points="20 6 9 17 4 12" />
                                                         </svg>
-                                                        <span>{t('contact.form.addMoreFiles')}</span>
-                                                    </button>
+                                                        <span>{t('contact.success.copied', {defaultValue: 'Copiado!'})}</span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                                        </svg>
+                                                        <span>{t('contact.success.copy', {defaultValue: 'Copiar'})}</span>
+                                                    </>
                                                 )}
-                                            </div>
+                                            </button>
+                                        </div>
+                                    </div>
 
-                                            <div className="files-list">
-                                                {attachedFiles.map((file, index) => (
-                                                    <div key={`${file.name}-${index}`} className="file-preview-card">
-                                                        <div className="file-preview-info">
-                                                            <div className="file-icon-badge">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                                                </svg>
-                                                            </div>
-                                                            <div className="file-text-details">
-                                                                <strong className="file-name" title={file.name}>
-                                                                    {file.name}
-                                                                </strong>
-                                                                <span className="file-size">{formatFileSize(file.size)}</span>
-                                                            </div>
-                                                        </div>
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => handleRemoveFile(index)}
-                                                            className="btn-remove-file"
-                                                            aria-label={t('contact.form.removeFile')}
-                                                            title={t('contact.form.removeFile')}
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                    <div className="success-actions">
+                                        <a
+                                            href={`https://wa.me/556299951773?text=${encodeURIComponent(whatsappMessageText)}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="btn-whatsapp"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                            </svg>
+                                            <span>{t('contact.success.whatsappButton', {defaultValue: 'Falar pelo WhatsApp'})}</span>
+                                        </a>
 
-                                            {attachedFiles.length < MAX_FILES && (
+                                        <button
+                                            type="button"
+                                            onClick={handleResetForm}
+                                            className="btn-new-request"
+                                        >
+                                            <span>{t('contact.success.newRequestButton', {defaultValue: 'Enviar nova solicitação'})}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    {isTargeted && (
+                                        <div className="context-badge-banner">
+                                            <div className="context-badge-info">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="context-icon" aria-hidden="true">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 14 14"></polyline>
+                                                </svg>
+                                                <span>
+                                                    <strong>{t('contact.form.contextBadge')}</strong> {currentServiceName}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <h2 className="form-title">{t('contact.form.title')}</h2>
+                                    <p className="form-subtitle">{t('contact.form.subtitle')}</p>
+
+                                    {submitError && (
+                                        <div className="submit-error-banner" role="alert">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                            <span>{submitError}</span>
+                                        </div>
+                                    )}
+
+                                    <form className="quote-form" onSubmit={handleSubmit}>
+                                        <div className="form-group-row">
+                                            <div className="form-field">
+                                                <label htmlFor="name">{t('contact.form.nameLabel')}</label>
+                                                <input
+                                                    type="text"
+                                                    id="name"
+                                                    name="name"
+                                                    required
+                                                    value={formState.name}
+                                                    onChange={handleChange}
+                                                    placeholder={t('contact.form.namePlaceholder')}
+                                                />
+                                            </div>
+                                            <div className="form-field">
+                                                <label htmlFor="company">{t('contact.form.companyLabel')}</label>
+                                                <input
+                                                    type="text"
+                                                    id="company"
+                                                    name="company"
+                                                    required
+                                                    value={formState.company}
+                                                    onChange={handleChange}
+                                                    placeholder={t('contact.form.companyPlaceholder')}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group-row">
+                                            <div className="form-field">
+                                                <label htmlFor="email">{t('contact.form.emailLabel')}</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    required
+                                                    value={formState.email}
+                                                    onChange={handleChange}
+                                                    placeholder="exemplo@empresa.com.br"
+                                                />
+                                            </div>
+                                            <div className="form-field">
+                                                <label htmlFor="phone">{t('contact.form.phoneLabel')}</label>
+                                                <input
+                                                    type="tel"
+                                                    id="phone"
+                                                    name="phone"
+                                                    required
+                                                    value={formState.phone}
+                                                    onChange={handlePhoneChange}
+                                                    placeholder="(00) 90000-0000"
+                                                    maxLength={16}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group-row">
+                                            <div className="form-field">
+                                                <label htmlFor="service">{t('contact.form.serviceLabel')}</label>
+                                                <select
+                                                    id="service"
+                                                    name="service"
+                                                    value={formState.service}
+                                                    onChange={handleServiceSelectChange}
+                                                >
+                                                    <option value="cmm">{t('contact.form.services.cmm')}</option>
+                                                    <option value="optica">{t('contact.form.services.optica')}</option>
+                                                    <option value="raio-x">{t('contact.form.services.raio-x')}</option>
+                                                    <option value="digitalizacao-3d">{t('contact.form.services.digitalizacao-3d')}</option>
+                                                    <option value="engenharia-reversa">{t('contact.form.services.engenharia-reversa')}</option>
+                                                    <option value="consultoria">{t('contact.form.services.consultoria')}</option>
+                                                </select>
+                                            </div>
+                                            <div className="form-field">
+                                                <label htmlFor="partQuantity">{t('contact.form.partQuantityLabel')}</label>
+                                                <input
+                                                    type="text"
+                                                    id="partQuantity"
+                                                    name="partQuantity"
+                                                    value={formState.partQuantity}
+                                                    onChange={handleChange}
+                                                    placeholder={t('contact.form.partQuantityPlaceholder')}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Drag & Drop CAD / Technical Drawing Upload Zone (Max 5 files / 25MB total) */}
+                                        <div className="form-field">
+                                            <label htmlFor="technical-file-input">{t('contact.form.drawingLabel')}</label>
+                                            <input
+                                                type="file"
+                                                id="technical-file-input"
+                                                ref={fileInputRef}
+                                                onChange={handleFileInputChange}
+                                                accept={ACCEPTED_EXTENSIONS}
+                                                multiple
+                                                style={{display: 'none'}}
+                                            />
+
+                                            {attachedFiles.length === 0 ? (
                                                 <div
-                                                    className={`compact-dropzone-box ${isDragging ? 'drag-active' : ''}`}
+                                                    className={`dropzone-box ${isDragging ? 'drag-active' : ''}`}
                                                     onClick={() => fileInputRef.current?.click()}
                                                     onDragOver={handleDragOver}
                                                     onDragLeave={handleDragLeave}
@@ -433,61 +501,161 @@ export function Contact() {
                                                             fileInputRef.current?.click();
                                                         }
                                                     }}
+                                                    aria-label={t('contact.form.dropzoneTitle')}
                                                 >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                        <polyline points="17 8 12 3 7 8"></polyline>
-                                                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                                                    </svg>
-                                                    <span>{isDragging ? t('contact.form.dropzoneDragActive') : t('contact.form.addMoreFiles')}</span>
+                                                    <div className="dropzone-icon-wrap">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                                        </svg>
+                                                    </div>
+                                                    <p className="dropzone-title">
+                                                        {isDragging ? t('contact.form.dropzoneDragActive') : t('contact.form.dropzoneTitle')}
+                                                    </p>
+                                                    <span className="dropzone-hint">{t('contact.form.dropzoneHint')}</span>
+                                                </div>
+                                            ) : (
+                                                <div className="attached-files-container">
+                                                    <div className="files-summary-bar">
+                                                        <span className="summary-text">
+                                                            {t('contact.form.filesSummary', {
+                                                                count: attachedFiles.length,
+                                                                max: MAX_FILES,
+                                                                size: formatFileSize(totalAttachedSize)
+                                                            })}
+                                                        </span>
+                                                        {attachedFiles.length < MAX_FILES && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => fileInputRef.current?.click()}
+                                                                className="btn-add-more"
+                                                            >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                </svg>
+                                                                <span>{t('contact.form.addMoreFiles')}</span>
+                                                            </button>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="files-list">
+                                                        {attachedFiles.map((file, index) => (
+                                                            <div key={`${file.name}-${index}`} className="file-preview-card">
+                                                                <div className="file-preview-info">
+                                                                    <div className="file-icon-badge">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                                            <polyline points="10 9 9 9 8 9"></polyline>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <div className="file-text-details">
+                                                                        <strong className="file-name" title={file.name}>
+                                                                            {file.name}
+                                                                        </strong>
+                                                                        <span className="file-size">{formatFileSize(file.size)}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => handleRemoveFile(index)}
+                                                                    className="btn-remove-file"
+                                                                    aria-label={t('contact.form.removeFile')}
+                                                                    title={t('contact.form.removeFile')}
+                                                                >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+
+                                                    {attachedFiles.length < MAX_FILES && (
+                                                        <div
+                                                            className={`compact-dropzone-box ${isDragging ? 'drag-active' : ''}`}
+                                                            onClick={() => fileInputRef.current?.click()}
+                                                            onDragOver={handleDragOver}
+                                                            onDragLeave={handleDragLeave}
+                                                            onDrop={handleDrop}
+                                                            role="button"
+                                                            tabIndex={0}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                                    fileInputRef.current?.click();
+                                                                }
+                                                            }}
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                                <polyline points="17 8 12 3 7 8"></polyline>
+                                                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                                                            </svg>
+                                                            <span>{isDragging ? t('contact.form.dropzoneDragActive') : t('contact.form.addMoreFiles')}</span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
+
+                                            {fileError && (
+                                                <p className="file-error-message" role="alert">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    {fileError}
+                                                </p>
+                                            )}
                                         </div>
-                                    )}
 
-                                    {fileError && (
-                                        <p className="file-error-message" role="alert">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                        <div className="form-field">
+                                            <label htmlFor="message">{t('contact.form.messageLabel')}</label>
+                                            <textarea
+                                                id="message"
+                                                name="message"
+                                                rows={4}
+                                                required
+                                                value={formState.message}
+                                                onChange={handleChange}
+                                                placeholder={t('contact.form.messagePlaceholder')}
+                                            />
+                                        </div>
+
+                                        <div className="confidentiality-notice">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                             </svg>
-                                            {fileError}
-                                        </p>
-                                    )}
-                                </div>
+                                            <span>{t('contact.form.confidentialityNotice')}</span>
+                                        </div>
 
-                                <div className="form-field">
-                                    <label htmlFor="message">{t('contact.form.messageLabel')}</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows={4}
-                                        required
-                                        value={formState.message}
-                                        onChange={handleChange}
-                                        placeholder={t('contact.form.messagePlaceholder')}
-                                    />
-                                </div>
-
-                                <div className="confidentiality-notice">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                    </svg>
-                                    <span>{t('contact.form.confidentialityNotice')}</span>
-                                </div>
-
-                                <button type="submit" className="btn-orcamento submit-btn">
-                                    <span>{t('contact.form.submitButton')}</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </button>
-                            </form>
+                                        <button type="submit" className="btn-orcamento submit-btn" disabled={isSubmitting}>
+                                            {isSubmitting ? (
+                                                <>
+                                                    <span className="spinner" style={{ width: 18, height: 18, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', display: 'inline-block', animation: 'spin 0.8s linear infinite' }}></span>
+                                                    <span>{t('contact.success.submitting', {defaultValue: 'Enviando solicitação...'})}</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span>{t('contact.form.submitButton')}</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+                                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                                    </svg>
+                                                </>
+                                            )}
+                                        </button>
+                                    </form>
+                                </>
+                            )}
                         </div>
 
                         <div className="contact-info-side">

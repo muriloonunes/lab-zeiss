@@ -523,6 +523,20 @@
       "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, tolerâncias críticas, norma aplicável e prazos desejados.",
       "submitButton": "Enviar Solicitação Técnica",
       "sentNotice": "Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato."
+    },
+    "success": {
+      "title": "Solicitação Enviada!",
+      "subtitle": "Recebemos sua solicitação com sucesso. Nossa equipe técnica analisará as informações e entrará em contato em breve.",
+      "protocolLabel": "Número de Protocolo",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "copyTitle": "Copiar Protocolo",
+      "whatsappButton": "Falar pelo WhatsApp",
+      "whatsappMessage": "Olá, gostaria de informações sobre a minha solicitação de orçamento (Protocolo: {{codigo}})",
+      "newRequestButton": "Enviar nova solicitação",
+      "submitting": "Enviando solicitação...",
+      "validationError": "Por favor, preencha todos os campos obrigatórios.",
+      "connectionError": "Não foi possível conectar ao servidor. Tente novamente em instantes."
     }
   },
   "footer": {

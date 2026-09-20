@@ -523,6 +523,20 @@
       "messagePlaceholder": "Provide details such as approximate dimensions, part material, critical tolerances, applicable standard, and desired deadlines.",
       "submitButton": "Submit Technical Request",
       "sentNotice": "Request sent successfully! Our technical team will get in touch."
+    },
+    "success": {
+      "title": "Request Submitted!",
+      "subtitle": "We have received your request successfully. Our technical team will review the details and reach out shortly.",
+      "protocolLabel": "Tracking Protocol Number",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "copyTitle": "Copy Protocol",
+      "whatsappButton": "Chat on WhatsApp",
+      "whatsappMessage": "Hello, I would like information regarding my quote request (Protocol: {{codigo}})",
+      "newRequestButton": "Submit another request",
+      "submitting": "Submitting request...",
+      "validationError": "Please fill in all required fields.",
+      "connectionError": "Could not connect to the server. Please try again shortly."
     }
   },
   "footer": {
