@@ -32,6 +32,7 @@ public class SolicitacaoService {
 
     private static final int MAX_ARQUIVOS = 5;
     private static final long MAX_TAMANHO_TOTAL_BYTES = 25 * 1024 * 1024; // 25MB
+    private static final List<String> EXTENSOES_PERMITIDAS = List.of("pdf", "step", "stp", "dwg", "iges", "igs", "dxf", "stl", "zip", "rar", "jpg", "jpeg", "png");
 
     @Inject
     SolicitacaoRepository solicitacaoRepository;
@@ -70,8 +71,19 @@ public class SolicitacaoService {
 
         long tamanhoTotal = 0;
         for (FileUpload f : arquivosUpload) {
+            String fileName = f.fileName();
+
+            if (fileName == null || !fileName.contains(".")) {
+                throw new RequisicaoInvalidaException("Arquivo inválido.");
+            }
+
+            var extensao = fileName.substring(fileName.lastIndexOf(".") + 1);
+            if (!EXTENSOES_PERMITIDAS.contains(extensao.toLowerCase())) {
+                throw new RequisicaoInvalidaException("A extensão " + extensao + " não é permitida.");
+            }
             tamanhoTotal += f.size();
         }
+
         if (tamanhoTotal > MAX_TAMANHO_TOTAL_BYTES) {
             throw new RequisicaoInvalidaException("A soma de todos os arquivos anexados não pode ultrapassar 25MB.");
         }
@@ -161,5 +173,6 @@ public class SolicitacaoService {
         solicitacaoRepository.delete(solicitacao);
     }
 
-    public record ArquivoDownloadInfo(File file, String nomeOriginal, String tipoMime) {}
+    public record ArquivoDownloadInfo(File file, String nomeOriginal, String tipoMime) {
+    }
 }

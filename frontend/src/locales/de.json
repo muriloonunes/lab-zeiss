@@ -503,6 +503,7 @@
       "dropzoneHint": "Formate: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP, RAR (Max. 5 Dateien / 25MB gesamt)",
       "dropzoneDragActive": "Dateien hier ablegen",
       "fileSizeError": "Die Datei überschreitet das maximale Limit von 25MB.",
+      "invalidFileExtension": "Ungültige Dateierweiterung.",
       "maxFilesError": "Sie können maximal 5 Dateien anhängen.",
       "totalFileSizeError": "Die Gesamtgröße der Dateien überschreitet das Limit von 25MB.",
       "removeFile": "Anhang entfernen",

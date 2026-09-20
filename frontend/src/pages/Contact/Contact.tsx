@@ -58,7 +58,12 @@ export const formatPhoneNumber = (value: string): string => {
 
 const MAX_FILES = 5;
 const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024; // 25MB total
-const ACCEPTED_EXTENSIONS = '.pdf,.step,.stp,.iges,.igs,.dwg,.dxf,.stl,.zip,.rar,application/pdf,application/zip,application/x-zip-compressed,application/x-rar-compressed,model/stl,model/step,model/iges';
+const ACCEPTED_EXTENSIONS = [
+    '.pdf', '.step', '.stp', '.iges', '.igs', '.dwg', '.dxf', '.stl', '.zip', '.rar', '.jpg', '.jpeg', '.png',
+    'application/pdf', 'application/zip', 'model/stl', 'image/jpeg', 'image/png'
+];
+
+const EXTENSOES_VALIDAS = ['pdf', 'step', 'stp', 'iges', 'igs', 'dwg', 'dxf', 'stl', 'zip', 'rar', 'jpg', 'jpeg', 'png'];
 
 export function Contact() {
     useScrollToTop();
@@ -132,6 +137,18 @@ export function Contact() {
         const filesToAdd: File[] = [];
 
         for (const file of incomingArray) {
+            const fileName =  file.name;
+            const lastDotIndex = fileName.lastIndexOf('.');
+
+            if (lastDotIndex === -1) continue;
+
+            const extensao = fileName.substring(lastDotIndex + 1).toLowerCase();
+
+            if (!EXTENSOES_VALIDAS.includes(extensao)) {
+                setFileError(t('contact.form.invalidFileExtension') || 'Extensão de arquivo inválida.');
+                return;
+            }
+
             const key = `${file.name}-${file.size}`;
             if (!existingKeys.has(key)) {
                 filesToAdd.push(file);
@@ -218,7 +235,7 @@ export function Contact() {
         setCopiado(false);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
         setSubmitError(null);
 
@@ -474,7 +491,6 @@ export function Contact() {
                                             </div>
                                         </div>
 
-                                        {/* Drag & Drop CAD / Technical Drawing Upload Zone (Max 5 files / 25MB total) */}
                                         <div className="form-field">
                                             <label htmlFor="technical-file-input">{t('contact.form.drawingLabel')}</label>
                                             <input
@@ -482,7 +498,7 @@ export function Contact() {
                                                 id="technical-file-input"
                                                 ref={fileInputRef}
                                                 onChange={handleFileInputChange}
-                                                accept={ACCEPTED_EXTENSIONS}
+                                                accept={ACCEPTED_EXTENSIONS.join(',')}
                                                 multiple
                                                 style={{display: 'none'}}
                                             />
