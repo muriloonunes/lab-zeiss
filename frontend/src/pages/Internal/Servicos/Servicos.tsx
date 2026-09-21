@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
     RegistroServico,
     STATUS_SERVICO_LABELS,
-    StatusServico,
     FinalizarServicoPayload,
 } from '../../../types/servico';
 import {
@@ -14,6 +13,7 @@ import {
 } from '../../../services/servicoService';
 import { listarClasses, listarTermosPorClasse } from '../../../services/vocabularioService';
 import { TermoVocabulario } from '../../../types/vocabulario';
+import { ModalCriarServico } from './components/ModalCriarServico/ModalCriarServico';
 import { useToast } from '../../../components/Toast';
 import './Servicos.scss';
 
@@ -31,11 +31,12 @@ export const Servicos: React.FC = () => {
     const [modalDetalhesAberto, setModalDetalhesAberto] = useState(false);
     const [modalFinalizarAberto, setModalFinalizarAberto] = useState(false);
     const [modalCancelarAberto, setModalCancelarAberto] = useState(false);
+    const [modalCriarAberto, setModalCriarAberto] = useState(false);
 
     // Serviço Selecionado
     const [selecionado, setSelecionado] = useState<RegistroServico | null>(null);
 
-    // Vocabulários para a Finalização / Aprendizado
+    // Vocabulários para Finalização (Bloco B e C)
     const [causasDesvio, setCausasDesvio] = useState<TermoVocabulario[]>([]);
     const [todosTermos, setTodosTermos] = useState<TermoVocabulario[]>([]);
 
@@ -71,13 +72,15 @@ export const Servicos: React.FC = () => {
     const carregarVocabularios = async () => {
         try {
             const classes = await listarClasses(true);
-            const classeCausa = classes.find(c => c.nome.toLowerCase() === 'causa do desvio');
-            if (classeCausa) {
-                const termosCausa = await listarTermosPorClasse(classeCausa.id, true);
-                setCausasDesvio(termosCausa);
+            for (const c of classes) {
+                const nomeLower = c.nome.toLowerCase();
+                if (nomeLower === 'causa do desvio') {
+                    const termos = await listarTermosPorClasse(c.id, true);
+                    setCausasDesvio(termos);
+                }
             }
 
-            // Carrega termos de outras classes para assuntos relacionados
+            // Carrega termos de todas as classes para assuntos relacionados
             const promessas = classes.map(c => listarTermosPorClasse(c.id, true));
             const resultados = await Promise.all(promessas);
             const combinados = resultados.flat();
@@ -122,6 +125,11 @@ export const Servicos: React.FC = () => {
     const abrirDetalhes = (s: RegistroServico) => {
         setSelecionado(s);
         setModalDetalhesAberto(true);
+    };
+
+    const handleServicoCriadoComSucesso = (criado: RegistroServico) => {
+        setServicos(prev => [criado, ...prev]);
+        mostrarToast('success', `Ordem de Serviço ${criado.codigo} criada com sucesso!`);
     };
 
     const handleIniciarExecucao = async (s: RegistroServico, e?: React.MouseEvent) => {
@@ -280,6 +288,15 @@ export const Servicos: React.FC = () => {
                         </svg>
                         <span>Atualizar</span>
                     </button>
+
+                    <button className="btn-new-os" onClick={() => setModalCriarAberto(true)} title="Criar nova Ordem de Serviço">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        <span>Nova Ordem de Serviço</span>
+                    </button>
                 </div>
             </div>
 
@@ -305,7 +322,7 @@ export const Servicos: React.FC = () => {
                         className={`filter-tab tab-em_execucao ${filtroStatus === 'EM_EXECUCAO' ? 'active' : ''}`}
                         onClick={() => setFiltroStatus('EM_EXECUCAO')}
                     >
-                        Em Execução ({contadores.emExecucao})\
+                        Em Execução ({contadores.emExecucao})
                     </button>
                     <button
                         type="button"
@@ -481,6 +498,14 @@ export const Servicos: React.FC = () => {
                 )}
             </div>
 
+            {/* Modal Reutilizável: Criar Nova Ordem de Serviço Avulsa */}
+            <ModalCriarServico
+                aberto={modalCriarAberto}
+                onClose={() => setModalCriarAberto(false)}
+                onSucesso={handleServicoCriadoComSucesso}
+                totalServicos={servicos.length}
+            />
+
             {/* Modal 1: Visualizar Serviço (Bloco A, Bloco B, Bloco C) */}
             {modalDetalhesAberto && selecionado && (
                 <div className="servico-modal-overlay" onClick={() => setModalDetalhesAberto(false)}>
@@ -495,7 +520,7 @@ export const Servicos: React.FC = () => {
                                     <span className="dot" />
                                     {STATUS_SERVICO_LABELS[selecionado.status]}
                                 </span>
-                                <button className="btn-close-modal" onClick={() => setModalDetalhesAberto(false)}>
+                                <button className="btn-close-modal" onClick={() => setModalDetalhesAberto(false)} title="Fechar">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -645,7 +670,11 @@ export const Servicos: React.FC = () => {
                                         onClick={() => handleIniciarExecucao(selecionado)}
                                         disabled={salvandoAcao}
                                     >
-                                        Iniciar Execução
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polygon points="5 3 19 12 5 21 5 3" />
+                                        </svg>
+                                        <span>Iniciar Execução</span>
                                     </button>
                                 )}
                                 {selecionado.status === 'EM_EXECUCAO' && (
@@ -654,7 +683,11 @@ export const Servicos: React.FC = () => {
                                         className="btn-finish-action"
                                         onClick={() => abrirModalFinalizar(selecionado)}
                                     >
-                                        Concluir Serviço / Lição
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                        <span>Concluir Serviço / Lição</span>
                                     </button>
                                 )}
                             </div>
@@ -677,7 +710,7 @@ export const Servicos: React.FC = () => {
                                 <span className="os-title">Finalização do Serviço {selecionado.codigo}</span>
                                 <span className="header-sub">Preencha os dados reais de entrega e a lição aprendida</span>
                             </div>
-                            <button className="btn-close-modal" onClick={() => setModalFinalizarAberto(false)}>
+                            <button className="btn-close-modal" onClick={() => setModalFinalizarAberto(false)} title="Fechar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <line x1="18" y1="6" x2="6" y2="18" />
@@ -693,35 +726,37 @@ export const Servicos: React.FC = () => {
                                     <h4>Bloco B: Execução Realizada</h4>
                                 </div>
                                 <div className="form-grid">
-                                    <div className="form-group">
-                                        <label>Horas Realizadas *</label>
-                                        <input
-                                            type="number"
-                                            step="0.5"
-                                            value={horasRealizadas}
-                                            onChange={(e) => setHorasRealizadas(e.target.value === '' ? '' : Number(e.target.value))}
-                                            placeholder="Ex: 5.5"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Custo Real (R$) *</label>
-                                        <input
-                                            type="number"
-                                            step="0.01"
-                                            value={custoReal}
-                                            onChange={(e) => setCustoReal(e.target.value === '' ? '' : Number(e.target.value))}
-                                            placeholder="Ex: 450.00"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Valor Faturado (R$) *</label>
-                                        <input
-                                            type="number"
-                                            step="0.01"
-                                            value={valorFaturado}
-                                            onChange={(e) => setValorFaturado(e.target.value === '' ? '' : Number(e.target.value))}
-                                            placeholder="Ex: 890.00"
-                                        />
+                                    <div className="form-row-3">
+                                        <div className="form-group">
+                                            <label>Horas Realizadas *</label>
+                                            <input
+                                                type="number"
+                                                step="0.5"
+                                                value={horasRealizadas}
+                                                onChange={(e) => setHorasRealizadas(e.target.value === '' ? '' : Number(e.target.value))}
+                                                placeholder="Ex: 5.5"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Custo Real (R$) *</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                value={custoReal}
+                                                onChange={(e) => setCustoReal(e.target.value === '' ? '' : Number(e.target.value))}
+                                                placeholder="Ex: 450.00"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Valor Faturado (R$) *</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                value={valorFaturado}
+                                                onChange={(e) => setValorFaturado(e.target.value === '' ? '' : Number(e.target.value))}
+                                                placeholder="Ex: 890.00"
+                                            />
+                                        </div>
                                     </div>
                                     <div className="form-group">
                                         <label>Data Real de Entrega</label>
@@ -731,7 +766,7 @@ export const Servicos: React.FC = () => {
                                             onChange={(e) => setDataRealEntrega(e.target.value)}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <label className="checkbox-label">
                                             <input
                                                 type="checkbox"
@@ -740,8 +775,6 @@ export const Servicos: React.FC = () => {
                                             />
                                             <span>Houve necessidade de retrabalho?</span>
                                         </label>
-                                    </div>
-                                    <div className="form-group">
                                         <label className="checkbox-label">
                                             <input
                                                 type="checkbox"
@@ -847,7 +880,7 @@ export const Servicos: React.FC = () => {
                     <div className="servico-modal-box modal-confirm-simple" onClick={(e) => e.stopPropagation()}>
                         <div className="servico-modal-header">
                             <span className="os-title">Cancelar Serviço</span>
-                            <button className="btn-close-modal" onClick={() => setModalCancelarAberto(false)}>
+                            <button className="btn-close-modal" onClick={() => setModalCancelarAberto(false)} title="Fechar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <line x1="18" y1="6" x2="6" y2="18" />

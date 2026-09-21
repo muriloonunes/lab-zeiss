@@ -1,9 +1,8 @@
 package com.senai.servico.service;
-/**
- *
- * @author Murilo Nunes <murilo_no@outlook.com>
- * @date 21/09/2026
- * @brief Class CancelarServicoRequest
- */
-public class CancelarServicoRequest {
+
+import jakarta.validation.constraints.NotBlank;
+
+public record CancelarServicoRequest(
+        @NotBlank String motivoCancelamento
+) {
 }

@@ -37,7 +37,7 @@ public class SeedVocabulario {
 
         LOGGER.info("Populando vocabulário controlado mínimo...");
 
-        criarClasse("Tipo de Serviço", "MMC", "Digitalização 3D", "Engenharia Reversa", "Elaboração de Laudo");
+        criarClasse("Tipo de Serviço", "MMC", "Digitalização 3D", "Engenharia Reversa", "Elaboração de Laudo", "Raio-X / Tomografia");
 
         criarClasse("Característica da Peça", "Grande Porte", "Médio Porte", "Pequeno Porte", "Peça Única", "Peça em Série", "Diâmetro Pequeno", "Diâmetro Médio", "Diâmetro Grande", "Peça Complexa", "Peça Simples");
 

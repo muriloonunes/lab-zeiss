@@ -39,6 +39,7 @@ export const InternalLayout: React.FC = () => {
     };
 
     const getPageTitle = () => {
+        if (location.pathname === '/interno/servicos') return 'Ordens de Serviço';
         if (location.pathname === '/interno/solicitacoes') return 'Solicitações de Orçamento';
         if (location.pathname === '/interno/usuarios') return 'Gerenciamento de Usuários';
         if (location.pathname === '/interno/vocabulario') return 'Vocabulário Controlado';
@@ -50,6 +51,7 @@ export const InternalLayout: React.FC = () => {
 
     return (
         <div className="internal-app">
+            {/* Backdrop para mobile */}
             <div
                 className={`sidebar-backdrop ${sidebarAberta ? 'open' : ''}`}
                 onClick={fecharSidebar}
@@ -117,6 +119,20 @@ export const InternalLayout: React.FC = () => {
                                 <rect width="7" height="5" x="3" y="16" rx="1"/>
                             </svg>
                             <span>Visão Geral</span>
+                        </div>
+                    </NavLink>
+
+                    <NavLink
+                        to="/interno/servicos"
+                        onClick={fecharSidebar}
+                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                    >
+                        <div className="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                            </svg>
+                            <span>Ordens de Serviço</span>
                         </div>
                     </NavLink>
 

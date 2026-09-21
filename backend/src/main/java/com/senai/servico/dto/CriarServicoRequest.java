@@ -1,6 +1,5 @@
 package com.senai.servico.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -9,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 public record CriarServicoRequest(
-        @NotBlank(message = "O código do serviço é obrigatório.")
         String codigo,
 
         @NotNull(message = "O tipo de serviço é obrigatório.")
@@ -35,4 +33,5 @@ public record CriarServicoRequest(
 
         String premissasAssumidas,
         String justificativaDesvioAssistente
-) {}
+) {
+}

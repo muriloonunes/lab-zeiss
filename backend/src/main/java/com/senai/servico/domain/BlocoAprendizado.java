@@ -38,4 +38,7 @@ public class BlocoAprendizado {
 
     @Column(name = "restrito")
     private Boolean restrito = false;
+
+    @Column(name = "motivo_rejeicao", columnDefinition = "TEXT")
+    private String motivoRejeicao;
 }

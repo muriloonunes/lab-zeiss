@@ -29,6 +29,9 @@ public class RegistroServico extends Auditavel {
     @Column(name = "status", nullable = false, length = 20)
     private StatusServico status = StatusServico.ORCADO;
 
+    @Column(name = "motivo_cancelamento")
+    private String motivoCancelamento;
+
     @Embedded
     private BlocoOrcamento blocoOrcamento;
 

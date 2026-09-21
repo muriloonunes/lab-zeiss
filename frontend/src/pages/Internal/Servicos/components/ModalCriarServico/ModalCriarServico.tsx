@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { CriarServicoPayload, RegistroServico } from '../../../../types/servico';
-import { Solicitacao } from '../../../../types/solicitacao';
-import { TermoVocabulario } from '../../../../types/vocabulario';
-import { criarServico } from '../../../../services/servicoService';
-import { listarClasses, listarTermosPorClasse } from '../../../../services/vocabularioService';
-import { useToast } from '../../../../components/Toast';
+import { CriarServicoPayload, RegistroServico } from '../../../../../types/servico';
+import { Solicitacao } from '../../../../../types/solicitacao';
+import { TermoVocabulario } from '../../../../../types/vocabulario';
+import { criarServico } from '../../../../../services/servicoService';
+import { listarClasses, listarTermosPorClasse } from '../../../../../services/vocabularioService';
+import { useToast } from '../../../../../components/Toast';
 import './ModalCriarServico.scss';
 
 export interface ModalCriarServicoProps {
@@ -31,8 +31,8 @@ function encontrarTipoServicoInteligente(servicoSolicitacao: string, termos: Ter
         if (s === 'digitalizacao-3d' && (desc.includes('digitalização 3d') || desc.includes('digitalizacao 3d') || desc.includes('engenharia reversa') || desc.includes('3d'))) return true;
         if (s === 'rugosidade' && (desc.includes('rugosidade') || desc.includes('rugosimetria') || desc.includes('perfilometria'))) return true;
         if (s === 'calibracao' && desc.includes('calibra')) return true;
-        if (s === 'treinamento' && (desc.includes('treinamento') || desc.includes('consultoria') || desc.includes('laudo'))) return true;
-        return false;
+        return s === 'treinamento' && (desc.includes('treinamento') || desc.includes('consultoria') || desc.includes('laudo'));
+
     });
 
     // 2. Fallback de substring direta

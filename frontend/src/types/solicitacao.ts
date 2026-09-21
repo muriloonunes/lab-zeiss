@@ -1,9 +1,18 @@
-export type StatusSolicitacao = 'PENDENTE' | 'RESPONDIDA' | 'IGNORADA';
+export type StatusSolicitacao = 'PENDENTE' | 'REGISTRADA' | 'IGNORADA';
 
 export const STATUS_SOLICITACAO_LABELS: Record<StatusSolicitacao, string> = {
     PENDENTE: 'Pendente',
-    RESPONDIDA: 'Registrada / Respondida',
+    REGISTRADA: 'Registrada',
     IGNORADA: 'Ignorada',
+};
+
+export const SERVICOS_LABELS: Record<string, string> = {
+    'cmm': 'Medição por Coordenadas (CMM)',
+    'rugosidade': 'Rugosimetria & Perfilometria',
+    'tomografia': 'Tomografia Computadorizada Industrial',
+    'digitalizacao-3d': 'Digitalização 3D & Engenharia Reversa',
+    'calibracao': 'Calibração de Instrumentos',
+    'treinamento': 'Consultoria & Treinamento Técnico',
 };
 
 export interface ArquivoSolicitacao {

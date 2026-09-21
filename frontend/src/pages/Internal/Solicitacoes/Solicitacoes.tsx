@@ -1,81 +1,67 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Solicitacao, STATUS_SOLICITACAO_LABELS, StatusSolicitacao } from '../../../types/solicitacao';
+import { useNavigate } from 'react-router-dom';
 import {
+    Solicitacao,
+    STATUS_SOLICITACAO_LABELS,
+    SERVICOS_LABELS
+} from '../../../types/solicitacao';
+import { RegistroServico } from '../../../types/servico';
+import {
+    listarSolicitacoes,
     atualizarStatusSolicitacao,
     baixarArquivoSolicitacao,
-    excluirSolicitacao,
-    listarSolicitacoes
+    excluirSolicitacao
 } from '../../../services/solicitacaoService';
-import { useAuth } from '../../../context/AuthContext';
+import { ModalCriarServico } from '../Servicos/components/ModalCriarServico/ModalCriarServico';
 import { useToast } from '../../../components/Toast';
 import './Solicitacoes.scss';
 
-const SERVICOS_LABELS: Record<string, string> = {
-    'cmm': 'Medição por Coordenadas (CMM)',
-    'optica': 'Medição Óptica & Luz Branca',
-    'raio-x': 'Tomografia Computadorizada (Raio-X)',
-    'digitalizacao-3d': 'Digitalização 3D e Escaneamento',
-    'engenharia-reversa': 'Engenharia Reversa CAD',
-    'consultoria': 'Consultoria & Treinamento GD&T',
-};
-
-const formatFileSize = (bytes: number): string => {
-    if (!bytes || bytes <= 0) return '0 B';
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-};
-
-const getFileExtension = (filename: string) => {
-    return filename.split('.').pop()?.toUpperCase() || 'ARQ';
-};
-
 export const Solicitacoes: React.FC = () => {
-    const { isAdmin } = useAuth();
+    const navigate = useNavigate();
     const { mostrarToast } = useToast();
 
     const [solicitacoes, setSolicitacoes] = useState<Solicitacao[]>([]);
     const [carregando, setCarregando] = useState(true);
 
-    // Filtros
+    // Filtros e busca
     const [busca, setBusca] = useState('');
     const [filtroStatus, setFiltroStatus] = useState<string>('TODOS');
     const [filtroServico, setFiltroServico] = useState<string>('TODOS');
 
     // Modais
     const [modalDetalhesAberto, setModalDetalhesAberto] = useState(false);
+    const [modalRegistrarServicoAberto, setModalRegistrarServicoAberto] = useState(false);
     const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
 
     // Solicitação Selecionada
     const [selecionada, setSelecionada] = useState<Solicitacao | null>(null);
 
-    // Estados de ação
     const [salvandoAcao, setSalvandoAcao] = useState(false);
     const [baixandoArquivoId, setBaixandoArquivoId] = useState<number | null>(null);
 
-    const carregarLista = async () => {
+    const carregarSolicitacoes = async () => {
         setCarregando(true);
         try {
             const data = await listarSolicitacoes();
             setSolicitacoes(data);
         } catch (err: unknown) {
-            mostrarToast('error', 'Não foi possível carregar as solicitações de serviço.');
+            mostrarToast('error', 'Não foi possível carregar as solicitações de orçamento.');
         } finally {
             setCarregando(false);
         }
     };
 
     useEffect(() => {
-        carregarLista();
+        carregarSolicitacoes();
     }, []);
 
     // Estatísticas discretas
     const contadores = useMemo(() => {
         const total = solicitacoes.length;
         const pendentes = solicitacoes.filter(s => s.status === 'PENDENTE').length;
-        const respondidas = solicitacoes.filter(s => s.status === 'RESPONDIDA').length;
+        const registradas = solicitacoes.filter(s => s.status === 'REGISTRADA').length;
         const ignoradas = solicitacoes.filter(s => s.status === 'IGNORADA').length;
-        return { total, pendentes, respondidas, ignoradas };
+        return { total, pendentes, registradas, ignoradas };
     }, [solicitacoes]);
 
     // Filtragem
@@ -88,7 +74,8 @@ export const Solicitacoes: React.FC = () => {
                 s.nome.toLowerCase().includes(query) ||
                 s.empresa.toLowerCase().includes(query) ||
                 s.email.toLowerCase().includes(query) ||
-                s.telefone.toLowerCase().includes(query);
+                s.telefone.toLowerCase().includes(query) ||
+                (s.mensagem && s.mensagem.toLowerCase().includes(query));
 
             const matchStatus = filtroStatus === 'TODOS' || s.status === filtroStatus;
             const matchServico = filtroServico === 'TODOS' || s.servico === filtroServico;
@@ -97,32 +84,47 @@ export const Solicitacoes: React.FC = () => {
         });
     }, [solicitacoes, busca, filtroStatus, filtroServico]);
 
-    // Abrir modal de detalhes
+    // Abertura do Modal de Detalhes
     const abrirDetalhes = (s: Solicitacao) => {
         setSelecionada(s);
         setModalDetalhesAberto(true);
     };
 
-    // Ação: Alternar Ignorado / Pendente
-    const handleToggleIgnorar = async (s: Solicitacao, e?: React.MouseEvent) => {
+    // Abertura do Modal de Registrar Serviço
+    const abrirModalRegistrarServico = (s: Solicitacao, e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        setSelecionada(s);
+        setModalRegistrarServicoAberto(true);
+    };
+
+    // Callback após criar o serviço no modal reutilizável
+    const handleServicoCriadoComSucesso = async (servicoCriado: RegistroServico) => {
+        if (selecionada) {
+            try {
+                const atualizada = await atualizarStatusSolicitacao(selecionada.id, {
+                    status: 'REGISTRADA',
+                });
+                setSolicitacoes(prev => prev.map(item => item.id === atualizada.id ? atualizada : item));
+            } catch (err: unknown) {
+                console.error('Erro ao marcar solicitação como registrada:', err);
+            }
+        }
+        mostrarToast('success', `Ordem de Serviço ${servicoCriado.codigo} criada com sucesso!`);
+        navigate('/interno/servicos');
+    };
+
+    // Ignorar Solicitação
+    const handleIgnorarSolicitacao = async (s: Solicitacao, e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
         setSalvandoAcao(true);
-
-        const proximoStatus: StatusSolicitacao = s.status === 'IGNORADA' ? 'PENDENTE' : 'IGNORADA';
         try {
             const atualizada = await atualizarStatusSolicitacao(s.id, {
-                status: proximoStatus,
+                status: 'IGNORADA',
             });
-
             setSolicitacoes(prev => prev.map(item => item.id === atualizada.id ? atualizada : item));
-            if (selecionada && selecionada.id === atualizada.id) {
+            mostrarToast('info', `Solicitação ${s.codigo} marcada como ignorada.`);
+            if (modalDetalhesAberto && selecionada?.id === s.id) {
                 setSelecionada(atualizada);
-            }
-
-            if (proximoStatus === 'IGNORADA') {
-                mostrarToast('info', `Solicitação ${s.codigo} marcada como ignorada.`);
-            } else {
-                mostrarToast('success', `Solicitação ${s.codigo} reaberta como pendente.`);
             }
         } catch (err: unknown) {
             mostrarToast('error', 'Não foi possível alterar o status da solicitação.');
@@ -131,13 +133,23 @@ export const Solicitacoes: React.FC = () => {
         }
     };
 
-    // Ação: Registrar como Serviço (prepara transição para Registro de Serviço)
-    const handleRegistrarComoServico = (s: Solicitacao, e?: React.MouseEvent) => {
+    // Restaurar Solicitação para Pendente
+    const handleRestaurarParaPendente = async (s: Solicitacao, e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
-        // Feedback imediato e preparação para abertura da OS
-        mostrarToast('info', `Iniciando Registro de Serviço para o protocolo ${s.codigo}...`);
-        if (modalDetalhesAberto) {
-            setModalDetalhesAberto(false);
+        setSalvandoAcao(true);
+        try {
+            const atualizada = await atualizarStatusSolicitacao(s.id, {
+                status: 'PENDENTE',
+            });
+            setSolicitacoes(prev => prev.map(item => item.id === atualizada.id ? atualizada : item));
+            mostrarToast('success', `Solicitação ${s.codigo} restaurada para pendente.`);
+            if (modalDetalhesAberto && selecionada?.id === s.id) {
+                setSelecionada(atualizada);
+            }
+        } catch (err: unknown) {
+            mostrarToast('error', 'Não foi possível alterar o status da solicitação.');
+        } finally {
+            setSalvandoAcao(false);
         }
     };
 
@@ -163,12 +175,11 @@ export const Solicitacoes: React.FC = () => {
 
     const handleConfirmarExclusao = async () => {
         if (!selecionada) return;
-
         setSalvandoAcao(true);
         try {
             await excluirSolicitacao(selecionada.id);
             setSolicitacoes(prev => prev.filter(item => item.id !== selecionada.id));
-            mostrarToast('success', `Solicitação ${selecionada.codigo} excluída.`);
+            mostrarToast('info', `Solicitação ${selecionada.codigo} excluída com sucesso.`);
             setModalExcluirAberto(false);
             if (modalDetalhesAberto) setModalDetalhesAberto(false);
         } catch (err: unknown) {
@@ -181,16 +192,24 @@ export const Solicitacoes: React.FC = () => {
     const formatarData = (dataIso?: string) => {
         if (!dataIso) return '-';
         try {
-            return new Date(dataIso).toLocaleString('pt-BR', {
+            return new Date(dataIso).toLocaleDateString('pt-BR', {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit',
+                minute: '2-digit'
             });
         } catch {
             return dataIso;
         }
+    };
+
+    const formatarTamanho = (bytes: number) => {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     };
 
     return (
@@ -198,11 +217,11 @@ export const Solicitacoes: React.FC = () => {
             {/* Cabeçalho */}
             <div className="solicitacoes-header">
                 <div className="header-info">
-                    <h1>Solicitações de Serviços</h1>
-                    <p>Demandas recebidas pelo portal público para triagem e conversão em Registros de Serviço do laboratório.</p>
+                    <h1>Solicitações de Análise & Orçamento</h1>
+                    <p>Acompanhe e trie as demandas comerciais de clientes recebidas pelo portal externo.</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn-refresh" onClick={carregarLista} disabled={carregando} title="Recarregar">
+                    <button className="btn-refresh" onClick={carregarSolicitacoes} disabled={carregando} title="Recarregar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={carregando ? 'spin-icon' : ''}>
                             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
@@ -212,7 +231,7 @@ export const Solicitacoes: React.FC = () => {
                 </div>
             </div>
 
-            {/* Barra de Filtros e Status */}
+            {/* Barra de Controles e Status */}
             <div className="solicitacoes-controls-bar">
                 <div className="status-filters">
                     <button
@@ -231,10 +250,10 @@ export const Solicitacoes: React.FC = () => {
                     </button>
                     <button
                         type="button"
-                        className={`filter-tab tab-respondida ${filtroStatus === 'RESPONDIDA' ? 'active' : ''}`}
-                        onClick={() => setFiltroStatus('RESPONDIDA')}
+                        className={`filter-tab tab-registrada ${filtroStatus === 'REGISTRADA' ? 'active' : ''}`}
+                        onClick={() => setFiltroStatus('REGISTRADA')}
                     >
-                        Registradas ({contadores.respondidas})
+                        Registradas ({contadores.registradas})
                     </button>
                     <button
                         type="button"
@@ -254,7 +273,7 @@ export const Solicitacoes: React.FC = () => {
                         </svg>
                         <input
                             type="text"
-                            placeholder="Buscar por protocolo, cliente, empresa ou e-mail..."
+                            placeholder="Buscar por protocolo, cliente, empresa, e-mail..."
                             value={busca}
                             onChange={(e) => setBusca(e.target.value)}
                         />
@@ -264,7 +283,6 @@ export const Solicitacoes: React.FC = () => {
                         className="service-select"
                         value={filtroServico}
                         onChange={(e) => setFiltroServico(e.target.value)}
-                        title="Filtrar por tipo de serviço"
                     >
                         <option value="TODOS">Todos os Serviços</option>
                         {Object.entries(SERVICOS_LABELS).map(([key, label]) => (
@@ -293,7 +311,6 @@ export const Solicitacoes: React.FC = () => {
                                 <th>Protocolo</th>
                                 <th>Cliente / Empresa</th>
                                 <th>Serviço Pretendido</th>
-                                <th>Qtd.</th>
                                 <th>Anexos</th>
                                 <th>Status</th>
                                 <th>Data</th>
@@ -304,33 +321,28 @@ export const Solicitacoes: React.FC = () => {
                             {solicitacoesFiltradas.map((s) => (
                                 <tr key={s.id} onClick={() => abrirDetalhes(s)} className="clickable-row">
                                     <td>
-                                        <span className="protocol-text">{s.codigo}</span>
+                                        <span className="protocolo-plain-text">{s.codigo}</span>
                                     </td>
                                     <td>
                                         <div className="client-cell">
-                                            <strong className="client-name">{s.nome}</strong>
-                                            <span className="client-company">{s.empresa}</span>
+                                            <span className="client-name">{s.nome}</span>
+                                            {s.empresa && <span className="client-company">{s.empresa}</span>}
                                         </div>
                                     </td>
                                     <td>
-                                        <span className="service-text">
-                                            {SERVICOS_LABELS[s.servico] || s.servico}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span className="qty-text">{s.quantidadePecas || '1 un.'}</span>
+                                        <span className="service-plain-text">{SERVICOS_LABELS[s.servico] || s.servico}</span>
                                     </td>
                                     <td>
                                         {s.arquivos && s.arquivos.length > 0 ? (
-                                            <span className="files-indicator">
+                                            <span className="attachments-count">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
                                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                                                    <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                                                 </svg>
-                                                <span>{s.arquivos.length}</span>
+                                                {s.arquivos.length}
                                             </span>
                                         ) : (
-                                            <span className="no-files">—</span>
+                                            <span className="no-attachments">-</span>
                                         )}
                                     </td>
                                     <td>
@@ -344,49 +356,56 @@ export const Solicitacoes: React.FC = () => {
                                     </td>
                                     <td onClick={(e) => e.stopPropagation()}>
                                         <div className="table-actions-row">
-                                            {/* Botão claro de registrar serviço */}
-                                            <button
-                                                className="btn-register-service"
-                                                onClick={(e) => handleRegistrarComoServico(s, e)}
-                                                title="Criar Registro de Serviço a partir desta demanda"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                                     fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                                </svg>
-                                                <span>Registrar Serviço</span>
-                                            </button>
-
-                                            {/* Atalho Ignorar / Restaurar */}
-                                            <button
-                                                className={`btn-icon-action ${s.status === 'IGNORADA' ? 'btn-restore' : 'btn-ignore'}`}
-                                                onClick={(e) => handleToggleIgnorar(s, e)}
-                                                disabled={salvandoAcao}
-                                                title={s.status === 'IGNORADA' ? 'Restaurar solicitação para Pendente' : 'Marcar solicitação como Ignorada'}
-                                            >
-                                                {s.status === 'IGNORADA' ? (
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                                                        <path d="M21 3v5h-5" />
-                                                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                                                        <path d="M8 16H3v5" />
+                                            {/* Botão Registrar como Serviço em Destaque */}
+                                            {s.status !== 'REGISTRADA' && (
+                                                <button
+                                                    className="btn-register-os-action"
+                                                    onClick={(e) => abrirModalRegistrarServico(s, e)}
+                                                    title="Transformar esta solicitação em Ordem de Serviço"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                                                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
                                                     </svg>
-                                                ) : (
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                                    <span>Registrar Serviço</span>
+                                                </button>
+                                            )}
+
+                                            {/* Ação rápida Ignorar / Restaurar */}
+                                            {s.status === 'PENDENTE' && (
+                                                <button
+                                                    className="btn-icon-action"
+                                                    onClick={(e) => handleIgnorarSolicitacao(s, e)}
+                                                    title="Ignorar Solicitação"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                         <circle cx="12" cy="12" r="10" />
                                                         <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
                                                     </svg>
-                                                )}
-                                            </button>
+                                                </button>
+                                            )}
 
-                                            {/* Detalhes */}
+                                            {s.status === 'IGNORADA' && (
+                                                <button
+                                                    className="btn-icon-action"
+                                                    onClick={(e) => handleRestaurarParaPendente(s, e)}
+                                                    title="Restaurar para Pendente"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <polyline points="1 4 1 10 7 10" />
+                                                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                                                    </svg>
+                                                </button>
+                                            )}
+
+                                            {/* Ver Detalhes */}
                                             <button
                                                 className="btn-icon-action"
                                                 onClick={() => abrirDetalhes(s)}
-                                                title="Ver detalhes da solicitação"
+                                                title="Ver Detalhes"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -395,21 +414,19 @@ export const Solicitacoes: React.FC = () => {
                                                 </svg>
                                             </button>
 
-                                            {/* Excluir (Admin) */}
-                                            {isAdmin && (
-                                                <button
-                                                    className="btn-icon-action btn-delete"
-                                                    onClick={(e) => abrirModalExcluir(s, e)}
-                                                    title="Excluir permanentemente"
-                                                >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M3 6h18" />
-                                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                                    </svg>
-                                                </button>
-                                            )}
+                                            {/* Excluir (Discreto) */}
+                                            <button
+                                                className="btn-icon-action btn-delete-action"
+                                                onClick={(e) => abrirModalExcluir(s, e)}
+                                                title="Excluir Definitivamente"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M3 6h18" />
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -420,25 +437,21 @@ export const Solicitacoes: React.FC = () => {
                 )}
             </div>
 
-            {/* Modal: Visualizar Solicitação */}
+            {/* Modal: Detalhes da Solicitação */}
             {modalDetalhesAberto && selecionada && (
                 <div className="solicitacao-modal-overlay" onClick={() => setModalDetalhesAberto(false)}>
                     <div className="solicitacao-modal-box" onClick={(e) => e.stopPropagation()}>
                         <div className="solicitacao-modal-header">
                             <div className="header-meta">
-                                <span className="protocol-title">Solicitação {selecionada.codigo}</span>
-                                <span className="header-sub">Recebido em {formatarData(selecionada.dataCriacao)}</span>
+                                <span className="protocolo-title">{selecionada.codigo}</span>
+                                <span className="header-sub">Recebida em {formatarData(selecionada.dataCriacao)}</span>
                             </div>
                             <div className="header-status-side">
                                 <span className={`status-indicator status-${selecionada.status.toLowerCase()}`}>
                                     <span className="dot" />
                                     {STATUS_SOLICITACAO_LABELS[selecionada.status]}
                                 </span>
-                                <button
-                                    className="btn-close-modal"
-                                    onClick={() => setModalDetalhesAberto(false)}
-                                    title="Fechar"
-                                >
+                                <button className="btn-close-modal" onClick={() => setModalDetalhesAberto(false)} title="Fechar">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -449,153 +462,151 @@ export const Solicitacoes: React.FC = () => {
                         </div>
 
                         <div className="solicitacao-modal-body">
-                            <div className="modal-content-grid">
-                                {/* Informações do Solicitante */}
-                                <div className="info-block">
-                                    <h4 className="block-title">Dados do Solicitante</h4>
-                                    <div className="info-rows">
-                                        <div className="info-row">
-                                            <span className="info-label">Nome / Responsável:</span>
-                                            <span className="info-value strong">{selecionada.nome}</span>
-                                        </div>
-                                        <div className="info-row">
-                                            <span className="info-label">Empresa / Razão Social:</span>
-                                            <span className="info-value">{selecionada.empresa}</span>
-                                        </div>
-                                        <div className="info-row">
-                                            <span className="info-label">E-mail:</span>
-                                            <a href={`mailto:${selecionada.email}`} className="info-value link">{selecionada.email}</a>
-                                        </div>
-                                        <div className="info-row">
-                                            <span className="info-label">Telefone:</span>
-                                            <a href={`tel:${selecionada.telefone}`} className="info-value link">{selecionada.telefone}</a>
-                                        </div>
+                            {/* Seção 1: Dados do Cliente */}
+                            <div className="info-block">
+                                <h4 className="block-title">Dados de Contato & Empresa</h4>
+                                <div className="grid-2-col">
+                                    <div className="info-item">
+                                        <span className="label">Nome do Solicitante:</span>
+                                        <span className="value strong">{selecionada.nome}</span>
                                     </div>
-                                </div>
-
-                                {/* Demanda Técnica */}
-                                <div className="info-block">
-                                    <h4 className="block-title">Demanda Pretendida</h4>
-                                    <div className="info-rows">
-                                        <div className="info-row">
-                                            <span className="info-label">Serviço:</span>
-                                            <span className="info-value strong">
-                                                {SERVICOS_LABELS[selecionada.servico] || selecionada.servico}
-                                            </span>
-                                        </div>
-                                        <div className="info-row">
-                                            <span className="info-label">Lote / Quantidade de Peças:</span>
-                                            <span className="info-value">{selecionada.quantidadePecas || '1 unidade'}</span>
-                                        </div>
+                                    <div className="info-item">
+                                        <span className="label">Empresa / Razão Social:</span>
+                                        <span className="value">{selecionada.empresa || 'Não informada'}</span>
+                                    </div>
+                                    <div className="info-item">
+                                        <span className="label">E-mail de Contato:</span>
+                                        <span className="value">{selecionada.email}</span>
+                                    </div>
+                                    <div className="info-item">
+                                        <span className="label">Telefone / Ramal:</span>
+                                        <span className="value">{selecionada.telefone}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Mensagem do Solicitante */}
-                            <div className="message-container">
-                                <h4 className="block-title">Requisitos e Instruções do Solicitante</h4>
-                                <div className="message-text-box">
-                                    {selecionada.mensagem ? (
-                                        <p>{selecionada.mensagem}</p>
-                                    ) : (
-                                        <span className="empty-text">Nenhuma instrução adicional informada.</span>
-                                    )}
+                            {/* Seção 2: Especificações Técnicas da Demanda */}
+                            <div className="info-block">
+                                <h4 className="block-title">Demanda Técnica Solicitada</h4>
+                                <div className="grid-2-col">
+                                    <div className="info-item">
+                                        <span className="label">Serviço Pretendido:</span>
+                                        <span className="value strong">{SERVICOS_LABELS[selecionada.servico] || selecionada.servico}</span>
+                                    </div>
+                                    <div className="info-item">
+                                        <span className="label">Quantidade Estimada de Peças:</span>
+                                        <span className="value">{selecionada.quantidadePecas || '1 peça / lote teste'}</span>
+                                    </div>
+                                </div>
+
+                                <div className="info-item full-width" style={{ marginTop: '0.75rem' }}>
+                                    <span className="label">Descrição Detalhada do Cliente:</span>
+                                    <div className="message-content">
+                                        {selecionada.mensagem ? (
+                                            <p>{selecionada.mensagem}</p>
+                                        ) : (
+                                            <p className="empty-hint">Nenhuma observação descritiva informada pelo solicitante.</p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* Arquivos Anexados */}
-                            <div className="attachments-container">
-                                <h4 className="block-title">
-                                    Desenhos Técnicos e Arquivos CAD ({selecionada.arquivos ? selecionada.arquivos.length : 0})
-                                </h4>
+                            {/* Seção 3: Anexos e Modelos CAD */}
+                            <div className="info-block">
+                                <h4 className="block-title">Documentação Técnica & Arquivos CAD</h4>
                                 {selecionada.arquivos && selecionada.arquivos.length > 0 ? (
-                                    <div className="attachments-list">
+                                    <div className="files-list">
                                         {selecionada.arquivos.map((arq) => (
-                                            <div key={arq.id} className="attachment-item">
-                                                <div className="attachment-details">
-                                                    <span className="file-format">{getFileExtension(arq.nomeOriginal)}</span>
-                                                    <div className="file-texts">
-                                                        <strong className="file-name" title={arq.nomeOriginal}>{arq.nomeOriginal}</strong>
-                                                        <span className="file-size">{formatFileSize(arq.tamanhoBytes)}</span>
-                                                    </div>
+                                            <div key={arq.id} className="file-card">
+                                                <div className="file-info">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                                                        <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                                    </svg>
+                                                    <span className="file-name" title={arq.nomeOriginal}>{arq.nomeOriginal}</span>
+                                                    <span className="file-size">{formatarTamanho(arq.tamanhoBytes)}</span>
                                                 </div>
                                                 <button
                                                     type="button"
+                                                    className="btn-download-file"
                                                     onClick={() => handleBaixarArquivo(selecionada.id, arq.id, arq.nomeOriginal)}
-                                                    className="btn-download-simple"
                                                     disabled={baixandoArquivoId === arq.id}
-                                                    title={`Baixar ${arq.nomeOriginal}`}
                                                 >
-                                                    {baixandoArquivoId === arq.id ? (
-                                                        <span className="spinner-sm" />
-                                                    ) : (
-                                                        <>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                                                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                                <polyline points="7 10 12 15 17 10" />
-                                                                <line x1="12" y1="15" x2="12" y2="3" />
-                                                            </svg>
-                                                            <span>Baixar Arquivo</span>
-                                                        </>
-                                                    )}
+                                                    {baixandoArquivoId === arq.id ? 'Baixando...' : 'Download'}
                                                 </button>
                                             </div>
                                         ))}
                                     </div>
                                 ) : (
-                                    <p className="no-attachments-text">Nenhum desenho ou arquivo 3D foi anexado a esta solicitação.</p>
+                                    <p className="empty-hint">Nenhum arquivo ou modelo 3D foi anexado a este pedido.</p>
                                 )}
                             </div>
                         </div>
 
-                        {/* Rodapé de Ações Baseado em Fluxo Operacional */}
                         <div className="solicitacao-modal-footer">
                             <div className="footer-left-actions">
-                                <button
-                                    type="button"
-                                    className={`btn-action-outline ${selecionada.status === 'IGNORADA' ? 'btn-restore' : 'btn-ignore'}`}
-                                    onClick={() => handleToggleIgnorar(selecionada)}
-                                    disabled={salvandoAcao}
-                                >
-                                    {selecionada.status === 'IGNORADA' ? 'Reabrir Solicitação (Pendente)' : 'Ignorar Solicitação'}
-                                </button>
+                                {selecionada.status === 'PENDENTE' && (
+                                    <button
+                                        type="button"
+                                        className="btn-secondary"
+                                        onClick={() => handleIgnorarSolicitacao(selecionada)}
+                                        disabled={salvandoAcao}
+                                    >
+                                        Ignorar Solicitação
+                                    </button>
+                                )}
+
+                                {selecionada.status === 'IGNORADA' && (
+                                    <button
+                                        type="button"
+                                        className="btn-secondary"
+                                        onClick={() => handleRestaurarParaPendente(selecionada)}
+                                        disabled={salvandoAcao}
+                                    >
+                                        Restaurar para Pendente
+                                    </button>
+                                )}
                             </div>
 
                             <div className="footer-right-actions">
-                                <button
-                                    type="button"
-                                    className="btn-close-clean"
-                                    onClick={() => setModalDetalhesAberto(false)}
-                                >
+                                <button type="button" className="btn-secondary" onClick={() => setModalDetalhesAberto(false)}>
                                     Fechar
                                 </button>
 
-                                <button
-                                    type="button"
-                                    className="btn-primary-register"
-                                    onClick={() => handleRegistrarComoServico(selecionada)}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="12" y1="5" x2="12" y2="19" />
-                                        <line x1="5" y1="12" x2="19" y2="12" />
-                                    </svg>
-                                    <span>Registrar como Serviço</span>
-                                </button>
+                                {selecionada.status !== 'REGISTRADA' && (
+                                    <button
+                                        type="button"
+                                        className="btn-primary-action"
+                                        onClick={() => {
+                                            setModalDetalhesAberto(false);
+                                            abrirModalRegistrarServico(selecionada);
+                                        }}
+                                    >
+                                        Registrar como Serviço
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             )}
 
+            {/* Modal Reutilizável: Transformar Solicitação em Registro de Serviço */}
+            <ModalCriarServico
+                aberto={modalRegistrarServicoAberto}
+                onClose={() => setModalRegistrarServicoAberto(false)}
+                onSucesso={handleServicoCriadoComSucesso}
+                solicitacaoOrigem={selecionada}
+            />
+
             {/* Modal: Confirmar Exclusão */}
             {modalExcluirAberto && selecionada && (
                 <div className="solicitacao-modal-overlay" onClick={() => setModalExcluirAberto(false)}>
                     <div className="solicitacao-modal-box modal-confirm-simple" onClick={(e) => e.stopPropagation()}>
                         <div className="solicitacao-modal-header">
-                            <span className="protocol-title">Excluir Solicitação</span>
-                            <button className="btn-close-modal" onClick={() => setModalExcluirAberto(false)}>
+                            <span className="protocolo-title">Excluir Solicitação</span>
+                            <button className="btn-close-modal" onClick={() => setModalExcluirAberto(false)} title="Fechar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <line x1="18" y1="6" x2="6" y2="18" />
@@ -605,20 +616,13 @@ export const Solicitacoes: React.FC = () => {
                         </div>
                         <div className="solicitacao-modal-body">
                             <p className="confirm-text">
-                                Deseja excluir permanentemente a solicitação <strong>{selecionada.codigo}</strong> da
-                                empresa <strong>{selecionada.empresa}</strong>?
-                            </p>
-                            <p className="sub-warning">
-                                Todos os arquivos técnicos anexados serão removidos do armazenamento do laboratório.
+                                Deseja realmente excluir permanentemente a solicitação <strong>{selecionada.codigo}</strong>?
+                                Esta operação não poderá ser desfeita.
                             </p>
                         </div>
                         <div className="solicitacao-modal-footer">
-                            <div className="footer-right-actions" style={{ width: '100%', justifyContent: 'flex-end' }}>
-                                <button
-                                    type="button"
-                                    className="btn-close-clean"
-                                    onClick={() => setModalExcluirAberto(false)}
-                                >
+                            <div className="footer-right-actions" style={{ width: '100%', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                                <button type="button" className="btn-secondary" onClick={() => setModalExcluirAberto(false)}>
                                     Cancelar
                                 </button>
                                 <button
@@ -627,7 +631,7 @@ export const Solicitacoes: React.FC = () => {
                                     onClick={handleConfirmarExclusao}
                                     disabled={salvandoAcao}
                                 >
-                                    {salvandoAcao ? 'Excluindo...' : 'Excluir Definitivamente'}
+                                    {salvandoAcao ? 'Excluindo...' : 'Confirmar Exclusão'}
                                 </button>
                             </div>
                         </div>
