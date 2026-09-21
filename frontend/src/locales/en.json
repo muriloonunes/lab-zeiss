@@ -8,7 +8,8 @@
       "optica": "Optical & Multisensor Inspection",
       "raioX": "X-Ray Inspection (NDT)",
       "scan3d": "3D Optical Digitization",
-      "reverseEng": "Reverse Engineering & CAD"
+      "reverseEng": "Reverse Engineering & CAD",
+      "mro": "Reliability & Virtual MRO Warehouse"
     },
     "contact": "Contact",
     "requestQuote": "Request a Quote"
@@ -30,16 +31,24 @@
           "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
         },
         "reverse": {
-          "title": "Reverse Engineering",
-          "description": "CAD and STL model generation from physical parts using 3D scanning technologies and specialized software."
+          "title": "Reverse Engineering & Localization",
+          "description": "CAD reconstruction and component localization development using 3D scanning and engineering software."
         },
         "qcontrol": {
-          "title": "Quality Control",
-          "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
+          "title": "Quality Control & CAD Comparison",
+          "description": "CAD vs. actual part inspection via 3D scanners, surface wear mapping, and FAI reports with GD&T."
         },
         "prototyping": {
-          "title": "Prototyping",
-          "description": "Manufacturing parts using 3D printing technologies to validate the product before machining."
+          "title": "Prototyping & 3D Printing",
+          "description": "Manufacturing parts and functional prototypes using 3D additive technologies for pre-machining validation."
+        },
+        "mro": {
+          "title": "Virtual Warehouse & MRO",
+          "description": "Equipment tree structuring and criticality matrix for on-demand digital cataloging and component readiness."
+        },
+        "training": {
+          "title": "Training & Technical Education",
+          "description": "Applied technical training in metrology, reverse engineering, maintenance reliability, lubrication, and failure analysis."
         }
       }
     },
@@ -178,25 +187,41 @@
       }
     },
     "scanning": {
-      "category": "3D scanning",
+      "category": "3D Scanning & CAD Comparison",
       "title": "Transform physical geometry into digital data.",
-      "description": "We capture complex geometries to produce high-fidelity 3D models for dimensional analysis, quality control, and reverse engineering. The T-SCAN Hawk 2 provides portable flexibility for on-site measurement, while the ATOS Q delivers maximum point density for intricate components.",
+      "description": "We capture complex geometries with optical and laser precision to produce 3D models, perform nominal vs. actual comparison (CAD × scanned physical part), and map surface wear on operating components. The T-SCAN Hawk 2 provides portable on-site flexibility, while the ATOS Q delivers maximum point density.",
       "applications": {
-        "fieldScanning": "Portable scanning on-site or on the shop floor",
-        "highResolution": "High-resolution optical scanning (ATOS Q)",
-        "colorMap": "3D color-map deviation reports",
-        "digitization": "Polygon mesh generation (STL/OBJ)"
+        "fieldScanning": "Portable scanning on-site or on the shop floor (T-SCAN Hawk 2)",
+        "highResolution": "High-resolution optical structured blue light scanning (ATOS Q)",
+        "cadComparison": "Direct comparison between CAD model and scanned physical part",
+        "wearMap": "Wear mapping and material loss monitoring on components",
+        "colorMap": "3D color-map deviation reports (Color Map)",
+        "digitization": "Watertight polygon mesh generation (STL/OBJ)"
       }
     },
     "reverse": {
-      "category": "Reverse engineering",
-      "title": "From physical part to parametric CAD model.",
-      "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for manufacturing, replacement, or design optimization.",
+      "category": "Reverse Engineering & Component Localization",
+      "title": "From physical part to parametric CAD model ready for manufacturing.",
+      "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for production, local manufacturing of imported spares, or design improvements.",
       "applications": {
         "legacyParts": "Recreation of spare parts without technical drawings",
+        "nationalization": "Localization and development of imported industrial components",
         "cadGeneration": "Parametric CAD modeling (STEP, IGES, Parasolid)",
         "tooling": "Mold, die, and tooling adaptation",
-        "optimization": "Redesign and geometric optimization"
+        "optimization": "Redesign, geometric optimization, and 3D prototyping"
+      }
+    },
+    "mro": {
+      "category": "Reliability, Virtual Warehouse & Training",
+      "title": "Maintenance intelligence, asset management, and technical training.",
+      "description": "Strategic solutions to eliminate unnecessary physical inventory capital in MRO spare parts without downtime risk. We build equipment asset trees, classify critical items using criticality and recurrence matrices (Class A low-recurrence spares), and provide full consulting in maintenance routines, industrial lubrication, failure diagnosis, and technical training.",
+      "applications": {
+        "virtualWarehouse": "Virtual warehouse and digital spare parts library",
+        "criticalParts": "Critical parts identification (Criticality x Recurrence matrix - Class A low-recurrence)",
+        "equipmentTree": "Equipment tree structuring and item-by-item asset breakdown",
+        "maintenancePlans": "Formulation of preventive maintenance and lubrication plans",
+        "failureAnalysis": "Failure analysis, mechanical breakdowns, and anomaly diagnostics",
+        "training": "Applied specialized technical training programs (direct inquiry)"
       }
     },
     "selection": {
@@ -217,12 +242,20 @@
           "description": "Computed tomography and X-ray for non-destructive internal defect detection."
         },
         "scanning": {
-          "title": "Need to digitize freeform surfaces and complex shapes?",
-          "description": "3D scanning to capture complete geometries directly on the shop floor."
+          "title": "Need to digitize freeform surfaces or compare with CAD?",
+          "description": "3D scanning to capture complete geometries and compare with original models."
         },
         "cad": {
-          "title": "Missing technical drawings or 3D files?",
-          "description": "Reverse engineering to recreate the digital model directly from the physical part."
+          "title": "Missing technical drawings or need part localization?",
+          "description": "Reverse engineering to recreate CAD models and enable local manufacturing."
+        },
+        "mro": {
+          "title": "Need to reduce spare parts stock without downtime risk?",
+          "description": "Virtual warehouse structuring, equipment trees, and critical MRO parts classification."
+        },
+        "training": {
+          "title": "Looking to train your technical team in standards and processes?",
+          "description": "Custom technical training backed by SENAI expertise and ZEISS technology."
         }
       }
     }
@@ -385,26 +418,27 @@
       "digitalizacao-3d": {
         "categoryTag": "3D Scanning & Photogrammetry",
         "title": "3D Optical Scanning & Color Map Analysis",
-        "headline": "Full geometric capture to produce 3D STL meshes and dimensional control.",
-        "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), ready for 3D printing, color-map dimensional inspection, or as the baseline dataset for parametric Reverse Engineering (CAD).",
+        "headline": "Full geometric capture to produce 3D STL meshes, CAD comparisons, and dimensional control.",
+        "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), enabling direct nominal vs. actual comparison (CAD × scanned physical part), wear mapping, 3D printing, or serving as the baseline dataset for parametric Reverse Engineering (CAD).",
         "targetAudience": [
           "Anyone holding a physical part who needs its 3D digital model (.STL)",
           "Designers and makers requiring watertight meshes for 3D printing and prototyping",
           "Maintenance teams and workshops creating digital archives or part replicas",
-          "Quality inspection teams needing CAD vs. part 3D color-map reports",
+          "Quality inspection teams needing CAD vs. scanned physical part 3D color-map reports",
           "Projects needing a digitized mesh as the starting foundation for Reverse Engineering (CAD)"
         ],
         "applications": [
           "Generation of watertight STL and OBJ meshes ready for 3D printing",
-          "3D color-map deviation analysis (Nominal CAD vs. actual part)",
-          "On-site portable scanning for medium and large components",
-          "Rapid inspection of warpage, twist, and surface wear",
+          "3D color-map deviation analysis (Nominal CAD vs. actual scanned part via 3D scanners)",
+          "Surface wear mapping and material loss monitoring for operating components",
+          "On-site portable scanning for medium and large components in the field or plant",
+          "Rapid inspection of warpage, twist, and sheet metal deformation",
           "High-density mesh baseline for parametric Reverse Engineering"
         ],
         "deliverables": [
           "Cleaned, closed, and aligned polygonal mesh (.STL, .OBJ, .PLY)",
-          "3D color-map deviation report indicating material excess and deficit zones (when applicable)",
-          "Comparative dimensional report for freeform surfaces"
+          "3D color-map deviation report indicating material excess, deficit, and nominal deviations",
+          "Comparative dimensional report for freeform surfaces and wear degradation maps"
         ],
         "machines": [
           {
@@ -439,26 +473,28 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametric Digital Modeling",
-        "title": "Reverse Engineering & CAD Reconstruction",
-        "headline": "Transforming raw scan data into production-ready parametric solid models.",
-        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or modified empirically in the toolroom.",
+        "categoryTag": "Parametric Digital Modeling & Localization",
+        "title": "Reverse Engineering, CAD Reconstruction & Localization",
+        "headline": "Transforming raw scan data into production-ready parametric solid models for local manufacturing.",
+        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or requiring domestic manufacturing substitution. Encompasses precision parametric modeling, optimization, and full technical documentation for component localization.",
         "targetAudience": [
-          "Industrial plant maintenance needing replacement of obsolete legacy parts",
-          "Mining and agribusiness operations with imported heavy machinery",
+          "Industrial plant maintenance needing replacement of obsolete legacy parts and localization of imports",
+          "Mining, agribusiness, and energy operations with imported heavy machinery facing long lead times",
           "High-performance product and prototype developers",
-          "Tool and mold manufacturers needing original geometry recovery"
+          "Tool and mold manufacturers needing original or improved geometry recovery"
         ],
         "applications": [
           "Parametric CAD modeling from polygon meshes (Mesh to CAD)",
+          "Localization and development of imported components for domestic sourcing",
           "Recovery of worn or broken components with missing geometry reconstruction",
           "Geometric adaptation for modernization and operational efficiency upgrades",
-          "Extraction of design intents, 2D cross-sections, and feature trees"
+          "Extraction of design intents, 2D cross-sections, and parametric feature trees"
         ],
         "deliverables": [
           "Parametric solid and surface CAD models in STEP, IGES, or Parasolid formats",
           "2D manufacturing technical drawings in PDF and DWG with GD&T",
-          "CAD deviation report comparing reconstructed model against measured scan mesh"
+          "CAD deviation report comparing reconstructed model against measured scan mesh",
+          "Engineering dossier to support domestic manufacturing feasibility"
         ],
         "machines": [
           {
@@ -472,6 +508,52 @@
               "Automatic surface segmentation for regular geometric entities (planes, cylinders, cones)",
               "Precision freeform surface fitting with real-time residual deviation control",
               "Native export compatibility with SolidWorks, Siemens NX, CATIA, and Autodesk Inventor"
+            ]
+          }
+        ]
+      },
+      "confiabilidade-mro": {
+        "categoryTag": "Industrial Reliability & Asset Management MRO",
+        "title": "Reliability, Virtual MRO Warehouse & Technical Training",
+        "headline": "Strategic spare parts management, asset tree structuring, and operational reliability for industry.",
+        "overview": "Integrated service combining reliability engineering and digital readiness to optimize industrial maintenance (MRO). By structuring equipment asset trees and applying rigorous criticality and recurrence matrices, we identify critical Class A items with low demand recurrence. We catalog these digitally into virtual warehouses for rapid on-demand manufacturing, eliminating costly idle physical inventory. The service also includes preventive maintenance and lubrication plans, root cause failure analysis, and customized professional training programs.",
+        "trainingDirectNotice": "Notice for Technical Training: For technical training proposals, professional development, or corporate in-company classes (in metrology, reverse engineering, maintenance, lubrication, and failure analysis), we recommend reaching out directly to laboratory management via phone, WhatsApp, or email for streamlined syllabus alignment and scheduling.",
+        "targetAudience": [
+          "Maintenance, Reliability, and Plant Asset Management leaders",
+          "Industries operating imported equipment with high lead times for OEM spare parts",
+          "Companies seeking to reduce physical inventory capital while mitigating downtime risk",
+          "Plants looking to standardize maintenance routines, lubrication practices, and investigate recurring failures",
+          "Engineering and technician teams requiring certified professional training"
+        ],
+        "applications": [
+          "Virtual warehouse creation and digital component library for MRO spares",
+          "Critical parts identification using criticality and recurrence matrices (Class A low-recurrence items)",
+          "Equipment tree structuring with item-by-item scanning and cataloging",
+          "Development and review of preventive/predictive maintenance plans and lubrication schedules",
+          "Failure analysis, mechanical breakdowns, anomalous wear, and root cause diagnosis",
+          "Applied technical training in maintenance, metrology, reverse engineering, lubrication, and failure analysis"
+        ],
+        "deliverables": [
+          "Structured equipment asset tree report with hierarchy and critical parts mapping",
+          "Analytical criticality and recurrence matrix with physical vs. digital stocking strategies",
+          "Digital 3D CAD library and manufacturing blueprints for on-demand replacement",
+          "Industrial lubrication manuals and standardized maintenance procedures",
+          "Forensic failure analysis reports with root-cause diagnosis and corrective actions",
+          "Professional technical training certificates issued by SENAI Goiás"
+        ],
+        "machines": [
+          {
+            "name": "SENAI Asset Management & MRO Methodology",
+            "category": "Reliability Engineering & Consulting Framework",
+            "volume": "Applicable to individual assets, full production lines, or entire industrial plants",
+            "accuracy": "RCM Criticality Matrix / FMEA Analysis / Class-A Reliability Classification",
+            "sensor": "SENAI Certified Technical Specialists & Reliability Engineering Team",
+            "software": "CMMS & ERP Integration, Cloud-Based 3D/CAD Engineering Repositories",
+            "features": [
+              "Focus on freeing immobilized capital in high-cost, low-turnover spare parts",
+              "Seamless integration with on-site 3D scanning, reverse engineering, and CNC/additive manufacturing",
+              "Tribology-driven industrial lubrication routines engineered to maximize component life",
+              "Hands-on practical training taught by accredited SENAI and ZEISS technical specialists"
             ]
           }
         ]
@@ -514,10 +596,13 @@
         "cmm": "Coordinate Measuring (CMM) & GD&T",
         "optica": "Optical & Multisensor Inspection",
         "raio-x": "X-Ray & CT Inspection (NDT)",
-        "digitalizacao-3d": "3D Optical Scanning & Color Map",
-        "engenharia-reversa": "Reverse Engineering & CAD Reconstruction",
-        "consultoria": "Other / Metrology Consulting & Training"
+        "digitalizacao-3d": "3D Optical Scanning, CAD Comparison & Color Map",
+        "engenharia-reversa": "Reverse Engineering & Component Localization",
+        "confiabilidade-mro": "Reliability, Virtual MRO Warehouse & Assets",
+        "treinamentos": "Technical Training & Education",
+        "consultoria": "Other / Specialized Consulting"
       },
+      "trainingDirectNotice": "For technical training inquiries and corporate in-company programs, we suggest contacting our laboratory leadership directly via phone or email for faster and customized support.",
       "otherOption": "Other / Dimensional Consulting",
       "messageLabel": "Project Description / Tolerances",
       "messagePlaceholder": "Provide details such as approximate dimensions, part material, critical tolerances, applicable standard, and desired deadlines.",

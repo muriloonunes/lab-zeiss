@@ -8,7 +8,8 @@
       "optica": "Optische & Multisensor-Prüfung",
       "raioX": "Röntgenprüfung (ZfP)",
       "scan3d": "Optische 3D-Digitalisierung",
-      "reverseEng": "Reverse Engineering & CAD"
+      "reverseEng": "Reverse Engineering & CAD",
+      "mro": "Zuverlässigkeit & Virtuelles MRO-Lager"
     },
     "contact": "Kontakt",
     "requestQuote": "Angebot anfordern"
@@ -30,16 +31,24 @@
           "description": "Geometrische Maßprüfung und GD&T-Tolerierung auf ZEISS-Koordinatenmessgeräten."
         },
         "reverse": {
-          "title": "Reverse Engineering",
-          "description": "Erstellung von CAD- und STL-Modellen aus realen Bauteilen mittels 3D-Digitalisierung und Spezialsoftware."
+          "title": "Reverse Engineering & Lokalisierung",
+          "description": "CAD-Modellrekonstruktion und Komponentenlokalisierung mittels 3D-Digitalisierung und Ingenieursoftware."
         },
         "qcontrol": {
-          "title": "Qualitätskontrolle",
-          "description": "Serienprüfung, Erstmusterprüfbericht (EMPB/FAI) und Farb-Abweichungsanalyse."
+          "title": "Qualitätskontrolle & CAD-Vergleich",
+          "description": "CAD-Vergleich vs. reales Bauteil per 3D-Scanner, Verschleißanalysen und EMPB/FAI-Prüfberichte mit GD&T."
         },
         "prototyping": {
-          "title": "Prototyping",
-          "description": "Herstellung von Teilen mit 3D-Drucktechnologien zur Validierung des Produkts vor der Bearbeitung."
+          "title": "Prototyping & 3D-Druck",
+          "description": "Additive Fertigung von Bauteilen und Funktionsprototypen zur Validierung vor der Zerspanung."
+        },
+        "mro": {
+          "title": "Virtuelles Lager & MRO",
+          "description": "Strukturierung von Anlagenbäumen und Kritizitätsmatrizen für die bedarfsgerechte digitale Bauteilbereitstellung."
+        },
+        "training": {
+          "title": "Schulung & Weiterbildung",
+          "description": "Praxisorientierte Fachschulungen in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse."
         }
       }
     },
@@ -178,25 +187,41 @@
       }
     },
     "scanning": {
-      "category": "3D-Digitalisierung",
+      "category": "3D-Digitalisierung & CAD-Vergleich",
       "title": "Physische Geometrien in digitale Daten verwandeln.",
-      "description": "Wir erfassen komplexe Geometrien zur Erstellung hochpräziser 3D-Modelle für Maßanalysen, Qualitätskontrolle und Reverse Engineering. Der T-SCAN Hawk 2 bietet Flexibilität für mobile Messungen vor Ort, während der ATOS Q höchste Punktedichte für detailreiche Komponenten liefert.",
+      "description": "Wir erfassen komplexe Geometrien mit optischer und Laser-Präzision zur 3D-Modellerstellung, zum direkten Soll-Ist-Vergleich (CAD × gescanntes Realteil) und zur Verschleißanalyse an Einsatzkomponenten. Der T-SCAN Hawk 2 bietet Flexibilität für mobile Messungen vor Ort, während der ATOS Q maximale Punktedichte liefert.",
       "applications": {
-        "fieldScanning": "Mobiles Scannen vor Ort oder in der Fertigung",
-        "highResolution": "Hochauflösende optische Digitalisierung (ATOS Q)",
-        "colorMap": "3D-Falschfarben-Abweichungsanalysen",
-        "digitization": "Erzeugung von Polygonnetzen (STL/OBJ)"
+        "fieldScanning": "Mobiles Scannen vor Ort oder in der Fertigung (T-SCAN Hawk 2)",
+        "highResolution": "Hochauflösende optische Blaulicht-Digitalisierung (ATOS Q)",
+        "cadComparison": "Direkter Vergleich zwischen CAD-Modell und gescanntem Bauteil",
+        "wearMap": "Verschleißkartierung und Überwachung von Materialabtrag",
+        "colorMap": "3D-Falschfarben-Abweichungsanalysen (Color Map)",
+        "digitization": "Erzeugung wasserdichter Polygonnetze (STL/OBJ)"
       }
     },
     "reverse": {
-      "category": "Reverse Engineering",
-      "title": "Vom physischen Bauteil zum parametrischen CAD-Modell.",
-      "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für Ersatzteilfertigung oder Konstruktionsoptimierung.",
+      "category": "Reverse Engineering & Bauteillokalisierung",
+      "title": "Vom physischen Bauteil zum fertigungsbereiten parametrischen CAD-Modell.",
+      "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für die Inlandsfertigung von Importteilen, Ersatzteilbereitstellung oder Konstruktionsoptimierung.",
       "applications": {
-        "legacyParts": "Rekonstruktion von Ersatzteilen ohne Zeichnung",
+        "legacyParts": "Rekonstruktion von Ersatzteilen ohne technische Zeichnung",
+        "nationalization": "Lokalisierung und Konstruktion importierter Industriekomponenten",
         "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES, Parasolid)",
         "tooling": "Anpassung von Formen, Gesenken und Werkzeugen",
-        "optimization": "Geometrische Neukonstruktion und Optimierung"
+        "optimization": "Geometrische Neukonstruktion, Optimierung und 3D-Prototyping"
+      }
+    },
+    "mro": {
+      "category": "Zuverlässigkeit, Virtuelles Lager & Schulung",
+      "title": "Instandhaltungsintelligenz, Asset-Management und Fachschulungen.",
+      "description": "Strategische Lösungen zur Reduzierung von gebundenem Kapital in MRO-Ersatzteillagern ohne Stillstandsrisiko. Wir strukturieren Anlagenbäume, klassifizieren kritische Artikel mittels Kritizitäts- und Wiederholungsmatrizen (Klasse-A-Ersatzteile mit geringem Umschlag) und bieten fundierte Beratung in Instandhaltungsroutinen, Schmiertechnik, Schadensanalysen und Fachweiterbildung.",
+      "applications": {
+        "virtualWarehouse": "Virtuelles Lager und digitale MRO-Ersatzteilbibliothek",
+        "criticalParts": "Identifikation kritischer Ersatzteile (Kritizitäts- x Wiederholungsmatrix - Klasse A)",
+        "equipmentTree": "Strukturierung von Anlagenbäumen und Bauteilerfassung",
+        "maintenancePlans": "Erstellung von Plänen für vorbeugende Instandhaltung und Schmierung",
+        "failureAnalysis": "Schadensanalysen, Bauteilbrüche und Ursachendiagnostik",
+        "training": "Praxisorientierte technische Weiterbildungsprogramme (Direktanfrage)"
       }
     },
     "selection": {
@@ -217,12 +242,20 @@
           "description": "Computertomographie und Röntgen für zerstörungsfreie Innenprüfung."
         },
         "scanning": {
-          "title": "Müssen Freiformflächen und komplexe Formen erfasst werden?",
-          "description": "3D-Scannen zur vollständigen Geometrieerfassung direkt im Fertigungsumfeld."
+          "title": "Müssen Freiformflächen erfasst oder mit CAD verglichen werden?",
+          "description": "3D-Scannen zur vollständigen Geometrieerfassung und zum Soll-Ist-Vergleich."
         },
         "cad": {
-          "title": "Liegen keine Zeichnungen oder 3D-Daten vor?",
-          "description": "Reverse Engineering zur Neuerstellung des digitalen Modells anhand des realen Teils."
+          "title": "Liegen keine Zeichnungen vor oder ist Lokalisierung erforderlich?",
+          "description": "Reverse Engineering zur Neuerstellung des CAD-Modells für die Inlandsfertigung."
+        },
+        "mro": {
+          "title": "Möchten Sie Ersatzteilbestände ohne Stillstandsrisiko senken?",
+          "description": "Aufbau virtueller Lager, Anlagenbäume und Klassifizierung kritischer MRO-Teile."
+        },
+        "training": {
+          "title": "Möchten Sie Ihr technisches Team in Normen und Prozessen schulen?",
+          "description": "Maßgeschneiderte Fachschulungen mit SENAI-Kompetenz und ZEISS-Technologie."
         }
       }
     }
@@ -385,26 +418,27 @@
       "digitalizacao-3d": {
         "categoryTag": "3D-Digitalisierung & Photogrammetrie",
         "title": "Optische 3D-Digitalisierung & Falschfarbenanalyse",
-        "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen und zur Maßkontrolle.",
-        "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – bereit für 3D-Druck, maßliche Falschfarbenprüfung oder als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
+        "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen, CAD-Vergleichen und zur Maßkontrolle.",
+        "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – ermöglicht den direkten Soll-Ist-Vergleich (CAD × gescanntes Realteil), Verschleißanalysen, 3D-Druck oder dient als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
         "targetAudience": [
           "Jeder mit einem physischen Bauteil, der ein digitales 3D-Netzmodell (.STL) benötigt",
           "Konstrukteure und Anwender mit Bedarf an wasserdichten 3D-Druck-Dateien",
           "Instandhaltung und Werkzeugbau zur digitalen Archivierung oder Bauteilduplikation",
-          "Qualitätssicherungsteams mit Bedarf an 3D-Falschfarben-Soll-Ist-Vergleichen",
+          "Qualitätssicherungsteams mit Bedarf an 3D-Falschfarben-Soll-Ist-Vergleichen (CAD vs. reales Bauteil)",
           "Projekte, die ein 3D-Netz als Basis für weiterführendes Reverse Engineering (CAD) benötigen"
         ],
         "applications": [
           "Erzeugung wasserdichter STL- und OBJ-Polygonnetze für den 3D-Druck",
-          "3D-Falschfarben-Abweichungsanalysen (Soll-CAD vs. Ist-Bauteil)",
-          "Mobiles Scannen vor Ort für mittelgroße und große Komponenten",
-          "Schnelle Prüfung von Verzug, Torsion und Oberflächenverschleiß",
+          "3D-Falschfarben-Abweichungsanalysen (Soll-CAD vs. reales gescanntes Bauteil via 3D-Scanner)",
+          "Oberflächenverschleißkartierung und Überwachung von Materialabtrag im laufenden Betrieb",
+          "Mobiles Scannen vor Ort für mittelgroße und große Komponenten in Werk oder Feld",
+          "Schnelle Prüfung von Verzug, Torsion und Blechumformung",
           "Hochdichte Netzbasis für parametrisches Reverse Engineering"
         ],
         "deliverables": [
           "Aufbereitetes, geschlossenes und ausgerichtetes Polygonnetz (.STL, .OBJ, .PLY)",
-          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß- und Untermaßzonen (falls zutreffend)",
-          "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen"
+          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß-, Untermaß- und Sollabweichungen",
+          "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen und Verschleißkarten"
         ],
         "machines": [
           {
@@ -439,26 +473,28 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametrische digitale Modellierung",
-        "title": "Reverse Engineering & CAD-Flächenrückführung",
-        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle.",
-        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder manuell im Werkzeugbau angepasst wurden.",
+        "categoryTag": "Parametrische digitale Modellierung & Lokalisierung",
+        "title": "Reverse Engineering, CAD-Flächenrückführung & Lokalisierung",
+        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle für die Inlandsfertigung.",
+        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung und Dokumentation.",
         "targetAudience": [
-          "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen",
-          "Bergbau- und Agrarunternehmen mit importierten Maschinenkomponenten",
+          "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen und Lokalisierung von Importteilen",
+          "Bergbau-, Agrar- und Energieunternehmen mit importierten Maschinenkomponenten und langen Lieferzeiten",
           "Entwickler von Hochleistungsprodukten und Prototypen",
-          "Formen- und Gesenkhersteller zur Wiederherstellung von Ursprungsgeometrien"
+          "Formen- und Gesenkhersteller zur Wiederherstellung oder Optimierung von Ursprungsgeometrien"
         ],
         "applications": [
           "Parametrische CAD-Modellierung aus Polygonnetzen (Mesh to CAD)",
+          "Lokalisierung und Entwicklung importierter Komponenten für die Inlandsfertigung",
           "Instandsetzung beschädigter Bauteile durch Rekonstruktion fehlender Geometrien",
           "Geometrische Anpassung zur Modernisierung und Leistungssteigerung",
-          "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und Konstruktionsbäumen"
+          "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und parametrischen Konstruktionsbäumen"
         ],
         "deliverables": [
           "Parametrische Volumen- und Flächen-CAD-Modelle in STEP-, IGES- oder Parasolid-Formaten",
           "Technische 2D-Fertigungszeichnungen in PDF und DWG mit Form- und Lagetoleranzen",
-          "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan"
+          "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan",
+          "Technisches Dossier zur Absicherung der Fertigungsumsetzung"
         ],
         "machines": [
           {
@@ -472,6 +508,52 @@
               "Automatische Segmentierung von Regelgeometrien (Ebenen, Zylinder, Kegel)",
               "Präzise Freiformflächenanpassung mit numerischer Restfehlerüberwachung",
               "Nativer CAD-Export kompatibel mit SolidWorks, Siemens NX, CATIA und Autodesk Inventor"
+            ]
+          }
+        ]
+      },
+      "confiabilidade-mro": {
+        "categoryTag": "Industrielle Zuverlässigkeit & MRO-Asset-Management",
+        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Weiterbildung",
+        "headline": "Strategisches Ersatzteilmanagement, Anlagenbäume und betriebliche Zuverlässigkeit für die Industrie.",
+        "overview": "Integrierte Dienstleistung, die Zuverlässigkeitstechnik und digitale Bereitschaft verbindet, um die industrielle Instandhaltung (MRO) zu revolutionieren. Durch die Strukturierung von Anlagenbäumen und die Anwendung fundierter Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Nachfragehäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem Instandhaltungs- und Schmierpläne, Schadensdiagnostik und maßgeschneiderte Fachweiterbildung.",
+        "trainingDirectNotice": "Hinweis für Fachschulungen: Für Schulungsanfragen, Fachausbildungen oder firmeninterne Inhouse-Schulungen (in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse) empfehlen wir, direkt mit der Laborleitung (telefonisch, per WhatsApp oder E-Mail) Kontakt aufzunehmen.",
+        "targetAudience": [
+          "Leiter und Koordinatoren für Instandhaltung, Zuverlässigkeit und Instandhaltungsplanung (PCM)",
+          "Industriebetriebe mit importierten Maschinen und kritischen OEM-Ersatzteillieferzeiten",
+          "Unternehmen, die gebundenes Lagerkapital senken möchten, ohne Betriebsrisiken einzugehen",
+          "Industriewerke, die standardisierte Instandhaltungs- und Schmierroutinen einführen und wiederkehrende Schäden untersuchen",
+          "Ingenieur- und Fachteams mit Bedarf an zertifizierter beruflicher Weiterbildung"
+        ],
+        "applications": [
+          "Aufbau virtueller Lager und digitaler Komponentenbibliotheken für MRO",
+          "Identifikation kritischer Ersatzteile mittels Kritizitäts- und Wiederholungsmatrix (Klasse-A-Artikel mit geringer Häufigkeit)",
+          "Strukturierung von Anlagenbäumen mit detaillierter Bauteilerfassung und -digitalisierung",
+          "Erstellung und Optimierung von Plänen für vorbeugende/vorausschauende Instandhaltung und industrielle Schmierung",
+          "Schadensanalysen, Bauteilbrüche, anomaler Verschleiß und Ursachenermittlung",
+          "Praxisnahe Fachschulungen in Instandhaltung, Messtechnik, Reverse Engineering, Schmierung und Schadensanalyse"
+        ],
+        "deliverables": [
+          "Strukturierter Anlagenbaum-Bericht mit hierarchischer Gliederung und kritischen Komponenten",
+          "Analytische Kritizitäts- und Wiederholungsmatrix mit Empfehlungen für physische vs. digitale Vorhaltung",
+          "Digitale 3D-CAD-Bibliothek und Fertigungszeichnungen für die bedarfsgerechte Nachfertigung",
+          "Schmierpläne und standardisierte Wartungsanweisungen",
+          "Fachgutachten zur Schadensanalyse mit Ursachendiagnose und Abstellmaßnahmen",
+          "Zertifikate für berufliche Weiterbildung ausgestellt durch SENAI Goiás"
+        ],
+        "machines": [
+          {
+            "name": "SENAI Asset-Management & MRO-Methodik",
+            "category": "Methodischer Rahmen für Zuverlässigkeit & Ingenieurberatung",
+            "volume": "Anwendbar auf Einzelanlagen, Fertigungslinien oder komplette Industriewerke",
+            "accuracy": "RCM-Kritizitätsmatrix / FMEA-Analyse / Klasse-A-Zuverlässigkeitseinstufung",
+            "sensor": "SENAI-zertifizierte Fachexperten & Team für Zuverlässigkeitstechnik",
+            "software": "CMMS- & ERP-Integration, cloudbasierte 3D/CAD-Repositories",
+            "features": [
+              "Fokus auf die Freisetzung von totem Kapital in teuren, langsam drehenden Ersatzteilen",
+              "Nahtlose Anbindung an die 3D-Digitalisierungs-, Reverse-Engineering- und Fertigungskapazitäten des Labors",
+              "Tribologisch fundierte industrielle Schmierpläne zur Maximierung der Komponentenlebensdauer",
+              "Praxisnahe technische Schulungen, durchgeführt von Fachexperten des SENAI/ZEISS-Verbunds"
             ]
           }
         ]
@@ -514,10 +596,13 @@
         "cmm": "Koordinatenmesstechnik (KMG) & GD&T",
         "optica": "Optische & Multisensorische Inspektion",
         "raio-x": "Röntgenprüfung & Computertomographie (NDT)",
-        "digitalizacao-3d": "Optische 3D-Digitalisierung & Farbvergleich",
-        "engenharia-reversa": "Reverse Engineering & CAD-Rekonstruktion",
-        "consultoria": "Sonstiges / Messtechnische Beratung & Schulung"
+        "digitalizacao-3d": "Optische 3D-Digitalisierung, CAD-Vergleich & Falschfarben",
+        "engenharia-reversa": "Reverse Engineering & Bauteillokalisierung",
+        "confiabilidade-mro": "Zuverlässigkeit, Virtuelles MRO-Lager & Assets",
+        "treinamentos": "Technische Weiterbildung & Fachschulung",
+        "consultoria": "Sonstiges / Spezialisierte Beratung"
       },
+      "trainingDirectNotice": "Für Schulungsanfragen und firmeninterne Weiterbildungsprogramme empfehlen wir, direkt telefonisch oder per E-Mail Kontakt mit unserer Laborleitung aufzunehmen.",
       "otherOption": "Sonstiges / Dimensionelle Beratung",
       "messageLabel": "Projektbeschreibung / Toleranzen",
       "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, kritische Toleranzen, anwendbare Norm und gewünschte Fristen an.",

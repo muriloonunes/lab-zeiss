@@ -34,8 +34,7 @@ export function Pillars() {
                         </div>
                         <h3 className="pillar-card-title">Rigor & Toleranciamento GD&T</h3>
                         <p className="pillar-card-desc">
-                            Aplicação estrita dos conceitos de Dimensionamento Geométrico e Toleranciamento (GD&T)
-                            conforme as normas ISO 1101 e ASME Y14.5, eliminando interpretações dúbias e garantindo
+                            Aplicação estrita dos conceitos de Dimensionamento Geométrico e Toleranciamento (GD&T), garantindo
                             repetibilidade metrológica.
                         </p>
                     </div>
