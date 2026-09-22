@@ -263,13 +263,13 @@
     "actions": {
       "requestQuote": "Request a Quote for this Service",
       "viewSpecs": "View Technical Specifications",
-      "trainingNoticeBadge": "Technical Training Notice",
-      "contactDirectly": "Contact Management Directly"
+      "talkToCoordination": "Contact Coordination"
     },
     "sections": {
       "audienceTitle": "Target Audience & Segments",
       "applicationsTitle": "Typical Applications",
       "deliverablesTitle": "Client Deliverables",
+      "trainingNoticeTitle": "Technical Qualification & In-Company Training",
       "installedCapacity": "Installed Capacity",
       "specsTitle": "ZEISS Certified Equipment Specifications",
       "specsDesc": "Bench test technical data and operational parameters guaranteed in the climate-controlled laboratory at the SENAI Ítalo Bologna Faculty.",
@@ -510,50 +510,67 @@
       "confiabilidade-mro": {
         "title": "Reliability, Virtual MRO Warehouse & Technical Training",
         "headline": "Strategic spare parts management, asset tree structuring, and operational reliability for industry.",
-        "overview": "Integrated service combining reliability engineering and digital readiness to optimize industrial maintenance (MRO). By structuring equipment asset trees and applying rigorous criticality and recurrence matrices, we identify critical Class A items with low demand recurrence. We catalog these digitally into virtual warehouses for rapid on-demand manufacturing, eliminating costly idle physical inventory. The service also includes preventive maintenance and lubrication plans, root cause failure analysis, and customized professional training programs.",
+        "overview": "Integrated reliability engineering and digital readiness solutions designed to transform industrial maintenance management (MRO). Through rigorous equipment asset tree structuring and analytical criticality and recurrence matrices, we identify critical Class A items with low demand recurrence, enabling their digital cataloging in virtual warehouses for rapid on-demand replacement without the prohibitive carrying costs of idle physical stock. This domain also encompasses tribology-driven maintenance and lubrication schedules, failure root cause diagnostics, and specialized technical qualification backed by SENAI methodology and ZEISS technology.",
         "trainingDirectNotice": "Notice for Technical Training: For technical training proposals, professional development, or corporate in-company classes (in metrology, reverse engineering, maintenance, lubrication, and failure analysis), we recommend reaching out directly to laboratory management via phone, WhatsApp, or email for streamlined syllabus alignment and scheduling.",
-        "targetAudience": [
-          "Maintenance, Reliability, and Plant Asset Management leaders",
-          "Industries operating imported equipment with high lead times for OEM spare parts",
-          "Companies seeking to reduce physical inventory capital while mitigating downtime risk",
-          "Plants looking to standardize maintenance routines, lubrication practices, and investigate recurring failures",
-          "Engineering and technician teams requiring certified professional training"
-        ],
-        "applications": [
-          "Virtual warehouse creation and digital component library for MRO spares",
-          "Critical parts identification using criticality and recurrence matrices (Class A low-recurrence items)",
-          "Equipment tree structuring with item-by-item scanning and cataloging",
-          "Development and review of preventive/predictive maintenance plans and lubrication schedules",
-          "Failure analysis, mechanical breakdowns, anomalous wear, and root cause diagnosis",
-          "Applied technical training in maintenance, metrology, reverse engineering, lubrication, and failure analysis"
-        ],
-        "deliverables": [
-          "Structured equipment asset tree report with hierarchy and critical parts mapping",
-          "Analytical criticality and recurrence matrix with physical vs. digital stocking strategies",
-          "Digital 3D CAD library and manufacturing blueprints for on-demand replacement",
-          "Industrial lubrication manuals and standardized maintenance procedures",
-          "Forensic failure analysis reports with root-cause diagnosis and corrective actions",
-          "Professional technical training certificates issued by SENAI Goiás"
-        ],
-        "customSpecLabels": {
-          "volume": "Scope of Application",
-          "accuracy": "Methodology & Standards",
-          "sensor": "Technical Specialists",
-          "software": "Integrated Systems"
-        },
-        "machines": [
+        "subServices": [
           {
-            "name": "SENAI Asset Management & MRO Methodology",
-            "category": "Reliability Engineering & Consulting Framework",
-            "volume": "Applicable to individual assets, full production lines, or entire industrial plants",
-            "accuracy": "RCM Criticality Matrix / FMEA Analysis / Class-A Reliability Classification",
-            "sensor": "SENAI Certified Technical Specialists & Reliability Engineering Team",
-            "software": "CMMS & ERP Integration, Cloud-Based 3D/CAD Engineering Repositories",
-            "features": [
-              "Focus on freeing immobilized capital in high-cost, low-turnover spare parts",
-              "Seamless integration with on-site 3D scanning, reverse engineering, and CNC/additive manufacturing",
-              "Tribology-driven industrial lubrication routines engineered to maximize component life",
-              "Hands-on practical training taught by accredited SENAI and ZEISS technical specialists"
+            "index": "01",
+            "category": "Virtual Warehouse & MRO Management",
+            "title": "Virtual warehouse and critical spare parts identification.",
+            "description": "We establish digital component repositories to eliminate physical stocks of high-cost, slow-moving spare parts. By deploying criticality and recurrence matrices, we isolate Class A critical parts with low historical demand frequency. These parts are 3D scanned and archived in a certified digital library, unlocking agile on-demand replacement or fast local manufacturing, eliminating immobilized capital without increasing downtime exposure.",
+            "applications": [
+              "Criticality and recurrence matrix deployment for Class A low-demand items identification",
+              "Creation of digital MRO spare part libraries complete with 3D CAD data and manufacturing drawings",
+              "Physical vs. digital stocking strategies delivering substantial reductions in working capital",
+              "Seamless integration with additive manufacturing, precision machining, and reverse engineering"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Asset Breakdown & Traceability",
+            "title": "Equipment trees and item-by-item asset mapping.",
+            "description": "We organize the complete hierarchical structure of complex machinery and entire industrial production lines. Conducting thorough item-by-item surveys of every assembly, module, and spare component with functional descriptions, reference codes, and technical specifications, we ensure full operational traceability for maintenance and PCM planning teams.",
+            "applications": [
+              "Structuring hierarchical equipment asset trees fully compatible with CMMS and ERP platforms",
+              "Comprehensive item-by-item cataloging and dimensional surveying of industrial assets",
+              "Critical components mapping and early identification of hard-to-source imported spares",
+              "Standardized asset data baselines for maintenance planning and preventive spare strategies"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Maintenance Engineering & Tribology",
+            "title": "Preventive maintenance plans and industrial lubrication routines.",
+            "description": "We formulate and review systematic preventive maintenance programs and industrial lubrication routines grounded in tribological rigor. We evaluate friction points, operating load regimes, environmental factors, and lubricant properties to deliver standardized procedures that eliminate premature wear, extend Mean Time Between Failures (MTBF), and maximize plant asset reliability.",
+            "applications": [
+              "Development and optimization of preventive/predictive maintenance plans and inspection routines",
+              "Lubrication point mapping, precise dosing calculation, and scientifically defined intervals",
+              "Rationalization and standardization of industrial lubricants to lower inventory costs and contamination",
+              "Standard Operating Procedures (SOP) for maintenance engineering and plant lubrication teams"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Mechanical Diagnostics & Forensics",
+            "title": "Failure analysis, mechanical breakdowns, and root-cause diagnosis.",
+            "description": "We investigate the root causes of unexpected mechanical fractures, fatigue cracking, corrosion, and abnormal component wear. Combining SENAI mechanical metallurgy experts with state-of-the-art ZEISS laboratory instrumentation (computed tomography for non-destructive internal inspection and 3D optical scanning for wear maps), we provide conclusive forensic engineering reports that permanently prevent failure recurrence.",
+            "applications": [
+              "Root-cause determination of mechanical fractures, material fatigue, and structural overloads",
+              "Non-destructive computed tomography inspection for internal voids, cracks, and porosity",
+              "3D wear mapping comparing operating geometry against nominal CAD design data",
+              "Formal technical diagnostic reports with corrective directives and component redesign advice"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Qualification & Technology Transfer",
+            "title": "Specialized technical training and tailored in-company cohorts.",
+            "description": "We qualify industrial technical personnel through hands-on training delivered by certified SENAI instructors and ZEISS accredited metrology specialists. We offer applied courses in coordinate metrology (CMM), optical inspection, GD&T, 3D scanning, reverse engineering, asset reliability, and mechanical maintenance routines, available through open enrollments or custom in-company programs.",
+            "applications": [
+              "Hands-on training in dimensional metrology, coordinate measuring machines (CMM), and GD&T",
+              "Practical qualification in 3D structured blue-light/laser scanning and polygon mesh inspection",
+              "Applied courses in industrial reliability, machinery lubrication, and maintenance management",
+              "Official professional certifications issued by the SENAI Ítalo Bologna Faculty"
             ]
           }
         ]

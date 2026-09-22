@@ -263,17 +263,17 @@
     "actions": {
       "requestQuote": "Angebot für diese Dienstleistung anfordern",
       "viewSpecs": "Technische Spezifikationen ansehen",
-      "trainingNoticeBadge": "Hinweis zu Fachschulungen",
-      "contactDirectly": "Direkten Kontakt aufnehmen"
+      "talkToCoordination": "Laborleitung kontaktieren"
     },
     "sections": {
-      "audienceTitle": "Zielgruppe & Branchen",
+      "audienceTitle": "Zielgruppen & Branchen",
       "applicationsTitle": "Typische Anwendungen",
-      "deliverablesTitle": "Kunden-Lieferumfang",
+      "deliverablesTitle": "Ergebnisse für den Kunden",
+      "trainingNoticeTitle": "Fachausbildung & Inhouse-Schulungen",
       "installedCapacity": "Installierte Kapazität",
       "specsTitle": "Spezifikationen der zertifizierten ZEISS-Messgeräte",
-      "specsDesc": "Technische Labordaten und garantierte Betriebsparameter im klimatisierten Messlabor der SENAI Ítalo Bologna Fakultät.",
-      "operationalDifferentiators": "Betriebliche Vorteile:"
+      "specsDesc": "Prüfstandsdaten und garantierte Betriebsparameter im klimatisierten Labor der SENAI Ítalo Bologna Fakultät.",
+      "operationalDifferentiators": "Betriebliche Differenzierungsmerkmale:"
     },
     "specLabels": {
       "volume": "Messbereich (X/Y/Z)",
@@ -508,52 +508,69 @@
         ]
       },
       "confiabilidade-mro": {
-        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Schulung",
+        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Fachschulungen",
         "headline": "Strategisches Ersatzteilmanagement, Anlagenbäume und betriebliche Zuverlässigkeit für die Industrie.",
-        "overview": "Integrierte Dienstleistung, die Zuverlässigkeitstechnik und digitale Bereitschaft verbindet, um die industrielle Instandhaltung (MRO) zu revolutionieren. Durch die Strukturierung von Anlagenbäumen und die Anwendung fundierter Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Nachfragehäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem Instandhaltungs- und Schmierpläne, Schadensdiagnostik und maßgeschneiderte Fachweiterbildung.",
+        "overview": "Integrierte Lösungen für Zuverlässigkeitstechnik und digitale Bereitschaft zur Transformation der industriellen Instandhaltung (MRO). Durch die systematische Strukturierung von Anlagenbäumen und die Anwendung analytischer Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Bedarfshäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem tribologisch fundierte Instandhaltungs- und Schmierpläne, metallmechanische Schadensdiagnostik und spezialisierte Weiterbildung mit SENAI-Methodik und ZEISS-Technologie.",
         "trainingDirectNotice": "Hinweis für Fachschulungen: Für Schulungsanfragen, Fachausbildungen oder firmeninterne Inhouse-Schulungen (in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse) empfehlen wir, direkt mit der Laborleitung (telefonisch, per WhatsApp oder E-Mail) Kontakt aufzunehmen.",
-        "targetAudience": [
-          "Leiter und Koordinatoren für Instandhaltung, Zuverlässigkeit und Instandhaltungsplanung (PCM)",
-          "Industriebetriebe mit importierten Maschinen und kritischen OEM-Ersatzteillieferzeiten",
-          "Unternehmen, die gebundenes Lagerkapital senken möchten, ohne Betriebsrisiken einzugehen",
-          "Industriewerke, die standardisierte Instandhaltungs- und Schmierroutinen einführen und wiederkehrende Schäden untersuchen",
-          "Ingenieur- und Fachteams mit Bedarf an zertifizierter beruflicher Weiterbildung"
-        ],
-        "applications": [
-          "Aufbau virtueller Lager und digitaler Komponentenbibliotheken für MRO",
-          "Identifikation kritischer Ersatzteile mittels Kritizitäts- und Wiederholungsmatrix (Klasse-A-Artikel mit geringer Häufigkeit)",
-          "Strukturierung von Anlagenbäumen mit detaillierter Bauteilerfassung und -digitalisierung",
-          "Erstellung und Optimierung von Plänen für vorbeugende/vorausschauende Instandhaltung und industrielle Schmierung",
-          "Schadensanalysen, Bauteilbrüche, anomaler Verschleiß und Ursachenermittlung",
-          "Praxisnahe Fachschulungen in Instandhaltung, Messtechnik, Reverse Engineering, Schmierung und Schadensanalyse"
-        ],
-        "deliverables": [
-          "Strukturierter Anlagenbaum-Bericht mit hierarchischer Gliederung und kritischen Komponenten",
-          "Analytische Kritizitäts- und Wiederholungsmatrix mit Empfehlungen für physische vs. digitale Vorhaltung",
-          "Digitale 3D-CAD-Bibliothek und Fertigungszeichnungen für die bedarfsgerechte Nachfertigung",
-          "Schmierpläne und standardisierte Wartungsanweisungen",
-          "Fachgutachten zur Schadensanalyse mit Ursachendiagnose und Abstellmaßnahmen",
-          "Zertifikate für berufliche Weiterbildung ausgestellt durch SENAI Goiás"
-        ],
-        "customSpecLabels": {
-          "volume": "Anwendungsbereich",
-          "accuracy": "Methodik & Standards",
-          "sensor": "Fachteam & Spezialisten",
-          "software": "Integrierte Systeme"
-        },
-        "machines": [
+        "subServices": [
           {
-            "name": "SENAI Asset-Management & MRO-Methodik",
-            "category": "Methodischer Rahmen für Zuverlässigkeit & Ingenieurberatung",
-            "volume": "Anwendbar auf Einzelanlagen, Fertigungslinien oder komplette Industriewerke",
-            "accuracy": "RCM-Kritizitätsmatrix / FMEA-Analyse / Klasse-A-Zuverlässigkeitseinstufung",
-            "sensor": "SENAI-zertifizierte Fachexperten & Team für Zuverlässigkeitstechnik",
-            "software": "CMMS- & ERP-Integration, cloudbasierte 3D/CAD-Repositories",
-            "features": [
-              "Fokus auf die Freisetzung von totem Kapital in teuren, langsam drehenden Ersatzteilen",
-              "Nahtlose Anbindung an die 3D-Digitalisierungs-, Reverse-Engineering- und Fertigungskapazitäten des Labors",
-              "Tribologisch fundierte industrielle Schmierpläne zur Maximierung der Komponentenlebensdauer",
-              "Praxisnahe technische Schulungen, durchgeführt von Fachexperten des SENAI/ZEISS-Verbunds"
+            "index": "01",
+            "category": "Virtuelles Lager & MRO-Management",
+            "title": "Virtuelles Lager und Identifikation kritischer Ersatzteile.",
+            "description": "Wir entwickeln digitale Komponentenbibliotheken zur Vermeidung physischer Lagerbestände teurer, langsam drehender Ersatzteile. Durch Kritizitäts- und Wiederholungsmatrizen isolieren wir kritische Klasse-A-Teile mit seltener Nachfrage. Diese werden 3D-erfasst und in einem zertifizierten Digitalarchiv hinterlegt, was eine zügige bedarfsgerechte Fertigung ohne Stillstandsrisiko ermöglicht.",
+            "applications": [
+              "Anwendung von Kritizitäts- und Wiederholungsmatrizen für Klasse-A-Ersatzteile mit geringer Häufigkeit",
+              "Aufbau digitaler MRO-Komponentenbibliotheken mit 3D-CAD-Daten und Fertigungszeichnungen",
+              "Strategie für physische vs. digitale Vorhaltung zur deutlichen Senkung gebundenen Kapitals",
+              "Nahtlose Anbindung an additive Fertigung, Präzisionszerspanung und Reverse Engineering"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Anlagengliederung & Rückverfolgbarkeit",
+            "title": "Anlagenbäume und detaillierte Erfassung Bauteil für Bauteil.",
+            "description": "Wir erfassen und strukturieren die vollständige Hierarchie komplexer Maschinen und ganzer Fertigungslinien. Durch die lückenlose Aufnahme jedes Subsystems, Moduls und Ersatzteils mit Funktionsbeschreibungen, Referenznummern und Spezifikationen gewährleisten wir vollständige Transparenz für Instandhaltungs- und PCM-Teams.",
+            "applications": [
+              "Strukturierung hierarchischer Anlagenbäume kompatibel mit gängigen CMMS- und ERP-Systemen",
+              "Detaillierte Bauteilaufnahme und maßliche Bestandsaufnahme industrieller Maschinen",
+              "Erfassung kritischer Baugruppen und frühzeitige Identifikation schwer beschaffbarer Importteile",
+              "Standardisierte Stammdatenbasis für Ersatzteilstrategien und vorbeugende Instandhaltung"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Instandhaltungs-Engineering & Tribologie",
+            "title": "Instandhaltungspläne und industrielle Schmierroutinen.",
+            "description": "Wir erarbeiten und optimieren systematische Pläne für vorbeugende Instandhaltung und industrielle Schmierroutinen nach tribologischen Grundsätzen. Wir analysieren Reibstellen, Lastkollektive, Umgebungsbedingungen und Schmierstoffeigenschaften zur Festlegung standardisierter Abläufe, die vorzeitigen Verschleiß verhindern und die MTBF maximieren.",
+            "applications": [
+              "Erstellung und Optimierung vorbeugender/vorausschauender Instandhaltungs- und Inspektionspläne",
+              "Erfassung von Schmierstellen, Dosierungsberechnung und Festlegung wissenschaftlicher Schmierintervalle",
+              "Rationalisierung und Sortenbereinigung von Schmierstoffen zur Vermeidung von Fehlern und Kontamination",
+              "Standardarbeitsanweisungen (SOP) für Instandhaltungs- und Schmierteams"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Mechanische Schadensdiagnostik & Gutachten",
+            "title": "Schadensanalysen, Bauteilbrüche und Ursachenermittlung.",
+            "description": "Wir untersuchen die Ursachen unerwarteter Bauteilbrüche, Ermüdungsrisse, Korrosion und anomaler Abnutzung. Durch das Zusammenspiel von SENAI-Werkstoffexperten und modernster ZEISS-Laborinfrastruktur (Computertomographie für innere Fehlstellen und 3D-Optik für Verschleißkarten) liefern wir fundierte Gutachten zur dauerhaften Schadensvermeidung.",
+            "applications": [
+              "Gutachterliche Ursachenermittlung bei mechanischen Brüchen, Schwingungsrisskorrosion und Überlast",
+              "Zerstörungsfreie Computertomographie zur Detektion von Lunkern, Poren und inneren Rissen",
+              "3D-Verschleißkartierung im Soll-Ist-Vergleich gegenüber nominellen CAD-Modelldaten",
+              "Erstellung detaillierter Schadensgutachten mit Handlungsempfehlungen zur konstruktiven Optimierung"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Weiterbildung & Technologietransfer",
+            "title": "Spezialisierte technische Schulungen und Inhouse-Programme.",
+            "description": "Wir qualifizieren industrielles Fachpersonal in praxisorientierten Programmen, geleitet von zertifizierten SENAI-Dozenten und akkreditierten ZEISS-Experten. Wir bieten praxisnahe Weiterbildungen in Koordinatenmesstechnik (KMG), optischer Prüfung, Form- und Lagetoleranzen (GD&T), 3D-Scannen, Reverse Engineering und industrieller Zuverlässigkeit an.",
+            "applications": [
+              "Praxisnahe Schulungen in taktiler Koordinatenmesstechnik (KMG) und GD&T-Normen",
+              "Qualifizierung in 3D-Digitalisierung (Streifenlicht und portabler Laser) sowie Netzinspektion",
+              "Praxismodule in industrieller Zuverlässigkeit, Schmiertechnik und Instandhaltungsmanagement",
+              "Offizielle Zertifikate ausgestellt durch die SENAI Ítalo Bologna Fakultät"
             ]
           }
         ]

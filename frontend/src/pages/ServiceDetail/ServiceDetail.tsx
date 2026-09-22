@@ -39,11 +39,16 @@ export function ServiceDetail() {
         title,
         headline,
         overview,
+        trainingDirectNotice,
         targetAudience = [],
         applications = [],
         deliverables = [],
-        machines = []
+        machines = [],
+        subServices = []
     } = service;
+
+    const hasVisual = Boolean(serviceMeta.galleryImages && serviceMeta.galleryImages.length > 0);
+    const hasSpecs = Boolean(machines && machines.length > 0);
 
     const infoCards = [
         {
@@ -89,9 +94,6 @@ export function ServiceDetail() {
         }
     ];
 
-    const hasVisuals = Boolean(serviceMeta.galleryImages && serviceMeta.galleryImages.length > 0);
-    const customLabels = service.customSpecLabels;
-
     return (
         <div className="service-detail-page">
             <div className="detail-blob-container" aria-hidden="true">
@@ -109,7 +111,7 @@ export function ServiceDetail() {
                         <span className="current">{title}</span>
                     </nav>
 
-                    <div className={`detail-hero-grid ${!hasVisuals ? 'detail-hero-grid--text-only' : ''}`}>
+                    <div className={`detail-hero-grid ${!hasVisual ? 'detail-hero-grid--text-only' : ''}`}>
                         <div className="detail-hero-content">
                             <h1 className="detail-title">{title}</h1>
                             <p className="detail-headline">{headline}</p>
@@ -120,22 +122,25 @@ export function ServiceDetail() {
                                     onClick={() => navigate(`/contato?service=${serviceId}`, {state: {serviceId}})}>
                                     {t('serviceDetail.actions.requestQuote', 'Solicitar Cotação para este Serviço')}
                                 </QuoteButton>
-                                <a href="#especificacoes" onClick={handleScrollToSpecs} className="btn-mais">
-                                    <span>{t('serviceDetail.actions.viewSpecs', 'Ver Especificações Técnicas')}</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"
-                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
-                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                        <polyline points="19 12 12 19 5 12"></polyline>
-                                    </svg>
-                                </a>
+                                {hasSpecs && (
+                                    <a href="#especificacoes" onClick={handleScrollToSpecs} className="btn-mais">
+                                        <span>{t('serviceDetail.actions.viewSpecs', 'Ver Especificações Técnicas')}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"
+                                             strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <polyline points="19 12 12 19 5 12"></polyline>
+                                        </svg>
+                                    </a>
+                                )}
                             </div>
                         </div>
 
-                        {hasVisuals && (
+                        {hasVisual && (
                             <div className="detail-hero-visual">
                                 <div className="detail-carousel-card glass-panel">
-                                    <ImageCarousel images={serviceMeta.galleryImages!}/>
+                                    <ImageCarousel images={serviceMeta.galleryImages}/>
                                 </div>
                             </div>
                         )}
@@ -143,129 +148,204 @@ export function ServiceDetail() {
                 </div>
             </section>
 
-            <section className="detail-info-section">
-                <div className="detail-container">
-                    <div className="detail-info-grid">
-                        {infoCards.map((card, idx) => (
-                            <div key={idx} className="info-column glass-panel">
-                                <div className="info-column-header">
-                                    <div className={`info-icon-badge ${card.isDeliverable ? 'accent' : ''}`}
-                                         aria-hidden="true">
-                                        {card.icon}
-                                    </div>
-                                    <h2 className="info-column-title">{card.title}</h2>
-                                </div>
-                                <ul className="info-pills-list">
-                                    {card.items.map((item, itemIdx) => (
-                                        <li key={itemIdx} className="info-pill-item">
-                                            <span className={card.isDeliverable ? "pill-check" : "pill-dot"}>
-                                                {card.isDeliverable ? "✓" : ""}
-                                            </span>
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
+            {subServices && subServices.length > 0 ? (
+                <div className="detail-subservices-wrapper">
+                    {subServices.map((sub, idx) => (
+                        <section
+                            key={sub.index || idx}
+                            className={`detail-subservice-section ${idx % 2 === 1 ? 'detail-subservice-section--alt' : ''}`}
+                        >
+                            <div className="detail-container">
+                                <div className="detail-subservice-card">
+                                    <span className="detail-subservice-num">{sub.index}</span>
+                                    <span className="detail-subservice-cat">{sub.category}</span>
+                                    <h2 className="detail-subservice-title">{sub.title}</h2>
+                                    <p className="detail-subservice-desc">{sub.description}</p>
 
-                    {service.trainingDirectNotice && (
-                        <div className="detail-training-notice glass-panel">
-                            <div className="notice-icon-box" aria-hidden="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                     strokeLinejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                </svg>
+                                    {sub.applications && sub.applications.length > 0 && (
+                                        <div className="detail-subservice-grid">
+                                            {sub.applications.map((app, appIdx) => (
+                                                <div key={appIdx} className="detail-subservice-app-item">
+                                                    <span className="detail-subservice-dot" aria-hidden="true"></span>
+                                                    <span>{app}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {(sub.index === '05' || idx === subServices.length - 1) && trainingDirectNotice && (
+                                        <div className="detail-notice-card glass-panel">
+                                            <div className="notice-icon-badge" aria-hidden="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24"
+                                                     fill="none" stroke="currentColor" strokeWidth="2"
+                                                     strokeLinecap="round"
+                                                     strokeLinejoin="round">
+                                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                                </svg>
+                                            </div>
+                                            <div className="notice-content">
+                                                <h3 className="notice-title">
+                                                    {t('serviceDetail.sections.trainingNoticeTitle', 'Capacitação Técnica & Treinamentos In-Company')}
+                                                </h3>
+                                                <p className="notice-text">{trainingDirectNotice}</p>
+                                            </div>
+                                            <div className="notice-action">
+                                                <button
+                                                    type="button"
+                                                    className="btn-mais"
+                                                    onClick={() => window.open("https://wa.me/556299951773", "_blank")}
+                                                >
+                                                    <span>{t('serviceDetail.actions.talkToCoordination', 'Falar com a Coordenação')}</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                         viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2"
+                                                         strokeLinecap="round"
+                                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                            <div className="notice-content">
-                                <span className="notice-badge">
-                                    {t('serviceDetail.actions.trainingNoticeBadge', 'Aviso de Capacitação Técnica')}
-                                </span>
-                                <p className="notice-text">{service.trainingDirectNotice}</p>
-                            </div>
-                            <div className="notice-actions">
-                                <Link to="/contato" className="btn-mais notice-btn">
-                                    <span>{t('serviceDetail.actions.contactDirectly', 'Falar com a Coordenação')}</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
-                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                    </svg>
-                                </Link>
-                            </div>
-                        </div>
-                    )}
+                        </section>
+                    ))}
                 </div>
-            </section>
-
-            <section className="detail-specs-section" id="especificacoes">
-                <div className="detail-container">
-                    <div className="detail-specs-header">
-                        <div className="specs-eyebrow">
-                            <span className="specs-eyebrow-line"></span>
-                            <span
-                                className="specs-eyebrow-text">{t('serviceDetail.sections.specsEyebrow', 'Capacidade Tecnológica')}</span>
-                        </div>
-                        <h2 className="detail-specs-title">{t('serviceDetail.sections.specsTitle', 'Equipamentos e Especificações do Laboratório')}</h2>
-                        <p className="detail-tech-desc">
-                            {t('serviceDetail.sections.specsDesc', 'Dados técnicos de bancada e parâmetros operacionais garantidos no laboratório climatizado da Faculdade SENAI Ítalo Bologna.')}
-                        </p>
-                    </div>
-
-                    <div className="machines-specs-list">
-                        {machines.map((mach, idx) => (
-                            <article key={idx} className="machine-spec-card glass-panel">
-                                <div className="machine-header-strip">
-                                    <div className="machine-title-group">
-                                        <h3 className="machine-name">{mach.name}</h3>
-                                        <span className="machine-cat-badge">{mach.category}</span>
+            ) : (
+                <section className="detail-info-section">
+                    <div className="detail-container">
+                        <div className="detail-info-grid">
+                            {infoCards.map((card, idx) => (
+                                <div key={idx} className="info-column glass-panel">
+                                    <div className="info-column-header">
+                                        <div className={`info-icon-badge ${card.isDeliverable ? 'accent' : ''}`}
+                                             aria-hidden="true">
+                                            {card.icon}
+                                        </div>
+                                        <h2 className="info-column-title">{card.title}</h2>
                                     </div>
-                                </div>
-
-                                <div className="specs-parameters-grid">
-                                    <div className="param-item">
-                                        <span
-                                            className="param-label">{customLabels?.volume || t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
-                                        <strong className="param-value">{mach.volume}</strong>
-                                    </div>
-                                    <div className="param-item">
-                                        <span
-                                            className="param-label">{customLabels?.accuracy || t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
-                                        <strong className="param-value">{mach.accuracy}</strong>
-                                    </div>
-                                    <div className="param-item">
-                                        <span
-                                            className="param-label">{customLabels?.sensor || t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
-                                        <strong className="param-value">{mach.sensor}</strong>
-                                    </div>
-                                    <div className="param-item">
-                                        <span
-                                            className="param-label">{customLabels?.software || t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
-                                        <strong className="param-value">{mach.software}</strong>
-                                    </div>
-                                </div>
-
-                                <div className="machine-features-strip">
-                                    <span
-                                        className="features-label">{t('serviceDetail.sections.operationalDifferentiators', 'Diferenciais Operacionais:')}</span>
-                                    <ul className="features-list">
-                                        {mach.features?.map((feat, fIdx) => (
-                                            <li key={fIdx}>
-                                                <span className="feature-check-icon" aria-hidden="true">✓</span>
-                                                <span>{feat}</span>
+                                    <ul className="info-pills-list">
+                                        {card.items.map((item, itemIdx) => (
+                                            <li key={itemIdx} className="info-pill-item">
+                                                <span className={card.isDeliverable ? "pill-check" : "pill-dot"}>
+                                                    {card.isDeliverable ? "✓" : ""}
+                                                </span>
+                                                <span>{item}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                            </article>
-                        ))}
+                            ))}
+                        </div>
+
+                        {trainingDirectNotice && (
+                            <div className="detail-notice-card glass-panel">
+                                <div className="notice-icon-badge" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round">
+                                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                        <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    </svg>
+                                </div>
+                                <div className="notice-content">
+                                    <h3 className="notice-title">
+                                        {t('serviceDetail.sections.trainingNoticeTitle', 'Capacitação Técnica & Treinamentos In-Company')}
+                                    </h3>
+                                    <p className="notice-text">{trainingDirectNotice}</p>
+                                </div>
+                                <div className="notice-action">
+                                    <button
+                                        type="button"
+                                        className="btn-mais"
+                                        onClick={() => navigate('/contato')}
+                                    >
+                                        <span>{t('serviceDetail.actions.talkToCoordination', 'Falar com a Coordenação')}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                             strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
+
+            {hasSpecs && (
+                <section className="detail-specs-section" id="especificacoes">
+                    <div className="detail-container">
+                        <div className="detail-specs-header">
+                            <div className="specs-eyebrow">
+                                <span className="specs-eyebrow-line"></span>
+                                <span
+                                    className="specs-eyebrow-text">{t('serviceDetail.sections.specsEyebrow', 'Capacidade Tecnológica')}</span>
+                            </div>
+                            <h2 className="detail-specs-title">{t('serviceDetail.sections.specsTitle', 'Equipamentos e Especificações do Laboratório')}</h2>
+                            <p className="detail-tech-desc">
+                                {t('serviceDetail.sections.specsDesc', 'Dados técnicos de bancada e parâmetros operacionais garantidos no laboratório climatizado da Faculdade SENAI Ítalo Bologna.')}
+                            </p>
+                        </div>
+
+                        <div className="machines-specs-list">
+                            {machines.map((mach, idx) => (
+                                <article key={idx} className="machine-spec-card glass-panel">
+                                    <div className="machine-header-strip">
+                                        <div className="machine-title-group">
+                                            <h3 className="machine-name">{mach.name}</h3>
+                                            <span className="machine-cat-badge">{mach.category}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="specs-parameters-grid">
+                                        <div className="param-item">
+                                            <span
+                                                className="param-label">{t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
+                                            <strong className="param-value">{mach.volume}</strong>
+                                        </div>
+                                        <div className="param-item">
+                                            <span
+                                                className="param-label">{t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
+                                            <strong className="param-value">{mach.accuracy}</strong>
+                                        </div>
+                                        <div className="param-item">
+                                            <span
+                                                className="param-label">{t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
+                                            <strong className="param-value">{mach.sensor}</strong>
+                                        </div>
+                                        <div className="param-item">
+                                            <span
+                                                className="param-label">{t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
+                                            <strong className="param-value">{mach.software}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div className="machine-features-strip">
+                                        <span
+                                            className="features-label">{t('serviceDetail.sections.operationalDifferentiators', 'Diferenciais Operacionais:')}</span>
+                                        <ul className="features-list">
+                                            {mach.features?.map((feat, fIdx) => (
+                                                <li key={fIdx}>
+                                                    <span className="feature-check-icon" aria-hidden="true">✓</span>
+                                                    <span>{feat}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
         </div>
     );
 }

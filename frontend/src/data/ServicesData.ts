@@ -10,26 +10,29 @@ export interface MachineSpec {
     features: string[];
 }
 
+export interface ServiceSubSection {
+    index: string;
+    category: string;
+    title: string;
+    description: string;
+    applications: string[];
+}
+
 export interface ServiceDetailContent {
     title: string;
     headline: string;
     overview: string;
     trainingDirectNotice?: string;
-    targetAudience: string[];
-    applications: string[];
-    deliverables: string[];
-    machines: MachineSpec[];
-    customSpecLabels?: {
-        volume?: string;
-        accuracy?: string;
-        sensor?: string;
-        software?: string;
-    };
+    targetAudience?: string[];
+    applications?: string[];
+    deliverables?: string[];
+    machines?: MachineSpec[];
+    subServices?: ServiceSubSection[];
 }
 
 export interface ServiceMeta {
     id: string;
-    galleryImages?: CarouselImage[];
+    galleryImages: CarouselImage[];
 }
 
 export const servicesData: Record<string, ServiceMeta> = {
@@ -78,4 +81,3 @@ export const servicesData: Record<string, ServiceMeta> = {
         galleryImages: []
     }
 };
-

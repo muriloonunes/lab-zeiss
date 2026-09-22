@@ -4,7 +4,7 @@ import {useLocation, useSearchParams} from 'react-router-dom';
 import {useScrollToTop} from "../../hooks/useScrollToTop";
 import {useTranslation} from "react-i18next";
 
-const SERVICE_KEYS = ['cmm', 'optica', 'raio-x', 'digitalizacao-3d', 'engenharia-reversa', 'consultoria'] as const;
+const SERVICE_KEYS = ['cmm', 'optica', 'raio-x', 'digitalizacao-3d', 'engenharia-reversa', 'confiabilidade-mro', 'consultoria'] as const;
 type ServiceKey = typeof SERVICE_KEYS[number];
 
 const normalizeServiceId = (rawId: string | null | undefined): ServiceKey => {
@@ -15,6 +15,7 @@ const normalizeServiceId = (rawId: string | null | undefined): ServiceKey => {
     if (lower === 'raio-x' || lower === 'xray' || lower === 'raiox') return 'raio-x';
     if (lower === 'digitalizacao-3d' || lower === 'scan3d' || lower === 'scanning') return 'digitalizacao-3d';
     if (lower === 'engenharia-reversa' || lower === 'reverse' || lower === 'reverseeng') return 'engenharia-reversa';
+    if (lower === 'confiabilidade-mro' || lower === 'mro' || lower === 'confiabilidade') return 'confiabilidade-mro';
     if (lower === 'consultoria' || lower === 'consulting') return 'consultoria';
     return 'cmm';
 };
@@ -66,9 +67,7 @@ export function Contact() {
 
     const initialServiceParam = searchParams.get('service') || (location.state as { serviceId?: string })?.serviceId;
     const initialService = normalizeServiceId(initialServiceParam);
-    const hasInitialTarget = Boolean(initialServiceParam);
 
-    const [isTargeted, setIsTargeted] = useState<boolean>(hasInitialTarget);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [fileError, setFileError] = useState<string | null>(null);
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
@@ -88,7 +87,6 @@ export function Contact() {
         if (currentParam) {
             const resolved = normalizeServiceId(currentParam);
             setFormState(prev => ({...prev, service: resolved}));
-            setIsTargeted(true);
         }
     }, [searchParams, location.state]);
 
@@ -110,7 +108,6 @@ export function Contact() {
     const handleServiceSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const val = e.target.value as ServiceKey;
         setFormState({...formState, service: val});
-        setIsTargeted(false);
     };
 
     const validateAndAddFiles = (incomingFiles: FileList | File[]) => {
@@ -214,20 +211,6 @@ export function Contact() {
                     <div className="contact-layout-split">
 
                         <div className="contact-form-side glass-panel">
-                            {isTargeted && (
-                                <div className="context-badge-banner">
-                                    <div className="context-badge-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="context-icon" aria-hidden="true">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12 6 12 12 14 14"></polyline>
-                                        </svg>
-                                        <span>
-                                            <strong>{t('contact.form.contextBadge')}</strong> {currentServiceName}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-
                             <h2 className="form-title">{t('contact.form.title')}</h2>
                             <p className="form-subtitle">{t('contact.form.subtitle')}</p>
 
@@ -301,6 +284,7 @@ export function Contact() {
                                             <option value="raio-x">{t('contact.form.services.raio-x')}</option>
                                             <option value="digitalizacao-3d">{t('contact.form.services.digitalizacao-3d')}</option>
                                             <option value="engenharia-reversa">{t('contact.form.services.engenharia-reversa')}</option>
+                                            <option value="confiabilidade-mro">{t('contact.form.services.confiabilidade-mro')}</option>
                                             <option value="consultoria">{t('contact.form.services.consultoria')}</option>
                                         </select>
                                     </div>

@@ -263,13 +263,13 @@
     "actions": {
       "requestQuote": "Solicitar Cotação para este Serviço",
       "viewSpecs": "Ver Especificações Técnicas",
-      "trainingNoticeBadge": "Aviso de Capacitação Técnica",
-      "contactDirectly": "Falar Diretamente com a Coordenação"
+      "talkToCoordination": "Falar com a Coordenação"
     },
     "sections": {
       "audienceTitle": "Público-Alvo & Segmentos",
       "applicationsTitle": "Aplicações Típicas",
       "deliverablesTitle": "Entregáveis ao Cliente",
+      "trainingNoticeTitle": "Capacitação Técnica & Treinamentos In-Company",
       "installedCapacity": "Capacidade Instalada",
       "specsTitle": "Especificações do Equipamento Homologado ZEISS",
       "specsDesc": "Dados técnicos de bancada e parâmetros operacionais garantidos no laboratório climatizado da Faculdade SENAI Ítalo Bologna.",
@@ -510,50 +510,67 @@
       "confiabilidade-mro": {
         "title": "Confiabilidade, Almoxarifado Virtual MRO & Capacitação Técnica",
         "headline": "Gestão estratégica de peças sobressalentes, árvore de ativos e confiabilidade operacional para a indústria.",
-        "overview": "Serviço integrado que une engenharia de confiabilidade e prontidão digital para transformar a gestão de manutenção industrial (MRO). A partir da estruturação de árvores de equipamentos e da aplicação criteriosa de matrizes de criticidade e recorrência, identificamos artigos críticos de nível A com baixa recorrência de demanda, viabilizando sua catalogação digital no almoxarifado virtual para reposição ágil sob demanda sem o alto custo de estoque físico imobilizado. A frente abrange também a formulação de planos de manutenção e lubrificação, diagnóstico de falhas mecânicas e programas de capacitação técnica aplicada.",
-        "trainingDirectNotice": "Aviso para Treinamentos Técnicos: Para solicitações de treinamentos técnicos e turmas corporativas in-company (nas áreas de metrologia, engenharia reversa, manutenção, lubrificação e análise de falhas), solicitamos entrar em contato diretamente com a coordenação técnica do laboratório (via telefone, WhatsApp ou e-mail), facilitando o alinhamento de escopo pedagógico e cronograma.",
-        "targetAudience": [
-          "Gerências e coordenações de Manutenção, Confiabilidade e PCM",
-          "Indústrias que operam com maquinário importado e enfrentam longos prazos de entrega de sobressalentes",
-          "Empresas que necessitam reduzir o capital imobilizado em estoque de peças sem elevar risco operacional",
-          "Plantas industriais que buscam padronizar planos de manutenção, rotinas de lubrificação e investigar quebras recorrentes",
-          "Equipes de engenharia que demandam capacitação e aperfeiçoamento técnico homologado"
-        ],
-        "applications": [
-          "Criação de almoxarifado virtual e biblioteca digital de componentes para MRO",
-          "Identificação de peças críticas mediante matriz de criticidade e matriz de recorrência (Artigos Nível A de baixa recorrência)",
-          "Estruturação de árvores de equipamentos com escaneamento e listagem minuciosa item a item",
-          "Elaboração e revisão de planos de manutenção preventiva/preditiva e rotinas de lubrificação industrial",
-          "Análise de falhas, quebras mecânicas, desgastes anômalos e determinação de causa-raiz",
-          "Treinamentos técnicos aplicados em manutenção, metrologia, engenharia reversa, lubrificação e análise de falhas"
-        ],
-        "deliverables": [
-          "Relatório estruturado de árvore de equipamentos com detalhamento hierárquico e peças críticas",
-          "Matriz analítica de criticidade e recorrência com estratégia de estoque físico vs. digital",
-          "Biblioteca digital de arquivos 3D e desenhos técnicos para reposição e fabricação sob demanda",
-          "Cadernos técnicos com procedimentos de lubrificação industrial e rotinas padronizadas de manutenção",
-          "Laudo pericial de análise de falhas com diagnóstico de causa-raiz e recomendações corretivas",
-          "Certificados de capacitação técnica profissional emitidos pelo SENAI Goiás"
-        ],
-        "customSpecLabels": {
-          "volume": "Escopo de Atuação",
-          "accuracy": "Metodologia & Normas",
-          "sensor": "Corpo Técnico Especialista",
-          "software": "Sistemas Integrados"
-        },
-        "machines": [
+        "overview": "Soluções integradas de engenharia de confiabilidade e prontidão digital para transformar a gestão de manutenção industrial (MRO). A partir da estruturação minuciosa de árvores de equipamentos e da aplicação de matrizes analíticas de criticidade e recorrência, identificamos artigos críticos de nível A com baixa recorrência de demanda, viabilizando sua catalogação digital no almoxarifado virtual para reposição ágil sob demanda sem o alto custo de estoque físico imobilizado. A frente contempla ainda a elaboração de planos de manutenção e lubrificação sob rigor tribológico, diagnóstico metalomecânico de falhas e capacitação técnica especializada com metodologia SENAI e tecnologia ZEISS.",
+        "trainingDirectNotice": "Aviso para Treinamentos Técnicos: Para solicitações de treinamentos técnicos nas áreas de metrologia, engenharia reversa, manutenção, lubrificação e análise de falhas, solicitamos entrar em contato diretamente com a coordenação do laboratório (via telefone, WhatsApp ou e-mail), facilitando o alinhamento do ensino e cronograma.",
+        "subServices": [
           {
-            "name": "Metodologia SENAI de Gestão de Ativos & MRO",
-            "category": "Framework Metodológico de Confiabilidade & Engenharia",
-            "volume": "Escopo para ativos individuais, linhas fabris ou plantas completas",
-            "accuracy": "Matriz de Criticidade RCM / Análise FMEA / Classificação Classe A",
-            "sensor": "Corpo Técnico de Especialistas SENAI & Engenharia de Confiabilidade",
-            "software": "Integração CMMS, ERPs de Manutenção e Acervos CAD/3D em Nuvem",
-            "features": [
-              "Foco na eliminação de capital morto em estoque de sobressalentes de alto custo e baixa rotatividade",
-              "Integração contínua com os recursos de digitalização 3D, engenharia reversa e manufatura aditiva do laboratório",
-              "Planos de lubrificação industrial desenvolvidos com rigor tribológico para extensão de vida útil de elementos de máquinas",
-              "Treinamentos técnicos com abordagem prática ministrados por especialistas do Sistema SENAI/ZEISS"
+            "index": "01",
+            "category": "Almoxarifado Virtual & Gestão MRO",
+            "title": "Almoxarifado virtual e identificação de peças críticas.",
+            "description": "Desenvolvemos bibliotecas digitais de componentes para eliminar estoques físicos de peças sobressalentes de alto custo e baixa rotatividade. Mediante a aplicação de matrizes de criticidade e recorrência, identificamos peças críticas de Classe A com baixa demanda histórica. Esses itens são digitalizados tridimensionalmente e catalogados em acervo digital homologado, permitindo reposição ágil sob demanda ou fabricação sob encomenda, eliminando o capital imobilizado na prateleira sem elevar o risco de parada da linha.",
+            "applications": [
+              "Aplicação de matriz de criticidade e recorrência para identificação de artigos nível A de baixa demanda",
+              "Criação de acervo digital de componentes MRO com modelos 3D, tolerâncias e desenhos técnicos",
+              "Estratégia de estoque físico vs. digital para redução substancial de capital de giro imobilizado",
+              "Integração com manufatura aditiva, usinagem de precisão e engenharia reversa do laboratório"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Estruturação de Ativos & Rastreabilidade",
+            "title": "Árvores de equipamentos e desmembramento item a item.",
+            "description": "Mapeamos e organizamos a estrutura hierárquica completa de equipamentos complexos e linhas industriais. Realizamos o levantamento minucioso de cada componente, módulo e sobressalente, com identificação funcional, códigos de referência e especificações técnicas, garantindo total rastreabilidade operacional e facilidade de localização pelas equipes de PCM e manutenção.",
+            "applications": [
+              "Estruturação de árvores hierárquicas de equipamentos compatíveis com sistemas CMMS e ERP",
+              "Catalogação item a item e levantamento dimensional minucioso de maquinários industriais",
+              "Mapeamento de peças críticas e identificação precoce de componentes importados de difícil aquisição",
+              "Padronização cadastral de ativos para planos de sobressalentes e manutenção preventiva"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Engenharia de Manutenção & Tribologia",
+            "title": "Planos de manutenção e rotinas de lubrificação industrial.",
+            "description": "Elaboramos e revisamos planos sistemáticos de manutenção preventiva e rotinas de lubrificação industrial pautadas em rigor tribológico. Analisamos pontos de atrito, regimes de carga, condições ambientais e especificações de lubrificantes para formular rotinas padronizadas que evitem desgaste prematuro, aumentem o tempo médio entre falhas (MTBF) e maximizem a confiabilidade dos ativos fabris.",
+            "applications": [
+              "Elaboração e otimização de planos de manutenção preventiva, preditiva e rotinas de inspeção",
+              "Mapeamento de pontos de lubrificação, cálculo de dosagens e definição criteriosa de frequências",
+              "Racionalização e padronização de lubrificantes industriais para redução de custos e contaminações",
+              "Procedimentos operacionais padronizados (POP) para equipes de manutenção e lubrificadores"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Diagnóstico Mecânico & Perícia",
+            "title": "Análise de falhas, quebras e determinação de causa-raiz.",
+            "description": "Investigamos as causas fundamentais de quebras mecânicas inesperadas, trincas por fadiga, corrosão ou desgastes anômalos em peças e equipamentos. Unindo o corpo de especialistas em metalmecânica do SENAI à infraestrutura laboratorial ZEISS (tomografia industrial para descontinuidades internas e escaneamento 3D para mapas de desgaste), entregamos laudos técnicos conclusivos com soluções para mitigar a reincidência.",
+            "applications": [
+              "Determinação pericial de causa-raiz em fraturas mecânicas, fadiga de material e sobrecargas",
+              "Inspeção não destrutiva por tomografia computadorizada para detecção de porosidades e trincas internas",
+              "Elaboração de mapas tridimensionais de desgaste comparativo contra o modelo nominal CAD",
+              "Emissão de laudo pericial com diretrizes corretivas e recomendações de redesenho de componentes"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Capacitação & Transferência de Tecnologia",
+            "title": "Treinamentos técnicos especializados.",
+            "description": "Capacitamos equipes industriais em programas práticos ministrados por instrutores e especialistas certificados pelo Sistema SENAI e homologados pela ZEISS. Oferecemos formações aplicadas em metrologia por coordenadas (CMM), metrologia óptica, GD&T, digitalização 3D, engenharia reversa, confiabilidade industrial e rotinas de manutenção mecânica, com turmas abertas ou in-company estruturadas sob medida.",
+            "applications": [
+              "Treinamentos práticos em metrologia dimensional, medição por coordenadas (CMM) e normas GD&T",
+              "Capacitação em digitalização 3D (luz azul e laser portátil) e inspeção por malhas poligonais",
+              "Cursos aplicados de confiabilidade, lubrificação industrial e gestão de manutenção",
+              "Certificação profissional de excelência emitida pela Faculdade SENAI Ítalo Bologna"
             ]
           }
         ]
