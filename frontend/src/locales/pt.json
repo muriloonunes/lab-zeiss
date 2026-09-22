@@ -213,15 +213,13 @@
     },
     "mro": {
       "category": "Confiabilidade, Almoxarifado Virtual & Capacitação",
-      "title": "Inteligência de manutenção, gestão de ativos e capacitação técnica.",
-      "description": "Soluções estratégicas para reduzir custos de estoque físico de peças sobressalentes em MRO sem risco de paradas fabris. Mapeamos árvores de equipamentos, classificamos itens críticos por matriz de criticidade e recorrência (Classe A de baixa demanda) e fornecemos consultoria completa em manutenção, lubrificação, análise de falhas e capacitação técnica.",
+      "title": "Inteligência de manutenção e capacitação técnica.",
+      "description": "Fornecemos soluções estratégicas para reduzir custos de estoque físico de peças sobressalentes em MRO sem risco de paradas fabris. Mapeamos árvores de equipamentos, fazemos matriz de criticidade e recorrência e fornecemos consultoria completa em manutenção, lubrificação, análise de falhas e capacitação técnica.",
       "applications": {
         "virtualWarehouse": "Almoxarifado virtual e biblioteca digital de sobressalentes",
-        "criticalParts": "Identificação de peças críticas (Matriz de criticidade x recorrência - Classe A de baixa recorrência)",
         "equipmentTree": "Estruturação de árvores de equipamentos e catalogação item a item",
         "maintenancePlans": "Elaboração de planos de manutenção e planos de lubrificação",
-        "failureAnalysis": "Análise de falhas, quebras mecânicas e diagnóstico de anomalias",
-        "training": "Capacitação e treinamentos técnicos especializados (contato direto)"
+        "training": "Capacitação e treinamentos técnicos especializados"
       }
     },
     "selection": {
@@ -264,7 +262,9 @@
     "breadcrumb": "Serviços",
     "actions": {
       "requestQuote": "Solicitar Cotação para este Serviço",
-      "viewSpecs": "Ver Especificações Técnicas"
+      "viewSpecs": "Ver Especificações Técnicas",
+      "trainingNoticeBadge": "Aviso de Capacitação Técnica",
+      "contactDirectly": "Falar Diretamente com a Coordenação"
     },
     "sections": {
       "audienceTitle": "Público-Alvo & Segmentos",
@@ -283,7 +283,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Metrologia Tátil e Dimensional",
         "title": "Medição por Coordenadas (CMM) & GD&T",
         "headline": "Exatidão submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
         "overview": "Serviço voltado à caracterização geométrica e linear tridimensional de peças de alta exigência mecânica. Utilizando sistemas CMM por contato contínuo (scanning tátil), avaliamos desvios de forma, orientação e posição segundo as normas ISO 1101 e ASME Y14.5.",
@@ -336,7 +335,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Metrologia Multissensor Sem Contato",
         "title": "Inspeção Óptica & Dimensional Combinada",
         "headline": "Medição de alta resolução sem contato mecânico para peças flexíveis e microgeometrias.",
         "overview": "Combina câmeras ópticas de alta definição com lentes telecêntricas e apalpamento por contato contínuo na mesma máquina. Elimina deformações causadas por pressão de toque em elastômeros, polímeros finos, tecidos técnicos e circuitos eletrônicos.",
@@ -375,7 +373,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Ensaios Não Destrutivos (NDT)",
         "title": "Inspeção por Raio-X & Análise Estrutural",
         "headline": "Investigação volumétrica interna e integridade sem corte ou destruição da amostra.",
         "overview": "Inspeção radioscópica 2D e tomografia não destrutiva para identificar descontinuidades internas ocultas. Avalia peças fundidas, soldas e montagens seladas com base na absorção e densidade radiológica dos materiais.",
@@ -416,7 +413,6 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "Digitalização 3D e Fotogrametria",
         "title": "Digitalização Óptica 3D & Análise por Mapa de Cores",
         "headline": "Captura geométrica integral ou parcial para geração de arquivos STL/malhas 3D, comparação com CAD e controle dimensional.",
         "overview": "Digitalização tridimensional de alta precisão por luz azul estruturada e triangulação a laser. Converte qualquer peça física em uma réplica tridimensional idêntica em formato de malha poligonal (.STL / .OBJ), permitindo a comparação direta nominal vs. real (CAD × Peça escaneada), elaboração de mapas de desgaste, impressão 3D ou como base para posterior Engenharia Reversa em CAD.",
@@ -473,7 +469,6 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Modelagem Digital Paramétrica & Nacionalização",
         "title": "Engenharia Reversa, Reconstrução CAD & Nacionalização",
         "headline": "Transformação de dados escaneados em sólidos paramétricos prontos para usinagem e fabricação nacional.",
         "overview": "Processo completo de engenharia para reconstruir o modelo digital tridimensional de peças físicas que não possuem desenho técnico original, estão desgastadas, são importadas ou sofreram modificações empíricas de ferramentaria. Abrange desde a modelagem paramétrica precisa até o desenvolvimento e viabilização da nacionalização de componentes.",
@@ -513,7 +508,6 @@
         ]
       },
       "confiabilidade-mro": {
-        "categoryTag": "Confiabilidade Industrial & Gestão de Ativos MRO",
         "title": "Confiabilidade, Almoxarifado Virtual MRO & Capacitação Técnica",
         "headline": "Gestão estratégica de peças sobressalentes, árvore de ativos e confiabilidade operacional para a indústria.",
         "overview": "Serviço integrado que une engenharia de confiabilidade e prontidão digital para transformar a gestão de manutenção industrial (MRO). A partir da estruturação de árvores de equipamentos e da aplicação criteriosa de matrizes de criticidade e recorrência, identificamos artigos críticos de nível A com baixa recorrência de demanda, viabilizando sua catalogação digital no almoxarifado virtual para reposição ágil sob demanda sem o alto custo de estoque físico imobilizado. A frente abrange também a formulação de planos de manutenção e lubrificação, diagnóstico de falhas mecânicas e programas de capacitação técnica aplicada.",
@@ -541,6 +535,12 @@
           "Laudo pericial de análise de falhas com diagnóstico de causa-raiz e recomendações corretivas",
           "Certificados de capacitação técnica profissional emitidos pelo SENAI Goiás"
         ],
+        "customSpecLabels": {
+          "volume": "Escopo de Atuação",
+          "accuracy": "Metodologia & Normas",
+          "sensor": "Corpo Técnico Especialista",
+          "software": "Sistemas Integrados"
+        },
         "machines": [
           {
             "name": "Metodologia SENAI de Gestão de Ativos & MRO",

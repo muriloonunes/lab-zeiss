@@ -206,22 +206,20 @@
       "applications": {
         "legacyParts": "Rekonstruktion von Ersatzteilen ohne technische Zeichnung",
         "nationalization": "Lokalisierung und Konstruktion importierter Industriekomponenten",
-        "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES, Parasolid)",
+        "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES)",
         "tooling": "Anpassung von Formen, Gesenken und Werkzeugen",
         "optimization": "Geometrische Neukonstruktion, Optimierung und 3D-Prototyping"
       }
     },
     "mro": {
       "category": "Zuverlässigkeit, Virtuelles Lager & Schulung",
-      "title": "Instandhaltungsintelligenz, Asset-Management und Fachschulungen.",
-      "description": "Strategische Lösungen zur Reduzierung von gebundenem Kapital in MRO-Ersatzteillagern ohne Stillstandsrisiko. Wir strukturieren Anlagenbäume, klassifizieren kritische Artikel mittels Kritizitäts- und Wiederholungsmatrizen (Klasse-A-Ersatzteile mit geringem Umschlag) und bieten fundierte Beratung in Instandhaltungsroutinen, Schmiertechnik, Schadensanalysen und Fachweiterbildung.",
+      "title": "Instandhaltungsintelligenz und Fachschulungen.",
+      "description": "Wir bieten strategische Lösungen zur Reduzierung physischer MRO-Ersatzteilbestände ohne Stillstandsrisiko. Wir strukturieren Anlagenbäume, erstellen Kritizitäts- und Wiederholungsmatrizen und bieten umfassende Beratung in Instandhaltung, Schmierung, Schadensanalyse und Fachschulung.",
       "applications": {
         "virtualWarehouse": "Virtuelles Lager und digitale MRO-Ersatzteilbibliothek",
-        "criticalParts": "Identifikation kritischer Ersatzteile (Kritizitäts- x Wiederholungsmatrix - Klasse A)",
         "equipmentTree": "Strukturierung von Anlagenbäumen und Bauteilerfassung",
         "maintenancePlans": "Erstellung von Plänen für vorbeugende Instandhaltung und Schmierung",
-        "failureAnalysis": "Schadensanalysen, Bauteilbrüche und Ursachendiagnostik",
-        "training": "Praxisorientierte technische Weiterbildungsprogramme (Direktanfrage)"
+        "training": "Spezialisierte technische Schulungen und Weiterbildungen"
       }
     },
     "selection": {
@@ -264,7 +262,9 @@
     "breadcrumb": "Dienstleistungen",
     "actions": {
       "requestQuote": "Angebot für diese Dienstleistung anfordern",
-      "viewSpecs": "Technische Spezifikationen ansehen"
+      "viewSpecs": "Technische Spezifikationen ansehen",
+      "trainingNoticeBadge": "Hinweis zu Fachschulungen",
+      "contactDirectly": "Direkten Kontakt aufnehmen"
     },
     "sections": {
       "audienceTitle": "Zielgruppe & Branchen",
@@ -283,7 +283,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Taktile & Dimensionelle Messtechnik",
         "title": "Koordinatenmesstechnik (KMG) & GD&T",
         "headline": "Submikrometer-Genauigkeit für anspruchsvolle Geometrien und strenge Form- und Lagetoleranzen.",
         "overview": "Dienstleistung zur präzisen dreidimensionalen geometrischen und linearen Charakterisierung hochbeanspruchter mechanischer Bauteile. Mittels kontinuierlichem taktilem Scanning erfassen wir Form-, Richtungs- und Lageabweichungen nach ISO 1101 und ASME Y14.5.",
@@ -336,7 +335,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Berührungslose Multisensor-Messtechnik",
         "title": "Kombinierte optische & taktile Prüfung",
         "headline": "Hochauflösende berührungslose Messung für elastische Bauteile und Mikrogeometrien.",
         "overview": "Kombiniert hochauflösende optische Kameras mit telezentrischen Objektiven und kontinuierlicher taktiler Antastung in einem System. Verhindert Verformungen durch Antastkräfte bei Elastomeren, dünnwandigen Polymeren, technischen Textilien und elektronischen Schaltungen.",
@@ -375,7 +373,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Zerstörungsfreie Prüfung (ZfP / NDT)",
         "title": "Röntgenprüfung & Strukturanalyse",
         "headline": "Volumetrische Innenprüfung und Strukturintegrität ohne Zerstörung oder Trennung der Probe.",
         "overview": "2D-Radioskopie und zerstörungsfreie Computertomographie zur Erkennung verdeckter innerer Fehlstellen. Bewertet Gussteile, Schweißnähte und versiegelte Baugruppen basierend auf Röntgendichte und Materialabsorption.",
@@ -416,7 +413,6 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "3D-Digitalisierung & Photogrammetrie",
         "title": "Optische 3D-Digitalisierung & Falschfarbenanalyse",
         "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen, CAD-Vergleichen und zur Maßkontrolle.",
         "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – ermöglicht den direkten Soll-Ist-Vergleich (CAD × gescanntes Realteil), Verschleißanalysen, 3D-Druck oder dient als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
@@ -473,7 +469,6 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametrische digitale Modellierung & Lokalisierung",
         "title": "Reverse Engineering, CAD-Flächenrückführung & Lokalisierung",
         "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle für die Inlandsfertigung.",
         "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung und Dokumentation.",
@@ -513,8 +508,7 @@
         ]
       },
       "confiabilidade-mro": {
-        "categoryTag": "Industrielle Zuverlässigkeit & MRO-Asset-Management",
-        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Weiterbildung",
+        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Schulung",
         "headline": "Strategisches Ersatzteilmanagement, Anlagenbäume und betriebliche Zuverlässigkeit für die Industrie.",
         "overview": "Integrierte Dienstleistung, die Zuverlässigkeitstechnik und digitale Bereitschaft verbindet, um die industrielle Instandhaltung (MRO) zu revolutionieren. Durch die Strukturierung von Anlagenbäumen und die Anwendung fundierter Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Nachfragehäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem Instandhaltungs- und Schmierpläne, Schadensdiagnostik und maßgeschneiderte Fachweiterbildung.",
         "trainingDirectNotice": "Hinweis für Fachschulungen: Für Schulungsanfragen, Fachausbildungen oder firmeninterne Inhouse-Schulungen (in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse) empfehlen wir, direkt mit der Laborleitung (telefonisch, per WhatsApp oder E-Mail) Kontakt aufzunehmen.",
@@ -541,6 +535,12 @@
           "Fachgutachten zur Schadensanalyse mit Ursachendiagnose und Abstellmaßnahmen",
           "Zertifikate für berufliche Weiterbildung ausgestellt durch SENAI Goiás"
         ],
+        "customSpecLabels": {
+          "volume": "Anwendungsbereich",
+          "accuracy": "Methodik & Standards",
+          "sensor": "Fachteam & Spezialisten",
+          "software": "Integrierte Systeme"
+        },
         "machines": [
           {
             "name": "SENAI Asset-Management & MRO-Methodik",

@@ -266,6 +266,49 @@ export function Services() {
                 </div>
             </section>
 
+            <section className="service-row-section service-row-section--alt">
+                <div className="services-container">
+                    <div className="service-row-split service-row-split--text-only">
+                        <div className="service-text-side">
+                            <span className="service-index-num">06</span>
+                            <span className="service-category-tag">{t('services.mro.category')}</span>
+                            <h2 className="service-row-title">{t('services.mro.title')}</h2>
+                            <p className="service-paragraph">{t('services.mro.description')}</p>
+
+                            <div className="service-applications-grid">
+                                <div className="app-item">
+                                    <span className="app-dot"></span>
+                                    {t('services.mro.applications.virtualWarehouse')}
+                                </div>
+                                <div className="app-item">
+                                    <span className="app-dot"></span>
+                                    {t('services.mro.applications.equipmentTree')}
+                                </div>
+                                <div className="app-item">
+                                    <span className="app-dot"></span>
+                                    {t('services.mro.applications.maintenancePlans')}
+                                </div>
+                                <div className="app-item">
+                                    <span className="app-dot"></span>
+                                    {t('services.mro.applications.training')}
+                                </div>
+                            </div>
+                            <div className="service-action">
+                                <Link to="/servicos/confiabilidade-mro" className="btn-mais">
+                                    <span>{t('services.learnMore')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section className="selection-guide-section">
                 <div className="services-container">
                     <div className="selection-header">
@@ -299,6 +342,14 @@ export function Services() {
                         <div className="selection-card glass-panel">
                             <h3 className="selection-card-title">{t('services.selection.items.cad.title')}</h3>
                             <p className="selection-card-desc">{t('services.selection.items.cad.description')}</p>
+                        </div>
+                        <div className="selection-card glass-panel">
+                            <h3 className="selection-card-title">{t('services.selection.items.mro.title')}</h3>
+                            <p className="selection-card-desc">{t('services.selection.items.mro.description')}</p>
+                        </div>
+                        <div className="selection-card glass-panel">
+                            <h3 className="selection-card-title">{t('services.selection.items.training.title')}</h3>
+                            <p className="selection-card-desc">{t('services.selection.items.training.description')}</p>
                         </div>
                     </div>
                 </div>

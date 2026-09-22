@@ -65,6 +65,7 @@ export function Navbar() {
         { id: 'raio-x', path: '/servicos/raio-x', key: 'raioX' },
         { id: 'digitalizacao-3d', path: '/servicos/digitalizacao-3d', key: 'scan3d' },
         { id: 'engenharia-reversa', path: '/servicos/engenharia-reversa', key: 'reverseEng' },
+        { id: 'confiabilidade-mro', path: '/servicos/confiabilidade-mro', key: 'mro' },
     ];
 
     return (

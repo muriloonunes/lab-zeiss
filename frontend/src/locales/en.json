@@ -206,22 +206,20 @@
       "applications": {
         "legacyParts": "Recreation of spare parts without technical drawings",
         "nationalization": "Localization and development of imported industrial components",
-        "cadGeneration": "Parametric CAD modeling (STEP, IGES, Parasolid)",
+        "cadGeneration": "Parametric CAD modeling (STEP, IGES)",
         "tooling": "Mold, die, and tooling adaptation",
         "optimization": "Redesign, geometric optimization, and 3D prototyping"
       }
     },
     "mro": {
       "category": "Reliability, Virtual Warehouse & Training",
-      "title": "Maintenance intelligence, asset management, and technical training.",
-      "description": "Strategic solutions to eliminate unnecessary physical inventory capital in MRO spare parts without downtime risk. We build equipment asset trees, classify critical items using criticality and recurrence matrices (Class A low-recurrence spares), and provide full consulting in maintenance routines, industrial lubrication, failure diagnosis, and technical training.",
+      "title": "Maintenance intelligence and technical training.",
+      "description": "We provide strategic solutions to reduce physical inventory costs of MRO spare parts without the risk of plant downtime. We map equipment trees, perform criticality and recurrence matrices, and offer comprehensive consulting in maintenance, lubrication, failure analysis, and technical training.",
       "applications": {
         "virtualWarehouse": "Virtual warehouse and digital spare parts library",
-        "criticalParts": "Critical parts identification (Criticality x Recurrence matrix - Class A low-recurrence)",
         "equipmentTree": "Equipment tree structuring and item-by-item asset breakdown",
         "maintenancePlans": "Formulation of preventive maintenance and lubrication plans",
-        "failureAnalysis": "Failure analysis, mechanical breakdowns, and anomaly diagnostics",
-        "training": "Applied specialized technical training programs (direct inquiry)"
+        "training": "Specialized technical training and qualification"
       }
     },
     "selection": {
@@ -264,7 +262,9 @@
     "breadcrumb": "Services",
     "actions": {
       "requestQuote": "Request a Quote for this Service",
-      "viewSpecs": "View Technical Specifications"
+      "viewSpecs": "View Technical Specifications",
+      "trainingNoticeBadge": "Technical Training Notice",
+      "contactDirectly": "Contact Management Directly"
     },
     "sections": {
       "audienceTitle": "Target Audience & Segments",
@@ -283,7 +283,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Tactile & Dimensional Metrology",
         "title": "Coordinate Measuring (CMM) & GD&T",
         "headline": "Sub-micrometric accuracy for critical geometries and rigorous geometric compliance.",
         "overview": "Service dedicated to 3D geometric and linear characterization of high-demand mechanical parts. Utilizing continuous-contact CMM systems (tactile scanning), we evaluate form, orientation, and location deviations according to ISO 1101 and ASME Y14.5 standards.",
@@ -336,7 +335,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Non-Contact Multisensor Metrology",
         "title": "Combined Optical & Tactile Inspection",
         "headline": "High-resolution non-contact measurement for flexible components and micro-geometries.",
         "overview": "Integrates high-definition optical cameras with telecentric lenses and continuous tactile probing on a single machine. Eliminates contact pressure deformation on elastomers, thin polymers, technical textiles, and electronic circuits.",
@@ -375,7 +373,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Non-Destructive Testing (NDT)",
         "title": "X-Ray Inspection & Structural Analysis",
         "headline": "Internal volumetric investigation and integrity verification without sectioning or destroying samples.",
         "overview": "2D radioscopic inspection and non-destructive tomography to identify hidden internal discontinuities. Evaluates cast components, welds, and sealed assemblies based on material density and radiological absorption.",
@@ -416,7 +413,6 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "3D Scanning & Photogrammetry",
         "title": "3D Optical Scanning & Color Map Analysis",
         "headline": "Full geometric capture to produce 3D STL meshes, CAD comparisons, and dimensional control.",
         "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), enabling direct nominal vs. actual comparison (CAD × scanned physical part), wear mapping, 3D printing, or serving as the baseline dataset for parametric Reverse Engineering (CAD).",
@@ -473,7 +469,6 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametric Digital Modeling & Localization",
         "title": "Reverse Engineering, CAD Reconstruction & Localization",
         "headline": "Transforming raw scan data into production-ready parametric solid models for local manufacturing.",
         "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or requiring domestic manufacturing substitution. Encompasses precision parametric modeling, optimization, and full technical documentation for component localization.",
@@ -513,7 +508,6 @@
         ]
       },
       "confiabilidade-mro": {
-        "categoryTag": "Industrial Reliability & Asset Management MRO",
         "title": "Reliability, Virtual MRO Warehouse & Technical Training",
         "headline": "Strategic spare parts management, asset tree structuring, and operational reliability for industry.",
         "overview": "Integrated service combining reliability engineering and digital readiness to optimize industrial maintenance (MRO). By structuring equipment asset trees and applying rigorous criticality and recurrence matrices, we identify critical Class A items with low demand recurrence. We catalog these digitally into virtual warehouses for rapid on-demand manufacturing, eliminating costly idle physical inventory. The service also includes preventive maintenance and lubrication plans, root cause failure analysis, and customized professional training programs.",
@@ -541,6 +535,12 @@
           "Forensic failure analysis reports with root-cause diagnosis and corrective actions",
           "Professional technical training certificates issued by SENAI Goiás"
         ],
+        "customSpecLabels": {
+          "volume": "Scope of Application",
+          "accuracy": "Methodology & Standards",
+          "sensor": "Technical Specialists",
+          "software": "Integrated Systems"
+        },
         "machines": [
           {
             "name": "SENAI Asset Management & MRO Methodology",

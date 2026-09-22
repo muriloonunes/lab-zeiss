@@ -37,7 +37,6 @@ export function ServiceDetail() {
 
     const {
         title,
-        categoryTag,
         headline,
         overview,
         targetAudience = [],
@@ -90,6 +89,9 @@ export function ServiceDetail() {
         }
     ];
 
+    const hasVisuals = Boolean(serviceMeta.galleryImages && serviceMeta.galleryImages.length > 0);
+    const customLabels = service.customSpecLabels;
+
     return (
         <div className="service-detail-page">
             <div className="detail-blob-container" aria-hidden="true">
@@ -107,9 +109,8 @@ export function ServiceDetail() {
                         <span className="current">{title}</span>
                     </nav>
 
-                    <div className="detail-hero-grid">
+                    <div className={`detail-hero-grid ${!hasVisuals ? 'detail-hero-grid--text-only' : ''}`}>
                         <div className="detail-hero-content">
-                            <span className="detail-tag">{categoryTag}</span>
                             <h1 className="detail-title">{title}</h1>
                             <p className="detail-headline">{headline}</p>
                             <p className="detail-overview">{overview}</p>
@@ -131,11 +132,13 @@ export function ServiceDetail() {
                             </div>
                         </div>
 
-                        <div className="detail-hero-visual">
-                            <div className="detail-carousel-card glass-panel">
-                                <ImageCarousel images={serviceMeta.galleryImages}/>
+                        {hasVisuals && (
+                            <div className="detail-hero-visual">
+                                <div className="detail-carousel-card glass-panel">
+                                    <ImageCarousel images={serviceMeta.galleryImages!}/>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -165,6 +168,37 @@ export function ServiceDetail() {
                             </div>
                         ))}
                     </div>
+
+                    {service.trainingDirectNotice && (
+                        <div className="detail-training-notice glass-panel">
+                            <div className="notice-icon-box" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                     strokeLinejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                </svg>
+                            </div>
+                            <div className="notice-content">
+                                <span className="notice-badge">
+                                    {t('serviceDetail.actions.trainingNoticeBadge', 'Aviso de Capacitação Técnica')}
+                                </span>
+                                <p className="notice-text">{service.trainingDirectNotice}</p>
+                            </div>
+                            <div className="notice-actions">
+                                <Link to="/contato" className="btn-mais notice-btn">
+                                    <span>{t('serviceDetail.actions.contactDirectly', 'Falar com a Coordenação')}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                         strokeLinejoin="round" className="btn-icon" aria-hidden="true">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </Link>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -195,22 +229,22 @@ export function ServiceDetail() {
                                 <div className="specs-parameters-grid">
                                     <div className="param-item">
                                         <span
-                                            className="param-label">{t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
+                                            className="param-label">{customLabels?.volume || t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
                                         <strong className="param-value">{mach.volume}</strong>
                                     </div>
                                     <div className="param-item">
                                         <span
-                                            className="param-label">{t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
+                                            className="param-label">{customLabels?.accuracy || t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
                                         <strong className="param-value">{mach.accuracy}</strong>
                                     </div>
                                     <div className="param-item">
                                         <span
-                                            className="param-label">{t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
+                                            className="param-label">{customLabels?.sensor || t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
                                         <strong className="param-value">{mach.sensor}</strong>
                                     </div>
                                     <div className="param-item">
                                         <span
-                                            className="param-label">{t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
+                                            className="param-label">{customLabels?.software || t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
                                         <strong className="param-value">{mach.software}</strong>
                                     </div>
                                 </div>
