@@ -22,10 +22,20 @@
   box-sizing: border-box;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+}
+
 body {
   font-family: vars.$font-subtitle;
   background-color: vars.$color-bg-light;
   color: vars.$color-text-dark;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
 }
 
 .glass-card {

@@ -139,12 +139,12 @@
     align-items: center;
 
     @media (max-width: 1024px) {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 2rem;
     }
 
     &.detail-hero-grid--text-only {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       width: 100%;
       max-width: 100%;
       margin: 0;
@@ -152,6 +152,7 @@
       .detail-hero-content {
         align-items: flex-start;
         width: 100%;
+        min-width: 0;
         text-align: left;
       }
 
@@ -168,6 +169,8 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .detail-title {
@@ -180,10 +183,20 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0 0 0.65rem 0;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
 
     @media (max-width: 600px) {
-      font-size: clamp(1.6rem, 6.2vw, 2.1rem);
-      line-height: 1.22;
+      font-size: clamp(1.4rem, 5.8vw, 1.95rem);
+      line-height: 1.2;
+    }
+
+    @media (max-width: 360px) {
+      font-size: 1.3rem;
     }
   }
 
@@ -193,9 +206,13 @@
     color: vars.$color-primary;
     line-height: 1.45;
     margin: 0 0 0.75rem 0;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 
     @media (max-width: 600px) {
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
   }
 
@@ -205,6 +222,9 @@
     color: vars.$color-text-body;
     margin: 0 0 1.5rem 0;
     max-width: 680px;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
 
     @media (max-width: 600px) {
       font-size: 0.94rem;
@@ -506,9 +526,15 @@
     line-height: 1.25;
     color: vars.$color-text-dark;
     margin: 0 0 1.15rem 0;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
 
     @media (max-width: 600px) {
-      font-size: clamp(1.4rem, 5.5vw, 1.75rem);
+      font-size: clamp(1.35rem, 5.5vw, 1.75rem);
       margin-bottom: 0.85rem;
     }
   }

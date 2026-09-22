@@ -28,6 +28,10 @@ export function LanguageSwitcher() {
     const currentLanguage = languages.find((l) => l.code === currentLangCode) || languages[0];
 
     useEffect(() => {
+        document.documentElement.lang = currentLangCode;
+    }, [currentLangCode]);
+
+    useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
