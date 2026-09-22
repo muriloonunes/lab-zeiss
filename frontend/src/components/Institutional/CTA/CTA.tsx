@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { QuoteButton } from '../../QuoteButton/QuoteButton';
 import './CTA.scss';
 
 export function CTA() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     return (
@@ -12,22 +14,21 @@ export function CTA() {
                     <div className="inst-cta-content">
                         <div className="inst-eyebrow">
                             <span className="inst-eyebrow-line"></span>
-                            <span className="inst-eyebrow-text">Agende uma Visita Técnica</span>
+                            <span className="inst-eyebrow-text">{t('institutional.cta.eyebrow')}</span>
                         </div>
                         <h2 className="inst-cta-title">
-                            Conheça a infraestrutura do laboratório na Faculdade SENAI Ítalo Bologna.
+                            {t('institutional.cta.title')}
                         </h2>
                         <p className="inst-cta-desc">
-                            Nossa equipe técnica está à disposição para avaliar suas necessidades em medição
-                            tridimensional, digitalização ou validação dimensional.
+                            {t('institutional.cta.description')}
                         </p>
                     </div>
                     <div className="inst-cta-actions">
                         <QuoteButton onClick={() => navigate('/contato')}>
-                            Solicitar Contato Técnico
+                            {t('institutional.cta.requestContact')}
                         </QuoteButton>
                         <Link to="/servicos" className="btn-mais">
-                            <span>Explorar Catálogo de Serviços</span>
+                            <span>{t('institutional.cta.exploreServices')}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="16"

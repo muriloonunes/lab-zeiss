@@ -178,6 +178,85 @@
       "exploreServices": "Dienstleistungskatalog ansehen"
     }
   },
+  "institutional": {
+    "hero": {
+      "title": "Deutsche Präzision und brasilianische Fachkompetenz im Dienste anspruchsvoller Industriezweige.",
+      "description": "Das an der Fakultät SENAI Ítalo Bologna in Goiânia ansässige Exzellenzzentrum für Messtechnik ist das Ergebnis einer strategischen Allianz zwischen dem FIEG-System / SENAI Goiás und Carl Zeiss. Als eines von weltweit nur fünf Zentren mit dieser Kapazität bieten wir ganzheitliche Lösungen in der 3D-Koordinatenmesstechnik, im Reverse Engineering und in der Maßhaltigkeitsprüfung.",
+      "imageAlt": "Laborfassade"
+    },
+    "alliance": {
+      "subtitle": "Strategische Allianz",
+      "title": "Wo globale Standards auf industrielle Exzellenz treffen.",
+      "intro": "Das CEM entstand aus dem Erfordernis, einem elementaren Bedarf moderner Industriezweige zu entsprechen: dem verlässlichen Zugang zu Messungen im Submikrometerbereich und fundierter technischer Validierung nach strengsten internationalen Normen.",
+      "paragraph": "Die technische Kooperation verbindet die messtechnische und optische Pionierleistung des deutschen Technologieunternehmens Carl Zeiss — weltweiter Benchmark dieser Industrie — mit der Infrastruktur, den Dozenten und der Ausbildungskraft des SENAI. Dank dieser Synergie erhalten Unternehmen aus Luft- und Raumfahrt, Automobilbau, Medizintechnik und Metallmechanik direkt in Brasilien technische Unterstützung auf dem Niveau führender europäischer Industriezentren.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Deutschland / Brasilien)",
+          "description": "Technische Homologation der Messsysteme, Werkskalibrierungen und aktuelle Lizenzen der Softwaresammlungen CALYPSO, PiWeb und ZEISS INSPECT."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Fakultät Ítalo Bologna",
+          "description": "Betriebliche Leitung, technische Verantwortung für die Prüfungen, Bereitstellung der Laborinfrastruktur und industrieller Wissenstransfer."
+        },
+        "fieg": {
+          "name": "FIEG-System",
+          "description": "Institutionelle Koordination zur Stärkung der Wettbewerbsfähigkeit und Konformität industrieller Lieferketten im Land."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Institutionelle Schirmherrschaft",
+      "title": "Die Vision der Initiatoren dieser Allianz",
+      "description": "Gemeinsames Bekenntnis zwischen dem brasilianischen Industriesystem und dem Technologiekonzern Carl Zeiss zu industrieller Produktivität und Wettbewerbsfähigkeit.",
+      "quotes": {
+        "mabel": {
+          "quote": "„Die Errichtung des ersten Carl-Zeiss-Exzellenzzentrums in Brasilien ist ein historischer Meilenstein. Die Initiative zielt darauf ab, die berufliche Weiterbildung voranzutreiben sowie Spitzenforschung, Entwicklung und Innovation zu fördern – und damit die wachsende Nachfrage der heimischen Industrie nach Präzision und Spitzentechnologie zu erfüllen.“",
+          "author": "Sandro Mabel",
+          "role": "Ehemaliger Präsident der FIEG und der Regionalräte von SESI und SENAI"
+        },
+        "weinisch": {
+          "quote": "„Wir freuen uns über die Chance, unsere Spitzentechnologie einer neuen Zielgruppe zugänglich zu machen. Nur die USA, Deutschland und China verfügen über einen vergleichbaren Komplex. Gemeinsam vermitteln wir der nächsten Generation den Einsatz innovativer Lösungen, um Produktqualität und industrielle Leistungsfähigkeit nachhaltig zu steigern.“",
+          "author": "Jochen Weinisch",
+          "role": "Vice President Sales (Lateinamerika, Naher Osten und Afrika) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "„Dieser Komplex kommt nicht nur der regionalen Industrie zugute, sondern entfaltet bundesweite Signalwirkung: Er wird zum Referenzzentrum für berufliche Qualifikation und industrielle Dienstleistungen und stärkt nachhaltig das Zusammenspiel zwischen Ausbildungsstätte und Werkshalle.“",
+          "author": "Dario Queija",
+          "role": "Direktor der SENAI-Fakultät Ítalo Bologna"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Grundwerte & Leitprinzipien",
+      "title": "Die tragenden Säulen jedes Prüfberichts",
+      "description": "Messtechnik ist die Wissenschaft des Vertrauens. Unsere verbindlichen Qualitätsstandards schaffen technische und rechtliche Sicherheit für Ihr Endprodukt.",
+      "items": {
+        "gdt": {
+          "title": "Strenge Einhaltung von Form- und Lagetoleranzen (GD&T)",
+          "description": "Konsequente Anwendung von Form- und Lagetoleranzen (GD&T) nach ISO 1101 und ASME Y14.5 zur Gewährleistung lückenloser metrologischer Wiederholgenauigkeit."
+        },
+        "accessibility": {
+          "title": "Zugänglichkeit für den Mittelstand",
+          "description": "Spitzenmesstechnik und dimensionelle Beratung nicht nur für Großkonzerne nutzbar machen, sondern insbesondere auch für kleine und mittelständische Betriebe, die Qualität und Präzision ihrer Produkte sichern wollen."
+        },
+        "techTransfer": {
+          "title": "Technologietransfer & Weiterbildung",
+          "description": "Mehr als reine Prüfdienstleistung: Verankerung einer gelebten Präzisionskultur durch kontinuierliche Weiterbildung und die Ausbildung künftiger Fachkräfte der industriellen Messtechnik."
+        },
+        "confidentiality": {
+          "title": "Geheimhaltung & Datensouveränität",
+          "description": "Bedingungslose Vertraulichkeit im Umgang mit proprietären CAD-Modellen, patentierten Geometrien, industriellen Prototypen und akkreditierten Prüfberichten."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Fachbesuch vereinbaren",
+      "title": "Lernen Sie unsere Laborinfrastruktur an der SENAI-Fakultät Ítalo Bologna kennen.",
+      "description": "Unser technisches Team steht Ihnen gerne zur Verfügung, um Ihre Anforderungen in der 3D-Messtechnik, Digitalisierung oder dimensionalen Validierung zu analysieren.",
+      "requestContact": "Technischen Kontakt anfragen",
+      "exploreServices": "Leistungskatalog entdecken"
+    }
+  },
   "services": {
     "hero": {
       "eyebrow": "Unsere Dienstleistungen",
@@ -675,12 +754,5 @@
     "businessHours": "Mo. bis Fr. von 08:00 bis 18:00 Uhr",
     "rights": "Alle Rechte vorbehalten.",
     "partnership": "FIEG-System • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "Deutsche Präzision und brasilianische Fachkompetenz im Dienste anspruchsvoller Industriezweige.",
-      "description": "Das an der Fakultät SENAI Ítalo Bologna in Goiânia ansässige Exzellenzzentrum für Messtechnik ist das Ergebnis einer strategischen Allianz zwischen dem FIEG-System / SENAI Goiás und Carl Zeiss. Als eines von weltweit nur fünf Zentren mit dieser Kapazität bieten wir ganzheitliche Lösungen in der 3D-Koordinatenmesstechnik, im Reverse Engineering und in der Maßhaltigkeitsprüfung.",
-      "imageAlt": "Laborfassade"
-    }
   }
 }

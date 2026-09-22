@@ -178,6 +178,85 @@
       "exploreServices": "Ver Catálogo de Serviços"
     }
   },
+  "institutional": {
+    "hero": {
+      "title": "Precisão alemã e expertise técnica brasileira a serviço da indústria de alta exigência.",
+      "description": "Instalado na Faculdade SENAI Ítalo Bologna, em Goiânia, o Centro de Excelência em Metrologia é resultado de uma aliança estratégica entre o Sistema FIEG / SENAI Goiás e a Carl Zeiss. Atuamos como um dos cinco centros globais com esta capacidade para oferecer soluções completas em medição tridimensional, engenharia reversa e conformidade dimensional.",
+      "imageAlt": "Fachada do Laboratório"
+    },
+    "alliance": {
+      "subtitle": "Aliança Estratégica",
+      "title": "A convergência entre padrão global e vocação industrial.",
+      "intro": "O CEM nasceu da necessidade de suprir uma demanda crítica da indústria moderna: o acesso a medições de exatidão micrométrica e validação técnica em conformidade com as normas internacionais mais rigorosas.",
+      "paragraph": "A cooperação técnica une o pioneirismo óptico e metrológico da alemã Carl Zeiss — referência mundial nessa indústria — à infraestrutura, corpo docente e capacidade de formação do SENAI. Esta sinergia permite que indústrias aeroespaciais, automotivas, de saúde e metalmecânica encontrem no Brasil suporte técnico do mesmo nível dos principais polos industriais da Europa.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Alemanha / Brasil)",
+          "description": "Homologação técnica de maquinários, calibrações de fábrica e licenças atualizadas das suítes CALYPSO, PiWeb e ZEISS INSPECT."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Faculdade Ítalo Bologna",
+          "description": "Gestão operacional, responsabilidade técnica pelos ensaios, infraestrutura física do laboratório e difusão de conhecimento industrial."
+        },
+        "fieg": {
+          "name": "Sistema FIEG",
+          "description": "Articulação institucional para o fortalecimento da competitividade e conformidade de fornecedores de cadeias produtivas no país."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Chancela Institucional",
+      "title": "A visão dos realizadores da aliança",
+      "description": "Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a produtividade e competitividade fabril.",
+      "quotes": {
+        "mabel": {
+          "quote": "“A implantação do primeiro Centro de Excelência da Carl Zeiss no Brasil é um marco histórico. A iniciativa visa impulsionar a formação profissional, além de promover o avanço em pesquisa, desenvolvimento e inovação, atendendo às crescentes demandas da indústria nacional por inovação e precisão.”",
+          "author": "Sandro Mabel",
+          "role": "Ex-Presidente da FIEG e dos Conselhos Regionais do SESI e SENAI"
+        },
+        "weinisch": {
+          "quote": "“Estamos tendo a oportunidade de trazer nossa tecnologia de ponta para um novo público-alvo. Apenas Estados Unidos, Alemanha e China têm um complexo similar. Juntos, vamos ensinar a próxima geração a usar soluções inovadoras para alavancar a produtividade e a qualidade dos produtos.”",
+          "author": "Jochen Weinisch",
+          "role": "Vice-Presidente de Vendas (América Latina, Oriente Médio e África) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "“Além de beneficiar a indústria goiana, o complexo terá impacto nacional, tornando-se referência em qualificação profissional e suporte técnico para o setor produtivo, fortalecendo a relação entre educação e chão de fábrica.”",
+          "author": "Dario Queija",
+          "role": "Diretor da Faculdade SENAI Ítalo Bologna"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Princípios & Valores",
+      "title": "Os pilares que sustentam cada relatório emitido",
+      "description": "Metrologia é a ciência da confiança. Nossos compromissos operacionais garantem segurança jurídica e técnica para o produto final.",
+      "items": {
+        "gdt": {
+          "title": "Rigor & Toleranciamento GD&T",
+          "description": "Aplicação estrita dos conceitos de Dimensionamento Geométrico e Toleranciamento (GD&T), garantindo repetibilidade metrológica."
+        },
+        "accessibility": {
+          "title": "Acessibilidade à Metrologia",
+          "description": "Tornar a instrumentação e a consultoria dimensional acessíveis não apenas para megacorporações, mas para pequenas e médias indústrias que buscam também garantir a qualidade e precisão de seus produtos."
+        },
+        "techTransfer": {
+          "title": "Transferência Tecnológica",
+          "description": "Ir além da prestação de serviços: difundir a cultura de precisão através da capacitação técnica contínua e da formação de novos especialistas na área de metrologia."
+        },
+        "confidentiality": {
+          "title": "Sigilo & Custódia de Dados",
+          "description": "Compromisso inegociável de confidencialidade com relação a modelos CAD proprietários, geometrias patentes, protótipos industriais e laudos técnicos de inspeção."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Agende uma Visita Técnica",
+      "title": "Conheça a infraestrutura do laboratório na Faculdade SENAI Ítalo Bologna.",
+      "description": "Nossa equipe técnica está à disposição para avaliar suas necessidades em medição tridimensional, digitalização ou validação dimensional.",
+      "requestContact": "Solicitar Contato Técnico",
+      "exploreServices": "Explorar Catálogo de Serviços"
+    }
+  },
   "services": {
     "hero": {
       "eyebrow": "Nossos Serviços",
@@ -675,12 +754,5 @@
     "businessHours": "Seg. a Sex. das 08h às 18h",
     "rights": "Todos os direitos reservados.",
     "partnership": "Sistema FIEG • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "Precisão alemã e expertise técnica brasileira a serviço da indústria de alta exigência.",
-      "description": "Instalado na Faculdade SENAI Ítalo Bologna, em Goiânia, o Centro de Excelência em Metrologia é resultado de uma aliança estratégica entre o Sistema FIEG / SENAI Goiás e a Carl Zeiss. Atuamos como um dos cinco centros globais com esta capacidade para oferecer soluções completas em medição tridimensional, engenharia reversa e conformidade dimensional.",
-      "imageAlt": "Fachada do Laboratório"
-    }
   }
 }

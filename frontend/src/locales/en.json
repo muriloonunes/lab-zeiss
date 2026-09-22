@@ -178,6 +178,85 @@
       "exploreServices": "View Services Catalog"
     }
   },
+  "institutional": {
+    "hero": {
+      "title": "German precision and Brazilian technical expertise serving high-demand industry.",
+      "description": "Located at the SENAI Ítalo Bologna Faculty in Goiânia, the Center for Excellence in Metrology is the result of a strategic alliance between the FIEG System / SENAI Goiás and Carl Zeiss. We operate as one of only five global centers with this capability, delivering comprehensive solutions in 3D measurement, reverse engineering, and dimensional compliance.",
+      "imageAlt": "Laboratory Facade"
+    },
+    "alliance": {
+      "subtitle": "Strategic Alliance",
+      "title": "Where global standards converge with industrial excellence.",
+      "intro": "The CEM was established to meet a critical requirement of modern industry: reliable access to micrometer-level precision measurement and rigorous technical validation in compliance with the highest international standards.",
+      "paragraph": "This technical cooperation brings together the optical and metrological leadership of Germany's Carl Zeiss — the global benchmark in this industry — with the infrastructure, faculty, and technical training power of SENAI. This synergy empowers aerospace, automotive, healthcare, and metalworking companies to find world-class technical support directly in Brazil, on par with Europe's leading industrial hubs.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Germany / Brazil)",
+          "description": "Technical homologation of machinery, factory calibrations, and up-to-date licensing for CALYPSO, PiWeb, and ZEISS INSPECT suites."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Ítalo Bologna Faculty",
+          "description": "Operational management, technical sign-off for inspection reports, physical laboratory infrastructure, and dissemination of industrial expertise."
+        },
+        "fieg": {
+          "name": "FIEG System",
+          "description": "Institutional leadership to drive competitiveness and quality compliance across Brazil's industrial supply chains."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Institutional Endorsement",
+      "title": "The vision behind the alliance",
+      "description": "A joint commitment between the Brazilian Industry System and multinational Carl Zeiss to boost manufacturing productivity and competitiveness.",
+      "quotes": {
+        "mabel": {
+          "quote": "“The establishment of Carl Zeiss’s first Center of Excellence in Brazil is a historic milestone. This initiative is designed to drive professional qualification while advancing research, development, and innovation to meet the Brazilian industry’s growing demand for precision and cutting-edge solutions.”",
+          "author": "Sandro Mabel",
+          "role": "Former President of FIEG and the Regional Councils of SESI and SENAI"
+        },
+        "weinisch": {
+          "quote": "“We have the unique opportunity to bring our state-of-the-art technology to a whole new audience. Only the United States, Germany, and China possess a comparable facility. Together, we are equipping the next generation to apply innovative solutions that drive product quality and industrial productivity.”",
+          "author": "Jochen Weinisch",
+          "role": "Vice President of Sales (Latin America, Middle East & Africa) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "“Beyond benefiting local industry in Goiás, this facility has a nationwide impact, serving as a benchmark for vocational excellence and technical support for manufacturing, bridging the gap between education and the shop floor.”",
+          "author": "Dario Queija",
+          "role": "Director of the SENAI Ítalo Bologna Faculty"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Core Principles & Values",
+      "title": "The foundational pillars behind every inspection report",
+      "description": "Metrology is the science of confidence. Our operational commitments guarantee legal certainty and technical validation for the final product.",
+      "items": {
+        "gdt": {
+          "title": "GD&T Rigor & Geometric Tolerancing",
+          "description": "Strict implementation of Geometric Dimensioning and Tolerancing (GD&T) principles, ensuring metrological repeatability."
+        },
+        "accessibility": {
+          "title": "Accessible Advanced Metrology",
+          "description": "Making precision instrumentation and dimensional consulting accessible not only to large corporations, but to small and medium enterprises seeking to qualify for export markets."
+        },
+        "techTransfer": {
+          "title": "Technology Transfer & Education",
+          "description": "Moving beyond routine testing: disseminating a culture of precision through ongoing technical training and fostering new specialized talent in metrology."
+        },
+        "confidentiality": {
+          "title": "Data Custody & Industrial Secrecy",
+          "description": "A non-negotiable commitment to confidentiality regarding proprietary CAD models, patented geometries, industrial prototypes, and certified inspection reports."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Schedule a Technical Visit",
+      "title": "Discover our laboratory infrastructure at the SENAI Ítalo Bologna Faculty.",
+      "description": "Our technical team is available to assess your requirements in 3D measurement, optical scanning, or dimensional validation.",
+      "requestContact": "Request Technical Consultation",
+      "exploreServices": "Explore Services Catalog"
+    }
+  },
   "services": {
     "hero": {
       "eyebrow": "Our Services",
@@ -675,12 +754,5 @@
     "businessHours": "Mon. to Fri. from 8:00 AM to 6:00 PM",
     "rights": "All rights reserved.",
     "partnership": "FIEG System • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "German precision and Brazilian technical expertise serving high-demand industry.",
-      "description": "Located at the SENAI Ítalo Bologna Faculty in Goiânia, the Center for Excellence in Metrology is the result of a strategic alliance between the FIEG System / SENAI Goiás and Carl Zeiss. We operate as one of only five global centers with this capability, delivering comprehensive solutions in 3D measurement, reverse engineering, and dimensional compliance.",
-      "imageAlt": "Laboratory Facade"
-    }
   }
 }

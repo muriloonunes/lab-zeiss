@@ -23,7 +23,7 @@ export function Institutional() {
             {/*<History />*/}
             <Leadership />
             <Pillars />
-            <Team />
+            {/*<Team />*/}
             <CTA />
         </div>
     );
