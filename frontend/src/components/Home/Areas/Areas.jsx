@@ -1,36 +1,39 @@
 import "./Areas.scss"
+import {useTranslation} from "react-i18next";
 
 export function Areas() {
+    const {t} = useTranslation();
+
     const sectorsList = [
         {
             id: "food",
-            name: "Alimentícia",
-            description: "Mapa de desgaste de peças e inspeção de equipamentos de processamento e envase.",
+            name: t("home.areas.sectors.food.title"),
+            description: t("home.areas.sectors.food.description")
         },
         {
             id: "automotive",
-            name: "Automotivo & Autopeças",
-            description: "Engenharia reversa e prototipagem de novas peças de alta performance.",
+            name: t("home.areas.sectors.automotive.title"),
+            description: t("home.areas.sectors.automotive.description"),
         },
         {
             id: "aerospace",
-            name: "Aeroespacial & Defesa",
-            description: "Controle dimensional de alta exatidão, análise de pás de turbinas e conformidade estrutural.",
+            name: t("home.areas.sectors.aerospace.title"),
+            description: t("home.areas.sectors.aerospace.description"),
         },
         {
             id: "medical",
-            name: "Médico-Hospitalar & Implantes",
-            description: "Digitalização e inspeção de próteses, dispositivos cirúrgicos e geometrias complexas.",
+            name: t("home.areas.sectors.medical.title"),
+            description: t("home.areas.sectors.medical.description"),
         },
         {
             id: "tooling",
-            name: "Ferramentaria & Moldes",
-            description: "Engenharia reversa e validação de matrizes, moldes de injeção e ferramentas de corte.",
+            name: t("home.areas.sectors.tooling.title"),
+            description: t("home.areas.sectors.tooling.description"),
         },
         {
-            id: "agro",
-            name: "Máquinas Agrícolas & Linha Pesada",
-            description: "Verificação de peças de grande porte, carcaças fundidas e estruturas montadas.",
+            id: "agricultural",
+            name: t("home.areas.sectors.agricultural.title"),
+            description: t("home.areas.sectors.agricultural.description"),
         }
     ];
 
@@ -44,14 +47,11 @@ export function Areas() {
                 <div className="section-header">
                     <div className="section-eyebrow">
                         <span className="eyebrow-line"></span>
-                        <span className="section-sub">Atuação Multissetorial</span>
+                        <span className="section-sub">{t("home.areas.subtitle")}</span>
                     </div>
                     <div className="sectors-header-content section-header-split">
-                        <h2 className="section-title">Segmentos Industriais Atendidos</h2>
-                        <p className="sectors-description section-description">
-                            Nossa infraestrutura e corpo técnico atendem aos mais rigorosos padrões
-                            de conformidade técnica de indústrias que exigem tolerâncias micrométricas.
-                        </p>
+                        <h2 className="section-title">{t("home.areas.mainTitle")}</h2>
+                        <p className="sectors-description section-description">{t("home.areas.description")}</p>
                     </div>
                 </div>
 

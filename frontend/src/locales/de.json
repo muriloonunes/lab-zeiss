@@ -140,6 +140,37 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Branchenübergreifende Kompetenz",
+      "mainTitle": "Bediente Industriebranchen",
+      "description": "Unsere hochmoderne Laborinfrastruktur und unser Fachteam erfüllen strengste technische Konformitätsstandards für Industriezweige mit Toleranzanforderungen im Mikrometerbereich.",
+      "sectors": {
+        "food": {
+          "title": "Lebensmittelindustrie",
+          "description": "Verschleißanalyse an Bauteilen und messtechnische Prüfung von Verarbeitungs- und Abfüllanlagen."
+        },
+        "automotive": {
+          "title": "Automobil- & Zulieferindustrie",
+          "description": "Reverse Engineering und Prototypenfertigung hochbelastbarer Komponenten."
+        },
+        "aerospace": {
+          "title": "Luft- und Raumfahrt & Verteidigung",
+          "description": "Maßhaltigkeitsprüfung und Reverse Engineering von sicherheitskritischen Präzisionsteilen."
+        },
+        "medical": {
+          "title": "Medizintechnik & Implantate",
+          "description": "3D-Digitalisierung und hochpräzise Qualitätsprüfung von Implantaten und Prothesen."
+        },
+        "tooling": {
+          "title": "Werkzeug- & Formenbau",
+          "description": "Reverse Engineering und Validierung von Umformmatrizen, Spritzgießformen und Zerspanungswerkzeugen."
+        },
+        "agricultural": {
+          "title": "Land- & Schwermaschinenbau",
+          "description": "Prüfung großformatiger Bauteile, Gussgehäuse und montierter Großbaugruppen."
+        }
+      }
+    },
     "cta": {
       "title": "Bringen Sie deutsche Präzision und Konformität in Ihre Industrie.",
       "description": "Verlassen Sie sich auf EMPB/FAI-Berichte, Reverse Engineering und GD&T-Prüfungen nach internationalem Standard am SENAI/ZEISS.",

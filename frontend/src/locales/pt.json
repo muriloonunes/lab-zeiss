@@ -140,6 +140,37 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Atuação Multissetorial",
+      "mainTitle": "Segmentos Industriais Atendidos",
+      "description": "Nossa infraestrutura e corpo técnico atendem aos mais rigorosos padrões de conformidade técnica de indústrias que exigem tolerâncias micrométricas.",
+      "sectors": {
+        "food": {
+          "title": "Alimentícia",
+          "description": "Mapa de desgaste de peças e inspeção de equipamentos de processamento e envase."
+        },
+        "automotive": {
+          "title": "Automotivo & Autopeças",
+          "description": "Engenharia reversa e prototipagem de novas peças de alta performance."
+        },
+        "aerospace": {
+          "title": "Aeroespacial & Defesa",
+          "description": "Controle dimensional e engenharia reversa de peças fundamentais."
+        },
+        "medical": {
+          "title": "Médico-Hospitalar & Implantes",
+          "description": "Digitalização e inspeção de próteses."
+        },
+        "tooling": {
+          "title": "Ferramentarias & Moldes",
+          "description": "Engenharia reversa e validação de matrizes, moldes de injeção e ferramentas de corte."
+        },
+        "agricultural": {
+          "title": "Máquinas Agrícolas & Linha Pesada",
+          "description": "Verificação de peças de grande porte, carcaças fundidas e estruturas montadas."
+        }
+      }
+    },
     "cta": {
       "title": "Leve a precisão e a conformidade alemã para a sua indústria.",
       "description": "Conte com relatórios FAI, engenharia reversa e inspeção GD&T de padrão internacional realizados em infraestrutura SENAI/ZEISS.",

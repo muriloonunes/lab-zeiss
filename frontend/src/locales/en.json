@@ -140,6 +140,37 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Cross-Industry Expertise",
+      "mainTitle": "Industries Served",
+      "description": "Our advanced infrastructure and technical specialists meet the most stringent compliance standards for industries demanding micrometer-level tolerances.",
+      "sectors": {
+        "food": {
+          "title": "Food & Beverage",
+          "description": "Component wear mapping and precision inspection of processing and packaging equipment."
+        },
+        "automotive": {
+          "title": "Automotive & Auto Parts",
+          "description": "Reverse engineering and prototyping of high-performance components."
+        },
+        "aerospace": {
+          "title": "Aerospace & Defense",
+          "description": "Dimensional inspection and reverse engineering of mission-critical parts."
+        },
+        "medical": {
+          "title": "Medical Devices & Implants",
+          "description": "3D scanning and precision inspection of prosthetics and implants."
+        },
+        "tooling": {
+          "title": "Tooling & Moldmaking",
+          "description": "Reverse engineering and validation of dies, injection molds, and cutting tools."
+        },
+        "agricultural": {
+          "title": "Agricultural & Heavy Equipment",
+          "description": "Dimensional verification of large-scale parts, cast housings, and assembled structures."
+        }
+      }
+    },
     "cta": {
       "title": "Bring German precision and compliance to your industry.",
       "description": "Rely on FAI reports, reverse engineering, and international GD&T inspection at SENAI/ZEISS facilities.",
