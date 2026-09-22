@@ -570,7 +570,7 @@
             "software": "ZEISS INSPECT",
             "features": [
               "Modo Satélite inovador: digitalização de peças grandes sem necessidade de fotogrametria com alvos codificados",
-              "Radar de distância integrado com projeção de marcador laser vermelho para ajuste do foco em tempo real",
+              "Radar de distância integrado com projeção de marcador laser vermelho para ajuste da distância ideal de trabalho em tempo real",
               "Rastreabilidade comprovada com padrões de comprimento em fibra de carbono calibrados DAkkS (ISO/IEC 17025)",
               "Recalibração rápida em tomada única através da ferramenta de precisão HyperScale",
               "Forte aderência em superfícies escuras, cromadas ou usinadas sem uso obrigatório de spray antirreflexo"
@@ -612,8 +612,7 @@
             "features": [
               "Segmentação automática de geometrias regulares (planos, cilindros, cones)",
               "Ajuste preciso de superfícies livres com controle numérico de desvio residual",
-              "Exportação compatível com SolidWorks, Siemens NX, CATIA e Inventor"
-            ]
+              "Exportação nativa compatível com SolidWorks, Siemens NX, CATIA e Autodesk Inventor"            ]
           }
         ]
       },

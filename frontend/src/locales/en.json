@@ -31,8 +31,8 @@
           "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
         },
         "reverse": {
-          "title": "Reverse Engineering & Localization",
-          "description": "CAD reconstruction and component localization development using 3D scanning and engineering software."
+          "title": "Reverse Engineering & Local Manufacturing",
+          "description":"CAD reconstruction and local manufacturing development using 3D scanning and engineering software."
         },
         "qcontrol": {
           "title": "Quality Control & CAD Comparison",
@@ -237,7 +237,7 @@
         },
         "accessibility": {
           "title": "Accessible Advanced Metrology",
-          "description": "Making precision instrumentation and dimensional consulting accessible not only to large corporations, but to small and medium enterprises seeking to qualify for export markets."
+          "description": "Making precision instrumentation and dimensional consulting accessible not only to large corporations, but to small and medium enterprises seeking to ensure the quality and precision of their products."
         },
         "techTransfer": {
           "title": "Technology Transfer & Education",
@@ -310,7 +310,7 @@
       }
     },
     "reverse": {
-      "category": "Reverse Engineering & Component Localization",
+      "category": "Reverse Engineering & Local Manufacturing",
       "title": "From physical part to parametric CAD model ready for manufacturing.",
       "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for production, local manufacturing of imported spares, or design improvements.",
       "applications": {
@@ -422,7 +422,7 @@
             "sensor": "ZEISS VAST Gold & ZEISS RDS",
             "software": "ZEISS CALYPSO with VAST Navigator, VAST Probing & FlyScan",
             "features": [
-              "Zerodur®/Robax® glass-ceramic scales with 200 nm resolution impervious to thermal expansion",
+              "Robax® glass-ceramic scales with 200 nm resolution impervious to thermal expansion",
               "Computer-Aided Accuracy (CAA) for dynamic error correction during high-speed scanning (up to 300 mm/s)",
               "ZEISS VAST Performance package with FlyScan (up to 70% cycle reduction) and QuickChange stylus system",
               "C99m controller with automatic energy and compressed air shutdown (PowerSaver & AirSaver)"
@@ -513,7 +513,7 @@
             "software": "ZEISS Bosello Integrated Software / ZEISS INSPECT X-Ray (CT-Ready)",
             "features": [
               "High penetration capability for light aluminum alloys and cast iron/steel parts up to 50 mm thick",
-              "360° rotary table extending outside the cabinet doors for ergonomic crane/forklift loading",
+              "360° rotary table extending outside the cabinet doors for ergonomic loading of heavy parts",
               "Exclusive software-controlled virtual C-arm configuration for precise source-detector alignment",
               "CT-Ready: prepared for tomographic scan acquisition and 3D reconstruction with defect spatial analysis",
               "Automated CNC inspection cycles and Automatic Defect Recognition (ADR) according to ASTM standards",
@@ -579,7 +579,7 @@
         ]
       },
       "engenharia-reversa": {
-        "title": "Reverse Engineering, CAD Reconstruction & Localization",
+        "title": "Reverse Engineering, CAD Reconstruction & Local Manufacturing",
         "headline": "Transforming raw scan data into production-ready parametric solid models for local manufacturing.",
         "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or requiring domestic manufacturing substitution. Encompasses precision parametric modeling, optimization, and full technical documentation for component localization.",
         "targetAudience": [
@@ -724,7 +724,7 @@
         "optica": "Optical & Multisensor Inspection",
         "raio-x": "X-Ray & CT Inspection (NDT)",
         "digitalizacao-3d": "3D Optical Scanning, CAD Comparison & Color Map",
-        "engenharia-reversa": "Reverse Engineering & Component Localization",
+        "engenharia-reversa": "Reverse Engineering & Local Manufacturing",
         "confiabilidade-mro": "Reliability, Virtual MRO Warehouse & Assets",
         "treinamentos": "Technical Training & Education",
         "consultoria": "Other / Specialized Consulting"

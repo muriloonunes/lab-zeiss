@@ -31,8 +31,8 @@
           "description": "Geometrische Maßprüfung und GD&T-Tolerierung auf ZEISS-Koordinatenmessgeräten."
         },
         "reverse": {
-          "title": "Reverse Engineering & Lokalisierung",
-          "description": "CAD-Modellrekonstruktion und Komponentenlokalisierung mittels 3D-Digitalisierung und Ingenieursoftware."
+          "title": "Reverse Engineering & Inlandsfertigung",
+          "description": "CAD-Modellrekonstruktion und Bauteil-Inlandsfertigung mittels 3D-Digitalisierung und Ingenieursoftware."
         },
         "qcontrol": {
           "title": "Qualitätskontrolle & CAD-Vergleich",
@@ -310,7 +310,7 @@
       }
     },
     "reverse": {
-      "category": "Reverse Engineering & Bauteillokalisierung",
+      "category": "Reverse Engineering & Inlandsfertigung",
       "title": "Vom physischen Bauteil zum fertigungsbereiten parametrischen CAD-Modell.",
       "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für die Inlandsfertigung von Importteilen, Ersatzteilbereitstellung oder Konstruktionsoptimierung.",
       "applications": {
@@ -513,7 +513,7 @@
             "software": "Integrierte ZEISS Bosello Software / ZEISS INSPECT X-Ray (CT-Ready)",
             "features": [
               "Hohe Durchstrahlungsleistung für Leichtmetalle und Stahl-/Gussteile bis zu 50 mm Wandstärke",
-              "360°-Drehtisch mit Außenausfahrbarkeit vor die Schutztüren für ergonomische Kranbeladung",
+              "360°-Drehtisch mit Außenausfahrbarkeit vor die Schutztüren für ergonomische Beladung schwerer Bauteile",
               "Softwaregesteuerter virtueller C-Bogen zur hochpräzisen Ausrichtung zwischen Quelle und Detektor",
               "CT-Ready: vorbereitet für tomographische 3D-Rekonstruktionen und räumliche Defektanalysen",
               "Automatisierte CNC-Prüfabläufe und automatische Fehlererkennung (ADR) nach ASTM-Normen",
@@ -570,7 +570,7 @@
             "software": "ZEISS INSPECT",
             "features": [
               "Innovativer Satellitenmodus: Scannen großer Objekte ohne separate Photogrammetrie-Aufbauten",
-              "Integrierter Abstandsrader mit roter Laserprojektion zur Echtzeit-Fokuseinstellung",
+              "Integrierter Abstandsradar mit roter Laserprojektion für das Echtzeit-Feedback der optimalen Arbeitsdistanz",
               "Nachgewiesene Rückführbarkeit durch DAkkS-kalibrierte Carbonfaser-Längenmaßstäbe (ISO/IEC 17025)",
               "Schnelle Ein-Schuss-Nachkalibrierung vor Ort mit dem HyperScale-Präzisionsstab",
               "Hohe Zuverlässigkeit auf dunklen, verchromten oder bearbeiteten Oberflächen ohne zwingendes Mattierungsspray"
@@ -579,7 +579,7 @@
         ]
       },
       "engenharia-reversa": {
-        "title": "Reverse Engineering, CAD-Flächenrückführung & Lokalisierung",
+        "title":"Reverse Engineering, CAD-Flächenrückführung & Inlandsfertigung",
         "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle für die Inlandsfertigung.",
         "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung und Dokumentation.",
         "targetAudience": [
@@ -724,7 +724,7 @@
         "optica": "Optische & Multisensorische Inspektion",
         "raio-x": "Röntgenprüfung & Computertomographie (NDT)",
         "digitalizacao-3d": "Optische 3D-Digitalisierung, CAD-Vergleich & Falschfarben",
-        "engenharia-reversa": "Reverse Engineering & Bauteillokalisierung",
+        "engenharia-reversa": "Reverse Engineering & Inlandsfertigung",
         "confiabilidade-mro": "Zuverlässigkeit, Virtuelles MRO-Lager & Assets",
         "treinamentos": "Technische Weiterbildung & Fachschulung",
         "consultoria": "Sonstiges / Spezialisierte Beratung"
