@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  *
  * @author Murilo Nunes <murilo_no@outlook.com>
  * @date 19/09/2026
- * @brief Class NotificacaoAssinatura
+ * @brief Class Notificacao
  */
 @Entity
 @Getter
@@ -31,6 +31,15 @@ public class Notificacao {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String mensagem;
+
+    @Column(name = "tipo")
+    private String tipo;
+
+    @Column(name = "referencia_id")
+    private Long referenciaId;
+
+    @Column(name = "link")
+    private String link;
 
     @Column(nullable = false)
     private boolean lida = false;

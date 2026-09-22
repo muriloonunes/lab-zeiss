@@ -13,6 +13,9 @@ public record NotificacaoResponse(
         Long usuarioId,
         String titulo,
         String mensagem,
+        String tipo,
+        Long referenciaId,
+        String link,
         boolean lida,
         LocalDateTime dataCriacao
 ) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Notificacao } from '../../types/notificacao';
 import {
     listarNotificacoes,
@@ -13,6 +14,7 @@ import './NotificacoesPopover.scss';
 
 export const NotificacoesPopover: React.FC = () => {
     const { usuario, autenticado } = useAuth();
+    const navigate = useNavigate();
     const [aberto, setAberto] = useState(false);
     const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
     const [totalNaoLidas, setTotalNaoLidas] = useState<number>(0);
@@ -36,26 +38,24 @@ export const NotificacoesPopover: React.FC = () => {
         if (!autenticado) return;
         if (!silencioso) setCarregando(true);
         try {
-            const data = await listarNotificacoes();
-            setNotificacoes(data);
-            setTotalNaoLidas(data.filter((n) => !n.lida).length);
-        } catch {
-            // Falha silenciosa
+            const dados = await listarNotificacoes();
+            setNotificacoes(dados);
+            const naoLidas = dados.filter((n) => !n.lida).length;
+            setTotalNaoLidas(naoLidas);
+        } catch (err: unknown) {
+            if (!silencioso) {
+                mostrarToast('error', 'Falha ao carregar as notificações.');
+            }
         } finally {
             if (!silencioso) setCarregando(false);
         }
-    }, [autenticado]);
+    }, [autenticado, mostrarToast]);
 
-    // Executa assim que o componente monta ou assim que o usuário é autenticado
+    // Atualiza contagem na montagem e com polling de 30s
     useEffect(() => {
         if (autenticado) {
             atualizarContagem();
         }
-    }, [autenticado, usuario, atualizarContagem]);
-
-    // Polling periódico a cada 30 segundos
-    useEffect(() => {
-        if (!autenticado) return;
 
         const intervalo = setInterval(() => {
             if (aberto) {
@@ -123,11 +123,27 @@ export const NotificacoesPopover: React.FC = () => {
     };
 
     const handleAbrirDetalhe = (notif: Notificacao) => {
-        setNotificacaoSelecionada(notif);
         if (!notif.lida) {
             handleMarcarComoLida(notif.id);
         }
         setAberto(false);
+
+        // Se houver link direto ou parâmetros de navegação rápida, navegar diretamente
+        const destino = notif.link || (
+            notif.tipo === 'LICAO_DEVOLVIDA' && notif.referenciaId
+                ? `/interno/servicos?servicoId=${notif.referenciaId}&acao=revisarLicao`
+                : (notif.tipo === 'NOVA_LICAO_VALIDAR' || notif.tipo === 'LICAO_REENVIADA') && notif.referenciaId
+                    ? `/interno/licoes?aba=validacao&servicoId=${notif.referenciaId}`
+                    : notif.tipo === 'LICAO_APROVADA' && notif.referenciaId
+                        ? `/interno/licoes?aba=conhecimento&servicoId=${notif.referenciaId}`
+                        : null
+        );
+
+        if (destino) {
+            navigate(destino);
+        } else {
+            setNotificacaoSelecionada(notif);
+        }
     };
 
     const formatarDataAmigavel = (dataStr: string) => {
@@ -165,8 +181,9 @@ export const NotificacoesPopover: React.FC = () => {
                     <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
                     <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                 </svg>
+
                 {totalNaoLidas > 0 && (
-                    <span className="badge-contagem">
+                    <span className="notificacoes-badge">
                         {totalNaoLidas > 99 ? '99+' : totalNaoLidas}
                     </span>
                 )}
@@ -174,46 +191,47 @@ export const NotificacoesPopover: React.FC = () => {
 
             {aberto && (
                 <>
-                    <div
-                        className="notificacoes-backdrop"
-                        onClick={handleFecharPopover}
-                        aria-hidden="true"
-                    />
+                    <div className="notificacoes-backdrop" onClick={handleFecharPopover} />
                     <div className="notificacoes-popover">
                         <div className="popover-header">
-                            <div className="header-title-area">
-                                <h3>Notificações</h3>
+                            <div className="header-title">
+                                <h4>Notificações</h4>
                                 {totalNaoLidas > 0 && (
-                                    <span className="unread-pill">{totalNaoLidas} não lidas</span>
+                                    <span className="badge-nao-lidas">{totalNaoLidas} novas</span>
                                 )}
                             </div>
-                            <button
-                                className="btn-marcar-todas"
-                                onClick={handleMarcarTodasComoLidas}
-                                disabled={totalNaoLidas === 0}
-                            >
-                                Marcar todas como lidas
-                            </button>
+                            <div className="header-actions">
+                                {totalNaoLidas > 0 && (
+                                    <button
+                                        className="btn-mark-all"
+                                        onClick={handleMarcarTodasComoLidas}
+                                        title="Marcar todas como lidas"
+                                    >
+                                        Limpar não lidas
+                                    </button>
+                                )}
+                            </div>
                         </div>
 
                         <div className="popover-body">
                             {carregando ? (
-                                <div className="loading-state">
-                                    <p>Carregando notificações...</p>
+                                <div className="popover-loading">
+                                    <div className="spinner-sutil" />
+                                    <span>Carregando notificações...</span>
                                 </div>
                             ) : notificacoes.length === 0 ? (
-                                <div className="empty-state">
+                                <div className="popover-empty">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        strokeWidth="2"
+                                        strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                     >
-                                        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                                        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                                     </svg>
                                     <p>Nenhuma notificação por enquanto.</p>
                                 </div>
@@ -325,29 +343,24 @@ export const NotificacoesPopover: React.FC = () => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button
-                                className="btn-excluir-modal"
-                                onClick={() => handleExcluirNotificacao(notificacaoSelecionada.id)}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                            {(notificacaoSelecionada.link || notificacaoSelecionada.referenciaId) && (
+                                <button
+                                    className="btn-primario"
+                                    onClick={() => {
+                                        const destino = notificacaoSelecionada.link || (
+                                            notificacaoSelecionada.tipo === 'LICAO_DEVOLVIDA'
+                                                ? `/interno/servicos?servicoId=${notificacaoSelecionada.referenciaId}&acao=revisarLicao`
+                                                : `/interno/licoes?servicoId=${notificacaoSelecionada.referenciaId}`
+                                        );
+                                        setNotificacaoSelecionada(null);
+                                        navigate(destino);
+                                    }}
                                 >
-                                    <path d="M3 6h18" />
-                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                </svg>
-                                Excluir notificação
-                            </button>
+                                    Acessar Registro →
+                                </button>
+                            )}
                             <button
-                                className="btn-entendido"
+                                className="btn-secundario"
                                 onClick={() => setNotificacaoSelecionada(null)}
                             >
                                 Fechar

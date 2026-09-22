@@ -17,6 +17,7 @@ import { Usuarios } from './pages/Internal/Usuarios/Usuarios';
 import { Vocabulario } from './pages/Internal/Vocabulario/Vocabulario';
 import { Solicitacoes } from './pages/Internal/Solicitacoes/Solicitacoes';
 import { Servicos } from './pages/Internal/Servicos/Servicos';
+import { Licoes } from './pages/Internal/Licoes/Licoes';
 
 function PublicLayout() {
     return (
@@ -60,6 +61,7 @@ export default function App() {
                 >
                     <Route index element={<Dashboard />} />
                     <Route path="servicos" element={<Servicos />} />
+                    <Route path="licoes" element={<Licoes />} />
                     <Route path="solicitacoes" element={<Solicitacoes />} />
                     <Route path="perfil" element={<Perfil />} />
                     <Route path="vocabulario" element={<Vocabulario />} />

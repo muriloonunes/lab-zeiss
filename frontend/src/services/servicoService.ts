@@ -6,7 +6,16 @@ import {
     StatusServico,
 } from '../types/servico';
 
-export { aprovarLicao, devolverLicao, reenviarLicao } from './licaoService';
+export {
+    aprovarLicao,
+    devolverLicao,
+    reenviarLicao,
+    marcarComoSuperada,
+    reativarLicao,
+    listarBaseConhecimento,
+    listarPendentesValidacao,
+    contarPendentesValidacao,
+} from './licaoService';
 
 export async function listarServicos(status?: StatusServico): Promise<RegistroServico[]> {
     const url = status ? `/api/servicos?status=${status}` : '/api/servicos';

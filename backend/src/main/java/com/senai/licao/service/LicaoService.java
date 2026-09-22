@@ -4,6 +4,7 @@ import com.senai.assinatura.AssinaturaAssunto;
 import com.senai.assinatura.AssinaturaRepository;
 import com.senai.common.exception.NaoEncontradoException;
 import com.senai.common.exception.RequisicaoInvalidaException;
+import com.senai.licao.dto.ContagemPendentesResponse;
 import com.senai.licao.dto.DevolverLicaoRequest;
 import com.senai.licao.dto.ReenviarLicaoRequest;
 import com.senai.notificacao.service.NotificacaoService;
@@ -26,11 +27,10 @@ import jakarta.transaction.Transactional;
 import java.util.*;
 
 /**
- * Serviço responsável pelas regras de negócio de Gestão do Conhecimento
- * e ciclo de validação de Lições Aprendidas (Peça 4.6).
  *
  * @author Murilo Nunes <murilo_no@outlook.com>
  * @date 22/09/2026
+ * @brief Service dedicado para o ciclo de vida e gestão de Lições Aprendidas (SRP)
  */
 @ApplicationScoped
 public class LicaoService {
@@ -45,95 +45,147 @@ public class LicaoService {
     UsuarioRepository usuarioRepository;
 
     @Inject
-    AssinaturaRepository assinaturaRepository;
+    NotificacaoService notificacaoService;
 
     @Inject
-    NotificacaoService notificacaoService;
+    AssinaturaRepository assinaturaRepository;
 
     @Inject
     ServicoMapper mapper;
 
-    public TermoVocabulario validarECarregarCausaDesvio(Long causaDesvioId, boolean obrigatorio) {
-        if (causaDesvioId == null) {
-            if (obrigatorio) {
-                throw new RequisicaoInvalidaException("A causa do desvio é obrigatória.");
-            }
-            return null;
-        }
-        var causaDesvio = termoRepository.findByIdOptional(causaDesvioId)
-                .orElseThrow(() -> new NaoEncontradoException("Causa de desvio informada não existe."));
-
-        if (!causaDesvio.getClasse().getNome().equalsIgnoreCase("Causa do Desvio") || !causaDesvio.isAtivo()) {
-            throw new RequisicaoInvalidaException("Termo inválido ou inativo para Causa do Desvio.");
-        }
-        return causaDesvio;
+    public List<ServicoResponse> listarBaseConhecimento(StatusLicao status, Long termoId, String busca) {
+        return servicoRepository.listarBaseConhecimento(status, termoId, busca).stream()
+                .map(mapper::toResponse)
+                .toList();
     }
 
-    public Set<TermoVocabulario> validarECarregarAssuntosRelacionados(Collection<Long> assuntosRelacionadosIds) {
-        if (assuntosRelacionadosIds == null || assuntosRelacionadosIds.isEmpty()) {
-            return new HashSet<>();
+    public List<ServicoResponse> listarLicoesPendentesValidacao() {
+        return servicoRepository.listarLicoesPendentesValidacao().stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
+
+    public ContagemPendentesResponse contarLicoesPendentesValidacao() {
+        long total = servicoRepository.contarLicoesPendentesValidacao();
+        return new ContagemPendentesResponse(total);
+    }
+
+    public TermoVocabulario validarECarregarCausaDesvio(Long causaDesvioId) {
+        if (causaDesvioId == null) {
+            return null;
         }
-        Set<TermoVocabulario> assuntosRelacionados = new HashSet<>();
-        for (Long assuntoId : assuntosRelacionadosIds) {
-            var assunto = termoRepository.findByIdOptional(assuntoId)
-                    .orElseThrow(() -> new NaoEncontradoException("Assunto relacionado ID " + assuntoId + " não encontrado."));
-            if (!assunto.isAtivo()) {
-                throw new RequisicaoInvalidaException("O termo '" + assunto.getDescricao() + "' está inativo.");
+        var termo = termoRepository.findByIdOptional(causaDesvioId)
+                .orElseThrow(() -> new NaoEncontradoException("Causa de desvio informada não existe."));
+
+        if (!termo.isAtivo()) {
+            throw new RequisicaoInvalidaException("O termo de causa de desvio selecionado está inativo.");
+        }
+        String nomeClasse = termo.getClasse() != null ? termo.getClasse().getNome() : "";
+        if (!"Causa do Desvio".equalsIgnoreCase(nomeClasse) && !"Causa de Desvio".equalsIgnoreCase(nomeClasse)) {
+            throw new RequisicaoInvalidaException("Termo inválido ou inativo para Causa do Desvio.");
+        }
+        return termo;
+    }
+
+    public Set<TermoVocabulario> validarECarregarAssuntosRelacionados(Collection<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return new LinkedHashSet<>();
+        }
+        Set<TermoVocabulario> termos = new LinkedHashSet<>();
+        for (Long id : ids) {
+            var termo = termoRepository.findByIdOptional(id)
+                    .orElseThrow(() -> new NaoEncontradoException("Assunto relacionado ID " + id + " não encontrado."));
+            if (!termo.isAtivo()) {
+                throw new RequisicaoInvalidaException("O termo '" + termo.getDescricao() + "' está inativo.");
             }
-            assuntosRelacionados.add(assunto);
+            termos.add(termo);
         }
-        return assuntosRelacionados;
+        return termos;
     }
 
     public BlocoAprendizado montarBlocoAprendizado(
-            BlocoAprendizado blocoExistente,
+            BlocoAprendizado existente,
             Long causaDesvioId,
             String licaoAprendida,
             Collection<Long> assuntosRelacionadosIds,
             Boolean restrito,
-            StatusLicao statusLicao,
-            String motivoRejeicao,
-            boolean obrigatorio
+            StatusLicao novoStatus,
+            String novoMotivoRejeicao,
+            boolean isConclusao
     ) {
-        var bloco = blocoExistente != null ? blocoExistente : new BlocoAprendizado();
-        if (causaDesvioId != null || obrigatorio) {
-            bloco.setCausaDesvio(validarECarregarCausaDesvio(causaDesvioId, obrigatorio));
-        }
-        if (assuntosRelacionadosIds != null) {
-            bloco.setAssuntosRelacionados(validarECarregarAssuntosRelacionados(assuntosRelacionadosIds));
-        }
-        if (licaoAprendida != null) {
+        BlocoAprendizado bloco = existente != null ? existente : new BlocoAprendizado();
+
+        if (isConclusao) {
+            if (causaDesvioId == null) {
+                throw new RequisicaoInvalidaException("A causa de desvio é obrigatória para concluir o serviço.");
+            }
+            bloco.setCausaDesvio(validarECarregarCausaDesvio(causaDesvioId));
+
+            if (licaoAprendida == null || licaoAprendida.trim().isBlank()) {
+                throw new RequisicaoInvalidaException("O relato da lição aprendida é obrigatório para concluir o serviço.");
+            }
             bloco.setLicaoAprendida(licaoAprendida.trim());
+
+            if (assuntosRelacionadosIds != null) {
+                bloco.setAssuntosRelacionados(validarECarregarAssuntosRelacionados(assuntosRelacionadosIds));
+            } else {
+                bloco.setAssuntosRelacionados(new LinkedHashSet<>());
+            }
+
+            bloco.setRestrito(Boolean.TRUE.equals(restrito));
+            bloco.setStatusLicao(StatusLicao.EM_VALIDACAO);
+            bloco.setMotivoRejeicao(null);
+        } else {
+            if (causaDesvioId != null) {
+                bloco.setCausaDesvio(validarECarregarCausaDesvio(causaDesvioId));
+            } else {
+                bloco.setCausaDesvio(null);
+            }
+
+            bloco.setLicaoAprendida(licaoAprendida != null && !licaoAprendida.trim().isBlank() ? licaoAprendida.trim() : null);
+
+            if (assuntosRelacionadosIds != null && !assuntosRelacionadosIds.isEmpty()) {
+                bloco.setAssuntosRelacionados(validarECarregarAssuntosRelacionados(assuntosRelacionadosIds));
+            } else {
+                bloco.setAssuntosRelacionados(new LinkedHashSet<>());
+            }
+
+            bloco.setRestrito(Boolean.TRUE.equals(restrito));
+
+            if (novoStatus != null) {
+                bloco.setStatusLicao(novoStatus);
+            } else if (bloco.getStatusLicao() == null || bloco.getStatusLicao() == StatusLicao.RASCUNHO) {
+                bloco.setStatusLicao(StatusLicao.RASCUNHO);
+            }
+
+            if (novoMotivoRejeicao != null) {
+                bloco.setMotivoRejeicao(novoMotivoRejeicao);
+            }
         }
-        if (restrito != null) {
-            bloco.setRestrito(restrito);
-        }
-        if (statusLicao != null) {
-            bloco.setStatusLicao(statusLicao);
-        }
-        bloco.setMotivoRejeicao(motivoRejeicao);
+
         return bloco;
     }
 
     public void notificarNovaLicao(RegistroServico servico, boolean isReenvio) {
         List<Usuario> validadores = usuarioRepository.listarAtivosPorTipos(TipoUsuario.VALIDADOR, TipoUsuario.ADMINISTRADOR);
-        Long autorId = servico.getBlocoOrcamento() != null && servico.getBlocoOrcamento().getResponsavelEstimativa() != null
-                ? servico.getBlocoOrcamento().getResponsavelEstimativa().getId()
-                : null;
-
-        String titulo = isReenvio
-                ? "Lição Reenviada para Validação: " + servico.getCodigo()
-                : "Nova Lição para Validação: " + servico.getCodigo();
-
-        String mensagem = isReenvio
-                ? String.format("A lição da OS %s foi revisada e reenviada pelo técnico para validação do conhecimento.", servico.getCodigo())
-                : String.format("A OS %s foi finalizada e submeteu uma nova lição aprendida aguardando validação.", servico.getCodigo());
+        String acao = isReenvio ? "revisada e reenviada" : "concluída";
+        String titulo = isReenvio ? "Lição Reenviada: " + servico.getCodigo() : "Nova Lição para Validação: " + servico.getCodigo();
+        String link = "/interno/licoes?aba=validacao&servicoId=" + servico.getId();
 
         for (Usuario validador : validadores) {
-            if (validador.getId().equals(autorId)) {
-                continue;
-            }
-            notificacaoService.criarNotificacao(validador.getId(), titulo, mensagem);
+            String mensagem = String.format(
+                    "A ordem de serviço %s teve sua lição %s pelo técnico e aguarda validação técnica no laboratório.",
+                    servico.getCodigo(),
+                    acao
+            );
+            notificacaoService.criarNotificacao(
+                    validador.getId(),
+                    titulo,
+                    mensagem,
+                    "LICAO_PENDENTE_VALIDACAO",
+                    servico.getId(),
+                    link
+            );
         }
     }
 
@@ -143,24 +195,38 @@ public class LicaoService {
                 .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
 
         if (servico.getStatus() != StatusServico.CONCLUIDO) {
-            throw new RequisicaoInvalidaException("A lição só pode ser reenviada para serviços concluídos.");
+            throw new RequisicaoInvalidaException("Apenas serviços com status CONCLUIDO podem ter suas lições reenviadas.");
         }
 
-        var blocoAprendizado = montarBlocoAprendizado(
-                servico.getBlocoAprendizado(),
-                request.causaDesvioId(),
-                request.licaoAprendida(),
-                request.assuntosRelacionadosIds(),
-                request.restrito(),
-                StatusLicao.EM_VALIDACAO,
-                null,
-                true
-        );
+        var blocoAprendizado = servico.getBlocoAprendizado();
+        if (blocoAprendizado == null) {
+            throw new RequisicaoInvalidaException("Este serviço não possui lição aprendida registrada.");
+        }
 
-        servico.setBlocoAprendizado(blocoAprendizado);
+        if (blocoAprendizado.getStatusLicao() != StatusLicao.RASCUNHO) {
+            throw new RequisicaoInvalidaException("Apenas lições devolvidas (status RASCUNHO) podem ser reenviadas para validação.");
+        }
+
+        if (request.licaoAprendida() == null || request.licaoAprendida().isBlank()) {
+            throw new RequisicaoInvalidaException("O relato da lição aprendida é obrigatório.");
+        }
+
+        if (request.causaDesvioId() != null) {
+            blocoAprendizado.setCausaDesvio(validarECarregarCausaDesvio(request.causaDesvioId()));
+        }
+
+        if (request.assuntosRelacionadosIds() != null) {
+            blocoAprendizado.setAssuntosRelacionados(validarECarregarAssuntosRelacionados(request.assuntosRelacionadosIds()));
+        }
+
+        blocoAprendizado.setLicaoAprendida(request.licaoAprendida().trim());
+        blocoAprendizado.setRestrito(request.restrito());
+
+        blocoAprendizado.setStatusLicao(StatusLicao.EM_VALIDACAO);
+        blocoAprendizado.setMotivoRejeicao(null);
+
         servicoRepository.persist(servico);
 
-        // Notificar validadores sobre o reenvio
         notificarNovaLicao(servico, true);
 
         return mapper.toResponse(servico);
@@ -184,20 +250,31 @@ public class LicaoService {
         blocoAprendizado.setMotivoRejeicao(null);
         servicoRepository.persist(servico);
 
-        // Notificar técnico responsável pela estimativa
         var autorEstimativa = servico.getBlocoOrcamento() != null ? servico.getBlocoOrcamento().getResponsavelEstimativa() : null;
         if (autorEstimativa != null && (!autorEstimativa.getId().equals(validadorId))) {
             notificacaoService.criarNotificacao(
                     autorEstimativa.getId(),
                     "Lição Aprovada: " + servico.getCodigo(),
-                    "A lição aprendida registrada na OS " + servico.getCodigo() + " foi aprovada e formalizada pelo validador."
+                    "A lição aprendida registrada na OS " + servico.getCodigo() + " foi aprovada e formalizada pelo validador.",
+                    "LICAO_APROVADA",
+                    servico.getId(),
+                    "/interno/licoes?aba=conhecimento&servicoId=" + servico.getId()
             );
         }
 
-        // Notificar assinantes dos assuntos relacionados
-        var assuntos = blocoAprendizado.getAssuntosRelacionados();
-        if (assuntos != null && !assuntos.isEmpty()) {
-            List<Long> termosIds = assuntos.stream().map(TermoVocabulario::getId).toList();
+        Set<TermoVocabulario> todosTermos = new HashSet<>();
+        if (blocoAprendizado.getCausaDesvio() != null) {
+            todosTermos.add(blocoAprendizado.getCausaDesvio());
+        }
+        if (blocoAprendizado.getAssuntosRelacionados() != null) {
+            todosTermos.addAll(blocoAprendizado.getAssuntosRelacionados());
+        }
+
+        if (!todosTermos.isEmpty()) {
+            List<Long> termosIds = todosTermos.stream()
+                    .map(TermoVocabulario::getId)
+                    .filter(Objects::nonNull)
+                    .toList();
             List<AssinaturaAssunto> assinaturas = assinaturaRepository.listarPorTermos(termosIds);
 
             Map<Long, List<String>> assuntosPorUsuario = new HashMap<>();
@@ -225,7 +302,10 @@ public class LicaoService {
                 notificacaoService.criarNotificacao(
                         usuarioDestinoId,
                         "Novo Conhecimento Formalizado: " + servico.getCodigo(),
-                        msg
+                        msg,
+                        "LICAO_APROVADA",
+                        servico.getId(),
+                        "/interno/licoes?aba=conhecimento&servicoId=" + servico.getId()
                 );
             }
         }
@@ -244,32 +324,66 @@ public class LicaoService {
 
         var blocoAprendizado = servico.getBlocoAprendizado();
         if (blocoAprendizado == null || blocoAprendizado.getStatusLicao() != StatusLicao.EM_VALIDACAO) {
-            throw new RequisicaoInvalidaException("A lição deste serviço não está em estado de validação.");
+            throw new RequisicaoInvalidaException("Apenas lições pendentes de validação podem ser devolvidas.");
         }
 
         if (request.motivoRejeicao() == null || request.motivoRejeicao().trim().isBlank()) {
-            throw new RequisicaoInvalidaException("O motivo da devolução/rejeição é obrigatório.");
+            throw new RequisicaoInvalidaException("O motivo da devolução da lição é obrigatório.");
         }
 
-        String motivo = request.motivoRejeicao().trim();
         blocoAprendizado.setStatusLicao(StatusLicao.RASCUNHO);
-        blocoAprendizado.setMotivoRejeicao(motivo);
+        blocoAprendizado.setMotivoRejeicao(request.motivoRejeicao().trim());
         servicoRepository.persist(servico);
 
-        // Notificar técnico responsável
         var autor = servico.getBlocoOrcamento() != null ? servico.getBlocoOrcamento().getResponsavelEstimativa() : null;
         if (autor != null) {
+            String link = "/interno/servicos?servicoId=" + servico.getId() + "&acao=revisarLicao";
             String msg = String.format(
-                    "A lição aprendida da OS %s foi devolvida pelo validador para revisão/complementação.\n\nMotivo da Devolução:\n%s",
+                    "A lição aprendida da OS %s foi devolvida pelo validador técnico para ajuste:\n\"%s\"",
                     servico.getCodigo(),
-                    motivo
+                    request.motivoRejeicao().trim()
             );
             notificacaoService.criarNotificacao(
                     autor.getId(),
-                    "Lição Devolvida: " + servico.getCodigo(),
-                    msg
+                    "Lição Devolvida para Ajuste: " + servico.getCodigo(),
+                    msg,
+                    "LICAO_DEVOLVIDA",
+                    servico.getId(),
+                    link
             );
         }
+
+        return mapper.toResponse(servico);
+    }
+
+    @Transactional
+    public ServicoResponse marcarComoSuperada(Long servicoId, Long validadorId) {
+        var servico = servicoRepository.findByIdOptional(servicoId)
+                .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
+
+        var blocoAprendizado = servico.getBlocoAprendizado();
+        if (blocoAprendizado == null || blocoAprendizado.getStatusLicao() != StatusLicao.FORMALIZADA) {
+            throw new RequisicaoInvalidaException("Apenas lições formalizadas podem ser marcadas como superadas.");
+        }
+
+        blocoAprendizado.setStatusLicao(StatusLicao.SUPERADA);
+        servicoRepository.persist(servico);
+
+        return mapper.toResponse(servico);
+    }
+
+    @Transactional
+    public ServicoResponse reativarLicao(Long servicoId, Long validadorId) {
+        var servico = servicoRepository.findByIdOptional(servicoId)
+                .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
+
+        var blocoAprendizado = servico.getBlocoAprendizado();
+        if (blocoAprendizado == null || blocoAprendizado.getStatusLicao() != StatusLicao.SUPERADA) {
+            throw new RequisicaoInvalidaException("Apenas lições superadas podem ser reativadas.");
+        }
+
+        blocoAprendizado.setStatusLicao(StatusLicao.FORMALIZADA);
+        servicoRepository.persist(servico);
 
         return mapper.toResponse(servico);
     }

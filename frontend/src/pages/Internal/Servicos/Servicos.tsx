@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
     RegistroServico,
     STATUS_SERVICO_LABELS,
@@ -10,6 +11,7 @@ import {
     cancelarServico,
     salvarRascunhoServico,
     concluirServico,
+    reenviarLicao,
 } from '../../../services/servicoService';
 import { listarClasses, listarTermosPorClasse } from '../../../services/vocabularioService';
 import { TermoVocabulario } from '../../../types/vocabulario';
@@ -19,6 +21,7 @@ import './Servicos.scss';
 
 export const Servicos: React.FC = () => {
     const { mostrarToast } = useToast();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [servicos, setServicos] = useState<RegistroServico[]>([]);
     const [carregando, setCarregando] = useState(true);
@@ -30,13 +33,14 @@ export const Servicos: React.FC = () => {
     // Modais
     const [modalDetalhesAberto, setModalDetalhesAberto] = useState(false);
     const [modalFinalizarAberto, setModalFinalizarAberto] = useState(false);
+    const [modalRevisarLicaoAberto, setModalRevisarLicaoAberto] = useState(false);
     const [modalCancelarAberto, setModalCancelarAberto] = useState(false);
     const [modalCriarAberto, setModalCriarAberto] = useState(false);
 
     // Serviço Selecionado
     const [selecionado, setSelecionado] = useState<RegistroServico | null>(null);
 
-    // Vocabulários para Finalização (Bloco B e C)
+    // Vocabulários para Finalização e Lições (Bloco B e C)
     const [causasDesvio, setCausasDesvio] = useState<TermoVocabulario[]>([]);
     const [todosTermos, setTodosTermos] = useState<TermoVocabulario[]>([]);
 
@@ -72,11 +76,12 @@ export const Servicos: React.FC = () => {
     const carregarVocabularios = async () => {
         try {
             const classes = await listarClasses(true);
-            for (const c of classes) {
-                const nomeLower = c.nome.toLowerCase();
-                if (nomeLower === 'causa do desvio') {
-                    const termos = await listarTermosPorClasse(c.id, true);
-                    setCausasDesvio(termos);
+            const classeCausa = classes.find(c => c.nome.toLowerCase() === 'causa do desvio');
+            if (classeCausa) {
+                const termosCausa = await listarTermosPorClasse(classeCausa.id, true);
+                setCausasDesvio(termosCausa);
+                if (termosCausa.length > 0) {
+                    setCausaDesvioId(termosCausa[0].id);
                 }
             }
 
@@ -95,17 +100,54 @@ export const Servicos: React.FC = () => {
         carregarVocabularios();
     }, []);
 
-    // Contadores
+    // Sincronização com Search Params (filtros ou navegação direta da notificação)
+    useEffect(() => {
+        const paramFiltro = searchParams.get('filtro');
+        if (paramFiltro === 'devolvidas') {
+            setFiltroStatus('DEVOLVIDAS');
+        } else if (paramFiltro && ['TODOS', 'EM_ANDAMENTO', 'CONCLUIDO', 'VALIDACAO', 'CANCELADO'].includes(paramFiltro.toUpperCase())) {
+            setFiltroStatus(paramFiltro.toUpperCase());
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        const paramServicoId = searchParams.get('servicoId');
+        if (paramServicoId && servicos.length > 0) {
+            const serv = servicos.find(s => s.id === Number(paramServicoId));
+            if (serv) {
+                const acao = searchParams.get('acao');
+                const isDevolvida = serv.status === 'CONCLUIDO' && serv.blocoAprendizado?.statusLicao === 'RASCUNHO';
+                if (acao === 'revisarLicao' || isDevolvida) {
+                    abrirModalRevisarLicao(serv);
+                } else {
+                    abrirDetalhes(serv);
+                }
+            }
+        }
+    }, [servicos, searchParams]);
+
+    // Contadores com métricas separadas de OS e Lição
     const contadores = useMemo(() => {
         const total = servicos.length;
         const orcados = servicos.filter(s => s.status === 'ORCADO').length;
         const emExecucao = servicos.filter(s => s.status === 'EM_EXECUCAO').length;
+        const emAndamento = orcados + emExecucao;
         const concluidos = servicos.filter(s => s.status === 'CONCLUIDO').length;
+        const devolvidas = servicos.filter(
+            s => s.status === 'CONCLUIDO' &&
+                s.blocoAprendizado?.statusLicao === 'RASCUNHO' &&
+                !!s.blocoAprendizado?.motivoRejeicao
+        ).length;
+        const emValidacao = servicos.filter(
+            s => s.status === 'CONCLUIDO' &&
+                s.blocoAprendizado?.statusLicao === 'EM_VALIDACAO'
+        ).length;
         const cancelados = servicos.filter(s => s.status === 'CANCELADO').length;
-        return { total, orcados, emExecucao, concluidos, cancelados };
+
+        return { total, orcados, emExecucao, emAndamento, concluidos, devolvidas, emValidacao, cancelados };
     }, [servicos]);
 
-    // Filtragem
+    // Filtragem refinada
     const servicosFiltrados = useMemo(() => {
         return servicos.filter((s) => {
             const query = busca.toLowerCase().trim();
@@ -116,20 +158,34 @@ export const Servicos: React.FC = () => {
                 s.blocoOrcamento?.recurso?.descricao.toLowerCase().includes(query) ||
                 s.blocoOrcamento?.responsavelEstimativa?.nome.toLowerCase().includes(query);
 
-            const matchStatus = filtroStatus === 'TODOS' || s.status === filtroStatus;
+            let matchStatus = true;
+            if (filtroStatus === 'TODOS') {
+                matchStatus = true;
+            } else if (filtroStatus === 'EM_ANDAMENTO') {
+                matchStatus = s.status === 'ORCADO' || s.status === 'EM_EXECUCAO';
+            } else if (filtroStatus === 'DEVOLVIDAS') {
+                matchStatus = s.status === 'CONCLUIDO' &&
+                    s.blocoAprendizado?.statusLicao === 'RASCUNHO' &&
+                    !!s.blocoAprendizado?.motivoRejeicao;
+            } else if (filtroStatus === 'VALIDACAO') {
+                matchStatus = s.status === 'CONCLUIDO' &&
+                    s.blocoAprendizado?.statusLicao === 'EM_VALIDACAO';
+            } else {
+                matchStatus = s.status === filtroStatus;
+            }
+
             return matchBusca && matchStatus;
         });
     }, [servicos, busca, filtroStatus]);
 
-    // Ações
     const abrirDetalhes = (s: RegistroServico) => {
         setSelecionado(s);
+        // Pre-carrega campos da licao caso queira avançar
+        setCausaDesvioId(s.blocoAprendizado?.causaDesvio?.id ?? (causasDesvio[0]?.id || ''));
+        setLicaoAprendida(s.blocoAprendizado?.licaoAprendida ?? '');
+        setAssuntosRelacionadosIds(s.blocoAprendizado?.assuntosRelacionados?.map(a => a.id) ?? []);
+        setRestrito(s.blocoAprendizado?.restrito ?? false);
         setModalDetalhesAberto(true);
-    };
-
-    const handleServicoCriadoComSucesso = (criado: RegistroServico) => {
-        setServicos(prev => [criado, ...prev]);
-        mostrarToast('success', `Ordem de Serviço ${criado.codigo} criada com sucesso!`);
     };
 
     const handleIniciarExecucao = async (s: RegistroServico, e?: React.MouseEvent) => {
@@ -137,44 +193,11 @@ export const Servicos: React.FC = () => {
         setSalvandoAcao(true);
         try {
             const atualizado = await iniciarExecucaoServico(s.id);
+            mostrarToast('success', `Serviço ${s.codigo} iniciado com sucesso!`);
             setServicos(prev => prev.map(item => item.id === atualizado.id ? atualizado : item));
-            mostrarToast('success', `Serviço ${s.codigo} colocado em execução.`);
-            if (modalDetalhesAberto && selecionado?.id === s.id) {
-                setSelecionado(atualizado);
-            }
+            if (selecionado?.id === s.id) setSelecionado(atualizado);
         } catch (err: unknown) {
-            mostrarToast('error', 'Falha ao iniciar execução do serviço.');
-        } finally {
-            setSalvandoAcao(false);
-        }
-    };
-
-    const abrirModalCancelar = (s: RegistroServico, e?: React.MouseEvent) => {
-        if (e) e.stopPropagation();
-        setSelecionado(s);
-        setMotivoCancelamento('');
-        setModalCancelarAberto(true);
-    };
-
-    const handleConfirmarCancelamento = async () => {
-        if (!selecionado) return;
-
-        if (!motivoCancelamento.trim()) {
-            mostrarToast('error', 'Por favor, informe o motivo do cancelamento.');
-            return;
-        }
-
-        setSalvandoAcao(true);
-        try {
-            const atualizado = await cancelarServico(selecionado.id, motivoCancelamento.trim());
-            setServicos(prev => prev.map(item => item.id === atualizado.id ? atualizado : item));
-            mostrarToast('info', `Serviço ${selecionado.codigo} cancelado com sucesso.`);
-            setModalCancelarAberto(false);
-            if (modalDetalhesAberto) {
-                setSelecionado(atualizado);
-            }
-        } catch (err: unknown) {
-            mostrarToast('error', 'Não foi possível cancelar o serviço.');
+            mostrarToast('error', 'Não foi possível iniciar a execução do serviço.');
         } finally {
             setSalvandoAcao(false);
         }
@@ -183,11 +206,9 @@ export const Servicos: React.FC = () => {
     const abrirModalFinalizar = (s: RegistroServico, e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
         setSelecionado(s);
-
-        // Preenche com valores do bloco realizado caso já existam ou sugere os do orçamento
-        setHorasRealizadas(s.blocoRealizado?.horasRealizadas ?? s.blocoOrcamento?.horasEstimadas ?? '');
-        setCustoReal(s.blocoRealizado?.custoReal ?? s.blocoOrcamento?.custoEstimado ?? '');
-        setValorFaturado(s.blocoRealizado?.valorFaturado ?? s.blocoOrcamento?.valorProposto ?? '');
+        setHorasRealizadas(s.blocoRealizado?.horasRealizadas ?? (s.blocoOrcamento?.horasEstimadas || ''));
+        setCustoReal(s.blocoRealizado?.custoReal ?? (s.blocoOrcamento?.custoEstimado || ''));
+        setValorFaturado(s.blocoRealizado?.valorFaturado ?? (s.blocoOrcamento?.valorProposto || ''));
         setDataRealEntrega(s.blocoRealizado?.dataRealEntrega ?? new Date().toISOString().split('T')[0]);
         setHouveRetrabalho(s.blocoRealizado?.houveRetrabalho ?? false);
         setHouveMudancaEscopo(s.blocoRealizado?.houveMudancaEscopo ?? false);
@@ -200,23 +221,60 @@ export const Servicos: React.FC = () => {
         setModalFinalizarAberto(true);
     };
 
-    const toggleAssuntoRelacionado = (termoId: number) => {
-        setAssuntosRelacionadosIds(prev =>
-            prev.includes(termoId) ? prev.filter(id => id !== termoId) : [...prev, termoId]
-        );
+    const abrirModalRevisarLicao = (s: RegistroServico, e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        setSelecionado(s);
+        setCausaDesvioId(s.blocoAprendizado?.causaDesvio?.id ?? (causasDesvio[0]?.id || ''));
+        setLicaoAprendida(s.blocoAprendizado?.licaoAprendida ?? '');
+        setAssuntosRelacionadosIds(s.blocoAprendizado?.assuntosRelacionados?.map(a => a.id) ?? []);
+        setRestrito(s.blocoAprendizado?.restrito ?? false);
+        setModalRevisarLicaoAberto(true);
     };
 
-    const handleSubmeterFinalizacao = async (ehConclusao: boolean) => {
-        if (!selecionado) return;
+    const abrirModalCancelar = (s: RegistroServico, e?: React.MouseEvent) => {
+        if (e) e.stopPropagation();
+        setSelecionado(s);
+        setMotivoCancelamento('');
+        setModalCancelarAberto(true);
+    };
 
-        if (!horasRealizadas || !custoReal || !valorFaturado) {
-            mostrarToast('error', 'Preencha as horas realizadas, custo real e valor faturado.');
+    const handleConfirmarCancelamento = async () => {
+        if (!selecionado) return;
+        if (!motivoCancelamento.trim()) {
+            mostrarToast('error', 'Informe o motivo do cancelamento.');
             return;
         }
 
-        if (!causaDesvioId) {
-            mostrarToast('error', 'Selecione a Causa do Desvio / Ocorrência.');
-            return;
+        setSalvandoAcao(true);
+        try {
+            const atualizado = await cancelarServico(selecionado.id, { motivoCancelamento: motivoCancelamento.trim() });
+            mostrarToast('success', `Serviço ${selecionado.codigo} cancelado.`);
+            setServicos(prev => prev.map(item => item.id === atualizado.id ? atualizado : item));
+            setModalCancelarAberto(false);
+            if (modalDetalhesAberto) setModalDetalhesAberto(false);
+        } catch (err: unknown) {
+            mostrarToast('error', 'Falha ao cancelar o serviço.');
+        } finally {
+            setSalvandoAcao(false);
+        }
+    };
+
+    const handleSalvarFinalizacao = async (ehConclusao: boolean) => {
+        if (!selecionado) return;
+
+        if (ehConclusao) {
+            if (horasRealizadas === '' || Number(horasRealizadas) <= 0) {
+                mostrarToast('error', 'Informe as Horas Realizadas válidas.');
+                return;
+            }
+            if (custoReal === '' || Number(custoReal) < 0) {
+                mostrarToast('error', 'Informe o Custo Real.');
+                return;
+            }
+            if (valorFaturado === '' || Number(valorFaturado) < 0) {
+                mostrarToast('error', 'Informe o Valor Faturado.');
+                return;
+            }
         }
 
         if (!licaoAprendida.trim()) {
@@ -242,7 +300,7 @@ export const Servicos: React.FC = () => {
             let atualizado: RegistroServico;
             if (ehConclusao) {
                 atualizado = await concluirServico(selecionado.id, payload);
-                mostrarToast('success', `Serviço ${selecionado.codigo} concluído com sucesso e lição aprendida registrada!`);
+                mostrarToast('success', `Serviço ${selecionado.codigo} concluído com sucesso e lição aprendida enviada para validação!`);
             } else {
                 atualizado = await salvarRascunhoServico(selecionado.id, payload);
                 mostrarToast('info', `Rascunho do serviço ${selecionado.codigo} salvo.`);
@@ -253,6 +311,37 @@ export const Servicos: React.FC = () => {
             if (modalDetalhesAberto) setModalDetalhesAberto(false);
         } catch (err: unknown) {
             mostrarToast('error', 'Falha ao processar o fechamento do serviço.');
+        } finally {
+            setSalvandoAcao(false);
+        }
+    };
+
+    const handleSubmeterReenvioLicao = async () => {
+        if (!selecionado) return;
+        if (!causaDesvioId) {
+            mostrarToast('error', 'Selecione a Causa do Desvio / Ocorrência.');
+            return;
+        }
+        if (!licaoAprendida.trim()) {
+            mostrarToast('error', 'Descreva o relato revisado da Lição Aprendida.');
+            return;
+        }
+
+        setSalvandoAcao(true);
+        try {
+            const atualizado = await reenviarLicao(selecionado.id, {
+                causaDesvioId: Number(causaDesvioId),
+                licaoAprendida: licaoAprendida.trim(),
+                assuntosRelacionadosIds,
+                restrito,
+            });
+            mostrarToast('success', `Lição da OS ${selecionado.codigo} reenviada para validação com sucesso!`);
+            setServicos(prev => prev.map(item => item.id === atualizado.id ? atualizado : item));
+            setModalRevisarLicaoAberto(false);
+            if (modalDetalhesAberto) setModalDetalhesAberto(false);
+        } catch (err: unknown) {
+            const msg = err instanceof Error ? err.message : 'Falha ao reenviar a lição para validação.';
+            mostrarToast('error', msg);
         } finally {
             setSalvandoAcao(false);
         }
@@ -272,25 +361,25 @@ export const Servicos: React.FC = () => {
         return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
 
+    const handleServicoCriadoComSucesso = (novo: RegistroServico) => {
+        setServicos(prev => [novo, ...prev]);
+        mostrarToast('success', `Ordem de Serviço ${novo.codigo} criada com sucesso!`);
+    };
+
     return (
         <div className="servicos-page">
-            {/* Cabeçalho */}
+            {/* Header da Página */}
             <div className="servicos-header">
-                <div className="header-info">
-                    <h1>Ordens de Serviço do Laboratório</h1>
-                    <p>Controle das etapas operacionais (Orçamento ➔ Execução ➔ Conclusão & Aprendizado contínuo).</p>
+                <div className="header-titles">
+                    <h2>Ordens de Serviço</h2>
+                    <p>Gestão do ciclo operacional: Orçamento, Execução e Formalização de Lições</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn-refresh" onClick={carregarServicos} disabled={carregando} title="Recarregar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={carregando ? 'spin-icon' : ''}>
-                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
-                        </svg>
-                        <span>Atualizar</span>
-                    </button>
-
-                    <button className="btn-new-os" onClick={() => setModalCriarAberto(true)} title="Criar nova Ordem de Serviço">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                    <button
+                        className="btn-nova-os"
+                        onClick={() => setModalCriarAberto(true)}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="12" y1="5" x2="12" y2="19" />
                             <line x1="5" y1="12" x2="19" y2="12" />
@@ -300,9 +389,9 @@ export const Servicos: React.FC = () => {
                 </div>
             </div>
 
-            {/* Barra de Controles e Status */}
-            <div className="servicos-controls-bar">
-                <div className="status-filters">
+            {/* Abas e Filtros Rápidos */}
+            <div className="servicos-toolbar">
+                <div className="filter-tabs">
                     <button
                         type="button"
                         className={`filter-tab ${filtroStatus === 'TODOS' ? 'active' : ''}`}
@@ -312,17 +401,10 @@ export const Servicos: React.FC = () => {
                     </button>
                     <button
                         type="button"
-                        className={`filter-tab tab-orcado ${filtroStatus === 'ORCADO' ? 'active' : ''}`}
-                        onClick={() => setFiltroStatus('ORCADO')}
+                        className={`filter-tab tab-em_execucao ${filtroStatus === 'EM_ANDAMENTO' ? 'active' : ''}`}
+                        onClick={() => setFiltroStatus('EM_ANDAMENTO')}
                     >
-                        Orçados ({contadores.orcados})
-                    </button>
-                    <button
-                        type="button"
-                        className={`filter-tab tab-em_execucao ${filtroStatus === 'EM_EXECUCAO' ? 'active' : ''}`}
-                        onClick={() => setFiltroStatus('EM_EXECUCAO')}
-                    >
-                        Em Execução ({contadores.emExecucao})
+                        Em Andamento / Orçados ({contadores.emAndamento})
                     </button>
                     <button
                         type="button"
@@ -330,6 +412,26 @@ export const Servicos: React.FC = () => {
                         onClick={() => setFiltroStatus('CONCLUIDO')}
                     >
                         Concluídos ({contadores.concluidos})
+                    </button>
+                    <button
+                        type="button"
+                        className={`filter-tab tab-devolvida ${filtroStatus === 'DEVOLVIDAS' ? 'active' : ''}`}
+                        onClick={() => setFiltroStatus('DEVOLVIDAS')}
+                    >
+                        <span>Lições a Corrigir</span>
+                        {contadores.devolvidas > 0 && (
+                            <span className="badge-count-warning">{contadores.devolvidas} ⚠️</span>
+                        )}
+                    </button>
+                    <button
+                        type="button"
+                        className={`filter-tab tab-validacao ${filtroStatus === 'VALIDACAO' ? 'active' : ''}`}
+                        onClick={() => setFiltroStatus('VALIDACAO')}
+                    >
+                        <span>Aguardando Validação</span>
+                        {contadores.emValidacao > 0 && (
+                            <span className="badge-count-subtle">{contadores.emValidacao}</span>
+                        )}
                     </button>
                     <button
                         type="button"
@@ -378,35 +480,46 @@ export const Servicos: React.FC = () => {
                                 <th>Características</th>
                                 <th>Horas (Est. / Real)</th>
                                 <th>Valores (Prop. / Fat.)</th>
-                                <th>Status</th>
+                                <th>Situação & Lição</th>
                                 <th>Data</th>
                                 <th style={{ textAlign: 'right' }}>Ações</th>
                             </tr>
                             </thead>
                             <tbody>
                             {servicosFiltrados.map((s) => (
-                                <tr key={s.id} onClick={() => abrirDetalhes(s)} className="clickable-row">
+                                <tr key={s.id} onClick={() => abrirDetalhes(s)}>
                                     <td>
-                                        <span className="os-code-text">{s.codigo}</span>
+                                        <div className="os-code-col">
+                                            <span className="code-text">{s.codigo}</span>
+                                            {s.blocoOrcamento?.responsavelEstimativa && (
+                                                <span className="sub-user">{s.blocoOrcamento.responsavelEstimativa.nome}</span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td>
-                                        <div className="service-type-cell">
-                                            <span className="service-name">{s.blocoOrcamento?.tipoServico?.descricao || 'Serviço'}</span>
-                                            <span className="recurso-name">{s.blocoOrcamento?.recurso?.descricao || 'Recurso'}</span>
+                                        <div className="service-info-col">
+                                            <span className="primary-desc">{s.blocoOrcamento?.tipoServico?.descricao || '-'}</span>
+                                            <span className="secondary-desc">{s.blocoOrcamento?.recurso?.descricao || '-'}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div className="tags-list-cell">
-                                            {s.blocoOrcamento?.caracteristicasPeca?.map(c => (
-                                                <span key={c.id} className="tag-item">{c.descricao}</span>
-                                            ))}
+                                            {s.blocoOrcamento?.caracteristicasPeca && s.blocoOrcamento.caracteristicasPeca.length > 0 ? (
+                                                s.blocoOrcamento.caracteristicasPeca.map((c) => (
+                                                    <span key={c.id} className="tag-item" title={c.descricao}>
+                                                        {c.descricao}
+                                                    </span>
+                                                ))
+                                            ) : (
+                                                <span className="tag-empty">-</span>
+                                            )}
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="hours-cell">
-                                            <span className="main-val">{s.blocoOrcamento?.horasEstimadas}h est.</span>
-                                            {s.blocoRealizado?.horasRealizadas && (
-                                                <span className="sub-val">{s.blocoRealizado.horasRealizadas}h real</span>
+                                        <div className="values-cell">
+                                            <span className="main-val">{s.blocoOrcamento?.horasEstimadas} h</span>
+                                            {s.blocoRealizado?.horasRealizadas !== undefined && s.blocoRealizado?.horasRealizadas !== null && (
+                                                <span className="sub-val">{s.blocoRealizado.horasRealizadas} h real</span>
                                             )}
                                         </div>
                                     </td>
@@ -419,10 +532,27 @@ export const Servicos: React.FC = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <span className={`status-indicator status-${s.status.toLowerCase()}`}>
-                                            <span className="dot" />
-                                            {STATUS_SERVICO_LABELS[s.status]}
-                                        </span>
+                                        <div className="status-cell-wrapper">
+                                            <span className={`status-indicator status-${s.status.toLowerCase()}`}>
+                                                <span className="dot" />
+                                                {STATUS_SERVICO_LABELS[s.status]}
+                                            </span>
+                                            {s.status === 'CONCLUIDO' && s.blocoAprendizado?.statusLicao === 'RASCUNHO' && s.blocoAprendizado?.motivoRejeicao && (
+                                                <span className="badge-licao-status devolvida" title={`Devolução: ${s.blocoAprendizado.motivoRejeicao}`}>
+                                                    ⚠️ Lição Devolvida
+                                                </span>
+                                            )}
+                                            {s.status === 'CONCLUIDO' && s.blocoAprendizado?.statusLicao === 'EM_VALIDACAO' && (
+                                                <span className="badge-licao-status em-validacao" title="Lição aguardando validação técnica">
+                                                    Lição em Validação
+                                                </span>
+                                            )}
+                                            {s.status === 'CONCLUIDO' && s.blocoAprendizado?.statusLicao === 'FORMALIZADA' && (
+                                                <span className="badge-licao-status formalizada" title="Lição aprovada e formalizada">
+                                                    Lição Formalizada
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td>
                                         <span className="date-text">{formatarData(s.dataCriacao)}</span>
@@ -460,6 +590,22 @@ export const Servicos: React.FC = () => {
                                                 </button>
                                             )}
 
+                                            {/* Revisar Lição se DEVOLVIDA */}
+                                            {s.status === 'CONCLUIDO' && s.blocoAprendizado?.statusLicao === 'RASCUNHO' && s.blocoAprendizado?.motivoRejeicao && (
+                                                <button
+                                                    className="btn-review-action"
+                                                    onClick={(e) => abrirModalRevisarLicao(s, e)}
+                                                    title="Revisar e corrigir lição devolvida pelo validador"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                                    </svg>
+                                                    <span>Revisar Lição</span>
+                                                </button>
+                                            )}
+
                                             {/* Ver Detalhes */}
                                             <button
                                                 className="btn-icon-action"
@@ -474,8 +620,7 @@ export const Servicos: React.FC = () => {
                                             </button>
 
                                             {/* Cancelar se ORCADO ou EM_EXECUCAO */}
-                                            {(s.status === 'ORCADO' || s.status === 'EM_EXECUCAO') && (
-                                                <button
+                                            {(s.status === 'ORCADO' || s.status === 'EM_EXECUCAO') && (                                                <button
                                                     className="btn-icon-action btn-cancel-action"
                                                     onClick={(e) => abrirModalCancelar(s, e)}
                                                     title="Cancelar Serviço"
@@ -531,7 +676,7 @@ export const Servicos: React.FC = () => {
                         </div>
 
                         <div className="servico-modal-body">
-                            {/* Se cancelado, exibe motivo com destaque */}
+                            {/* Alerta de Cancelamento */}
                             {selecionado.status === 'CANCELADO' && selecionado.motivoCancelamento && (
                                 <div style={{
                                     padding: '0.85rem 1rem',
@@ -543,6 +688,22 @@ export const Servicos: React.FC = () => {
                                 }}>
                                     <strong style={{ display: 'block', marginBottom: '0.25rem' }}>Motivo do Cancelamento:</strong>
                                     <span>{selecionado.motivoCancelamento}</span>
+                                </div>
+                            )}
+
+                            {/* Alerta de Lição Devolvida para Revisão */}
+                            {selecionado.status === 'CONCLUIDO' && selecionado.blocoAprendizado?.statusLicao === 'RASCUNHO' && selecionado.blocoAprendizado?.motivoRejeicao && (
+                                <div className="feedback-validador-box">
+                                    <div className="feedback-header">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                                            <line x1="12" y1="9" x2="12" y2="13" />
+                                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                                        </svg>
+                                        <strong>Devolvido pelo Validador para Correção:</strong>
+                                    </div>
+                                    <p className="feedback-motivo">"{selecionado.blocoAprendizado.motivoRejeicao}"</p>
                                 </div>
                             )}
 
@@ -654,6 +815,16 @@ export const Servicos: React.FC = () => {
                                             <span className="field-label">Lição Aprendida:</span>
                                             <span className="field-val">{selecionado.blocoAprendizado.licaoAprendida}</span>
                                         </div>
+                                        {selecionado.blocoAprendizado.assuntosRelacionados && selecionado.blocoAprendizado.assuntosRelacionados.length > 0 && (
+                                            <div className="field-view" style={{ gridColumn: '1 / -1' }}>
+                                                <span className="field-label">Assuntos Vinculados:</span>
+                                                <div className="tags-list-cell" style={{ marginTop: '0.25rem' }}>
+                                                    {selecionado.blocoAprendizado.assuntosRelacionados.map(a => (
+                                                        <span key={a.id} className="tag-item">#{a.descricao}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <p className="empty-block-hint">Nenhuma lição aprendida registrada até o momento.</p>
@@ -686,13 +857,33 @@ export const Servicos: React.FC = () => {
                                     <button
                                         type="button"
                                         className="btn-finish-action"
-                                        onClick={() => abrirModalFinalizar(selecionado)}
+                                        onClick={() => {
+                                            setModalDetalhesAberto(false);
+                                            abrirModalFinalizar(selecionado);
+                                        }}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                                              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                             <polyline points="20 6 9 17 4 12" />
                                         </svg>
                                         <span>Concluir Serviço / Lição</span>
+                                    </button>
+                                )}
+                                {selecionado.status === 'CONCLUIDO' && selecionado.blocoAprendizado?.statusLicao === 'RASCUNHO' && selecionado.blocoAprendizado?.motivoRejeicao && (
+                                    <button
+                                        type="button"
+                                        className="btn-review-action"
+                                        onClick={() => {
+                                            setModalDetalhesAberto(false);
+                                            abrirModalRevisarLicao(selecionado);
+                                        }}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                        </svg>
+                                        <span>Revisar & Reenviar Lição</span>
                                     </button>
                                 )}
                             </div>
@@ -781,7 +972,7 @@ export const Servicos: React.FC = () => {
                                                 checked={houveMudancaEscopo}
                                                 onChange={(e) => setHouveMudancaEscopo(e.target.checked)}
                                             />
-                                            <span>Houve mudança de escopo durante a medição?</span>
+                                            <span>Houve mudança de escopo durante a execução?</span>
                                         </label>
                                     </div>
                                 </div>
@@ -793,52 +984,65 @@ export const Servicos: React.FC = () => {
                                     <h4>Bloco C: Aprendizado & Lições</h4>
                                 </div>
                                 <div className="form-grid">
-                                    <div className="form-group full-width">
-                                        <label>Causa do Desvio / Ocorrência Principal *</label>
+                                    <div className="form-group">
+                                        <label>Causa do Desvio / Ocorrência *</label>
                                         <select
                                             value={causaDesvioId}
-                                            onChange={(e) => setCausaDesvioId(Number(e.target.value))}
+                                            onChange={(e) => setCausaDesvioId(e.target.value === '' ? '' : Number(e.target.value))}
                                         >
-                                            <option value="">Selecione uma causa...</option>
+                                            <option value="">Selecione...</option>
                                             {causasDesvio.map(c => (
                                                 <option key={c.id} value={c.id}>{c.descricao}</option>
                                             ))}
                                         </select>
                                     </div>
 
-                                    <div className="form-group full-width">
-                                        <label>Lição Aprendida com a Execução *</label>
+                                    <div className="form-group">
+                                        <label>Lição Aprendida *</label>
                                         <textarea
-                                            rows={3}
+                                            rows={4}
                                             value={licaoAprendida}
                                             onChange={(e) => setLicaoAprendida(e.target.value)}
-                                            placeholder="Descreva pontos de melhoria, boas práticas ou aprendizados técnicos observados nesta OS..."
+                                            placeholder="Descreva o que ocorreu de imprevisto, boas práticas encontradas e ações recomendadas para novos serviços similares..."
                                         />
                                     </div>
 
-                                    <div className="form-group full-width">
-                                        <label>Assuntos / Termos Relacionados</label>
+                                    <div className="form-group">
+                                        <label>Assuntos do Vocabulário Relacionados</label>
                                         <div className="multi-select-tags">
-                                            {todosTermos.slice(0, 15).map(termo => (
-                                                <div
-                                                    key={termo.id}
-                                                    className={`tag-checkbox-pill ${assuntosRelacionadosIds.includes(termo.id) ? 'selected' : ''}`}
-                                                    onClick={() => toggleAssuntoRelacionado(termo.id)}
-                                                >
-                                                    <span>{termo.descricao}</span>
-                                                </div>
-                                            ))}
+                                            {todosTermos.map(t => {
+                                                const checked = assuntosRelacionadosIds.includes(t.id);
+                                                return (
+                                                    <label
+                                                        key={t.id}
+                                                        className={`tag-checkbox-pill ${checked ? 'selected' : ''}`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={checked}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    setAssuntosRelacionadosIds(prev => [...prev, t.id]);
+                                                                } else {
+                                                                    setAssuntosRelacionadosIds(prev => prev.filter(id => id !== t.id));
+                                                                }
+                                                            }}
+                                                        />
+                                                        <span>{t.descricao}</span>
+                                                    </label>
+                                                );
+                                            })}
                                         </div>
                                     </div>
 
-                                    <div className="form-group full-width">
+                                    <div className="form-group">
                                         <label className="checkbox-label">
                                             <input
                                                 type="checkbox"
                                                 checked={restrito}
                                                 onChange={(e) => setRestrito(e.target.checked)}
                                             />
-                                            <span>Restringir visibilidade desta lição apenas aos validadores e administradores</span>
+                                            <span>Conteúdo Restrito? (Visível apenas para usuários internos)</span>
                                         </label>
                                     </div>
                                 </div>
@@ -849,24 +1053,29 @@ export const Servicos: React.FC = () => {
                             <div className="footer-left-actions">
                                 <button
                                     type="button"
-                                    className="btn-draft"
-                                    onClick={() => handleSubmeterFinalizacao(false)}
+                                    className="btn-secondary"
+                                    onClick={() => setModalFinalizarAberto(false)}
                                     disabled={salvandoAcao}
                                 >
-                                    Salvar como Rascunho
+                                    Cancelar
                                 </button>
                             </div>
                             <div className="footer-right-actions">
-                                <button type="button" className="btn-secondary" onClick={() => setModalFinalizarAberto(false)}>
-                                    Cancelar
+                                <button
+                                    type="button"
+                                    className="btn-draft"
+                                    onClick={() => handleSalvarFinalizacao(false)}
+                                    disabled={salvandoAcao}
+                                >
+                                    Salvar Rascunho
                                 </button>
                                 <button
                                     type="button"
                                     className="btn-primary-finish"
-                                    onClick={() => handleSubmeterFinalizacao(true)}
+                                    onClick={() => handleSalvarFinalizacao(true)}
                                     disabled={salvandoAcao}
                                 >
-                                    {salvandoAcao ? 'Processando...' : 'Concluir Serviço'}
+                                    {salvandoAcao ? 'Concluindo...' : 'Concluir Serviço e Submeter Lição'}
                                 </button>
                             </div>
                         </div>
@@ -874,12 +1083,12 @@ export const Servicos: React.FC = () => {
                 </div>
             )}
 
-            {/* Modal 3: Confirmar Cancelamento com Motivo */}
+            {/* Modal 3: Cancelar Serviço */}
             {modalCancelarAberto && selecionado && (
                 <div className="servico-modal-overlay" onClick={() => setModalCancelarAberto(false)}>
                     <div className="servico-modal-box modal-confirm-simple" onClick={(e) => e.stopPropagation()}>
                         <div className="servico-modal-header">
-                            <span className="os-title">Cancelar Serviço</span>
+                            <span className="os-title">Cancelar Serviço {selecionado.codigo}</span>
                             <button className="btn-close-modal" onClick={() => setModalCancelarAberto(false)} title="Fechar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -889,34 +1098,31 @@ export const Servicos: React.FC = () => {
                             </button>
                         </div>
                         <div className="servico-modal-body">
-                            <p className="confirm-text" style={{ margin: 0 }}>
-                                Deseja realmente cancelar a Ordem de Serviço <strong>{selecionado.codigo}</strong>?
+                            <p style={{ fontSize: '0.86rem', color: '#475569', marginBottom: '1rem', lineHeight: 1.5 }}>
+                                Tem certeza de que deseja cancelar esta Ordem de Serviço? Esta ação é irreversível.
                             </p>
-                            <div className="form-group" style={{ marginTop: '0.5rem' }}>
-                                <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#334155' }}>
-                                    Motivo do Cancelamento *
-                                </label>
+                            <div className="form-group">
+                                <label>Justificativa do Cancelamento *</label>
                                 <textarea
                                     rows={3}
                                     value={motivoCancelamento}
                                     onChange={(e) => setMotivoCancelamento(e.target.value)}
-                                    placeholder="Informe a justificativa do cancelamento desta OS..."
-                                    style={{
-                                        padding: '0.5rem',
-                                        border: '1px solid #cbd5e1',
-                                        borderRadius: '6px',
-                                        fontSize: '0.82rem',
-                                        width: '100%',
-                                        boxSizing: 'border-box'
-                                    }}
+                                    placeholder="Informe por que o serviço foi cancelado..."
                                 />
                             </div>
                         </div>
                         <div className="servico-modal-footer">
-                            <div className="footer-right-actions" style={{ width: '100%', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                                <button type="button" className="btn-secondary" onClick={() => setModalCancelarAberto(false)}>
+                            <div className="footer-left-actions">
+                                <button
+                                    type="button"
+                                    className="btn-secondary"
+                                    onClick={() => setModalCancelarAberto(false)}
+                                    disabled={salvandoAcao}
+                                >
                                     Voltar
                                 </button>
+                            </div>
+                            <div className="footer-right-actions">
                                 <button
                                     type="button"
                                     className="btn-danger-confirm"
@@ -924,6 +1130,170 @@ export const Servicos: React.FC = () => {
                                     disabled={salvandoAcao}
                                 >
                                     {salvandoAcao ? 'Cancelando...' : 'Confirmar Cancelamento'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal 4: Revisar e Reenviar Lição Devolvida */}
+            {modalRevisarLicaoAberto && selecionado && (
+                <div className="servico-modal-overlay" onClick={() => setModalRevisarLicaoAberto(false)}>
+                    <div className="servico-modal-box modal-box-wide" onClick={(e) => e.stopPropagation()}>
+                        <div className="servico-modal-header">
+                            <div className="header-meta">
+                                <span className="os-title">Revisão de Lição Aprendida • OS {selecionado.codigo}</span>
+                                <span className="header-sub">Serviço Concluído • Ajuste os pontos solicitados pelo validador técnico</span>
+                            </div>
+                            <button className="btn-close-modal" onClick={() => setModalRevisarLicaoAberto(false)} title="Fechar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div className="servico-modal-body">
+                            {/* Caixa de Feedback do Validador */}
+                            {selecionado.blocoAprendizado?.motivoRejeicao && (
+                                <div className="feedback-validador-box">
+                                    <div className="feedback-header">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                                            <line x1="12" y1="9" x2="12" y2="13" />
+                                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                                        </svg>
+                                        <strong>Devolvido pelo Validador para Correção:</strong>
+                                    </div>
+                                    <p className="feedback-motivo">"{selecionado.blocoAprendizado.motivoRejeicao}"</p>
+                                </div>
+                            )}
+
+                            {/* Blocos A e B Travados (Somente Leitura) */}
+                            <div className="locked-blocks-summary">
+                                <div className="summary-badge">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                    <span>Blocos A e B Concluídos (Somente Leitura)</span>
+                                </div>
+                                <div className="summary-grid">
+                                    <div className="summary-item">
+                                        <span className="label">Tipo de Serviço:</span>
+                                        <span className="val">{selecionado.blocoOrcamento?.tipoServico?.descricao || '-'}</span>
+                                    </div>
+                                    <div className="summary-item">
+                                        <span className="label">Recurso / Máquina:</span>
+                                        <span className="val">{selecionado.blocoOrcamento?.recurso?.descricao || '-'}</span>
+                                    </div>
+                                    <div className="summary-item">
+                                        <span className="label">Horas Realizadas:</span>
+                                        <span className="val">{selecionado.blocoRealizado?.horasRealizadas ?? '-'} h</span>
+                                    </div>
+                                    <div className="summary-item">
+                                        <span className="label">Valor Faturado:</span>
+                                        <span className="val">{formatarMoeda(selecionado.blocoRealizado?.valorFaturado)}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bloco C: Aprendizado & Lições (Habilitado para Edição) */}
+                            <div className="block-section">
+                                <div className="section-heading">
+                                    <h4>Bloco C: Edição da Lição de Aprendizado</h4>
+                                    <span className="badge-step">Correção</span>
+                                </div>
+
+                                <div className="form-grid">
+                                    <div className="form-group">
+                                        <label>Causa do Desvio / Ocorrência *</label>
+                                        <select
+                                            value={causaDesvioId}
+                                            onChange={(e) => setCausaDesvioId(e.target.value === '' ? '' : Number(e.target.value))}
+                                        >
+                                            <option value="">Selecione a Causa Principal...</option>
+                                            {causasDesvio.map((c) => (
+                                                <option key={c.id} value={c.id}>{c.descricao}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Relato da Lição Aprendida *</label>
+                                        <textarea
+                                            rows={5}
+                                            value={licaoAprendida}
+                                            onChange={(e) => setLicaoAprendida(e.target.value)}
+                                            placeholder="Detalhe o aprendizado técnico, as ações tomadas e como evitar o problema no futuro..."
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Assuntos / Termos do Vocabulário Relacionados</label>
+                                        <div className="multi-select-tags">
+                                            {todosTermos.map((t) => {
+                                                const checked = assuntosRelacionadosIds.includes(t.id);
+                                                return (
+                                                    <label
+                                                        key={t.id}
+                                                        className={`tag-checkbox-pill ${checked ? 'selected' : ''}`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={checked}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    setAssuntosRelacionadosIds(prev => [...prev, t.id]);
+                                                                } else {
+                                                                    setAssuntosRelacionadosIds(prev => prev.filter(id => id !== t.id));
+                                                                }
+                                                            }}
+                                                        />
+                                                        <span>{t.descricao}</span>
+                                                    </label>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={restrito}
+                                                onChange={(e) => setRestrito(e.target.checked)}
+                                            />
+                                            <span>Conteúdo Restrito? (Visível apenas para técnicos e validadores)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="servico-modal-footer">
+                            <div className="footer-left-actions">
+                                <button
+                                    type="button"
+                                    className="btn-secondary"
+                                    onClick={() => setModalRevisarLicaoAberto(false)}
+                                    disabled={salvandoAcao}
+                                >
+                                    Cancelar
+                                </button>
+                            </div>
+                            <div className="footer-right-actions">
+                                <button
+                                    type="button"
+                                    className="btn-primary-finish"
+                                    onClick={handleSubmeterReenvioLicao}
+                                    disabled={salvandoAcao}
+                                >
+                                    {salvandoAcao ? 'Reenviando...' : 'Reenviar para Validação'}
                                 </button>
                             </div>
                         </div>

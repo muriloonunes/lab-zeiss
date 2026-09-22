@@ -41,6 +41,7 @@ export const InternalLayout: React.FC = () => {
 
     const getPageTitle = () => {
         if (location.pathname === '/interno/servicos') return 'Ordens de Serviço';
+        if (location.pathname === '/interno/licoes') return 'Base de Conhecimento & Lições';
         if (location.pathname === '/interno/solicitacoes') return 'Solicitações de Orçamento';
         if (location.pathname === '/interno/usuarios') return 'Gerenciamento de Usuários';
         if (location.pathname === '/interno/vocabulario') return 'Vocabulário Controlado';
@@ -54,8 +55,7 @@ export const InternalLayout: React.FC = () => {
         <div className="internal-app">
             {/* Backdrop para mobile */}
             <div
-                className={`sidebar-backdrop ${sidebarAberta ? 'open' : ''}`}
-                onClick={fecharSidebar}
+                className={`sidebar-backdrop ${sidebarAberta ? 'open' : ''}`}                onClick={fecharSidebar}
                 aria-hidden="true"
             />
 
@@ -138,6 +138,22 @@ export const InternalLayout: React.FC = () => {
                     </NavLink>
 
                     <NavLink
+                        to="/interno/licoes"
+                        onClick={fecharSidebar}
+                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                    >
+                        <div className="nav-link-content">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                <path d="M6 6h10"/>
+                                <path d="M6 10h10"/>
+                            </svg>
+                            <span>Lições Aprendidas</span>
+                        </div>
+                    </NavLink>
+
+                    <NavLink
                         to="/interno/solicitacoes"
                         onClick={fecharSidebar}
                         className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
@@ -163,9 +179,9 @@ export const InternalLayout: React.FC = () => {
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-                                <path d="M6 6h10"/>
-                                <path d="M6 10h10"/>
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="2" y1="12" x2="22" y2="12" />
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                             </svg>
                             <span>Vocabulário</span>
                         </div>

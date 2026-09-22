@@ -5,6 +5,9 @@ export interface Notificacao {
     mensagem: string;
     lida: boolean;
     dataCriacao: string;
+    tipo?: string;
+    referenciaId?: number;
+    link?: string;
 }
 
 export interface ContagemNaoLidasResponse {

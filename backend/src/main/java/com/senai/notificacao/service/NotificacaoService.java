@@ -64,10 +64,18 @@ public class NotificacaoService {
 
     @Transactional
     public Notificacao criarNotificacao(Long usuarioId, String titulo, String mensagem) {
+        return criarNotificacao(usuarioId, titulo, mensagem, null, null, null);
+    }
+
+    @Transactional
+    public Notificacao criarNotificacao(Long usuarioId, String titulo, String mensagem, String tipo, Long referenciaId, String link) {
         Notificacao notif = new Notificacao();
         notif.setUsuarioId(usuarioId);
         notif.setTitulo(titulo);
         notif.setMensagem(mensagem);
+        notif.setTipo(tipo);
+        notif.setReferenciaId(referenciaId);
+        notif.setLink(link);
         notif.setLida(false);
         notif.setDataCriacao(LocalDateTime.now());
         notificacaoRepository.persist(notif);

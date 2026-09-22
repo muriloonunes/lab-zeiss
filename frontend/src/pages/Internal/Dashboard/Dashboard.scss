@@ -3,14 +3,186 @@
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0;
+  gap: 1.5rem;
+  max-width: 1200px;
 
   .dashboard-header {
     .dashboard-greeting {
       font-family: vars.$font-headline;
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: vars.$color-text-dark;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .dashboard-sub {
+      color: #64748b;
+      font-size: 0.88rem;
+      margin: 0;
+    }
+  }
+
+  /* Banner de Alerta para Validações Pendentes e Lições Devolvidas */
+  .dashboard-alert-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    background: #ffffff;
+    border: 1px solid #fed7aa;
+    border-left: 4px solid #ea580c;
+    border-radius: 8px;
+    padding: 1.15rem 1.4rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+
+    &.alert-warning {
+      border-color: #fde68a;
+      border-left-color: #d97706;
+
+      .alert-content {
+        .alert-icon.warning {
+          color: #d97706;
+        }
+
+        .alert-text {
+          strong {
+            color: #92400e;
+          }
+
+          p {
+            color: #78350f;
+          }
+        }
+      }
+
+      .btn-alert-warning {
+        background: #d97706;
+        border-color: #d97706;
+
+        &:hover {
+          background: #b45309;
+        }
+      }
+    }
+
+    .alert-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+
+      .alert-icon {
+        color: #ea580c;
+        margin-top: 2px;
+      }
+
+      .alert-text {
+        strong {
+          display: block;
+          font-size: 0.92rem;
+          color: #9a3412;
+          margin-bottom: 0.2rem;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.82rem;
+          color: #7c2d12;
+          line-height: 1.4;
+        }
+      }
+    }
+
+    .btn-alert-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.95rem;
+      background: #ea580c;
+      border: 1px solid #ea580c;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+
+      &:hover {
+        background: #c2410c;
+      }
+    }
+  }
+
+  /* Grid de Cards de Atalho */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+
+    .dashboard-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+
+      &:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+
+        .card-link {
+          color: #141e8c;
+          transform: translateX(4px);
+        }
+      }
+
+      .card-header-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #141e8c;
+        margin-bottom: 1.15rem;
+
+        svg {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      h3 {
+        font-family: vars.$font-headline;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 0.45rem 0;
+      }
+
+      p {
+        font-size: 0.83rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin: 0 0 1.25rem 0;
+        flex-grow: 1;
+      }
+
+      .card-link {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #0284c7;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.15s ease;
+      }
     }
   }
 }
