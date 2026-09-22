@@ -1,4 +1,4 @@
-package com.senai.servico.service;
+package com.senai.servico.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

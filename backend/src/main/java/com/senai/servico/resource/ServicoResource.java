@@ -4,8 +4,9 @@ import com.senai.servico.domain.StatusServico;
 import com.senai.servico.dto.ConcluirServicoRequest;
 import com.senai.servico.dto.CriarServicoRequest;
 import com.senai.servico.dto.RascunharServicoRequest;
+import com.senai.servico.dto.ReenviarLicaoRequest;
 import com.senai.servico.dto.ServicoResponse;
-import com.senai.servico.service.CancelarServicoRequest;
+import com.senai.servico.dto.CancelarServicoRequest;
 import com.senai.servico.service.ServicoService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -34,7 +35,7 @@ public class ServicoResource {
     JsonWebToken jwt;
 
     @GET
-    @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR", "CONSULTA"})
+    @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public Response listar(@QueryParam("status") StatusServico status) {
         List<ServicoResponse> responses = servicoService.listarTodos(status);
         return Response.ok(responses).build();
@@ -42,7 +43,7 @@ public class ServicoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR", "CONSULTA"})
+    @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public Response buscarPorId(@PathParam("id") Long id) {
         ServicoResponse response = servicoService.buscarPorId(id);
         return Response.ok(response).build();
@@ -85,6 +86,14 @@ public class ServicoResource {
     @RolesAllowed({"TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public Response concluir(@PathParam("id") Long id, @Valid ConcluirServicoRequest request) {
         ServicoResponse response = servicoService.concluirServico(id, request);
+        return Response.ok().entity(response).build();
+    }
+
+    @PUT
+    @Path("/{id}/aprendizado/reenviar")
+    @RolesAllowed({"TECNICO", "ADMINISTRADOR"})
+    public Response reenviarLicao(@PathParam("id") Long id, @Valid ReenviarLicaoRequest request) {
+        ServicoResponse response = servicoService.reenviarLicao(id, request);
         return Response.ok().entity(response).build();
     }
 }

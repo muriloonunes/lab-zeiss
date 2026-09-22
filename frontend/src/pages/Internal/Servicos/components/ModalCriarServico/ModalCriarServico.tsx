@@ -360,6 +360,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             <textarea
                                 rows={3}
                                 value={premissasAssumidas}
+                                className="premissas-area"
                                 onChange={(e) => setPremissasAssumidas(e.target.value)}
                                 placeholder="Informações técnicas preliminares, tolerâncias exigidas, restrições..."
                             />

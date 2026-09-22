@@ -15,7 +15,7 @@ import java.util.List;
  * @date 21/09/2026
  * @brief Interface ServicoMapper
  */
-@Mapper(componentModel = MappingConstants.ComponentModel.CDI, uses = {VocabularioMapper.class, UsuarioMapper.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI, uses = {VocabularioMapper.class, UsuarioMapper.class})
 public interface ServicoMapper {
 
     ServicoResponse toResponse(RegistroServico registroServico);

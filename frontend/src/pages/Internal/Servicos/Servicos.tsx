@@ -663,6 +663,11 @@ export const Servicos: React.FC = () => {
 
                         <div className="servico-modal-footer">
                             <div className="footer-left-actions">
+                                <button type="button" className="btn-secondary" onClick={() => setModalDetalhesAberto(false)}>
+                                    Fechar
+                                </button>
+                            </div>
+                            <div className="footer-right-actions">
                                 {selecionado.status === 'ORCADO' && (
                                     <button
                                         type="button"
@@ -690,11 +695,6 @@ export const Servicos: React.FC = () => {
                                         <span>Concluir Serviço / Lição</span>
                                     </button>
                                 )}
-                            </div>
-                            <div className="footer-right-actions">
-                                <button type="button" className="btn-secondary" onClick={() => setModalDetalhesAberto(false)}>
-                                    Fechar
-                                </button>
                             </div>
                         </div>
                     </div>

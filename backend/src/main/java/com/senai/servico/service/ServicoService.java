@@ -5,10 +5,7 @@ import com.senai.common.exception.NaoEncontradoException;
 import com.senai.common.exception.RequisicaoInvalidaException;
 import com.senai.servico.ServicoMapper;
 import com.senai.servico.domain.*;
-import com.senai.servico.dto.ConcluirServicoRequest;
-import com.senai.servico.dto.CriarServicoRequest;
-import com.senai.servico.dto.RascunharServicoRequest;
-import com.senai.servico.dto.ServicoResponse;
+import com.senai.servico.dto.*;
 import com.senai.servico.repository.ServicoRepository;
 import com.senai.usuario.UsuarioRepository;
 import com.senai.vocabulario.TermoVocabulario;
@@ -269,11 +266,53 @@ public class ServicoService {
         blocoAprendizado.setLicaoAprendida(request.licaoAprendida().trim());
         blocoAprendizado.setAssuntosRelacionados(assuntosRelacionados);
         blocoAprendizado.setRestrito(request.restrito());
+        blocoAprendizado.setMotivoRejeicao(null);
         blocoAprendizado.setStatusLicao(StatusLicao.EM_VALIDACAO);
         servico.setBlocoRealizado(blocoRealizado);
         servico.setBlocoAprendizado(blocoAprendizado);
         servico.setStatus(StatusServico.CONCLUIDO);
 
+        servicoRepository.persist(servico);
+        return mapper.toResponse(servico);
+    }
+
+    @Transactional
+    public ServicoResponse reenviarLicao(Long id, ReenviarLicaoRequest request) {
+        var servico = servicoRepository.findByIdOptional(id)
+                .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
+
+        if (servico.getStatus() != StatusServico.CONCLUIDO) {
+            throw new RequisicaoInvalidaException("A lição só pode ser reenviada para serviços concluídos.");
+        }
+
+        var causaDesvio = termoRepository.findByIdOptional(request.causaDesvioId())
+                .orElseThrow(() -> new NaoEncontradoException("Causa de desvio informada não existe."));
+
+        if (!causaDesvio.getClasse().getNome().equalsIgnoreCase("Causa do Desvio") || !causaDesvio.isAtivo()) {
+            throw new RequisicaoInvalidaException("Termo inválido ou inativo para Causa do Desvio.");
+        }
+
+        Set<TermoVocabulario> assuntosRelacionados = new HashSet<>();
+        if (request.assuntosRelacionadosIds() != null) {
+            for (Long assuntoId : request.assuntosRelacionadosIds()) {
+                var assunto = termoRepository.findByIdOptional(assuntoId)
+                        .orElseThrow(() -> new NaoEncontradoException("Assunto relacionado ID " + assuntoId + " não encontrado."));
+                if (!assunto.isAtivo()) {
+                    throw new RequisicaoInvalidaException("O termo '" + assunto.getDescricao() + "' está inativo.");
+                }
+                assuntosRelacionados.add(assunto);
+            }
+        }
+
+        var blocoAprendizado = servico.getBlocoAprendizado() != null ? servico.getBlocoAprendizado() : new BlocoAprendizado();
+        blocoAprendizado.setCausaDesvio(causaDesvio);
+        blocoAprendizado.setLicaoAprendida(request.licaoAprendida().trim());
+        blocoAprendizado.setAssuntosRelacionados(assuntosRelacionados);
+        blocoAprendizado.setRestrito(request.restrito());
+        blocoAprendizado.setMotivoRejeicao(null);
+        blocoAprendizado.setStatusLicao(StatusLicao.EM_VALIDACAO);
+
+        servico.setBlocoAprendizado(blocoAprendizado);
         servicoRepository.persist(servico);
         return mapper.toResponse(servico);
     }

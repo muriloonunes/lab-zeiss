@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { NotificacoesPopover } from '../Notificacoes/NotificacoesPopover';
 import './InternalLayout.scss';
 
 export const InternalLayout: React.FC = () => {
@@ -259,6 +260,9 @@ export const InternalLayout: React.FC = () => {
                         </div>
                     </div>
 
+                    <div className="topbar-right">
+                        <NotificacoesPopover />
+                    </div>
                 </header>
 
                 <main className="internal-page-container">

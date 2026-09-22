@@ -10,6 +10,13 @@ export const STATUS_SERVICO_LABELS: Record<StatusServico, string> = {
     CANCELADO: 'Cancelado',
 };
 
+export const STATUS_LICAO_LABELS: Record<StatusLicao, string> = {
+    RASCUNHO: 'Rascunho / Devolvida',
+    EM_VALIDACAO: 'Em Validação',
+    FORMALIZADA: 'Formalizada',
+    SUPERADA: 'Superada',
+};
+
 export interface UsuarioResumo {
     id: number;
     nome: string;
@@ -44,6 +51,7 @@ export interface BlocoAprendizado {
     assuntosRelacionados?: TermoVocabulario[];
     statusLicao?: StatusLicao;
     restrito?: boolean;
+    motivoRejeicao?: string;
 }
 
 export interface RegistroServico {
@@ -85,4 +93,11 @@ export interface FinalizarServicoPayload {
     licaoAprendida: string;
     assuntosRelacionadosIds?: number[];
     restrito?: boolean;
+}
+
+export interface ReenviarLicaoPayload {
+    causaDesvioId: number;
+    licaoAprendida: string;
+    assuntosRelacionadosIds?: number[];
+    restrito: boolean;
 }

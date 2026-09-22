@@ -1,4 +1,4 @@
-package com.senai.assinatura;
+package com.senai.notificacao.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "notificacao_assinatura")
-public class NotificacaoAssinatura {
+@Table(name = "notificacoes")
+public class Notificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

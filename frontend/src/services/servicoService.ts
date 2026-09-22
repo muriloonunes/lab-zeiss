@@ -3,6 +3,7 @@ import {
     RegistroServico,
     CriarServicoPayload,
     FinalizarServicoPayload,
+    ReenviarLicaoPayload,
     StatusServico,
 } from '../types/servico';
 
@@ -50,6 +51,16 @@ export async function concluirServico(
     payload: FinalizarServicoPayload
 ): Promise<RegistroServico> {
     return request<RegistroServico>(`/api/servicos/${id}/concluir`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
+}
+
+export async function reenviarLicao(
+    id: number,
+    payload: ReenviarLicaoPayload
+): Promise<RegistroServico> {
+    return request<RegistroServico>(`/api/servicos/${id}/aprendizado/reenviar`, {
         method: 'PUT',
         body: JSON.stringify(payload),
     });
