@@ -101,3 +101,7 @@ export interface ReenviarLicaoPayload {
     assuntosRelacionadosIds?: number[];
     restrito: boolean;
 }
+
+export interface DevolverLicaoPayload {
+    motivoRejeicao: string;
+}

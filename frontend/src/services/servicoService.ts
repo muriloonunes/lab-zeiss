@@ -3,9 +3,10 @@ import {
     RegistroServico,
     CriarServicoPayload,
     FinalizarServicoPayload,
-    ReenviarLicaoPayload,
     StatusServico,
 } from '../types/servico';
+
+export { aprovarLicao, devolverLicao, reenviarLicao } from './licaoService';
 
 export async function listarServicos(status?: StatusServico): Promise<RegistroServico[]> {
     const url = status ? `/api/servicos?status=${status}` : '/api/servicos';
@@ -51,16 +52,6 @@ export async function concluirServico(
     payload: FinalizarServicoPayload
 ): Promise<RegistroServico> {
     return request<RegistroServico>(`/api/servicos/${id}/concluir`, {
-        method: 'PUT',
-        body: JSON.stringify(payload),
-    });
-}
-
-export async function reenviarLicao(
-    id: number,
-    payload: ReenviarLicaoPayload
-): Promise<RegistroServico> {
-    return request<RegistroServico>(`/api/servicos/${id}/aprendizado/reenviar`, {
         method: 'PUT',
         body: JSON.stringify(payload),
     });

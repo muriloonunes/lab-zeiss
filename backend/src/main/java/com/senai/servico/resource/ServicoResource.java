@@ -1,12 +1,7 @@
 package com.senai.servico.resource;
 
 import com.senai.servico.domain.StatusServico;
-import com.senai.servico.dto.ConcluirServicoRequest;
-import com.senai.servico.dto.CriarServicoRequest;
-import com.senai.servico.dto.RascunharServicoRequest;
-import com.senai.servico.dto.ReenviarLicaoRequest;
-import com.senai.servico.dto.ServicoResponse;
-import com.senai.servico.dto.CancelarServicoRequest;
+import com.senai.servico.dto.*;
 import com.senai.servico.service.ServicoService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -19,6 +14,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import java.util.List;
 
 /**
+ * Recurso REST para o ciclo de vida da Ordem de Serviço (OS).
  *
  * @author Murilo Nunes <murilo_no@outlook.com>
  * @date 21/09/2026
@@ -86,14 +82,6 @@ public class ServicoResource {
     @RolesAllowed({"TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public Response concluir(@PathParam("id") Long id, @Valid ConcluirServicoRequest request) {
         ServicoResponse response = servicoService.concluirServico(id, request);
-        return Response.ok().entity(response).build();
-    }
-
-    @PUT
-    @Path("/{id}/aprendizado/reenviar")
-    @RolesAllowed({"TECNICO", "ADMINISTRADOR"})
-    public Response reenviarLicao(@PathParam("id") Long id, @Valid ReenviarLicaoRequest request) {
-        ServicoResponse response = servicoService.reenviarLicao(id, request);
         return Response.ok().entity(response).build();
     }
 }

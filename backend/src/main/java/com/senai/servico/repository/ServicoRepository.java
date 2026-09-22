@@ -1,6 +1,7 @@
 package com.senai.servico.repository;
 
 import com.senai.servico.domain.RegistroServico;
+import com.senai.servico.domain.StatusLicao;
 import com.senai.servico.domain.StatusServico;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Sort;
@@ -28,5 +29,40 @@ public class ServicoRepository implements PanacheRepository<RegistroServico> {
 
     public Optional<RegistroServico> encontrarPorCodigo(String codigo) {
         return find("codigo", codigo).firstResultOptional();
+    }
+
+    public List<RegistroServico> listarLicoesPendentesValidacao() {
+        return list(
+                "status = ?1 and blocoAprendizado.statusLicao = ?2",
+                Sort.descending("dataCriacao"),
+                StatusServico.CONCLUIDO,
+                StatusLicao.EM_VALIDACAO
+        );
+    }
+
+    public long contarLicoesPendentesValidacao() {
+        return count(
+                "status = ?1 and blocoAprendizado.statusLicao = ?2",
+                StatusServico.CONCLUIDO,
+                StatusLicao.EM_VALIDACAO
+        );
+    }
+
+    public List<RegistroServico> listarBaseConhecimento(StatusLicao statusLicao) {
+        if (statusLicao != null) {
+            return list(
+                    "status = ?1 and blocoAprendizado.statusLicao = ?2",
+                    Sort.descending("dataCriacao"),
+                    StatusServico.CONCLUIDO,
+                    statusLicao
+            );
+        }
+        return list(
+                "status = ?1 and blocoAprendizado.statusLicao in (?2, ?3)",
+                Sort.descending("dataCriacao"),
+                StatusServico.CONCLUIDO,
+                StatusLicao.FORMALIZADA,
+                StatusLicao.SUPERADA
+        );
     }
 }
