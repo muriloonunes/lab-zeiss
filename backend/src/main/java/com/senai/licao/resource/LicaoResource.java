@@ -81,7 +81,6 @@ public class LicaoResource {
     @Path("/{servicoId}/devolver")
     @RolesAllowed({"VALIDADOR", "ADMINISTRADOR"})
     public Response devolverLicao(@PathParam("servicoId") Long servicoId, @Valid DevolverLicaoRequest request) {
-        Long validadorId = Long.parseLong(jwt.getSubject());
         ServicoResponse response = licaoService.devolverLicao(servicoId, request);
         return Response.ok(response).build();
     }
@@ -90,8 +89,7 @@ public class LicaoResource {
     @Path("/{servicoId}/superar")
     @RolesAllowed({"VALIDADOR", "ADMINISTRADOR"})
     public Response marcarComoSuperada(@PathParam("servicoId") Long servicoId) {
-        Long validadorId = Long.parseLong(jwt.getSubject());
-        ServicoResponse response = licaoService.marcarComoSuperada(servicoId, validadorId);
+        ServicoResponse response = licaoService.marcarComoSuperada(servicoId);
         return Response.ok(response).build();
     }
 
@@ -99,8 +97,7 @@ public class LicaoResource {
     @Path("/{servicoId}/reativar")
     @RolesAllowed({"VALIDADOR", "ADMINISTRADOR"})
     public Response reativarLicao(@PathParam("servicoId") Long servicoId) {
-        Long validadorId = Long.parseLong(jwt.getSubject());
-        ServicoResponse response = licaoService.reativarLicao(servicoId, validadorId);
+        ServicoResponse response = licaoService.reativarLicao(servicoId);
         return Response.ok(response).build();
     }
 }

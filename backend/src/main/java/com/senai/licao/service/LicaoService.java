@@ -357,7 +357,7 @@ public class LicaoService {
     }
 
     @Transactional
-    public ServicoResponse marcarComoSuperada(Long servicoId, Long validadorId) {
+    public ServicoResponse marcarComoSuperada(Long servicoId) {
         var servico = servicoRepository.findByIdOptional(servicoId)
                 .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
 
@@ -373,7 +373,7 @@ public class LicaoService {
     }
 
     @Transactional
-    public ServicoResponse reativarLicao(Long servicoId, Long validadorId) {
+    public ServicoResponse reativarLicao(Long servicoId) {
         var servico = servicoRepository.findByIdOptional(servicoId)
                 .orElseThrow(() -> new NaoEncontradoException("Serviço não encontrado"));
 

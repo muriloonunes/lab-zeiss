@@ -43,7 +43,7 @@ public class SeedVocabulario {
 
         criarClasse("Recurso", "DuraMax", "Prismo", "OInspect", "Bosello", "T-Scan", "ATOS Q", "ZRE", "Zeiss Inspect");
 
-        criarClasse("Causa do Desvio", "Fixação mais complexa", "Peça com geometria complexa", "Mudança de escopo pelo cliente");
+        criarClasse("Causa do Desvio", "Nenhum Desvio", "Fixação mais complexa", "Peça com geometria complexa", "Mudança de escopo pelo cliente");
     }
 
     private void criarClasse(String nomeClasse, String... termos) {

@@ -82,6 +82,6 @@ public class ServicoRepository implements PanacheRepository<RegistroServico> {
             params.put("termoId", termoId);
         }
 
-        return find(query.toString() + " order by s.dataCriacao desc", params).list();
+        return find(query + " order by s.dataCriacao desc", params).list();
     }
 }
