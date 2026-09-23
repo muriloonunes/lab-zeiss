@@ -55,11 +55,14 @@ export async function aprovarLicao(servicoId: number): Promise<RegistroServico> 
 
 export async function devolverLicao(
     servicoId: number,
-    payload: DevolverLicaoPayload
+    payload: DevolverLicaoPayload | string
 ): Promise<RegistroServico> {
+    const body: DevolverLicaoPayload =
+        typeof payload === 'string' ? { motivoRejeicao: payload } : payload;
+
     return request<RegistroServico>(`/api/licoes/${servicoId}/devolver`, {
         method: 'PATCH',
-        body: JSON.stringify(payload),
+        body: JSON.stringify(body),
     });
 }
 

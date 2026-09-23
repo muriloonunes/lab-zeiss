@@ -180,7 +180,9 @@ export const Licoes: React.FC = () => {
 
         setProcessandoAcao(true);
         try {
-            const atualizado = await devolverLicao(licaoSelecionada.id, motivoDevolucao.trim());
+            const atualizado = await devolverLicao(licaoSelecionada.id, {
+                motivoRejeicao: motivoDevolucao.trim(),
+            });
             mostrarToast('info', `Lição da OS ${atualizado.codigo} devolvida para ajuste com notificação ao técnico.`);
             setModalDevolverAberto(false);
             setLicaoSelecionada(null);

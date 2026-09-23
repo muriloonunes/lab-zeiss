@@ -45,7 +45,10 @@
 
     @media (min-width: 1024px) {
       transform: translateX(0);
-      position: sticky;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
       height: 100vh;
       box-shadow: none;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -342,6 +345,11 @@
     flex-direction: column;
     min-width: 0;
     min-height: 100vh;
+
+    @media (min-width: 1024px) {
+      margin-left: 280px;
+      width: calc(100% - 280px);
+    }
 
     // Top Header
     .internal-topbar {

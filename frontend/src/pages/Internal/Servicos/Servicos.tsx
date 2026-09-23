@@ -16,6 +16,7 @@ import {
 import { listarClasses, listarTermosPorClasse } from '../../../services/vocabularioService';
 import { TermoVocabulario } from '../../../types/vocabulario';
 import { ModalCriarServico } from './components/ModalCriarServico/ModalCriarServico';
+import { VocabularioMultiSelect, TermoComClasse } from '../../../components/VocabularioMultiSelect/VocabularioMultiSelect';
 import { useToast } from '../../../components/Toast';
 import './Servicos.scss';
 
@@ -37,12 +38,11 @@ export const Servicos: React.FC = () => {
     const [modalCancelarAberto, setModalCancelarAberto] = useState(false);
     const [modalCriarAberto, setModalCriarAberto] = useState(false);
 
-    // Serviço Selecionado
     const [selecionado, setSelecionado] = useState<RegistroServico | null>(null);
 
     // Vocabulários para Finalização e Lições (Bloco B e C)
     const [causasDesvio, setCausasDesvio] = useState<TermoVocabulario[]>([]);
-    const [todosTermos, setTodosTermos] = useState<TermoVocabulario[]>([]);
+    const [todosTermos, setTodosTermos] = useState<TermoComClasse[]>([]);
 
     // Estados do Formulário de Finalização / Rascunho
     const [horasRealizadas, setHorasRealizadas] = useState<number | ''>('');
@@ -80,13 +80,15 @@ export const Servicos: React.FC = () => {
             if (classeCausa) {
                 const termosCausa = await listarTermosPorClasse(classeCausa.id, true);
                 setCausasDesvio(termosCausa);
-                if (termosCausa.length > 0) {
-                    setCausaDesvioId(termosCausa[0].id);
-                }
             }
 
-            // Carrega termos de todas as classes para assuntos relacionados
-            const promessas = classes.map(c => listarTermosPorClasse(c.id, true));
+            const promessas = classes.map(async (c) => {
+                const termos = await listarTermosPorClasse(c.id, true);
+                return termos.map(t => ({
+                    ...t,
+                    classeNome: c.nome
+                }));
+            });
             const resultados = await Promise.all(promessas);
             const combinados = resultados.flat();
             setTodosTermos(combinados);
@@ -100,7 +102,6 @@ export const Servicos: React.FC = () => {
         carregarVocabularios();
     }, []);
 
-    // Sincronização com Search Params (filtros ou navegação direta da notificação)
     useEffect(() => {
         const paramFiltro = searchParams.get('filtro');
         if (paramFiltro === 'devolvidas') {
@@ -126,7 +127,6 @@ export const Servicos: React.FC = () => {
         }
     }, [servicos, searchParams]);
 
-    // Contadores com métricas separadas de OS e Lição
     const contadores = useMemo(() => {
         const total = servicos.length;
         const orcados = servicos.filter(s => s.status === 'ORCADO').length;
@@ -147,7 +147,6 @@ export const Servicos: React.FC = () => {
         return { total, orcados, emExecucao, emAndamento, concluidos, devolvidas, emValidacao, cancelados };
     }, [servicos]);
 
-    // Filtragem refinada
     const servicosFiltrados = useMemo(() => {
         return servicos.filter((s) => {
             const query = busca.toLowerCase().trim();
@@ -178,12 +177,41 @@ export const Servicos: React.FC = () => {
         });
     }, [servicos, busca, filtroStatus]);
 
+    const obterTermosPreSelecionados = (s: RegistroServico, causaId?: number | ''): number[] => {
+        const ids = new Set<number>();
+
+        if (s.blocoAprendizado?.assuntosRelacionados && s.blocoAprendizado.assuntosRelacionados.length > 0) {
+            s.blocoAprendizado.assuntosRelacionados.forEach(a => ids.add(a.id));
+        }
+
+        if (s.blocoOrcamento?.caracteristicasPeca) {
+            s.blocoOrcamento.caracteristicasPeca.forEach(c => ids.add(c.id));
+        }
+
+        const causa = causaId || s.blocoAprendizado?.causaDesvio?.id;
+        if (causa && typeof causa === 'number') {
+            ids.add(causa);
+        }
+
+        return Array.from(ids);
+    };
+
+    const handleMudarCausaDesvio = (novoId: number | '') => {
+        if (causaDesvioId && typeof causaDesvioId === 'number' && causaDesvioId !== novoId) {
+            setAssuntosRelacionadosIds(prev => prev.filter(id => id !== causaDesvioId));
+        }
+        setCausaDesvioId(novoId);
+        if (novoId && typeof novoId === 'number') {
+            setAssuntosRelacionadosIds(prev => prev.includes(novoId) ? prev : [...prev, novoId]);
+        }
+    };
+
     const abrirDetalhes = (s: RegistroServico) => {
         setSelecionado(s);
-        // Pre-carrega campos da licao caso queira avançar
-        setCausaDesvioId(s.blocoAprendizado?.causaDesvio?.id ?? (causasDesvio[0]?.id || ''));
+        const causa = s.blocoAprendizado?.causaDesvio?.id ?? '';
+        setCausaDesvioId(causa);
         setLicaoAprendida(s.blocoAprendizado?.licaoAprendida ?? '');
-        setAssuntosRelacionadosIds(s.blocoAprendizado?.assuntosRelacionados?.map(a => a.id) ?? []);
+        setAssuntosRelacionadosIds(obterTermosPreSelecionados(s, causa));
         setRestrito(s.blocoAprendizado?.restrito ?? false);
         setModalDetalhesAberto(true);
     };
@@ -213,9 +241,10 @@ export const Servicos: React.FC = () => {
         setHouveRetrabalho(s.blocoRealizado?.houveRetrabalho ?? false);
         setHouveMudancaEscopo(s.blocoRealizado?.houveMudancaEscopo ?? false);
 
-        setCausaDesvioId(s.blocoAprendizado?.causaDesvio?.id ?? (causasDesvio[0]?.id || ''));
+        const causa = s.blocoAprendizado?.causaDesvio?.id ?? '';
+        setCausaDesvioId(causa);
         setLicaoAprendida(s.blocoAprendizado?.licaoAprendida ?? '');
-        setAssuntosRelacionadosIds(s.blocoAprendizado?.assuntosRelacionados?.map(a => a.id) ?? []);
+        setAssuntosRelacionadosIds(obterTermosPreSelecionados(s, causa));
         setRestrito(s.blocoAprendizado?.restrito ?? false);
 
         setModalFinalizarAberto(true);
@@ -224,9 +253,10 @@ export const Servicos: React.FC = () => {
     const abrirModalRevisarLicao = (s: RegistroServico, e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
         setSelecionado(s);
-        setCausaDesvioId(s.blocoAprendizado?.causaDesvio?.id ?? (causasDesvio[0]?.id || ''));
+        const causa = s.blocoAprendizado?.causaDesvio?.id ?? '';
+        setCausaDesvioId(causa);
         setLicaoAprendida(s.blocoAprendizado?.licaoAprendida ?? '');
-        setAssuntosRelacionadosIds(s.blocoAprendizado?.assuntosRelacionados?.map(a => a.id) ?? []);
+        setAssuntosRelacionadosIds(obterTermosPreSelecionados(s, causa));
         setRestrito(s.blocoAprendizado?.restrito ?? false);
         setModalRevisarLicaoAberto(true);
     };
@@ -273,6 +303,10 @@ export const Servicos: React.FC = () => {
             }
             if (valorFaturado === '' || Number(valorFaturado) < 0) {
                 mostrarToast('error', 'Informe o Valor Faturado.');
+                return;
+            }
+            if (!causaDesvioId) {
+                mostrarToast('error', 'Selecione a Causa do Desvio / Ocorrência.');
                 return;
             }
         }
@@ -368,7 +402,6 @@ export const Servicos: React.FC = () => {
 
     return (
         <div className="servicos-page">
-            {/* Header da Página */}
             <div className="servicos-header">
                 <div className="header-titles">
                     <h2>Ordens de Serviço</h2>
@@ -389,7 +422,6 @@ export const Servicos: React.FC = () => {
                 </div>
             </div>
 
-            {/* Abas e Filtros Rápidos */}
             <div className="servicos-toolbar">
                 <div className="filter-tabs">
                     <button
@@ -978,7 +1010,6 @@ export const Servicos: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Bloco Aprendizado */}
                             <div className="block-section">
                                 <div className="section-heading">
                                     <h4>Bloco C: Aprendizado & Lições</h4>
@@ -988,9 +1019,9 @@ export const Servicos: React.FC = () => {
                                         <label>Causa do Desvio / Ocorrência *</label>
                                         <select
                                             value={causaDesvioId}
-                                            onChange={(e) => setCausaDesvioId(e.target.value === '' ? '' : Number(e.target.value))}
+                                            onChange={(e) => handleMudarCausaDesvio(e.target.value === '' ? '' : Number(e.target.value))}
                                         >
-                                            <option value="">Selecione...</option>
+                                            <option value="">Selecione a Causa do Desvio...</option>
                                             {causasDesvio.map(c => (
                                                 <option key={c.id} value={c.id}>{c.descricao}</option>
                                             ))}
@@ -1008,31 +1039,13 @@ export const Servicos: React.FC = () => {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Assuntos do Vocabulário Relacionados</label>
-                                        <div className="multi-select-tags">
-                                            {todosTermos.map(t => {
-                                                const checked = assuntosRelacionadosIds.includes(t.id);
-                                                return (
-                                                    <label
-                                                        key={t.id}
-                                                        className={`tag-checkbox-pill ${checked ? 'selected' : ''}`}
-                                                    >
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={checked}
-                                                            onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setAssuntosRelacionadosIds(prev => [...prev, t.id]);
-                                                                } else {
-                                                                    setAssuntosRelacionadosIds(prev => prev.filter(id => id !== t.id));
-                                                                }
-                                                            }}
-                                                        />
-                                                        <span>{t.descricao}</span>
-                                                    </label>
-                                                );
-                                            })}
-                                        </div>
+                                        <VocabularioMultiSelect
+                                            label="Assuntos do Vocabulário Relacionados"
+                                            termos={todosTermos}
+                                            selecionadosIds={assuntosRelacionadosIds}
+                                            onChange={setAssuntosRelacionadosIds}
+                                            placeholder="Buscar e selecionar termos do vocabulário..."
+                                        />
                                     </div>
 
                                     <div className="form-group">
@@ -1137,7 +1150,6 @@ export const Servicos: React.FC = () => {
                 </div>
             )}
 
-            {/* Modal 4: Revisar e Reenviar Lição Devolvida */}
             {modalRevisarLicaoAberto && selecionado && (
                 <div className="servico-modal-overlay" onClick={() => setModalRevisarLicaoAberto(false)}>
                     <div className="servico-modal-box modal-box-wide" onClick={(e) => e.stopPropagation()}>
@@ -1156,7 +1168,6 @@ export const Servicos: React.FC = () => {
                         </div>
 
                         <div className="servico-modal-body">
-                            {/* Caixa de Feedback do Validador */}
                             {selecionado.blocoAprendizado?.motivoRejeicao && (
                                 <div className="feedback-validador-box">
                                     <div className="feedback-header">
@@ -1172,7 +1183,6 @@ export const Servicos: React.FC = () => {
                                 </div>
                             )}
 
-                            {/* Blocos A e B Travados (Somente Leitura) */}
                             <div className="locked-blocks-summary">
                                 <div className="summary-badge">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
@@ -1202,7 +1212,6 @@ export const Servicos: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Bloco C: Aprendizado & Lições (Habilitado para Edição) */}
                             <div className="block-section">
                                 <div className="section-heading">
                                     <h4>Bloco C: Edição da Lição de Aprendizado</h4>
@@ -1214,9 +1223,9 @@ export const Servicos: React.FC = () => {
                                         <label>Causa do Desvio / Ocorrência *</label>
                                         <select
                                             value={causaDesvioId}
-                                            onChange={(e) => setCausaDesvioId(e.target.value === '' ? '' : Number(e.target.value))}
+                                            onChange={(e) => handleMudarCausaDesvio(e.target.value === '' ? '' : Number(e.target.value))}
                                         >
-                                            <option value="">Selecione a Causa Principal...</option>
+                                            <option value="">Selecione a Causa do Desvio...</option>
                                             {causasDesvio.map((c) => (
                                                 <option key={c.id} value={c.id}>{c.descricao}</option>
                                             ))}
@@ -1234,31 +1243,13 @@ export const Servicos: React.FC = () => {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Assuntos / Termos do Vocabulário Relacionados</label>
-                                        <div className="multi-select-tags">
-                                            {todosTermos.map((t) => {
-                                                const checked = assuntosRelacionadosIds.includes(t.id);
-                                                return (
-                                                    <label
-                                                        key={t.id}
-                                                        className={`tag-checkbox-pill ${checked ? 'selected' : ''}`}
-                                                    >
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={checked}
-                                                            onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setAssuntosRelacionadosIds(prev => [...prev, t.id]);
-                                                                } else {
-                                                                    setAssuntosRelacionadosIds(prev => prev.filter(id => id !== t.id));
-                                                                }
-                                                            }}
-                                                        />
-                                                        <span>{t.descricao}</span>
-                                                    </label>
-                                                );
-                                            })}
-                                        </div>
+                                        <VocabularioMultiSelect
+                                            label="Assuntos / Termos do Vocabulário Relacionados"
+                                            termos={todosTermos}
+                                            selecionadosIds={assuntosRelacionadosIds}
+                                            onChange={setAssuntosRelacionadosIds}
+                                            placeholder="Buscar e selecionar termos do vocabulário..."
+                                        />
                                     </div>
 
                                     <div className="form-group">
