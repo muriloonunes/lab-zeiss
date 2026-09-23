@@ -1,4 +1,4 @@
-package com.senai.assinatura;
+package com.senai.notificacao.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
  *
  * @author Murilo Nunes <murilo_no@outlook.com>
  * @date 19/09/2026
- * @brief Class NotificacaoAssinatura
+ * @brief Class Notificacao
  */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "notificacao_assinatura")
-public class NotificacaoAssinatura {
+@Table(name = "notificacoes")
+public class Notificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,6 +31,15 @@ public class NotificacaoAssinatura {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String mensagem;
+
+    @Column(name = "tipo")
+    private String tipo;
+
+    @Column(name = "referencia_id")
+    private Long referenciaId;
+
+    @Column(name = "link")
+    private String link;
 
     @Column(nullable = false)
     private boolean lida = false;

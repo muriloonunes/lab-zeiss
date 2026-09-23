@@ -708,9 +708,10 @@
       "partQuantityPlaceholder": "Ex: 1 protótipo, lote piloto de 10 peças, série de 500 un...",
       "drawingLabel": "Desenhos Técnicos ou Modelos 3D (Opcional)",
       "dropzoneTitle": "Clique ou arraste até 5 arquivos técnicos aqui",
-      "dropzoneHint": "Formatos: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP, RAR (Máx. 5 arquivos / 25MB total)",
+      "dropzoneHint": "Formatos: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP, RAR, PNG, JPG (Máx. 5 arquivos / 25MB total)",
       "dropzoneDragActive": "Solte os arquivos para anexar",
       "fileSizeError": "O arquivo excede o limite máximo permitido de 25MB.",
+      "invalidFileExtension": "Extensão de arquivo inválida.",
       "maxFilesError": "Você pode anexar no máximo 5 arquivos no total.",
       "totalFileSizeError": "A soma dos arquivos selecionados excede o limite máximo de 25MB.",
       "removeFile": "Remover anexo",
@@ -734,6 +735,20 @@
       "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, tolerâncias críticas, norma aplicável e prazos desejados.",
       "submitButton": "Enviar Solicitação Técnica",
       "sentNotice": "Solicitação enviada com sucesso! Nossa equipe técnica entrará em contato."
+    },
+    "success": {
+      "title": "Solicitação Enviada!",
+      "subtitle": "Recebemos sua solicitação com sucesso. Nossa equipe técnica analisará as informações e entrará em contato em breve.",
+      "protocolLabel": "Número de Protocolo",
+      "copy": "Copiar",
+      "copied": "Copiado!",
+      "copyTitle": "Copiar Protocolo",
+      "whatsappButton": "Falar pelo WhatsApp",
+      "whatsappMessage": "Olá, gostaria de informações sobre a minha solicitação de orçamento (Protocolo: {{codigo}})",
+      "newRequestButton": "Enviar nova solicitação",
+      "submitting": "Enviando solicitação...",
+      "validationError": "Por favor, preencha todos os campos obrigatórios.",
+      "connectionError": "Não foi possível conectar ao servidor. Tente novamente em instantes."
     }
   },
   "footer": {

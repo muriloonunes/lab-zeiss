@@ -37,13 +37,13 @@ public class SeedVocabulario {
 
         LOGGER.info("Populando vocabulário controlado mínimo...");
 
-        criarClasse("Tipo de Serviço", "MMC", "Digitalização 3D", "Engenharia Reversa", "Elaboração de Laudo");
+        criarClasse("Tipo de Serviço", "MMC", "Digitalização 3D", "Engenharia Reversa", "Elaboração de Laudo", "Raio-X / Tomografia");
 
         criarClasse("Característica da Peça", "Grande Porte", "Médio Porte", "Pequeno Porte", "Peça Única", "Peça em Série", "Diâmetro Pequeno", "Diâmetro Médio", "Diâmetro Grande", "Peça Complexa", "Peça Simples");
 
         criarClasse("Recurso", "DuraMax", "Prismo", "OInspect", "Bosello", "T-Scan", "ATOS Q", "ZRE", "Zeiss Inspect");
 
-        criarClasse("Causa do Desvio", "Fixação mais complexa", "Peça com geometria complexa", "Mudança de escopo pelo cliente");
+        criarClasse("Causa do Desvio", "Nenhum Desvio", "Fixação mais complexa", "Peça com geometria complexa", "Mudança de escopo pelo cliente");
     }
 
     private void criarClasse(String nomeClasse, String... termos) {

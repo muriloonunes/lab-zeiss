@@ -712,6 +712,7 @@
       "dropzoneHint": "Formate: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP, RAR (Max. 5 Dateien / 25MB gesamt)",
       "dropzoneDragActive": "Dateien hier ablegen",
       "fileSizeError": "Die Datei überschreitet das maximale Limit von 25MB.",
+      "invalidFileExtension": "Ungültige Dateierweiterung.",
       "maxFilesError": "Sie können maximal 5 Dateien anhängen.",
       "totalFileSizeError": "Die Gesamtgröße der Dateien überschreitet das Limit von 25MB.",
       "removeFile": "Anhang entfernen",
@@ -735,6 +736,20 @@
       "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, kritische Toleranzen, anwendbare Norm und gewünschte Fristen an.",
       "submitButton": "Technische Anfrage absenden",
       "sentNotice": "Anfrage erfolgreich gesendet! Unser technisches Team wird sich mit Ihnen in Verbindung setzen."
+    },
+    "success": {
+      "title": "Anfrage erfolgreich gesendet!",
+      "subtitle": "Wir haben Ihre Anfrage erfolgreich erhalten. Unser technisches Team wird die Angaben prüfen und sich in Kürze bei Ihnen melden.",
+      "protocolLabel": "Protokollnummer",
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "copyTitle": "Protokoll kopieren",
+      "whatsappButton": "Per WhatsApp kontaktieren",
+      "whatsappMessage": "Hallo, ich hätte gerne Informationen zu meiner Angebotsanfrage (Protokoll: {{codigo}})",
+      "newRequestButton": "Neue Anfrage senden",
+      "submitting": "Anfrage wird gesendet...",
+      "validationError": "Bitte füllen Sie alle Pflichtfelder aus.",
+      "connectionError": "Verbindung zum Server fehlgeschlagen. Bitte versuchen Sie es in Kürze erneut."
     }
   },
   "footer": {

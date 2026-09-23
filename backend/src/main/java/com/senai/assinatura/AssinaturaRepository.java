@@ -3,6 +3,7 @@ package com.senai.assinatura;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,12 @@ public class AssinaturaRepository implements PanacheRepository<AssinaturaAssunto
 
     public long deleteByUsuarioETermo(Long idUsuario, Long termoId) {
         return delete("usuarioId = ?1 and termo.id = ?2", idUsuario, termoId);
+    }
+
+    public List<AssinaturaAssunto> listarPorTermos(Collection<Long> termosIds) {
+        if (termosIds == null || termosIds.isEmpty()) {
+            return List.of();
+        }
+        return list("termo.id in ?1", termosIds);
     }
 }

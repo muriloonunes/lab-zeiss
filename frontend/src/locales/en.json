@@ -712,6 +712,7 @@
       "dropzoneHint": "Formats: PDF, STEP, STP, IGES, IGS, DWG, DXF, STL, ZIP, RAR (Max. 5 files / 25MB total)",
       "dropzoneDragActive": "Drop files here to attach",
       "fileSizeError": "File exceeds the maximum allowable limit of 25MB.",
+      "invalidFileExtension": "Invalid file extension.",
       "maxFilesError": "You can attach a maximum of 5 files.",
       "totalFileSizeError": "The total size of attached files exceeds the 25MB limit.",
       "removeFile": "Remove attachment",
@@ -735,6 +736,20 @@
       "messagePlaceholder": "Provide details such as approximate dimensions, part material, critical tolerances, applicable standard, and desired deadlines.",
       "submitButton": "Submit Technical Request",
       "sentNotice": "Request sent successfully! Our technical team will get in touch."
+    },
+    "success": {
+      "title": "Request Submitted!",
+      "subtitle": "We have received your request successfully. Our technical team will review the details and reach out shortly.",
+      "protocolLabel": "Tracking Protocol Number",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "copyTitle": "Copy Protocol",
+      "whatsappButton": "Chat on WhatsApp",
+      "whatsappMessage": "Hello, I would like information regarding my quote request (Protocol: {{codigo}})",
+      "newRequestButton": "Submit another request",
+      "submitting": "Submitting request...",
+      "validationError": "Please fill in all required fields.",
+      "connectionError": "Could not connect to the server. Please try again shortly."
     }
   },
   "footer": {

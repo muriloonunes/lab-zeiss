@@ -36,3 +36,7 @@ pnpm-debug.log*
 
 logs/
 *.log
+
+# Uploads de solicitações (local)
+uploads/
+/uploads
