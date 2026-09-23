@@ -6,6 +6,7 @@ import com.senai.licao.dto.ReenviarLicaoRequest;
 import com.senai.licao.service.LicaoService;
 import com.senai.servico.domain.StatusLicao;
 import com.senai.servico.dto.ServicoResponse;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -33,6 +34,9 @@ public class LicaoResource {
     @Inject
     JsonWebToken jwt;
 
+    @Inject
+    SecurityIdentity securityIdentity;
+
     @GET
     @RolesAllowed({"CONSULTA", "TECNICO", "VALIDADOR", "ADMINISTRADOR"})
     public Response listarBaseConhecimento(
@@ -40,7 +44,8 @@ public class LicaoResource {
             @QueryParam("termoId") Long termoId,
             @QueryParam("busca") String busca
     ) {
-        List<ServicoResponse> response = licaoService.listarBaseConhecimento(status, termoId, busca);
+        boolean podeVerRestritas = securityIdentity.hasRole("VALIDADOR") || securityIdentity.hasRole("ADMINISTRADOR");
+        List<ServicoResponse> response = licaoService.listarBaseConhecimento(status, termoId, busca, podeVerRestritas);
         return Response.ok(response).build();
     }
 

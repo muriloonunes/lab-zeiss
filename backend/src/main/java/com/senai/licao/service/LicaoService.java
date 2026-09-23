@@ -54,7 +54,11 @@ public class LicaoService {
     ServicoMapper mapper;
 
     public List<ServicoResponse> listarBaseConhecimento(StatusLicao status, Long termoId, String busca) {
-        return servicoRepository.listarBaseConhecimento(status, termoId, busca).stream()
+        return listarBaseConhecimento(status, termoId, busca, true);
+    }
+
+    public List<ServicoResponse> listarBaseConhecimento(StatusLicao status, Long termoId, String busca, boolean podeVerRestritas) {
+        return servicoRepository.listarBaseConhecimento(status, termoId, busca, podeVerRestritas).stream()
                 .map(mapper::toResponse)
                 .toList();
     }

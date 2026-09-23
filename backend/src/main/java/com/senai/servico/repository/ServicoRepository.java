@@ -4,7 +4,6 @@ import com.senai.servico.domain.RegistroServico;
 import com.senai.servico.domain.StatusLicao;
 import com.senai.servico.domain.StatusServico;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.HashMap;
@@ -13,10 +12,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * Repositório Panache para operações em RegistroServico.
  *
  * @author Murilo Nunes <murilo_no@outlook.com>
  * @date 20/09/2026
- * @brief Class ServicoRepository
  */
 @ApplicationScoped
 public class ServicoRepository implements PanacheRepository<RegistroServico> {
@@ -30,20 +29,19 @@ public class ServicoRepository implements PanacheRepository<RegistroServico> {
     }
 
     public List<RegistroServico> listarPorStatus(StatusServico status) {
-        return find("status", Sort.descending("dataCriacao"), status).list();
+        return find("status = ?1 order by dataCriacao desc", status).list();
     }
 
     public List<RegistroServico> listarTodosOrdenadosPorData() {
-        return listAll(Sort.descending("dataCriacao"));
+        return find("order by dataCriacao desc").list();
     }
 
     public List<RegistroServico> listarLicoesPendentesValidacao() {
-        return list(
-                "status = ?1 and blocoAprendizado.statusLicao = ?2",
-                Sort.descending("dataCriacao"),
+        return find(
+                "status = ?1 and blocoAprendizado.statusLicao = ?2 order by dataCriacao asc",
                 StatusServico.CONCLUIDO,
                 StatusLicao.EM_VALIDACAO
-        );
+        ).list();
     }
 
     public long contarLicoesPendentesValidacao() {
@@ -55,13 +53,21 @@ public class ServicoRepository implements PanacheRepository<RegistroServico> {
     }
 
     public List<RegistroServico> listarBaseConhecimento(StatusLicao statusLicao) {
-        return listarBaseConhecimento(statusLicao, null, null);
+        return listarBaseConhecimento(statusLicao, null, null, true);
     }
 
     public List<RegistroServico> listarBaseConhecimento(StatusLicao statusLicao, Long termoId, String busca) {
+        return listarBaseConhecimento(statusLicao, termoId, busca, true);
+    }
+
+    public List<RegistroServico> listarBaseConhecimento(StatusLicao statusLicao, Long termoId, String busca, boolean podeVerRestritas) {
         StringBuilder query = new StringBuilder("select s from RegistroServico s where s.status = :status");
         Map<String, Object> params = new HashMap<>();
         params.put("status", StatusServico.CONCLUIDO);
+
+        if (!podeVerRestritas) {
+            query.append(" and (s.blocoAprendizado.restrito is null or s.blocoAprendizado.restrito = false)");
+        }
 
         if (statusLicao != null) {
             query.append(" and s.blocoAprendizado.statusLicao = :statusLicao");
