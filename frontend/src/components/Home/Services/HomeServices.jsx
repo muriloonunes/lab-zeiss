@@ -9,21 +9,37 @@ export function HomeServices() {
             id: 'cmm',
             title: t('home.services.items.cmm.title'),
             description: t('home.services.items.cmm.description'),
+            link: '/servicos/cmm',
         },
         {
             id: 'reverse',
             title: t('home.services.items.reverse.title'),
             description: t('home.services.items.reverse.description'),
+            link: '/servicos/engenharia-reversa',
         },
         {
             id: 'q-control',
             title: t('home.services.items.qcontrol.title'),
             description: t('home.services.items.qcontrol.description'),
+            link: '/servicos/digitalizacao-3d',
         },
         {
             id: 'prototyping',
             title: t('home.services.items.prototyping.title'),
             description: t('home.services.items.prototyping.description'),
+            link: '/servicos/digitalizacao-3d',
+        },
+        {
+            id: 'mro',
+            title: t('home.services.items.mro.title'),
+            description: t('home.services.items.mro.description'),
+            link: '/servicos',
+        },
+        {
+            id: 'training',
+            title: t('home.services.items.training.title'),
+            description: t('home.services.items.training.description'),
+            link: '/servicos',
         },
     ];
 
@@ -49,7 +65,7 @@ export function HomeServices() {
                             </div>
 
                             <div className="card-bottom">
-                                <Link to="/servicos" className="service-link">
+                                <Link to={item.link} className="service-link">
                                     <span>{t('home.services.learnMore')}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor"

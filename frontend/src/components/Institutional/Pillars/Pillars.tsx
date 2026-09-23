@@ -1,21 +1,23 @@
 import './Pillars.scss';
+import { useTranslation } from "react-i18next";
 
 export function Pillars() {
+    const { t } = useTranslation();
+
     return (
         <section className="inst-section" id="pilares">
             <div className="inst-container">
                 <div className="inst-section-header">
                     <div className="inst-eyebrow">
                         <span className="inst-eyebrow-line"></span>
-                        <span className="inst-eyebrow-text">Princípios & Valores</span>
+                        <span className="inst-eyebrow-text">{t("institutional.pillars.subtitle")}</span>
                     </div>
                     <div className="inst-header-split">
                         <h2 className="inst-section-title">
-                            Os pilares que sustentam cada relatório emitido
+                            {t("institutional.pillars.title")}
                         </h2>
                         <p className="inst-section-desc">
-                            Metrologia é a ciência da confiança. Nossos compromissos operacionais garantem segurança
-                            jurídica e técnica para o produto final.
+                            {t("institutional.pillars.description")}
                         </p>
                     </div>
                 </div>
@@ -32,11 +34,9 @@ export function Pillars() {
                                 <line x1="12" y1="22" x2="12" y2="18"></line>
                             </svg>
                         </div>
-                        <h3 className="pillar-card-title">Rigor & Toleranciamento GD&T</h3>
+                        <h3 className="pillar-card-title">{t("institutional.pillars.items.gdt.title")}</h3>
                         <p className="pillar-card-desc">
-                            Aplicação estrita dos conceitos de Dimensionamento Geométrico e Toleranciamento (GD&T)
-                            conforme as normas ISO 1101 e ASME Y14.5, eliminando interpretações dúbias e garantindo
-                            repetibilidade metrológica.
+                            {t("institutional.pillars.items.gdt.description")}
                         </p>
                     </div>
 
@@ -50,11 +50,9 @@ export function Pillars() {
                                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
                             </svg>
                         </div>
-                        <h3 className="pillar-card-title">Acessibilidade à Manufatura</h3>
+                        <h3 className="pillar-card-title">{t("institutional.pillars.items.accessibility.title")}</h3>
                         <p className="pillar-card-desc">
-                            Tornar a instrumentação e a consultoria dimensional acessíveis não apenas para
-                            megacorporações, mas para pequenas e médias indústrias que buscam se qualificar para
-                            mercados de exportação.
+                            {t("institutional.pillars.items.accessibility.description")}
                         </p>
                     </div>
 
@@ -66,10 +64,9 @@ export function Pillars() {
                                     points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>
                         </div>
-                        <h3 className="pillar-card-title">Transferência Tecnológica</h3>
+                        <h3 className="pillar-card-title">{t("institutional.pillars.items.techTransfer.title")}</h3>
                         <p className="pillar-card-desc">
-                            Ir além da prestação de serviços: difundir a cultura de precisão através da capacitação
-                            técnica contínua e da formação de novos especialistas para o parque fabril.
+                            {t("institutional.pillars.items.techTransfer.description")}
                         </p>
                     </div>
 
@@ -81,10 +78,9 @@ export function Pillars() {
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
                         </div>
-                        <h3 className="pillar-card-title">Sigilo & Custódia de Dados</h3>
+                        <h3 className="pillar-card-title">{t("institutional.pillars.items.confidentiality.title")}</h3>
                         <p className="pillar-card-desc">
-                            Compromisso inegociável de confidencialidade com relação a modelos CAD proprietários,
-                            geometrias patentes, protótipos industriais e laudos técnicos de inspeção.
+                            {t("institutional.pillars.items.confidentiality.description")}
                         </p>
                     </div>
                 </div>

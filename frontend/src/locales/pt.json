@@ -8,7 +8,8 @@
       "optica": "Inspeção Óptica & Multissensor",
       "raioX": "Inspeção por Raio-X (NDT)",
       "scan3d": "Digitalização Óptica 3D",
-      "reverseEng": "Engenharia Reversa & CAD"
+      "reverseEng": "Engenharia Reversa & CAD",
+      "mro": "Confiabilidade & Almoxarifado MRO"
     },
     "contact": "Contato",
     "requestQuote": "Solicitar Orçamento"
@@ -30,16 +31,24 @@
           "description": "Inspeção dimensional geométrica e toleranciamento GD&T em máquinas de medir por coordenadas ZEISS."
         },
         "reverse": {
-          "title": "Engenharia Reversa",
-          "description": "Criação de modelos CAD e STL a partir de peças físicas, utilizando tecnologias de digitalização 3D e softwares especializados."
+          "title": "Engenharia Reversa & Nacionalização",
+          "description": "Reconstrução de modelos CAD e desenvolvimento para nacionalização de componentes a partir de digitalização 3D."
         },
         "qcontrol": {
-          "title": "Controle de Qualidade",
-          "description": "Inspeção seriada, relatório FAI e análise de desvios dimensionais por mapa de cores."
+          "title": "Controle de Qualidade & Comparação CAD",
+          "description": "Comparação CAD vs. peça real por scanner 3D, mapas de desgaste e relatórios FAI com tolerâncias GD&T."
         },
         "prototyping": {
-          "title": "Prototipagem",
-          "description": "Fabricação de peças utilizando tecnologias de impressão 3D para validação do produto antes da usinagem."
+          "title": "Prototipagem & Impressão 3D",
+          "description": "Fabricação de peças e protótipos em manufatura aditiva 3D para validação geométrica antes da usinagem."
+        },
+        "mro": {
+          "title": "Almoxarifado Virtual & MRO",
+          "description": "Estruturação de árvores de equipamentos e matriz de criticidade para catalogação e prontidão digital sob demanda."
+        },
+        "training": {
+          "title": "Capacitação & Treinamentos",
+          "description": "Treinamentos técnicos aplicados em metrologia, engenharia reversa, manutenção, lubrificação e análise de falhas."
         }
       }
     },
@@ -131,11 +140,121 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Atuação Multissetorial",
+      "mainTitle": "Segmentos Industriais Atendidos",
+      "description": "Nossa infraestrutura e corpo técnico atendem aos mais rigorosos padrões de conformidade técnica de indústrias que exigem tolerâncias micrométricas.",
+      "sectors": {
+        "food": {
+          "title": "Alimentícia",
+          "description": "Mapa de desgaste de peças e inspeção de equipamentos de processamento e envase."
+        },
+        "automotive": {
+          "title": "Automotivo & Autopeças",
+          "description": "Engenharia reversa e prototipagem de novas peças de alta performance."
+        },
+        "aerospace": {
+          "title": "Aeroespacial & Defesa",
+          "description": "Controle dimensional e engenharia reversa de peças fundamentais."
+        },
+        "medical": {
+          "title": "Médico-Hospitalar & Implantes",
+          "description": "Digitalização e inspeção de próteses."
+        },
+        "tooling": {
+          "title": "Ferramentarias & Moldes",
+          "description": "Engenharia reversa e validação de matrizes, moldes de injeção e ferramentas de corte."
+        },
+        "agricultural": {
+          "title": "Máquinas Agrícolas & Linha Pesada",
+          "description": "Verificação de peças de grande porte, carcaças fundidas e estruturas montadas."
+        }
+      }
+    },
     "cta": {
       "title": "Leve a precisão e a conformidade alemã para a sua indústria.",
       "description": "Conte com relatórios FAI, engenharia reversa e inspeção GD&T de padrão internacional realizados em infraestrutura SENAI/ZEISS.",
       "requestQuote": "Solicitar Orçamento Técnico",
       "exploreServices": "Ver Catálogo de Serviços"
+    }
+  },
+  "institutional": {
+    "hero": {
+      "title": "Precisão alemã e expertise técnica brasileira a serviço da indústria de alta exigência.",
+      "description": "Instalado na Faculdade SENAI Ítalo Bologna, em Goiânia, o Centro de Excelência em Metrologia é resultado de uma aliança estratégica entre o Sistema FIEG / SENAI Goiás e a Carl Zeiss. Atuamos como um dos cinco centros globais com esta capacidade para oferecer soluções completas em medição tridimensional, engenharia reversa e conformidade dimensional.",
+      "imageAlt": "Fachada do Laboratório"
+    },
+    "alliance": {
+      "subtitle": "Aliança Estratégica",
+      "title": "A convergência entre padrão global e vocação industrial.",
+      "intro": "O CEM nasceu da necessidade de suprir uma demanda crítica da indústria moderna: o acesso a medições de exatidão micrométrica e validação técnica em conformidade com as normas internacionais mais rigorosas.",
+      "paragraph": "A cooperação técnica une o pioneirismo óptico e metrológico da alemã Carl Zeiss — referência mundial nessa indústria — à infraestrutura, corpo docente e capacidade de formação do SENAI. Esta sinergia permite que indústrias aeroespaciais, automotivas, de saúde e metalmecânica encontrem no Brasil suporte técnico do mesmo nível dos principais polos industriais da Europa.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Alemanha / Brasil)",
+          "description": "Homologação técnica de maquinários, calibrações de fábrica e licenças atualizadas das suítes CALYPSO, PiWeb e ZEISS INSPECT."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Faculdade Ítalo Bologna",
+          "description": "Gestão operacional, responsabilidade técnica pelos ensaios, infraestrutura física do laboratório e difusão de conhecimento industrial."
+        },
+        "fieg": {
+          "name": "Sistema FIEG",
+          "description": "Articulação institucional para o fortalecimento da competitividade e conformidade de fornecedores de cadeias produtivas no país."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Chancela Institucional",
+      "title": "A visão dos realizadores da aliança",
+      "description": "Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a produtividade e competitividade fabril.",
+      "quotes": {
+        "mabel": {
+          "quote": "“A implantação do primeiro Centro de Excelência da Carl Zeiss no Brasil é um marco histórico. A iniciativa visa impulsionar a formação profissional, além de promover o avanço em pesquisa, desenvolvimento e inovação, atendendo às crescentes demandas da indústria nacional por inovação e precisão.”",
+          "author": "Sandro Mabel",
+          "role": "Ex-Presidente da FIEG e dos Conselhos Regionais do SESI e SENAI"
+        },
+        "weinisch": {
+          "quote": "“Estamos tendo a oportunidade de trazer nossa tecnologia de ponta para um novo público-alvo. Apenas Estados Unidos, Alemanha e China têm um complexo similar. Juntos, vamos ensinar a próxima geração a usar soluções inovadoras para alavancar a produtividade e a qualidade dos produtos.”",
+          "author": "Jochen Weinisch",
+          "role": "Vice-Presidente de Vendas (América Latina, Oriente Médio e África) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "“Além de beneficiar a indústria goiana, o complexo terá impacto nacional, tornando-se referência em qualificação profissional e suporte técnico para o setor produtivo, fortalecendo a relação entre educação e chão de fábrica.”",
+          "author": "Dario Queija",
+          "role": "Diretor da Faculdade SENAI Ítalo Bologna"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Princípios & Valores",
+      "title": "Os pilares que sustentam cada relatório emitido",
+      "description": "Metrologia é a ciência da confiança. Nossos compromissos operacionais garantem segurança jurídica e técnica para o produto final.",
+      "items": {
+        "gdt": {
+          "title": "Rigor & Toleranciamento GD&T",
+          "description": "Aplicação estrita dos conceitos de Dimensionamento Geométrico e Toleranciamento (GD&T), garantindo repetibilidade metrológica."
+        },
+        "accessibility": {
+          "title": "Acessibilidade à Metrologia",
+          "description": "Tornar a instrumentação e a consultoria dimensional acessíveis não apenas para megacorporações, mas para pequenas e médias indústrias que buscam também garantir a qualidade e precisão de seus produtos."
+        },
+        "techTransfer": {
+          "title": "Transferência Tecnológica",
+          "description": "Ir além da prestação de serviços: difundir a cultura de precisão através da capacitação técnica contínua e da formação de novos especialistas na área de metrologia."
+        },
+        "confidentiality": {
+          "title": "Sigilo & Custódia de Dados",
+          "description": "Compromisso inegociável de confidencialidade com relação a modelos CAD proprietários, geometrias patentes, protótipos industriais e laudos técnicos de inspeção."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Agende uma Visita Técnica",
+      "title": "Conheça a infraestrutura do laboratório na Faculdade SENAI Ítalo Bologna.",
+      "description": "Nossa equipe técnica está à disposição para avaliar suas necessidades em medição tridimensional, digitalização ou validação dimensional.",
+      "requestContact": "Solicitar Contato Técnico",
+      "exploreServices": "Explorar Catálogo de Serviços"
     }
   },
   "services": {
@@ -178,25 +297,39 @@
       }
     },
     "scanning": {
-      "category": "Digitalização 3D",
+      "category": "Digitalização 3D & Comparação CAD",
       "title": "Transforme a geometria física em dados digitais.",
-      "description": "Capturamos geometrias complexas para criar modelos tridimensionais de alta fidelidade para análise dimensional, controle de qualidade e engenharia reversa. O T-SCAN Hawk 2 garante mobilidade para medições em campo, enquanto o ATOS Q entrega máxima densidade de pontos para componentes detalhados.",
+      "description": "Capturamos geometrias complexas com precisão óptica e a laser para gerar modelos tridimensionais, realizar a comparação nominal vs. real (CAD × Peça escaneada) e mapear desgastes superficiais em componentes em serviço. O T-SCAN Hawk 2 garante mobilidade para medições em campo, enquanto o ATOS Q entrega máxima densidade de pontos.",
       "applications": {
-        "fieldScanning": "Digitalização portátil em campo ou fábrica",
-        "highResolution": "Digitalização óptica de alta resolução (ATOS Q)",
-        "colorMap": "Relatórios de desvio 3D com mapa de cores",
-        "digitization": "Geração de malhas poligonais (STL/OBJ)"
+        "fieldScanning": "Digitalização portátil em campo ou fábrica (T-SCAN Hawk 2)",
+        "highResolution": "Digitalização óptica de alta resolução por luz azul (ATOS Q)",
+        "cadComparison": "Comparação direta entre modelo CAD e peça física escaneada",
+        "wearMap": "Elaboração de mapas de desgaste e monitoramento de perda de material",
+        "colorMap": "Relatórios de desvio 3D com mapa de cores (Color Map)",
+        "digitization": "Geração de malhas poligonais estanques (STL/OBJ)"
       }
     },
     "reverse": {
-      "category": "Engenharia reversa",
-      "title": "Da peça física ao modelo CAD paramétrico.",
-      "description": "Reconstruímos a geometria exata de componentes a partir de nuvens de pontos e malhas 3D, gerando modelos CAD sólidos ou superficiais prontos para fabricação, reposição ou aprimoramento de projeto.",
+      "category": "Engenharia Reversa & Nacionalização",
+      "title": "Da peça física ao modelo CAD paramétrico pronto para fabricação.",
+      "description": "Reconstruímos a geometria exata de componentes a partir de nuvens de pontos e malhas 3D, gerando modelos CAD sólidos ou superficiais prontos para fabricação, nacionalização de itens importados ou aprimoramento de projeto.",
       "applications": {
-        "legacyParts": "Reconstituição de peças sobressalentes sem desenho",
-        "cadGeneration": "Modelagem CAD paramétrica (STEP, IGES, Parasolid)",
+        "legacyParts": "Reconstituição de peças sobressalentes sem desenho técnico",
+        "nationalization": "Nacionalização e desenvolvimento de componentes importados",
+        "cadGeneration": "Modelagem CAD paramétrica (STEP, IGES)",
         "tooling": "Adequação de moldes, matrizes e ferramental",
-        "optimization": "Redesenho e otimização geométrica"
+        "optimization": "Redesenho, otimização geométrica e prototipagem 3D"
+      }
+    },
+    "mro": {
+      "category": "Confiabilidade, Almoxarifado Virtual & Capacitação",
+      "title": "Inteligência de manutenção e capacitação técnica.",
+      "description": "Fornecemos soluções estratégicas para reduzir custos de estoque físico de peças sobressalentes em MRO sem risco de paradas fabris. Mapeamos árvores de equipamentos, fazemos matriz de criticidade e recorrência e fornecemos consultoria completa em manutenção, lubrificação, análise de falhas e capacitação técnica.",
+      "applications": {
+        "virtualWarehouse": "Almoxarifado virtual e biblioteca digital de sobressalentes",
+        "equipmentTree": "Estruturação de árvores de equipamentos e catalogação item a item",
+        "maintenancePlans": "Elaboração de planos de manutenção e planos de lubrificação",
+        "training": "Capacitação e treinamentos técnicos especializados"
       }
     },
     "selection": {
@@ -217,12 +350,20 @@
           "description": "Tomografia e Raio-X para defeitos internos sem danificar a peça."
         },
         "scanning": {
-          "title": "Precisa digitalizar superfícies livres e formas complexas?",
-          "description": "Escaneamento 3D para capturar geometrias completas no chão de fábrica."
+          "title": "Precisa digitalizar superfícies livres ou comparar com CAD?",
+          "description": "Escaneamento 3D para capturar geometrias completas e comparar com o modelo original."
         },
         "cad": {
-          "title": "Não possui o desenho técnico ou arquivo 3D?",
-          "description": "Engenharia reversa para recriar o modelo digital a partir da peça física."
+          "title": "Não possui o desenho técnico ou precisa nacionalizar?",
+          "description": "Engenharia reversa para recriar o modelo digital e viabilizar a fabricação nacional."
+        },
+        "mro": {
+          "title": "Precisa reduzir estoque de peças sobressalentes sem risco de parada?",
+          "description": "Estruturação de almoxarifado virtual, árvores de equipamentos e peças críticas MRO."
+        },
+        "training": {
+          "title": "Deseja capacitar sua equipe técnica em normas e processos industriais?",
+          "description": "Treinamentos técnicos aplicados sob medida pelo SENAI/ZEISS."
         }
       }
     }
@@ -231,12 +372,14 @@
     "breadcrumb": "Serviços",
     "actions": {
       "requestQuote": "Solicitar Cotação para este Serviço",
-      "viewSpecs": "Ver Especificações Técnicas"
+      "viewSpecs": "Ver Especificações Técnicas",
+      "talkToCoordination": "Falar com a Coordenação"
     },
     "sections": {
       "audienceTitle": "Público-Alvo & Segmentos",
       "applicationsTitle": "Aplicações Típicas",
       "deliverablesTitle": "Entregáveis ao Cliente",
+      "trainingNoticeTitle": "Capacitação Técnica & Treinamentos In-Company",
       "installedCapacity": "Capacidade Instalada",
       "specsTitle": "Especificações do Equipamento Homologado ZEISS",
       "specsDesc": "Dados técnicos de bancada e parâmetros operacionais garantidos no laboratório climatizado da Faculdade SENAI Ítalo Bologna.",
@@ -250,7 +393,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Metrologia Tátil e Dimensional",
         "title": "Medição por Coordenadas (CMM) & GD&T",
         "headline": "Exatidão submicrométrica para geometrias críticas e conformidade geométrica rigorosa.",
         "overview": "Serviço voltado à caracterização geométrica e linear tridimensional de peças de alta exigência mecânica. Utilizando sistemas CMM por contato contínuo (scanning tátil), avaliamos desvios de forma, orientação e posição segundo as normas ISO 1101 e ASME Y14.5.",
@@ -303,7 +445,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Metrologia Multissensor Sem Contato",
         "title": "Inspeção Óptica & Dimensional Combinada",
         "headline": "Medição de alta resolução sem contato mecânico para peças flexíveis e microgeometrias.",
         "overview": "Combina câmeras ópticas de alta definição com lentes telecêntricas e apalpamento por contato contínuo na mesma máquina. Elimina deformações causadas por pressão de toque em elastômeros, polímeros finos, tecidos técnicos e circuitos eletrônicos.",
@@ -342,7 +483,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Ensaios Não Destrutivos (NDT)",
         "title": "Inspeção por Raio-X & Análise Estrutural",
         "headline": "Investigação volumétrica interna e integridade sem corte ou destruição da amostra.",
         "overview": "Inspeção radioscópica 2D e tomografia não destrutiva para identificar descontinuidades internas ocultas. Avalia peças fundidas, soldas e montagens seladas com base na absorção e densidade radiológica dos materiais.",
@@ -383,28 +523,28 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "Digitalização 3D e Fotogrametria",
         "title": "Digitalização Óptica 3D & Análise por Mapa de Cores",
-        "headline": "Captura geométrica integral ou parcial para geração de arquivos STL/malhas 3D e controle dimensional.",
-        "overview": "Digitalização tridimensional de alta precisão por luz azul estruturada e triangulação a laser. Converte qualquer peça física em uma réplica tridimensional idêntica em formato de malha poligonal (.STL / .OBJ), pronta para impressão 3D, inspeção dimensional por mapa de cores ou como base para posterior Engenharia Reversa em CAD.",
+        "headline": "Captura geométrica integral ou parcial para geração de arquivos STL/malhas 3D, comparação com CAD e controle dimensional.",
+        "overview": "Digitalização tridimensional de alta precisão por luz azul estruturada e triangulação a laser. Converte qualquer peça física em uma réplica tridimensional idêntica em formato de malha poligonal (.STL / .OBJ), permitindo a comparação direta nominal vs. real (CAD × Peça escaneada), elaboração de mapas de desgaste, impressão 3D ou como base para posterior Engenharia Reversa em CAD.",
         "targetAudience": [
           "Qualquer pessoa ou empresa que possua uma peça física e precise do modelo 3D digital (.STL)",
           "Projetistas e entusiastas que necessitam de malhas 3D para impressão 3D e manufatura aditiva",
           "Manutenção e ferramentarias precisando de acervo digital ou clonagem dimensional de peças",
-          "Equipes de controle de qualidade que realizam inspeção comparativa de desvios (nominal vs. real)",
+          "Equipes de controle de qualidade que realizam inspeção comparativa de desvios (nominal CAD vs. real escaneada)",
           "Clientes com primeiro passo definido antes de avançar para a Engenharia Reversa paramétrica (CAD)"
         ],
         "applications": [
           "Geração de arquivos STL/OBJ estanques (watertight) para impressão 3D",
-          "Comparação dimensional com mapa de cores (Color Map nominal CAD vs. peça real)",
+          "Comparação dimensional com mapa de cores (Color Map nominal CAD vs. peça real escaneada via scanners)",
+          "Elaboração de mapas de desgaste e monitoramento de perda de espessura de material",
           "Digitalização in-loco de componentes no chão de fábrica ou campo",
-          "Inspeção rápida de torção, empenamento e desgaste",
+          "Inspeção rápida de torção, empenamento e conformação de chapas",
           "Base de malha poligonal de alta densidade para engenharia reversa"
         ],
         "deliverables": [
           "Malha poligonal tratada, fechada e alinhada (.STL, .OBJ, .PLY)",
-          "Relatório com mapa de cores 3D demonstrando zonas de excesso e falta (quando aplicável)",
-          "Laudo comparativo de desvios dimensionais de superfícies livres"
+          "Relatório com mapa de cores 3D demonstrando zonas de excesso, falta e desvios nominais",
+          "Laudo comparativo de desvios dimensionais de superfícies livres e mapas de desgaste"
         ],
         "machines": [
           {
@@ -430,7 +570,7 @@
             "software": "ZEISS INSPECT",
             "features": [
               "Modo Satélite inovador: digitalização de peças grandes sem necessidade de fotogrametria com alvos codificados",
-              "Radar de distância integrado com projeção de marcador laser vermelho para ajuste do foco em tempo real",
+              "Radar de distância integrado com projeção de marcador laser vermelho para ajuste da distância ideal de trabalho em tempo real",
               "Rastreabilidade comprovada com padrões de comprimento em fibra de carbono calibrados DAkkS (ISO/IEC 17025)",
               "Recalibração rápida em tomada única através da ferramenta de precisão HyperScale",
               "Forte aderência em superfícies escuras, cromadas ou usinadas sem uso obrigatório de spray antirreflexo"
@@ -439,26 +579,27 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Modelagem Digital Paramétrica",
-        "title": "Engenharia Reversa & Reconstrução CAD",
-        "headline": "Transformação de dados escaneados em sólidos paramétricos prontos para usinagem.",
-        "overview": "Processo completo de engenharia para reconstruir o modelo digital tridimensional de peças físicas que não possuem desenho técnico original, estão desgastadas ou sofreram modificações empíricas de ferramentaria.",
+        "title": "Engenharia Reversa, Reconstrução CAD & Nacionalização",
+        "headline": "Transformação de dados escaneados em sólidos paramétricos prontos para usinagem e fabricação nacional.",
+        "overview": "Processo completo de engenharia para reconstruir o modelo digital tridimensional de peças físicas que não possuem desenho técnico original, estão desgastadas, são importadas ou sofreram modificações empíricas de ferramentaria. Abrange desde a modelagem paramétrica precisa até o desenvolvimento e viabilização da nacionalização de componentes.",
         "targetAudience": [
-          "Manutenção industrial com necessidade de reposição de peças obsoletas",
-          "Empresas de mineração e agroindústria com maquinário importado",
+          "Manutenção industrial com necessidade de reposição de peças obsoletas e nacionalização de importados",
+          "Empresas de mineração, agroindústria e energia com maquinário importado e lead time crítico",
           "Desenvolvedores de produtos e protótipos de alta performance",
-          "Fabricantes de moldes que precisam recuperar geometrias originais"
+          "Fabricantes de moldes e matrizes que precisam recuperar geometrias originais ou aprimoradas"
         ],
         "applications": [
           "Modelagem CAD a partir de malhas poligonais (Mesh to CAD)",
+          "Nacionalização e desenvolvimento de componentes para substituição de importações",
           "Recuperação de peças quebradas com reconstrução das partes ausentes",
           "Adaptação geométrica para modernização e melhoria de desempenho fabril",
-          "Extração de perfis, seções 2D e árvores de construção"
+          "Extração de perfis, seções 2D e árvores de construção paramétricas"
         ],
         "deliverables": [
           "Modelos sólidos e de superfícies paramétricos em formatos STEP, IGES ou Parasolid",
           "Desenhos técnicos 2D em PDF e DWG com toleranciamento de fabricação",
-          "Relatório de desvio de reconstrução comparando o CAD gerado com a malha real"
+          "Relatório de desvio de reconstrução comparando o CAD gerado com a malha real",
+          "Caderno de engenharia para viabilização de fabricação nacional"
         ],
         "machines": [
           {
@@ -471,7 +612,74 @@
             "features": [
               "Segmentação automática de geometrias regulares (planos, cilindros, cones)",
               "Ajuste preciso de superfícies livres com controle numérico de desvio residual",
-              "Exportação compatível com SolidWorks, Siemens NX, CATIA e Inventor"
+              "Exportação nativa compatível com SolidWorks, Siemens NX, CATIA e Autodesk Inventor"            ]
+          }
+        ]
+      },
+      "confiabilidade-mro": {
+        "title": "Confiabilidade, Almoxarifado Virtual MRO & Capacitação Técnica",
+        "headline": "Gestão estratégica de peças sobressalentes, árvore de ativos e confiabilidade operacional para a indústria.",
+        "overview": "Soluções integradas de engenharia de confiabilidade e prontidão digital para transformar a gestão de manutenção industrial (MRO). A partir da estruturação minuciosa de árvores de equipamentos e da aplicação de matrizes analíticas de criticidade e recorrência, identificamos artigos críticos de nível A com baixa recorrência de demanda, viabilizando sua catalogação digital no almoxarifado virtual para reposição ágil sob demanda sem o alto custo de estoque físico imobilizado. A frente contempla ainda a elaboração de planos de manutenção e lubrificação sob rigor tribológico, diagnóstico metalomecânico de falhas e capacitação técnica especializada com metodologia SENAI e tecnologia ZEISS.",
+        "trainingDirectNotice": "Aviso para Treinamentos Técnicos: Para solicitações de treinamentos técnicos nas áreas de metrologia, engenharia reversa, manutenção, lubrificação e análise de falhas, solicitamos entrar em contato diretamente com a coordenação do laboratório (via telefone, WhatsApp ou e-mail), facilitando o alinhamento do ensino e cronograma.",
+        "subServices": [
+          {
+            "index": "01",
+            "category": "Almoxarifado Virtual & Gestão MRO",
+            "title": "Almoxarifado virtual e identificação de peças críticas.",
+            "description": "Desenvolvemos bibliotecas digitais de componentes para eliminar estoques físicos de peças sobressalentes de alto custo e baixa rotatividade. Mediante a aplicação de matrizes de criticidade e recorrência, identificamos peças críticas de Classe A com baixa demanda histórica. Esses itens são digitalizados tridimensionalmente e catalogados em acervo digital homologado, permitindo reposição ágil sob demanda ou fabricação sob encomenda, eliminando o capital imobilizado na prateleira sem elevar o risco de parada da linha.",
+            "applications": [
+              "Aplicação de matriz de criticidade e recorrência para identificação de artigos nível A de baixa demanda",
+              "Criação de acervo digital de componentes MRO com modelos 3D, tolerâncias e desenhos técnicos",
+              "Estratégia de estoque físico vs. digital para redução substancial de capital de giro imobilizado",
+              "Integração com manufatura aditiva, usinagem de precisão e engenharia reversa do laboratório"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Estruturação de Ativos & Rastreabilidade",
+            "title": "Árvores de equipamentos e desmembramento item a item.",
+            "description": "Mapeamos e organizamos a estrutura hierárquica completa de equipamentos complexos e linhas industriais. Realizamos o levantamento minucioso de cada componente, módulo e sobressalente, com identificação funcional, códigos de referência e especificações técnicas, garantindo total rastreabilidade operacional e facilidade de localização pelas equipes de PCM e manutenção.",
+            "applications": [
+              "Estruturação de árvores hierárquicas de equipamentos compatíveis com sistemas CMMS e ERP",
+              "Catalogação item a item e levantamento dimensional minucioso de maquinários industriais",
+              "Mapeamento de peças críticas e identificação precoce de componentes importados de difícil aquisição",
+              "Padronização cadastral de ativos para planos de sobressalentes e manutenção preventiva"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Engenharia de Manutenção & Tribologia",
+            "title": "Planos de manutenção e rotinas de lubrificação industrial.",
+            "description": "Elaboramos e revisamos planos sistemáticos de manutenção preventiva e rotinas de lubrificação industrial pautadas em rigor tribológico. Analisamos pontos de atrito, regimes de carga, condições ambientais e especificações de lubrificantes para formular rotinas padronizadas que evitem desgaste prematuro, aumentem o tempo médio entre falhas (MTBF) e maximizem a confiabilidade dos ativos fabris.",
+            "applications": [
+              "Elaboração e otimização de planos de manutenção preventiva, preditiva e rotinas de inspeção",
+              "Mapeamento de pontos de lubrificação, cálculo de dosagens e definição criteriosa de frequências",
+              "Racionalização e padronização de lubrificantes industriais para redução de custos e contaminações",
+              "Procedimentos operacionais padronizados (POP) para equipes de manutenção e lubrificadores"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Diagnóstico Mecânico & Perícia",
+            "title": "Análise de falhas, quebras e determinação de causa-raiz.",
+            "description": "Investigamos as causas fundamentais de quebras mecânicas inesperadas, trincas por fadiga, corrosão ou desgastes anômalos em peças e equipamentos. Unindo o corpo de especialistas em metalmecânica do SENAI à infraestrutura laboratorial ZEISS (tomografia industrial para descontinuidades internas e escaneamento 3D para mapas de desgaste), entregamos laudos técnicos conclusivos com soluções para mitigar a reincidência.",
+            "applications": [
+              "Determinação pericial de causa-raiz em fraturas mecânicas, fadiga de material e sobrecargas",
+              "Inspeção não destrutiva por tomografia computadorizada para detecção de porosidades e trincas internas",
+              "Elaboração de mapas tridimensionais de desgaste comparativo contra o modelo nominal CAD",
+              "Emissão de laudo pericial com diretrizes corretivas e recomendações de redesenho de componentes"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Capacitação & Transferência de Tecnologia",
+            "title": "Treinamentos técnicos especializados.",
+            "description": "Capacitamos equipes industriais em programas práticos ministrados por instrutores e especialistas certificados pelo Sistema SENAI e homologados pela ZEISS. Oferecemos formações aplicadas em metrologia por coordenadas (CMM), metrologia óptica, GD&T, digitalização 3D, engenharia reversa, confiabilidade industrial e rotinas de manutenção mecânica, com turmas abertas ou in-company estruturadas sob medida.",
+            "applications": [
+              "Treinamentos práticos em metrologia dimensional, medição por coordenadas (CMM) e normas GD&T",
+              "Capacitação em digitalização 3D (luz azul e laser portátil) e inspeção por malhas poligonais",
+              "Cursos aplicados de confiabilidade, lubrificação industrial e gestão de manutenção",
+              "Certificação profissional de excelência emitida pela Faculdade SENAI Ítalo Bologna"
             ]
           }
         ]
@@ -515,10 +723,13 @@
         "cmm": "Medição por Coordenadas (CMM) & GD&T",
         "optica": "Inspeção Óptica & Multissensor",
         "raio-x": "Inspeção por Raio-X & Tomografia (NDT)",
-        "digitalizacao-3d": "Digitalização Óptica 3D & Mapa de Cores",
-        "engenharia-reversa": "Engenharia Reversa & Reconstrução CAD",
-        "consultoria": "Outro / Consultoria & Treinamento Metrológico"
+        "digitalizacao-3d": "Digitalização Óptica 3D, Comparação CAD & Mapa de Cores",
+        "engenharia-reversa": "Engenharia Reversa & Nacionalização de Peças",
+        "confiabilidade-mro": "Confiabilidade, Almoxarifado Virtual MRO & Ativos",
+        "treinamentos": "Treinamentos Técnicos & Capacitação",
+        "consultoria": "Outro / Consultoria Especializada"
       },
+      "trainingDirectNotice": "Para treinamentos técnicos e capacitação de equipes corporativas, sugerimos entrar em contato direto por telefone ou e-mail com a nossa coordenação para um atendimento personalizado.",
       "otherOption": "Outro / Consultoria Dimensional",
       "messageLabel": "Descrição da Demanda / Tolerâncias",
       "messagePlaceholder": "Informe detalhes como dimensões aproximadas, material da peça, tolerâncias críticas, norma aplicável e prazos desejados.",
@@ -557,12 +768,5 @@
     "businessHours": "Seg. a Sex. das 08h às 18h",
     "rights": "Todos os direitos reservados.",
     "partnership": "Sistema FIEG • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "Precisão alemã e expertise técnica brasileira a serviço da indústria de alta exigência.",
-      "description": "Instalado na Faculdade SENAI Ítalo Bologna, em Goiânia, o Centro de Excelência em Metrologia é resultado de uma aliança estratégica entre o Sistema FIEG / SENAI Goiás e a Carl Zeiss. Atuamos como um dos cinco centros globais com esta capacidade para oferecer soluções completas em medição tridimensional, engenharia reversa e conformidade dimensional.",
-      "imageAlt": "Fachada do Laboratório"
-    }
   }
 }

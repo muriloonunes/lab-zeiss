@@ -8,7 +8,8 @@
       "optica": "Optische & Multisensor-Prüfung",
       "raioX": "Röntgenprüfung (ZfP)",
       "scan3d": "Optische 3D-Digitalisierung",
-      "reverseEng": "Reverse Engineering & CAD"
+      "reverseEng": "Reverse Engineering & CAD",
+      "mro": "Zuverlässigkeit & Virtuelles MRO-Lager"
     },
     "contact": "Kontakt",
     "requestQuote": "Angebot anfordern"
@@ -30,16 +31,24 @@
           "description": "Geometrische Maßprüfung und GD&T-Tolerierung auf ZEISS-Koordinatenmessgeräten."
         },
         "reverse": {
-          "title": "Reverse Engineering",
-          "description": "Erstellung von CAD- und STL-Modellen aus realen Bauteilen mittels 3D-Digitalisierung und Spezialsoftware."
+          "title": "Reverse Engineering & Inlandsfertigung",
+          "description": "CAD-Modellrekonstruktion und Bauteil-Inlandsfertigung mittels 3D-Digitalisierung und Ingenieursoftware."
         },
         "qcontrol": {
-          "title": "Qualitätskontrolle",
-          "description": "Serienprüfung, Erstmusterprüfbericht (EMPB/FAI) und Farb-Abweichungsanalyse."
+          "title": "Qualitätskontrolle & CAD-Vergleich",
+          "description": "CAD-Vergleich vs. reales Bauteil per 3D-Scanner, Verschleißanalysen und EMPB/FAI-Prüfberichte mit GD&T."
         },
         "prototyping": {
-          "title": "Prototyping",
-          "description": "Herstellung von Teilen mit 3D-Drucktechnologien zur Validierung des Produkts vor der Bearbeitung."
+          "title": "Prototyping & 3D-Druck",
+          "description": "Additive Fertigung von Bauteilen und Funktionsprototypen zur Validierung vor der Zerspanung."
+        },
+        "mro": {
+          "title": "Virtuelles Lager & MRO",
+          "description": "Strukturierung von Anlagenbäumen und Kritizitätsmatrizen für die bedarfsgerechte digitale Bauteilbereitstellung."
+        },
+        "training": {
+          "title": "Schulung & Weiterbildung",
+          "description": "Praxisorientierte Fachschulungen in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse."
         }
       }
     },
@@ -131,11 +140,121 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Branchenübergreifende Kompetenz",
+      "mainTitle": "Bediente Industriebranchen",
+      "description": "Unsere hochmoderne Laborinfrastruktur und unser Fachteam erfüllen strengste technische Konformitätsstandards für Industriezweige mit Toleranzanforderungen im Mikrometerbereich.",
+      "sectors": {
+        "food": {
+          "title": "Lebensmittelindustrie",
+          "description": "Verschleißanalyse an Bauteilen und messtechnische Prüfung von Verarbeitungs- und Abfüllanlagen."
+        },
+        "automotive": {
+          "title": "Automobil- & Zulieferindustrie",
+          "description": "Reverse Engineering und Prototypenfertigung hochbelastbarer Komponenten."
+        },
+        "aerospace": {
+          "title": "Luft- und Raumfahrt & Verteidigung",
+          "description": "Maßhaltigkeitsprüfung und Reverse Engineering von sicherheitskritischen Präzisionsteilen."
+        },
+        "medical": {
+          "title": "Medizintechnik & Implantate",
+          "description": "3D-Digitalisierung und hochpräzise Qualitätsprüfung von Implantaten und Prothesen."
+        },
+        "tooling": {
+          "title": "Werkzeug- & Formenbau",
+          "description": "Reverse Engineering und Validierung von Umformmatrizen, Spritzgießformen und Zerspanungswerkzeugen."
+        },
+        "agricultural": {
+          "title": "Land- & Schwermaschinenbau",
+          "description": "Prüfung großformatiger Bauteile, Gussgehäuse und montierter Großbaugruppen."
+        }
+      }
+    },
     "cta": {
       "title": "Bringen Sie deutsche Präzision und Konformität in Ihre Industrie.",
       "description": "Verlassen Sie sich auf EMPB/FAI-Berichte, Reverse Engineering und GD&T-Prüfungen nach internationalem Standard am SENAI/ZEISS.",
       "requestQuote": "Technisches Angebot anfordern",
       "exploreServices": "Dienstleistungskatalog ansehen"
+    }
+  },
+  "institutional": {
+    "hero": {
+      "title": "Deutsche Präzision und brasilianische Fachkompetenz im Dienste anspruchsvoller Industriezweige.",
+      "description": "Das an der Fakultät SENAI Ítalo Bologna in Goiânia ansässige Exzellenzzentrum für Messtechnik ist das Ergebnis einer strategischen Allianz zwischen dem FIEG-System / SENAI Goiás und Carl Zeiss. Als eines von weltweit nur fünf Zentren mit dieser Kapazität bieten wir ganzheitliche Lösungen in der 3D-Koordinatenmesstechnik, im Reverse Engineering und in der Maßhaltigkeitsprüfung.",
+      "imageAlt": "Laborfassade"
+    },
+    "alliance": {
+      "subtitle": "Strategische Allianz",
+      "title": "Wo globale Standards auf industrielle Exzellenz treffen.",
+      "intro": "Das CEM entstand aus dem Erfordernis, einem elementaren Bedarf moderner Industriezweige zu entsprechen: dem verlässlichen Zugang zu Messungen im Submikrometerbereich und fundierter technischer Validierung nach strengsten internationalen Normen.",
+      "paragraph": "Die technische Kooperation verbindet die messtechnische und optische Pionierleistung des deutschen Technologieunternehmens Carl Zeiss — weltweiter Benchmark dieser Industrie — mit der Infrastruktur, den Dozenten und der Ausbildungskraft des SENAI. Dank dieser Synergie erhalten Unternehmen aus Luft- und Raumfahrt, Automobilbau, Medizintechnik und Metallmechanik direkt in Brasilien technische Unterstützung auf dem Niveau führender europäischer Industriezentren.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Deutschland / Brasilien)",
+          "description": "Technische Homologation der Messsysteme, Werkskalibrierungen und aktuelle Lizenzen der Softwaresammlungen CALYPSO, PiWeb und ZEISS INSPECT."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Fakultät Ítalo Bologna",
+          "description": "Betriebliche Leitung, technische Verantwortung für die Prüfungen, Bereitstellung der Laborinfrastruktur und industrieller Wissenstransfer."
+        },
+        "fieg": {
+          "name": "FIEG-System",
+          "description": "Institutionelle Koordination zur Stärkung der Wettbewerbsfähigkeit und Konformität industrieller Lieferketten im Land."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Institutionelle Schirmherrschaft",
+      "title": "Die Vision der Initiatoren dieser Allianz",
+      "description": "Gemeinsames Bekenntnis zwischen dem brasilianischen Industriesystem und dem Technologiekonzern Carl Zeiss zu industrieller Produktivität und Wettbewerbsfähigkeit.",
+      "quotes": {
+        "mabel": {
+          "quote": "„Die Errichtung des ersten Carl-Zeiss-Exzellenzzentrums in Brasilien ist ein historischer Meilenstein. Die Initiative zielt darauf ab, die berufliche Weiterbildung voranzutreiben sowie Spitzenforschung, Entwicklung und Innovation zu fördern – und damit die wachsende Nachfrage der heimischen Industrie nach Präzision und Spitzentechnologie zu erfüllen.“",
+          "author": "Sandro Mabel",
+          "role": "Ehemaliger Präsident der FIEG und der Regionalräte von SESI und SENAI"
+        },
+        "weinisch": {
+          "quote": "„Wir freuen uns über die Chance, unsere Spitzentechnologie einer neuen Zielgruppe zugänglich zu machen. Nur die USA, Deutschland und China verfügen über einen vergleichbaren Komplex. Gemeinsam vermitteln wir der nächsten Generation den Einsatz innovativer Lösungen, um Produktqualität und industrielle Leistungsfähigkeit nachhaltig zu steigern.“",
+          "author": "Jochen Weinisch",
+          "role": "Vice President Sales (Lateinamerika, Naher Osten und Afrika) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "„Dieser Komplex kommt nicht nur der regionalen Industrie zugute, sondern entfaltet bundesweite Signalwirkung: Er wird zum Referenzzentrum für berufliche Qualifikation und industrielle Dienstleistungen und stärkt nachhaltig das Zusammenspiel zwischen Ausbildungsstätte und Werkshalle.“",
+          "author": "Dario Queija",
+          "role": "Direktor der SENAI-Fakultät Ítalo Bologna"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Grundwerte & Leitprinzipien",
+      "title": "Die tragenden Säulen jedes Prüfberichts",
+      "description": "Messtechnik ist die Wissenschaft des Vertrauens. Unsere verbindlichen Qualitätsstandards schaffen technische und rechtliche Sicherheit für Ihr Endprodukt.",
+      "items": {
+        "gdt": {
+          "title": "Strenge Einhaltung von Form- und Lagetoleranzen (GD&T)",
+          "description": "Konsequente Anwendung von Form- und Lagetoleranzen (GD&T) nach ISO 1101 und ASME Y14.5 zur Gewährleistung lückenloser metrologischer Wiederholgenauigkeit."
+        },
+        "accessibility": {
+          "title": "Zugänglichkeit für den Mittelstand",
+          "description": "Spitzenmesstechnik und dimensionelle Beratung nicht nur für Großkonzerne nutzbar machen, sondern insbesondere auch für kleine und mittelständische Betriebe, die Qualität und Präzision ihrer Produkte sichern wollen."
+        },
+        "techTransfer": {
+          "title": "Technologietransfer & Weiterbildung",
+          "description": "Mehr als reine Prüfdienstleistung: Verankerung einer gelebten Präzisionskultur durch kontinuierliche Weiterbildung und die Ausbildung künftiger Fachkräfte der industriellen Messtechnik."
+        },
+        "confidentiality": {
+          "title": "Geheimhaltung & Datensouveränität",
+          "description": "Bedingungslose Vertraulichkeit im Umgang mit proprietären CAD-Modellen, patentierten Geometrien, industriellen Prototypen und akkreditierten Prüfberichten."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Fachbesuch vereinbaren",
+      "title": "Lernen Sie unsere Laborinfrastruktur an der SENAI-Fakultät Ítalo Bologna kennen.",
+      "description": "Unser technisches Team steht Ihnen gerne zur Verfügung, um Ihre Anforderungen in der 3D-Messtechnik, Digitalisierung oder dimensionalen Validierung zu analysieren.",
+      "requestContact": "Technischen Kontakt anfragen",
+      "exploreServices": "Leistungskatalog entdecken"
     }
   },
   "services": {
@@ -178,25 +297,39 @@
       }
     },
     "scanning": {
-      "category": "3D-Digitalisierung",
+      "category": "3D-Digitalisierung & CAD-Vergleich",
       "title": "Physische Geometrien in digitale Daten verwandeln.",
-      "description": "Wir erfassen komplexe Geometrien zur Erstellung hochpräziser 3D-Modelle für Maßanalysen, Qualitätskontrolle und Reverse Engineering. Der T-SCAN Hawk 2 bietet Flexibilität für mobile Messungen vor Ort, während der ATOS Q höchste Punktedichte für detailreiche Komponenten liefert.",
+      "description": "Wir erfassen komplexe Geometrien mit optischer und Laser-Präzision zur 3D-Modellerstellung, zum direkten Soll-Ist-Vergleich (CAD × gescanntes Realteil) und zur Verschleißanalyse an Einsatzkomponenten. Der T-SCAN Hawk 2 bietet Flexibilität für mobile Messungen vor Ort, während der ATOS Q maximale Punktedichte liefert.",
       "applications": {
-        "fieldScanning": "Mobiles Scannen vor Ort oder in der Fertigung",
-        "highResolution": "Hochauflösende optische Digitalisierung (ATOS Q)",
-        "colorMap": "3D-Falschfarben-Abweichungsanalysen",
-        "digitization": "Erzeugung von Polygonnetzen (STL/OBJ)"
+        "fieldScanning": "Mobiles Scannen vor Ort oder in der Fertigung (T-SCAN Hawk 2)",
+        "highResolution": "Hochauflösende optische Blaulicht-Digitalisierung (ATOS Q)",
+        "cadComparison": "Direkter Vergleich zwischen CAD-Modell und gescanntem Bauteil",
+        "wearMap": "Verschleißkartierung und Überwachung von Materialabtrag",
+        "colorMap": "3D-Falschfarben-Abweichungsanalysen (Color Map)",
+        "digitization": "Erzeugung wasserdichter Polygonnetze (STL/OBJ)"
       }
     },
     "reverse": {
-      "category": "Reverse Engineering",
-      "title": "Vom physischen Bauteil zum parametrischen CAD-Modell.",
-      "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für Ersatzteilfertigung oder Konstruktionsoptimierung.",
+      "category": "Reverse Engineering & Inlandsfertigung",
+      "title": "Vom physischen Bauteil zum fertigungsbereiten parametrischen CAD-Modell.",
+      "description": "Wir rekonstruieren exakte Bauteilgeometrien aus Punktwolken und 3D-Netzen und erstellen fertigungsbereite Festkörper- oder Flächen-CAD-Modelle für die Inlandsfertigung von Importteilen, Ersatzteilbereitstellung oder Konstruktionsoptimierung.",
       "applications": {
-        "legacyParts": "Rekonstruktion von Ersatzteilen ohne Zeichnung",
-        "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES, Parasolid)",
+        "legacyParts": "Rekonstruktion von Ersatzteilen ohne technische Zeichnung",
+        "nationalization": "Lokalisierung und Konstruktion importierter Industriekomponenten",
+        "cadGeneration": "Parametrische CAD-Modellierung (STEP, IGES)",
         "tooling": "Anpassung von Formen, Gesenken und Werkzeugen",
-        "optimization": "Geometrische Neukonstruktion und Optimierung"
+        "optimization": "Geometrische Neukonstruktion, Optimierung und 3D-Prototyping"
+      }
+    },
+    "mro": {
+      "category": "Zuverlässigkeit, Virtuelles Lager & Schulung",
+      "title": "Instandhaltungsintelligenz und Fachschulungen.",
+      "description": "Wir bieten strategische Lösungen zur Reduzierung physischer MRO-Ersatzteilbestände ohne Stillstandsrisiko. Wir strukturieren Anlagenbäume, erstellen Kritizitäts- und Wiederholungsmatrizen und bieten umfassende Beratung in Instandhaltung, Schmierung, Schadensanalyse und Fachschulung.",
+      "applications": {
+        "virtualWarehouse": "Virtuelles Lager und digitale MRO-Ersatzteilbibliothek",
+        "equipmentTree": "Strukturierung von Anlagenbäumen und Bauteilerfassung",
+        "maintenancePlans": "Erstellung von Plänen für vorbeugende Instandhaltung und Schmierung",
+        "training": "Spezialisierte technische Schulungen und Weiterbildungen"
       }
     },
     "selection": {
@@ -217,12 +350,20 @@
           "description": "Computertomographie und Röntgen für zerstörungsfreie Innenprüfung."
         },
         "scanning": {
-          "title": "Müssen Freiformflächen und komplexe Formen erfasst werden?",
-          "description": "3D-Scannen zur vollständigen Geometrieerfassung direkt im Fertigungsumfeld."
+          "title": "Müssen Freiformflächen erfasst oder mit CAD verglichen werden?",
+          "description": "3D-Scannen zur vollständigen Geometrieerfassung und zum Soll-Ist-Vergleich."
         },
         "cad": {
-          "title": "Liegen keine Zeichnungen oder 3D-Daten vor?",
-          "description": "Reverse Engineering zur Neuerstellung des digitalen Modells anhand des realen Teils."
+          "title": "Liegen keine Zeichnungen vor oder ist Lokalisierung erforderlich?",
+          "description": "Reverse Engineering zur Neuerstellung des CAD-Modells für die Inlandsfertigung."
+        },
+        "mro": {
+          "title": "Möchten Sie Ersatzteilbestände ohne Stillstandsrisiko senken?",
+          "description": "Aufbau virtueller Lager, Anlagenbäume und Klassifizierung kritischer MRO-Teile."
+        },
+        "training": {
+          "title": "Möchten Sie Ihr technisches Team in Normen und Prozessen schulen?",
+          "description": "Maßgeschneiderte Fachschulungen mit SENAI-Kompetenz und ZEISS-Technologie."
         }
       }
     }
@@ -231,16 +372,18 @@
     "breadcrumb": "Dienstleistungen",
     "actions": {
       "requestQuote": "Angebot für diese Dienstleistung anfordern",
-      "viewSpecs": "Technische Spezifikationen ansehen"
+      "viewSpecs": "Technische Spezifikationen ansehen",
+      "talkToCoordination": "Laborleitung kontaktieren"
     },
     "sections": {
-      "audienceTitle": "Zielgruppe & Branchen",
+      "audienceTitle": "Zielgruppen & Branchen",
       "applicationsTitle": "Typische Anwendungen",
-      "deliverablesTitle": "Kunden-Lieferumfang",
+      "deliverablesTitle": "Ergebnisse für den Kunden",
+      "trainingNoticeTitle": "Fachausbildung & Inhouse-Schulungen",
       "installedCapacity": "Installierte Kapazität",
       "specsTitle": "Spezifikationen der zertifizierten ZEISS-Messgeräte",
-      "specsDesc": "Technische Labordaten und garantierte Betriebsparameter im klimatisierten Messlabor der SENAI Ítalo Bologna Fakultät.",
-      "operationalDifferentiators": "Betriebliche Vorteile:"
+      "specsDesc": "Prüfstandsdaten und garantierte Betriebsparameter im klimatisierten Labor der SENAI Ítalo Bologna Fakultät.",
+      "operationalDifferentiators": "Betriebliche Differenzierungsmerkmale:"
     },
     "specLabels": {
       "volume": "Messbereich (X/Y/Z)",
@@ -250,7 +393,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Taktile & Dimensionelle Messtechnik",
         "title": "Koordinatenmesstechnik (KMG) & GD&T",
         "headline": "Submikrometer-Genauigkeit für anspruchsvolle Geometrien und strenge Form- und Lagetoleranzen.",
         "overview": "Dienstleistung zur präzisen dreidimensionalen geometrischen und linearen Charakterisierung hochbeanspruchter mechanischer Bauteile. Mittels kontinuierlichem taktilem Scanning erfassen wir Form-, Richtungs- und Lageabweichungen nach ISO 1101 und ASME Y14.5.",
@@ -303,7 +445,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Berührungslose Multisensor-Messtechnik",
         "title": "Kombinierte optische & taktile Prüfung",
         "headline": "Hochauflösende berührungslose Messung für elastische Bauteile und Mikrogeometrien.",
         "overview": "Kombiniert hochauflösende optische Kameras mit telezentrischen Objektiven und kontinuierlicher taktiler Antastung in einem System. Verhindert Verformungen durch Antastkräfte bei Elastomeren, dünnwandigen Polymeren, technischen Textilien und elektronischen Schaltungen.",
@@ -342,7 +483,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Zerstörungsfreie Prüfung (ZfP / NDT)",
         "title": "Röntgenprüfung & Strukturanalyse",
         "headline": "Volumetrische Innenprüfung und Strukturintegrität ohne Zerstörung oder Trennung der Probe.",
         "overview": "2D-Radioskopie und zerstörungsfreie Computertomographie zur Erkennung verdeckter innerer Fehlstellen. Bewertet Gussteile, Schweißnähte und versiegelte Baugruppen basierend auf Röntgendichte und Materialabsorption.",
@@ -373,7 +513,7 @@
             "software": "Integrierte ZEISS Bosello Software / ZEISS INSPECT X-Ray (CT-Ready)",
             "features": [
               "Hohe Durchstrahlungsleistung für Leichtmetalle und Stahl-/Gussteile bis zu 50 mm Wandstärke",
-              "360°-Drehtisch mit Außenausfahrbarkeit vor die Schutztüren für ergonomische Kranbeladung",
+              "360°-Drehtisch mit Außenausfahrbarkeit vor die Schutztüren für ergonomische Beladung schwerer Bauteile",
               "Softwaregesteuerter virtueller C-Bogen zur hochpräzisen Ausrichtung zwischen Quelle und Detektor",
               "CT-Ready: vorbereitet für tomographische 3D-Rekonstruktionen und räumliche Defektanalysen",
               "Automatisierte CNC-Prüfabläufe und automatische Fehlererkennung (ADR) nach ASTM-Normen",
@@ -383,28 +523,28 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "3D-Digitalisierung & Photogrammetrie",
         "title": "Optische 3D-Digitalisierung & Falschfarbenanalyse",
-        "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen und zur Maßkontrolle.",
-        "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – bereit für 3D-Druck, maßliche Falschfarbenprüfung oder als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
+        "headline": "Ganzheitliche Geometrieerfassung zur Erstellung von 3D-STL-Netzen, CAD-Vergleichen und zur Maßkontrolle.",
+        "overview": "Hochpräzise 3D-Digitalisierung mittels strukturierter Blaulicht-Technologie und mobiler Lasertriangulation. Wandelt jedes physische Bauteil in ein exaktes 3D-Polygonnetz (.STL / .OBJ) um – ermöglicht den direkten Soll-Ist-Vergleich (CAD × gescanntes Realteil), Verschleißanalysen, 3D-Druck oder dient als Grundlage für nachgelagertes parametrisches Reverse Engineering (CAD).",
         "targetAudience": [
           "Jeder mit einem physischen Bauteil, der ein digitales 3D-Netzmodell (.STL) benötigt",
           "Konstrukteure und Anwender mit Bedarf an wasserdichten 3D-Druck-Dateien",
           "Instandhaltung und Werkzeugbau zur digitalen Archivierung oder Bauteilduplikation",
-          "Qualitätssicherungsteams mit Bedarf an 3D-Falschfarben-Soll-Ist-Vergleichen",
+          "Qualitätssicherungsteams mit Bedarf an 3D-Falschfarben-Soll-Ist-Vergleichen (CAD vs. reales Bauteil)",
           "Projekte, die ein 3D-Netz als Basis für weiterführendes Reverse Engineering (CAD) benötigen"
         ],
         "applications": [
           "Erzeugung wasserdichter STL- und OBJ-Polygonnetze für den 3D-Druck",
-          "3D-Falschfarben-Abweichungsanalysen (Soll-CAD vs. Ist-Bauteil)",
-          "Mobiles Scannen vor Ort für mittelgroße und große Komponenten",
-          "Schnelle Prüfung von Verzug, Torsion und Oberflächenverschleiß",
+          "3D-Falschfarben-Abweichungsanalysen (Soll-CAD vs. reales gescanntes Bauteil via 3D-Scanner)",
+          "Oberflächenverschleißkartierung und Überwachung von Materialabtrag im laufenden Betrieb",
+          "Mobiles Scannen vor Ort für mittelgroße und große Komponenten in Werk oder Feld",
+          "Schnelle Prüfung von Verzug, Torsion und Blechumformung",
           "Hochdichte Netzbasis für parametrisches Reverse Engineering"
         ],
         "deliverables": [
           "Aufbereitetes, geschlossenes und ausgerichtetes Polygonnetz (.STL, .OBJ, .PLY)",
-          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß- und Untermaßzonen (falls zutreffend)",
-          "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen"
+          "3D-Falschfarbenbericht mit Visualisierung von Materialaufmaß-, Untermaß- und Sollabweichungen",
+          "Vergleichender Prüfbericht für Freiformflächen-Maßabweichungen und Verschleißkarten"
         ],
         "machines": [
           {
@@ -430,7 +570,7 @@
             "software": "ZEISS INSPECT",
             "features": [
               "Innovativer Satellitenmodus: Scannen großer Objekte ohne separate Photogrammetrie-Aufbauten",
-              "Integrierter Abstandsrader mit roter Laserprojektion zur Echtzeit-Fokuseinstellung",
+              "Integrierter Abstandsradar mit roter Laserprojektion für das Echtzeit-Feedback der optimalen Arbeitsdistanz",
               "Nachgewiesene Rückführbarkeit durch DAkkS-kalibrierte Carbonfaser-Längenmaßstäbe (ISO/IEC 17025)",
               "Schnelle Ein-Schuss-Nachkalibrierung vor Ort mit dem HyperScale-Präzisionsstab",
               "Hohe Zuverlässigkeit auf dunklen, verchromten oder bearbeiteten Oberflächen ohne zwingendes Mattierungsspray"
@@ -439,26 +579,27 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametrische digitale Modellierung",
-        "title": "Reverse Engineering & CAD-Flächenrückführung",
-        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle.",
-        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder manuell im Werkzeugbau angepasst wurden.",
+        "title":"Reverse Engineering, CAD-Flächenrückführung & Inlandsfertigung",
+        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle für die Inlandsfertigung.",
+        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung und Dokumentation.",
         "targetAudience": [
-          "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen",
-          "Bergbau- und Agrarunternehmen mit importierten Maschinenkomponenten",
+          "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen und Lokalisierung von Importteilen",
+          "Bergbau-, Agrar- und Energieunternehmen mit importierten Maschinenkomponenten und langen Lieferzeiten",
           "Entwickler von Hochleistungsprodukten und Prototypen",
-          "Formen- und Gesenkhersteller zur Wiederherstellung von Ursprungsgeometrien"
+          "Formen- und Gesenkhersteller zur Wiederherstellung oder Optimierung von Ursprungsgeometrien"
         ],
         "applications": [
           "Parametrische CAD-Modellierung aus Polygonnetzen (Mesh to CAD)",
+          "Lokalisierung und Entwicklung importierter Komponenten für die Inlandsfertigung",
           "Instandsetzung beschädigter Bauteile durch Rekonstruktion fehlender Geometrien",
           "Geometrische Anpassung zur Modernisierung und Leistungssteigerung",
-          "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und Konstruktionsbäumen"
+          "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und parametrischen Konstruktionsbäumen"
         ],
         "deliverables": [
           "Parametrische Volumen- und Flächen-CAD-Modelle in STEP-, IGES- oder Parasolid-Formaten",
           "Technische 2D-Fertigungszeichnungen in PDF und DWG mit Form- und Lagetoleranzen",
-          "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan"
+          "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan",
+          "Technisches Dossier zur Absicherung der Fertigungsumsetzung"
         ],
         "machines": [
           {
@@ -472,6 +613,74 @@
               "Automatische Segmentierung von Regelgeometrien (Ebenen, Zylinder, Kegel)",
               "Präzise Freiformflächenanpassung mit numerischer Restfehlerüberwachung",
               "Nativer CAD-Export kompatibel mit SolidWorks, Siemens NX, CATIA und Autodesk Inventor"
+            ]
+          }
+        ]
+      },
+      "confiabilidade-mro": {
+        "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Fachschulungen",
+        "headline": "Strategisches Ersatzteilmanagement, Anlagenbäume und betriebliche Zuverlässigkeit für die Industrie.",
+        "overview": "Integrierte Lösungen für Zuverlässigkeitstechnik und digitale Bereitschaft zur Transformation der industriellen Instandhaltung (MRO). Durch die systematische Strukturierung von Anlagenbäumen und die Anwendung analytischer Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Bedarfshäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem tribologisch fundierte Instandhaltungs- und Schmierpläne, metallmechanische Schadensdiagnostik und spezialisierte Weiterbildung mit SENAI-Methodik und ZEISS-Technologie.",
+        "trainingDirectNotice": "Hinweis für Fachschulungen: Für Schulungsanfragen, Fachausbildungen oder firmeninterne Inhouse-Schulungen (in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse) empfehlen wir, direkt mit der Laborleitung (telefonisch, per WhatsApp oder E-Mail) Kontakt aufzunehmen.",
+        "subServices": [
+          {
+            "index": "01",
+            "category": "Virtuelles Lager & MRO-Management",
+            "title": "Virtuelles Lager und Identifikation kritischer Ersatzteile.",
+            "description": "Wir entwickeln digitale Komponentenbibliotheken zur Vermeidung physischer Lagerbestände teurer, langsam drehender Ersatzteile. Durch Kritizitäts- und Wiederholungsmatrizen isolieren wir kritische Klasse-A-Teile mit seltener Nachfrage. Diese werden 3D-erfasst und in einem zertifizierten Digitalarchiv hinterlegt, was eine zügige bedarfsgerechte Fertigung ohne Stillstandsrisiko ermöglicht.",
+            "applications": [
+              "Anwendung von Kritizitäts- und Wiederholungsmatrizen für Klasse-A-Ersatzteile mit geringer Häufigkeit",
+              "Aufbau digitaler MRO-Komponentenbibliotheken mit 3D-CAD-Daten und Fertigungszeichnungen",
+              "Strategie für physische vs. digitale Vorhaltung zur deutlichen Senkung gebundenen Kapitals",
+              "Nahtlose Anbindung an additive Fertigung, Präzisionszerspanung und Reverse Engineering"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Anlagengliederung & Rückverfolgbarkeit",
+            "title": "Anlagenbäume und detaillierte Erfassung Bauteil für Bauteil.",
+            "description": "Wir erfassen und strukturieren die vollständige Hierarchie komplexer Maschinen und ganzer Fertigungslinien. Durch die lückenlose Aufnahme jedes Subsystems, Moduls und Ersatzteils mit Funktionsbeschreibungen, Referenznummern und Spezifikationen gewährleisten wir vollständige Transparenz für Instandhaltungs- und PCM-Teams.",
+            "applications": [
+              "Strukturierung hierarchischer Anlagenbäume kompatibel mit gängigen CMMS- und ERP-Systemen",
+              "Detaillierte Bauteilaufnahme und maßliche Bestandsaufnahme industrieller Maschinen",
+              "Erfassung kritischer Baugruppen und frühzeitige Identifikation schwer beschaffbarer Importteile",
+              "Standardisierte Stammdatenbasis für Ersatzteilstrategien und vorbeugende Instandhaltung"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Instandhaltungs-Engineering & Tribologie",
+            "title": "Instandhaltungspläne und industrielle Schmierroutinen.",
+            "description": "Wir erarbeiten und optimieren systematische Pläne für vorbeugende Instandhaltung und industrielle Schmierroutinen nach tribologischen Grundsätzen. Wir analysieren Reibstellen, Lastkollektive, Umgebungsbedingungen und Schmierstoffeigenschaften zur Festlegung standardisierter Abläufe, die vorzeitigen Verschleiß verhindern und die MTBF maximieren.",
+            "applications": [
+              "Erstellung und Optimierung vorbeugender/vorausschauender Instandhaltungs- und Inspektionspläne",
+              "Erfassung von Schmierstellen, Dosierungsberechnung und Festlegung wissenschaftlicher Schmierintervalle",
+              "Rationalisierung und Sortenbereinigung von Schmierstoffen zur Vermeidung von Fehlern und Kontamination",
+              "Standardarbeitsanweisungen (SOP) für Instandhaltungs- und Schmierteams"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Mechanische Schadensdiagnostik & Gutachten",
+            "title": "Schadensanalysen, Bauteilbrüche und Ursachenermittlung.",
+            "description": "Wir untersuchen die Ursachen unerwarteter Bauteilbrüche, Ermüdungsrisse, Korrosion und anomaler Abnutzung. Durch das Zusammenspiel von SENAI-Werkstoffexperten und modernster ZEISS-Laborinfrastruktur (Computertomographie für innere Fehlstellen und 3D-Optik für Verschleißkarten) liefern wir fundierte Gutachten zur dauerhaften Schadensvermeidung.",
+            "applications": [
+              "Gutachterliche Ursachenermittlung bei mechanischen Brüchen, Schwingungsrisskorrosion und Überlast",
+              "Zerstörungsfreie Computertomographie zur Detektion von Lunkern, Poren und inneren Rissen",
+              "3D-Verschleißkartierung im Soll-Ist-Vergleich gegenüber nominellen CAD-Modelldaten",
+              "Erstellung detaillierter Schadensgutachten mit Handlungsempfehlungen zur konstruktiven Optimierung"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Weiterbildung & Technologietransfer",
+            "title": "Spezialisierte technische Schulungen und Inhouse-Programme.",
+            "description": "Wir qualifizieren industrielles Fachpersonal in praxisorientierten Programmen, geleitet von zertifizierten SENAI-Dozenten und akkreditierten ZEISS-Experten. Wir bieten praxisnahe Weiterbildungen in Koordinatenmesstechnik (KMG), optischer Prüfung, Form- und Lagetoleranzen (GD&T), 3D-Scannen, Reverse Engineering und industrieller Zuverlässigkeit an.",
+            "applications": [
+              "Praxisnahe Schulungen in taktiler Koordinatenmesstechnik (KMG) und GD&T-Normen",
+              "Qualifizierung in 3D-Digitalisierung (Streifenlicht und portabler Laser) sowie Netzinspektion",
+              "Praxismodule in industrieller Zuverlässigkeit, Schmiertechnik und Instandhaltungsmanagement",
+              "Offizielle Zertifikate ausgestellt durch die SENAI Ítalo Bologna Fakultät"
             ]
           }
         ]
@@ -515,10 +724,13 @@
         "cmm": "Koordinatenmesstechnik (KMG) & GD&T",
         "optica": "Optische & Multisensorische Inspektion",
         "raio-x": "Röntgenprüfung & Computertomographie (NDT)",
-        "digitalizacao-3d": "Optische 3D-Digitalisierung & Farbvergleich",
-        "engenharia-reversa": "Reverse Engineering & CAD-Rekonstruktion",
-        "consultoria": "Sonstiges / Messtechnische Beratung & Schulung"
+        "digitalizacao-3d": "Optische 3D-Digitalisierung, CAD-Vergleich & Falschfarben",
+        "engenharia-reversa": "Reverse Engineering & Inlandsfertigung",
+        "confiabilidade-mro": "Zuverlässigkeit, Virtuelles MRO-Lager & Assets",
+        "treinamentos": "Technische Weiterbildung & Fachschulung",
+        "consultoria": "Sonstiges / Spezialisierte Beratung"
       },
+      "trainingDirectNotice": "Für Schulungsanfragen und firmeninterne Weiterbildungsprogramme empfehlen wir, direkt telefonisch oder per E-Mail Kontakt mit unserer Laborleitung aufzunehmen.",
       "otherOption": "Sonstiges / Dimensionelle Beratung",
       "messageLabel": "Projektbeschreibung / Toleranzen",
       "messagePlaceholder": "Geben Sie Details wie ungefähre Abmessungen, Bauteilmaterial, kritische Toleranzen, anwendbare Norm und gewünschte Fristen an.",
@@ -557,12 +769,5 @@
     "businessHours": "Mo. bis Fr. von 08:00 bis 18:00 Uhr",
     "rights": "Alle Rechte vorbehalten.",
     "partnership": "FIEG-System • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "Deutsche Präzision und brasilianische Fachkompetenz im Dienste anspruchsvoller Industriezweige.",
-      "description": "Das an der Fakultät SENAI Ítalo Bologna in Goiânia ansässige Exzellenzzentrum für Messtechnik ist das Ergebnis einer strategischen Allianz zwischen dem FIEG-System / SENAI Goiás und Carl Zeiss. Als eines von weltweit nur fünf Zentren mit dieser Kapazität bieten wir ganzheitliche Lösungen in der 3D-Koordinatenmesstechnik, im Reverse Engineering und in der Maßhaltigkeitsprüfung.",
-      "imageAlt": "Laborfassade"
-    }
   }
 }

@@ -8,7 +8,8 @@
       "optica": "Optical & Multisensor Inspection",
       "raioX": "X-Ray Inspection (NDT)",
       "scan3d": "3D Optical Digitization",
-      "reverseEng": "Reverse Engineering & CAD"
+      "reverseEng": "Reverse Engineering & CAD",
+      "mro": "Reliability & Virtual MRO Warehouse"
     },
     "contact": "Contact",
     "requestQuote": "Request a Quote"
@@ -30,16 +31,24 @@
           "description": "Geometric dimensional inspection and GD&T tolerancing on ZEISS coordinate measuring machines."
         },
         "reverse": {
-          "title": "Reverse Engineering",
-          "description": "CAD and STL model generation from physical parts using 3D scanning technologies and specialized software."
+          "title": "Reverse Engineering & Local Manufacturing",
+          "description":"CAD reconstruction and local manufacturing development using 3D scanning and engineering software."
         },
         "qcontrol": {
-          "title": "Quality Control",
-          "description": "Batch inspection, FAI reporting, and dimensional deviation analysis via color mapping."
+          "title": "Quality Control & CAD Comparison",
+          "description": "CAD vs. actual part inspection via 3D scanners, surface wear mapping, and FAI reports with GD&T."
         },
         "prototyping": {
-          "title": "Prototyping",
-          "description": "Manufacturing parts using 3D printing technologies to validate the product before machining."
+          "title": "Prototyping & 3D Printing",
+          "description": "Manufacturing parts and functional prototypes using 3D additive technologies for pre-machining validation."
+        },
+        "mro": {
+          "title": "Virtual Warehouse & MRO",
+          "description": "Equipment tree structuring and criticality matrix for on-demand digital cataloging and component readiness."
+        },
+        "training": {
+          "title": "Training & Technical Education",
+          "description": "Applied technical training in metrology, reverse engineering, maintenance reliability, lubrication, and failure analysis."
         }
       }
     },
@@ -131,11 +140,121 @@
         }
       }
     },
+    "areas": {
+      "subtitle": "Cross-Industry Expertise",
+      "mainTitle": "Industries Served",
+      "description": "Our advanced infrastructure and technical specialists meet the most stringent compliance standards for industries demanding micrometer-level tolerances.",
+      "sectors": {
+        "food": {
+          "title": "Food & Beverage",
+          "description": "Component wear mapping and precision inspection of processing and packaging equipment."
+        },
+        "automotive": {
+          "title": "Automotive & Auto Parts",
+          "description": "Reverse engineering and prototyping of high-performance components."
+        },
+        "aerospace": {
+          "title": "Aerospace & Defense",
+          "description": "Dimensional inspection and reverse engineering of mission-critical parts."
+        },
+        "medical": {
+          "title": "Medical Devices & Implants",
+          "description": "3D scanning and precision inspection of prosthetics and implants."
+        },
+        "tooling": {
+          "title": "Tooling & Moldmaking",
+          "description": "Reverse engineering and validation of dies, injection molds, and cutting tools."
+        },
+        "agricultural": {
+          "title": "Agricultural & Heavy Equipment",
+          "description": "Dimensional verification of large-scale parts, cast housings, and assembled structures."
+        }
+      }
+    },
     "cta": {
       "title": "Bring German precision and compliance to your industry.",
       "description": "Rely on FAI reports, reverse engineering, and international GD&T inspection at SENAI/ZEISS facilities.",
       "requestQuote": "Request Technical Quote",
       "exploreServices": "View Services Catalog"
+    }
+  },
+  "institutional": {
+    "hero": {
+      "title": "German precision and Brazilian technical expertise serving high-demand industry.",
+      "description": "Located at the SENAI Ítalo Bologna Faculty in Goiânia, the Center for Excellence in Metrology is the result of a strategic alliance between the FIEG System / SENAI Goiás and Carl Zeiss. We operate as one of only five global centers with this capability, delivering comprehensive solutions in 3D measurement, reverse engineering, and dimensional compliance.",
+      "imageAlt": "Laboratory Facade"
+    },
+    "alliance": {
+      "subtitle": "Strategic Alliance",
+      "title": "Where global standards converge with industrial excellence.",
+      "intro": "The CEM was established to meet a critical requirement of modern industry: reliable access to micrometer-level precision measurement and rigorous technical validation in compliance with the highest international standards.",
+      "paragraph": "This technical cooperation brings together the optical and metrological leadership of Germany's Carl Zeiss — the global benchmark in this industry — with the infrastructure, faculty, and technical training power of SENAI. This synergy empowers aerospace, automotive, healthcare, and metalworking companies to find world-class technical support directly in Brazil, on par with Europe's leading industrial hubs.",
+      "governance": {
+        "zeiss": {
+          "name": "Carl Zeiss (Germany / Brazil)",
+          "description": "Technical homologation of machinery, factory calibrations, and up-to-date licensing for CALYPSO, PiWeb, and ZEISS INSPECT suites."
+        },
+        "senai": {
+          "name": "SENAI Goiás & Ítalo Bologna Faculty",
+          "description": "Operational management, technical sign-off for inspection reports, physical laboratory infrastructure, and dissemination of industrial expertise."
+        },
+        "fieg": {
+          "name": "FIEG System",
+          "description": "Institutional leadership to drive competitiveness and quality compliance across Brazil's industrial supply chains."
+        }
+      }
+    },
+    "leadership": {
+      "subtitle": "Institutional Endorsement",
+      "title": "The vision behind the alliance",
+      "description": "A joint commitment between the Brazilian Industry System and multinational Carl Zeiss to boost manufacturing productivity and competitiveness.",
+      "quotes": {
+        "mabel": {
+          "quote": "“The establishment of Carl Zeiss’s first Center of Excellence in Brazil is a historic milestone. This initiative is designed to drive professional qualification while advancing research, development, and innovation to meet the Brazilian industry’s growing demand for precision and cutting-edge solutions.”",
+          "author": "Sandro Mabel",
+          "role": "Former President of FIEG and the Regional Councils of SESI and SENAI"
+        },
+        "weinisch": {
+          "quote": "“We have the unique opportunity to bring our state-of-the-art technology to a whole new audience. Only the United States, Germany, and China possess a comparable facility. Together, we are equipping the next generation to apply innovative solutions that drive product quality and industrial productivity.”",
+          "author": "Jochen Weinisch",
+          "role": "Vice President of Sales (Latin America, Middle East & Africa) — Carl Zeiss"
+        },
+        "queija": {
+          "quote": "“Beyond benefiting local industry in Goiás, this facility has a nationwide impact, serving as a benchmark for vocational excellence and technical support for manufacturing, bridging the gap between education and the shop floor.”",
+          "author": "Dario Queija",
+          "role": "Director of the SENAI Ítalo Bologna Faculty"
+        }
+      }
+    },
+    "pillars": {
+      "subtitle": "Core Principles & Values",
+      "title": "The foundational pillars behind every inspection report",
+      "description": "Metrology is the science of confidence. Our operational commitments guarantee legal certainty and technical validation for the final product.",
+      "items": {
+        "gdt": {
+          "title": "GD&T Rigor & Geometric Tolerancing",
+          "description": "Strict implementation of Geometric Dimensioning and Tolerancing (GD&T) principles, ensuring metrological repeatability."
+        },
+        "accessibility": {
+          "title": "Accessible Advanced Metrology",
+          "description": "Making precision instrumentation and dimensional consulting accessible not only to large corporations, but to small and medium enterprises seeking to ensure the quality and precision of their products."
+        },
+        "techTransfer": {
+          "title": "Technology Transfer & Education",
+          "description": "Moving beyond routine testing: disseminating a culture of precision through ongoing technical training and fostering new specialized talent in metrology."
+        },
+        "confidentiality": {
+          "title": "Data Custody & Industrial Secrecy",
+          "description": "A non-negotiable commitment to confidentiality regarding proprietary CAD models, patented geometries, industrial prototypes, and certified inspection reports."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Schedule a Technical Visit",
+      "title": "Discover our laboratory infrastructure at the SENAI Ítalo Bologna Faculty.",
+      "description": "Our technical team is available to assess your requirements in 3D measurement, optical scanning, or dimensional validation.",
+      "requestContact": "Request Technical Consultation",
+      "exploreServices": "Explore Services Catalog"
     }
   },
   "services": {
@@ -178,25 +297,39 @@
       }
     },
     "scanning": {
-      "category": "3D scanning",
+      "category": "3D Scanning & CAD Comparison",
       "title": "Transform physical geometry into digital data.",
-      "description": "We capture complex geometries to produce high-fidelity 3D models for dimensional analysis, quality control, and reverse engineering. The T-SCAN Hawk 2 provides portable flexibility for on-site measurement, while the ATOS Q delivers maximum point density for intricate components.",
+      "description": "We capture complex geometries with optical and laser precision to produce 3D models, perform nominal vs. actual comparison (CAD × scanned physical part), and map surface wear on operating components. The T-SCAN Hawk 2 provides portable on-site flexibility, while the ATOS Q delivers maximum point density.",
       "applications": {
-        "fieldScanning": "Portable scanning on-site or on the shop floor",
-        "highResolution": "High-resolution optical scanning (ATOS Q)",
-        "colorMap": "3D color-map deviation reports",
-        "digitization": "Polygon mesh generation (STL/OBJ)"
+        "fieldScanning": "Portable scanning on-site or on the shop floor (T-SCAN Hawk 2)",
+        "highResolution": "High-resolution optical structured blue light scanning (ATOS Q)",
+        "cadComparison": "Direct comparison between CAD model and scanned physical part",
+        "wearMap": "Wear mapping and material loss monitoring on components",
+        "colorMap": "3D color-map deviation reports (Color Map)",
+        "digitization": "Watertight polygon mesh generation (STL/OBJ)"
       }
     },
     "reverse": {
-      "category": "Reverse engineering",
-      "title": "From physical part to parametric CAD model.",
-      "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for manufacturing, replacement, or design optimization.",
+      "category": "Reverse Engineering & Local Manufacturing",
+      "title": "From physical part to parametric CAD model ready for manufacturing.",
+      "description": "We reconstruct exact component geometries from point clouds and 3D meshes, delivering solid or surface CAD models ready for production, local manufacturing of imported spares, or design improvements.",
       "applications": {
         "legacyParts": "Recreation of spare parts without technical drawings",
-        "cadGeneration": "Parametric CAD modeling (STEP, IGES, Parasolid)",
+        "nationalization": "Localization and development of imported industrial components",
+        "cadGeneration": "Parametric CAD modeling (STEP, IGES)",
         "tooling": "Mold, die, and tooling adaptation",
-        "optimization": "Redesign and geometric optimization"
+        "optimization": "Redesign, geometric optimization, and 3D prototyping"
+      }
+    },
+    "mro": {
+      "category": "Reliability, Virtual Warehouse & Training",
+      "title": "Maintenance intelligence and technical training.",
+      "description": "We provide strategic solutions to reduce physical inventory costs of MRO spare parts without the risk of plant downtime. We map equipment trees, perform criticality and recurrence matrices, and offer comprehensive consulting in maintenance, lubrication, failure analysis, and technical training.",
+      "applications": {
+        "virtualWarehouse": "Virtual warehouse and digital spare parts library",
+        "equipmentTree": "Equipment tree structuring and item-by-item asset breakdown",
+        "maintenancePlans": "Formulation of preventive maintenance and lubrication plans",
+        "training": "Specialized technical training and qualification"
       }
     },
     "selection": {
@@ -217,12 +350,20 @@
           "description": "Computed tomography and X-ray for non-destructive internal defect detection."
         },
         "scanning": {
-          "title": "Need to digitize freeform surfaces and complex shapes?",
-          "description": "3D scanning to capture complete geometries directly on the shop floor."
+          "title": "Need to digitize freeform surfaces or compare with CAD?",
+          "description": "3D scanning to capture complete geometries and compare with original models."
         },
         "cad": {
-          "title": "Missing technical drawings or 3D files?",
-          "description": "Reverse engineering to recreate the digital model directly from the physical part."
+          "title": "Missing technical drawings or need part localization?",
+          "description": "Reverse engineering to recreate CAD models and enable local manufacturing."
+        },
+        "mro": {
+          "title": "Need to reduce spare parts stock without downtime risk?",
+          "description": "Virtual warehouse structuring, equipment trees, and critical MRO parts classification."
+        },
+        "training": {
+          "title": "Looking to train your technical team in standards and processes?",
+          "description": "Custom technical training backed by SENAI expertise and ZEISS technology."
         }
       }
     }
@@ -231,12 +372,14 @@
     "breadcrumb": "Services",
     "actions": {
       "requestQuote": "Request a Quote for this Service",
-      "viewSpecs": "View Technical Specifications"
+      "viewSpecs": "View Technical Specifications",
+      "talkToCoordination": "Contact Coordination"
     },
     "sections": {
       "audienceTitle": "Target Audience & Segments",
       "applicationsTitle": "Typical Applications",
       "deliverablesTitle": "Client Deliverables",
+      "trainingNoticeTitle": "Technical Qualification & In-Company Training",
       "installedCapacity": "Installed Capacity",
       "specsTitle": "ZEISS Certified Equipment Specifications",
       "specsDesc": "Bench test technical data and operational parameters guaranteed in the climate-controlled laboratory at the SENAI Ítalo Bologna Faculty.",
@@ -250,7 +393,6 @@
     },
     "services": {
       "cmm": {
-        "categoryTag": "Tactile & Dimensional Metrology",
         "title": "Coordinate Measuring (CMM) & GD&T",
         "headline": "Sub-micrometric accuracy for critical geometries and rigorous geometric compliance.",
         "overview": "Service dedicated to 3D geometric and linear characterization of high-demand mechanical parts. Utilizing continuous-contact CMM systems (tactile scanning), we evaluate form, orientation, and location deviations according to ISO 1101 and ASME Y14.5 standards.",
@@ -280,7 +422,7 @@
             "sensor": "ZEISS VAST Gold & ZEISS RDS",
             "software": "ZEISS CALYPSO with VAST Navigator, VAST Probing & FlyScan",
             "features": [
-              "Zerodur®/Robax® glass-ceramic scales with 200 nm resolution impervious to thermal expansion",
+              "Robax® glass-ceramic scales with 200 nm resolution impervious to thermal expansion",
               "Computer-Aided Accuracy (CAA) for dynamic error correction during high-speed scanning (up to 300 mm/s)",
               "ZEISS VAST Performance package with FlyScan (up to 70% cycle reduction) and QuickChange stylus system",
               "C99m controller with automatic energy and compressed air shutdown (PowerSaver & AirSaver)"
@@ -303,7 +445,6 @@
         ]
       },
       "optica": {
-        "categoryTag": "Non-Contact Multisensor Metrology",
         "title": "Combined Optical & Tactile Inspection",
         "headline": "High-resolution non-contact measurement for flexible components and micro-geometries.",
         "overview": "Integrates high-definition optical cameras with telecentric lenses and continuous tactile probing on a single machine. Eliminates contact pressure deformation on elastomers, thin polymers, technical textiles, and electronic circuits.",
@@ -342,7 +483,6 @@
         ]
       },
       "raio-x": {
-        "categoryTag": "Non-Destructive Testing (NDT)",
         "title": "X-Ray Inspection & Structural Analysis",
         "headline": "Internal volumetric investigation and integrity verification without sectioning or destroying samples.",
         "overview": "2D radioscopic inspection and non-destructive tomography to identify hidden internal discontinuities. Evaluates cast components, welds, and sealed assemblies based on material density and radiological absorption.",
@@ -373,7 +513,7 @@
             "software": "ZEISS Bosello Integrated Software / ZEISS INSPECT X-Ray (CT-Ready)",
             "features": [
               "High penetration capability for light aluminum alloys and cast iron/steel parts up to 50 mm thick",
-              "360° rotary table extending outside the cabinet doors for ergonomic crane/forklift loading",
+              "360° rotary table extending outside the cabinet doors for ergonomic loading of heavy parts",
               "Exclusive software-controlled virtual C-arm configuration for precise source-detector alignment",
               "CT-Ready: prepared for tomographic scan acquisition and 3D reconstruction with defect spatial analysis",
               "Automated CNC inspection cycles and Automatic Defect Recognition (ADR) according to ASTM standards",
@@ -383,28 +523,28 @@
         ]
       },
       "digitalizacao-3d": {
-        "categoryTag": "3D Scanning & Photogrammetry",
         "title": "3D Optical Scanning & Color Map Analysis",
-        "headline": "Full geometric capture to produce 3D STL meshes and dimensional control.",
-        "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), ready for 3D printing, color-map dimensional inspection, or as the baseline dataset for parametric Reverse Engineering (CAD).",
+        "headline": "Full geometric capture to produce 3D STL meshes, CAD comparisons, and dimensional control.",
+        "overview": "High-precision 3D scanning using structured blue light and portable laser triangulation. Converts any physical component into an accurate 3D polygon mesh (.STL / .OBJ), enabling direct nominal vs. actual comparison (CAD × scanned physical part), wear mapping, 3D printing, or serving as the baseline dataset for parametric Reverse Engineering (CAD).",
         "targetAudience": [
           "Anyone holding a physical part who needs its 3D digital model (.STL)",
           "Designers and makers requiring watertight meshes for 3D printing and prototyping",
           "Maintenance teams and workshops creating digital archives or part replicas",
-          "Quality inspection teams needing CAD vs. part 3D color-map reports",
+          "Quality inspection teams needing CAD vs. scanned physical part 3D color-map reports",
           "Projects needing a digitized mesh as the starting foundation for Reverse Engineering (CAD)"
         ],
         "applications": [
           "Generation of watertight STL and OBJ meshes ready for 3D printing",
-          "3D color-map deviation analysis (Nominal CAD vs. actual part)",
-          "On-site portable scanning for medium and large components",
-          "Rapid inspection of warpage, twist, and surface wear",
+          "3D color-map deviation analysis (Nominal CAD vs. actual scanned part via 3D scanners)",
+          "Surface wear mapping and material loss monitoring for operating components",
+          "On-site portable scanning for medium and large components in the field or plant",
+          "Rapid inspection of warpage, twist, and sheet metal deformation",
           "High-density mesh baseline for parametric Reverse Engineering"
         ],
         "deliverables": [
           "Cleaned, closed, and aligned polygonal mesh (.STL, .OBJ, .PLY)",
-          "3D color-map deviation report indicating material excess and deficit zones (when applicable)",
-          "Comparative dimensional report for freeform surfaces"
+          "3D color-map deviation report indicating material excess, deficit, and nominal deviations",
+          "Comparative dimensional report for freeform surfaces and wear degradation maps"
         ],
         "machines": [
           {
@@ -439,26 +579,27 @@
         ]
       },
       "engenharia-reversa": {
-        "categoryTag": "Parametric Digital Modeling",
-        "title": "Reverse Engineering & CAD Reconstruction",
-        "headline": "Transforming raw scan data into production-ready parametric solid models.",
-        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or modified empirically in the toolroom.",
+        "title": "Reverse Engineering, CAD Reconstruction & Local Manufacturing",
+        "headline": "Transforming raw scan data into production-ready parametric solid models for local manufacturing.",
+        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or requiring domestic manufacturing substitution. Encompasses precision parametric modeling, optimization, and full technical documentation for component localization.",
         "targetAudience": [
-          "Industrial plant maintenance needing replacement of obsolete legacy parts",
-          "Mining and agribusiness operations with imported heavy machinery",
+          "Industrial plant maintenance needing replacement of obsolete legacy parts and localization of imports",
+          "Mining, agribusiness, and energy operations with imported heavy machinery facing long lead times",
           "High-performance product and prototype developers",
-          "Tool and mold manufacturers needing original geometry recovery"
+          "Tool and mold manufacturers needing original or improved geometry recovery"
         ],
         "applications": [
           "Parametric CAD modeling from polygon meshes (Mesh to CAD)",
+          "Localization and development of imported components for domestic sourcing",
           "Recovery of worn or broken components with missing geometry reconstruction",
           "Geometric adaptation for modernization and operational efficiency upgrades",
-          "Extraction of design intents, 2D cross-sections, and feature trees"
+          "Extraction of design intents, 2D cross-sections, and parametric feature trees"
         ],
         "deliverables": [
           "Parametric solid and surface CAD models in STEP, IGES, or Parasolid formats",
           "2D manufacturing technical drawings in PDF and DWG with GD&T",
-          "CAD deviation report comparing reconstructed model against measured scan mesh"
+          "CAD deviation report comparing reconstructed model against measured scan mesh",
+          "Engineering dossier to support domestic manufacturing feasibility"
         ],
         "machines": [
           {
@@ -472,6 +613,74 @@
               "Automatic surface segmentation for regular geometric entities (planes, cylinders, cones)",
               "Precision freeform surface fitting with real-time residual deviation control",
               "Native export compatibility with SolidWorks, Siemens NX, CATIA, and Autodesk Inventor"
+            ]
+          }
+        ]
+      },
+      "confiabilidade-mro": {
+        "title": "Reliability, Virtual MRO Warehouse & Technical Training",
+        "headline": "Strategic spare parts management, asset tree structuring, and operational reliability for industry.",
+        "overview": "Integrated reliability engineering and digital readiness solutions designed to transform industrial maintenance management (MRO). Through rigorous equipment asset tree structuring and analytical criticality and recurrence matrices, we identify critical Class A items with low demand recurrence, enabling their digital cataloging in virtual warehouses for rapid on-demand replacement without the prohibitive carrying costs of idle physical stock. This domain also encompasses tribology-driven maintenance and lubrication schedules, failure root cause diagnostics, and specialized technical qualification backed by SENAI methodology and ZEISS technology.",
+        "trainingDirectNotice": "Notice for Technical Training: For technical training proposals, professional development, or corporate in-company classes (in metrology, reverse engineering, maintenance, lubrication, and failure analysis), we recommend reaching out directly to laboratory management via phone, WhatsApp, or email for streamlined syllabus alignment and scheduling.",
+        "subServices": [
+          {
+            "index": "01",
+            "category": "Virtual Warehouse & MRO Management",
+            "title": "Virtual warehouse and critical spare parts identification.",
+            "description": "We establish digital component repositories to eliminate physical stocks of high-cost, slow-moving spare parts. By deploying criticality and recurrence matrices, we isolate Class A critical parts with low historical demand frequency. These parts are 3D scanned and archived in a certified digital library, unlocking agile on-demand replacement or fast local manufacturing, eliminating immobilized capital without increasing downtime exposure.",
+            "applications": [
+              "Criticality and recurrence matrix deployment for Class A low-demand items identification",
+              "Creation of digital MRO spare part libraries complete with 3D CAD data and manufacturing drawings",
+              "Physical vs. digital stocking strategies delivering substantial reductions in working capital",
+              "Seamless integration with additive manufacturing, precision machining, and reverse engineering"
+            ]
+          },
+          {
+            "index": "02",
+            "category": "Asset Breakdown & Traceability",
+            "title": "Equipment trees and item-by-item asset mapping.",
+            "description": "We organize the complete hierarchical structure of complex machinery and entire industrial production lines. Conducting thorough item-by-item surveys of every assembly, module, and spare component with functional descriptions, reference codes, and technical specifications, we ensure full operational traceability for maintenance and PCM planning teams.",
+            "applications": [
+              "Structuring hierarchical equipment asset trees fully compatible with CMMS and ERP platforms",
+              "Comprehensive item-by-item cataloging and dimensional surveying of industrial assets",
+              "Critical components mapping and early identification of hard-to-source imported spares",
+              "Standardized asset data baselines for maintenance planning and preventive spare strategies"
+            ]
+          },
+          {
+            "index": "03",
+            "category": "Maintenance Engineering & Tribology",
+            "title": "Preventive maintenance plans and industrial lubrication routines.",
+            "description": "We formulate and review systematic preventive maintenance programs and industrial lubrication routines grounded in tribological rigor. We evaluate friction points, operating load regimes, environmental factors, and lubricant properties to deliver standardized procedures that eliminate premature wear, extend Mean Time Between Failures (MTBF), and maximize plant asset reliability.",
+            "applications": [
+              "Development and optimization of preventive/predictive maintenance plans and inspection routines",
+              "Lubrication point mapping, precise dosing calculation, and scientifically defined intervals",
+              "Rationalization and standardization of industrial lubricants to lower inventory costs and contamination",
+              "Standard Operating Procedures (SOP) for maintenance engineering and plant lubrication teams"
+            ]
+          },
+          {
+            "index": "04",
+            "category": "Mechanical Diagnostics & Forensics",
+            "title": "Failure analysis, mechanical breakdowns, and root-cause diagnosis.",
+            "description": "We investigate the root causes of unexpected mechanical fractures, fatigue cracking, corrosion, and abnormal component wear. Combining SENAI mechanical metallurgy experts with state-of-the-art ZEISS laboratory instrumentation (computed tomography for non-destructive internal inspection and 3D optical scanning for wear maps), we provide conclusive forensic engineering reports that permanently prevent failure recurrence.",
+            "applications": [
+              "Root-cause determination of mechanical fractures, material fatigue, and structural overloads",
+              "Non-destructive computed tomography inspection for internal voids, cracks, and porosity",
+              "3D wear mapping comparing operating geometry against nominal CAD design data",
+              "Formal technical diagnostic reports with corrective directives and component redesign advice"
+            ]
+          },
+          {
+            "index": "05",
+            "category": "Qualification & Technology Transfer",
+            "title": "Specialized technical training and tailored in-company cohorts.",
+            "description": "We qualify industrial technical personnel through hands-on training delivered by certified SENAI instructors and ZEISS accredited metrology specialists. We offer applied courses in coordinate metrology (CMM), optical inspection, GD&T, 3D scanning, reverse engineering, asset reliability, and mechanical maintenance routines, available through open enrollments or custom in-company programs.",
+            "applications": [
+              "Hands-on training in dimensional metrology, coordinate measuring machines (CMM), and GD&T",
+              "Practical qualification in 3D structured blue-light/laser scanning and polygon mesh inspection",
+              "Applied courses in industrial reliability, machinery lubrication, and maintenance management",
+              "Official professional certifications issued by the SENAI Ítalo Bologna Faculty"
             ]
           }
         ]
@@ -515,10 +724,13 @@
         "cmm": "Coordinate Measuring (CMM) & GD&T",
         "optica": "Optical & Multisensor Inspection",
         "raio-x": "X-Ray & CT Inspection (NDT)",
-        "digitalizacao-3d": "3D Optical Scanning & Color Map",
-        "engenharia-reversa": "Reverse Engineering & CAD Reconstruction",
-        "consultoria": "Other / Metrology Consulting & Training"
+        "digitalizacao-3d": "3D Optical Scanning, CAD Comparison & Color Map",
+        "engenharia-reversa": "Reverse Engineering & Local Manufacturing",
+        "confiabilidade-mro": "Reliability, Virtual MRO Warehouse & Assets",
+        "treinamentos": "Technical Training & Education",
+        "consultoria": "Other / Specialized Consulting"
       },
+      "trainingDirectNotice": "For technical training inquiries and corporate in-company programs, we suggest contacting our laboratory leadership directly via phone or email for faster and customized support.",
       "otherOption": "Other / Dimensional Consulting",
       "messageLabel": "Project Description / Tolerances",
       "messagePlaceholder": "Provide details such as approximate dimensions, part material, critical tolerances, applicable standard, and desired deadlines.",
@@ -557,12 +769,5 @@
     "businessHours": "Mon. to Fri. from 8:00 AM to 6:00 PM",
     "rights": "All rights reserved.",
     "partnership": "FIEG System • SENAI Goiás • Carl Zeiss"
-  },
-  "institutional": {
-    "hero": {
-      "title": "German precision and Brazilian technical expertise serving high-demand industry.",
-      "description": "Located at the SENAI Ítalo Bologna Faculty in Goiânia, the Center for Excellence in Metrology is the result of a strategic alliance between the FIEG System / SENAI Goiás and Carl Zeiss. We operate as one of only five global centers with this capability, delivering comprehensive solutions in 3D measurement, reverse engineering, and dimensional compliance.",
-      "imageAlt": "Laboratory Facade"
-    }
   }
 }

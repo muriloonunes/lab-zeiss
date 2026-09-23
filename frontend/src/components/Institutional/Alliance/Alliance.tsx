@@ -1,6 +1,9 @@
 import './Alliance.scss';
+import {useTranslation} from "react-i18next";
 
 export function Alliance() {
+    const {t} = useTranslation();
+
     return (
         <section className="inst-section" id="alianca">
             <div className="inst-container">
@@ -20,23 +23,11 @@ export function Alliance() {
                     <div className="inst-alliance-content">
                         <div className="inst-eyebrow">
                             <span className="inst-eyebrow-line"></span>
-                            <span className="inst-eyebrow-text">Aliança Estratégica</span>
+                            <span className="inst-eyebrow-text">{t("institutional.alliance.subtitle")}</span>
                         </div>
-                        <h2 className="inst-section-title">
-                            A convergência entre padrão global e vocação industrial.
-                        </h2>
-                        <p className="inst-paragraph">
-                            O CEM nasceu da necessidade de suprir uma demanda crítica da indústria moderna: o acesso
-                            a medições de exatidão micrométrica e validação técnica em conformidade com as normas
-                            internacionais mais rigorosas.
-                        </p>
-                        <p className="inst-paragraph">
-                            A cooperação técnica une o pioneirismo óptico e metrológico da alemã Carl Zeiss —
-                            referência mundial nessa indústria — à infraestrutura, corpo docente e
-                            capacidade de formação do SENAI. Esta sinergia permite que indústrias aeroespaciais,
-                            automotivas, de saúde e metalmecânica encontrem no Brasil suporte técnico do mesmo nível
-                            dos principais polos industriais da Europa.
-                        </p>
+                        <h2 className="inst-section-title">{t("institutional.alliance.title")}</h2>
+                        <p className="inst-paragraph">{t("institutional.alliance.intro")}</p>
+                        <p className="inst-paragraph">{t("institutional.alliance.paragraph")}</p>
                     </div>
                 </div>
 
@@ -44,34 +35,25 @@ export function Alliance() {
                     <div className="governance-col">
                         <div className="gov-header">
                             <span className="gov-dot"></span>
-                            <strong className="gov-entity">Carl Zeiss (Alemanha / Brasil)</strong>
+                            <strong className="gov-entity">{t("institutional.alliance.governance.zeiss.name")}</strong>
                         </div>
-                        <p className="gov-desc">
-                            Homologação técnica de maquinários, calibrações de fábrica e licenças atualizadas das
-                            suítes CALYPSO, PiWeb e ZEISS INSPECT.
-                        </p>
+                        <p className="gov-desc">{t("institutional.alliance.governance.zeiss.description")}</p>
                     </div>
 
                     <div className="governance-col">
                         <div className="gov-header">
                             <span className="gov-dot"></span>
-                            <strong className="gov-entity">SENAI Goiás & Faculdade Ítalo Bologna</strong>
+                            <strong className="gov-entity">{t("institutional.alliance.governance.senai.name")}</strong>
                         </div>
-                        <p className="gov-desc">
-                            Gestão operacional, responsabilidade técnica pelos ensaios, infraestrutura física do
-                            laboratório e difusão de conhecimento industrial.
-                        </p>
+                        <p className="gov-desc">{t("institutional.alliance.governance.senai.description")}</p>
                     </div>
 
                     <div className="governance-col">
                         <div className="gov-header">
                             <span className="gov-dot"></span>
-                            <strong className="gov-entity">Sistema FIEG</strong>
+                            <strong className="gov-entity">{t("institutional.alliance.governance.fieg.name")}</strong>
                         </div>
-                        <p className="gov-desc">
-                            Articulação institucional para o fortalecimento da competitividade e conformidade de
-                            fornecedores de cadeias produtivas no país.
-                        </p>
+                        <p className="gov-desc">{t("institutional.alliance.governance.fieg.description")}</p>
                     </div>
                 </div>
             </div>

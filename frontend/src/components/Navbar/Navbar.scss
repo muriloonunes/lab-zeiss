@@ -453,14 +453,17 @@
     }
   }
 
+  &.scrolled {
+    background: vars.$nav-glass-scrolled-bg;
+    border-bottom: 1px solid vars.$nav-border-scrolled;
+    backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
+    -webkit-backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
+    box-shadow: vars.$nav-glass-scrolled-shadow;
+  }
+
   @media (min-width: 1181px) {
     &.scrolled {
       padding: 0.55rem clamp(1.25rem, 2.5vw, 4.5rem);
-      background: vars.$nav-glass-scrolled-bg;
-      border-bottom: 1px solid vars.$nav-border-scrolled;
-      backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
-      -webkit-backdrop-filter: blur(vars.$nav-glass-scrolled-blur);
-      box-shadow: vars.$nav-glass-scrolled-shadow;
 
       .brand-logo {
         height: 30px;

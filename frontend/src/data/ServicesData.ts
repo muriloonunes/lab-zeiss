@@ -10,15 +10,24 @@ export interface MachineSpec {
     features: string[];
 }
 
+export interface ServiceSubSection {
+    index: string;
+    category: string;
+    title: string;
+    description: string;
+    applications: string[];
+}
+
 export interface ServiceDetailContent {
-    categoryTag: string;
     title: string;
     headline: string;
     overview: string;
-    targetAudience: string[];
-    applications: string[];
-    deliverables: string[];
-    machines: MachineSpec[];
+    trainingDirectNotice?: string;
+    targetAudience?: string[];
+    applications?: string[];
+    deliverables?: string[];
+    machines?: MachineSpec[];
+    subServices?: ServiceSubSection[];
 }
 
 export interface ServiceMeta {
@@ -65,5 +74,10 @@ export const servicesData: Record<string, ServiceMeta> = {
             { src: '/images/ZRE1.png', alt: 'Estação de Engenharia Reversa' },
             { src: '/images/ZRE2.png', alt: 'Estação de Engenharia Reversa' }
         ]
+    },
+
+    'confiabilidade-mro': {
+        id: 'confiabilidade-mro',
+        galleryImages: []
     }
 };
