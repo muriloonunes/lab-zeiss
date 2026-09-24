@@ -123,6 +123,20 @@ export const Licoes: React.FC = () => {
         carregarLicoes();
     }, [carregarLicoes]);
 
+    useEffect(() => {
+        const handleDemoAlterado = () => {
+            carregarLicoes();
+            carregarContagemPendentes();
+        };
+
+        window.addEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        window.addEventListener('zeiss-configuracoes-alteradas', handleDemoAlterado);
+        return () => {
+            window.removeEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+            window.removeEventListener('zeiss-configuracoes-alteradas', handleDemoAlterado);
+        };
+    }, [carregarLicoes, carregarContagemPendentes]);
+
     // Ao carregar a lista de lições, se houver servicoId na URL, abre automaticamente o detalhe
     useEffect(() => {
         const idParam = searchParams.get('servicoId');

@@ -100,6 +100,17 @@ export const Servicos: React.FC = () => {
     useEffect(() => {
         carregarServicos();
         carregarVocabularios();
+
+        const handleDemoAlterado = () => {
+            carregarServicos();
+        };
+
+        window.addEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        window.addEventListener('zeiss-configuracoes-alteradas', handleDemoAlterado);
+        return () => {
+            window.removeEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+            window.removeEventListener('zeiss-configuracoes-alteradas', handleDemoAlterado);
+        };
     }, []);
 
     useEffect(() => {

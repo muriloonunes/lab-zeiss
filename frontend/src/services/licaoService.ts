@@ -1,5 +1,5 @@
 import { request } from './request';
-import {
+import type {
     RegistroServico,
     ReenviarLicaoPayload,
     DevolverLicaoPayload,
@@ -16,6 +16,13 @@ export interface ContagemPendentesResponse {
     totalPendentes: number;
 }
 
+import {
+    isModoDemoAtivo,
+    obterServicosMockComoRegistros,
+    marcarMockLicaoSuperada,
+    reativarMockLicao,
+} from './mockDataService';
+
 export async function listarBaseConhecimento(
     filtros?: FiltrosBaseConhecimento
 ): Promise<RegistroServico[]> {
@@ -26,7 +33,63 @@ export async function listarBaseConhecimento(
 
     const query = params.toString();
     const url = query ? `/api/licoes?${query}` : '/api/licoes';
-    return request<RegistroServico[]>(url);
+    let licoesReais: RegistroServico[] = [];
+    try {
+        licoesReais = await request<RegistroServico[]>(url);
+    } catch (err) {
+        console.warn('Erro ao carregar lições da API:', err);
+    }
+
+    if (!isModoDemoAtivo()) {
+        return licoesReais;
+    }
+
+    // Modo demonstração: unifica as lições aprendidas mockadas
+    let mocks = obterServicosMockComoRegistros().filter(
+        (m) => m.blocoAprendizado && m.blocoAprendizado.licaoAprendida
+    );
+
+    if (filtros?.status) {
+        mocks = mocks.filter((m) => m.blocoAprendizado?.statusLicao === filtros.status);
+    }
+
+    if (filtros?.termoId) {
+        const tId = filtros.termoId;
+        mocks = mocks.filter((m) => {
+            const orc = m.blocoOrcamento;
+            const apr = m.blocoAprendizado;
+            if (orc?.tipoServico?.id === tId) return true;
+            if (orc?.recurso?.id === tId) return true;
+            if (orc?.caracteristicasPeca?.some((c) => c.id === tId)) return true;
+            if (apr?.causaDesvio?.id === tId) return true;
+            if (apr?.assuntosRelacionados?.some((a) => a.id === tId)) return true;
+            return false;
+        });
+    }
+
+    if (filtros?.busca) {
+        const buscaNorm = filtros.busca.toLowerCase().trim();
+        mocks = mocks.filter((m) => {
+            const cod = (m.codigo || '').toLowerCase();
+            const lic = (m.blocoAprendizado?.licaoAprendida || '').toLowerCase();
+            const causa = (m.blocoAprendizado?.causaDesvio?.descricao || '').toLowerCase();
+            const tipo = (m.blocoOrcamento?.tipoServico?.descricao || '').toLowerCase();
+            return (
+                cod.includes(buscaNorm) ||
+                lic.includes(buscaNorm) ||
+                causa.includes(buscaNorm) ||
+                tipo.includes(buscaNorm)
+            );
+        });
+    }
+
+    const idsReais = new Set(licoesReais.map((l) => l.id));
+    const codigosReais = new Set(licoesReais.map((l) => l.codigo));
+    const mocksNaoDuplicados = mocks.filter(
+        (m) => !idsReais.has(m.id) && !codigosReais.has(m.codigo)
+    );
+
+    return [...licoesReais, ...mocksNaoDuplicados];
 }
 
 export async function listarPendentesValidacao(): Promise<RegistroServico[]> {
@@ -67,12 +130,22 @@ export async function devolverLicao(
 }
 
 export async function marcarComoSuperada(servicoId: number): Promise<RegistroServico> {
+    if (servicoId >= 900) {
+        marcarMockLicaoSuperada(servicoId);
+        const mock = obterServicosMockComoRegistros().find((m) => m.id === servicoId);
+        if (mock) return mock;
+    }
     return request<RegistroServico>(`/api/licoes/${servicoId}/superar`, {
         method: 'PATCH',
     });
 }
 
 export async function reativarLicao(servicoId: number): Promise<RegistroServico> {
+    if (servicoId >= 900) {
+        reativarMockLicao(servicoId);
+        const mock = obterServicosMockComoRegistros().find((m) => m.id === servicoId);
+        if (mock) return mock;
+    }
     return request<RegistroServico>(`/api/licoes/${servicoId}/reativar`, {
         method: 'PATCH',
     });

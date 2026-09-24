@@ -1,4 +1,4 @@
-import { isModoDemoAtivo, setModoDemoAtivo } from './estatisticaServiceMock';
+import { isModoDemoAtivo, setModoDemoAtivo } from './mockDataService';
 
 export interface ConfiguracoesSistema {
     valorHoraLaboratorio: number; // R$/hora, ex: 250.00

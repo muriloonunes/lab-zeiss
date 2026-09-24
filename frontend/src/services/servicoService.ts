@@ -1,5 +1,5 @@
 import { request } from './request';
-import {
+import type {
     RegistroServico,
     CriarServicoPayload,
     FinalizarServicoPayload,
@@ -17,12 +17,39 @@ export {
     contarPendentesValidacao,
 } from './licaoService';
 
+import { isModoDemoAtivo, obterServicosMockComoRegistros } from './mockDataService';
+
 export async function listarServicos(status?: StatusServico): Promise<RegistroServico[]> {
     const url = status ? `/api/servicos?status=${status}` : '/api/servicos';
-    return request<RegistroServico[]>(url);
+    let servicosReais: RegistroServico[] = [];
+    try {
+        servicosReais = await request<RegistroServico[]>(url);
+    } catch (err) {
+        console.warn('Erro ao carregar serviços da API:', err);
+    }
+
+    if (!isModoDemoAtivo()) {
+        return servicosReais;
+    }
+
+    // Modo demonstração: unifica os casos mockados
+    const mocks = obterServicosMockComoRegistros();
+    const mocksFiltrados = status ? mocks.filter((m) => m.status === status) : mocks;
+
+    const idsReais = new Set(servicosReais.map((s) => s.id));
+    const codigosReais = new Set(servicosReais.map((s) => s.codigo));
+    const mocksNaoDuplicados = mocksFiltrados.filter(
+        (m) => !idsReais.has(m.id) && !codigosReais.has(m.codigo)
+    );
+
+    return [...servicosReais, ...mocksNaoDuplicados];
 }
 
 export async function obterServicoPorId(id: number): Promise<RegistroServico> {
+    if (isModoDemoAtivo() && id >= 900) {
+        const mock = obterServicosMockComoRegistros().find((m) => m.id === id);
+        if (mock) return mock;
+    }
     return request<RegistroServico>(`/api/servicos/${id}`);
 }
 
