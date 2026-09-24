@@ -5,6 +5,7 @@ import { TermoVocabulario } from '../../../../../types/vocabulario';
 import { criarServico } from '../../../../../services/servicoService';
 import { listarClasses, listarTermosPorClasse } from '../../../../../services/vocabularioService';
 import { RecomendacaoOrcamento } from '../../../../../services/estatisticaServiceMock';
+import { obterConfiguracoes } from '../../../../../services/configuracaoService';
 import { useToast } from '../../../../../components/Toast';
 import { VocabularioMultiSelect, TermoComClasse } from '../../../../../components/VocabularioMultiSelect/VocabularioMultiSelect';
 import { AssistenteOrcamento } from './components/AssistenteOrcamento/AssistenteOrcamento';
@@ -74,6 +75,14 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
 
     const [salvando, setSalvando] = useState(false);
     const [recomendacaoAtual, setRecomendacaoAtual] = useState<RecomendacaoOrcamento | null>(null);
+    const [configuracoes, setConfiguracoes] = useState(obterConfiguracoes());
+
+    // Sincroniza alterações nas configurações do sistema
+    useEffect(() => {
+        const handleConfig = () => setConfiguracoes(obterConfiguracoes());
+        window.addEventListener('zeiss-configuracoes-alteradas', handleConfig);
+        return () => window.removeEventListener('zeiss-configuracoes-alteradas', handleConfig);
+    }, []);
 
     // Carregar Vocabulários
     useEffect(() => {
@@ -212,16 +221,21 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
     }, [caracteristicasPeca, caracteristicasPecaIds]);
 
     // REVERSÃO E VERIFICAÇÃO DE DESVIO DO ASSISTENTE
-    // Se a confiança for MÉDIA ou ALTA, e as horas estimadas estiverem fora do intervalo [Q1, Q3],
-    // a justificativa torna-se de preenchimento obrigatório!
+    // Se a confiança for MÉDIA ou ALTA, e as horas estimadas estiverem fora do intervalo [Q1, Q3]
+    // ou divergirem da mediana além da sensibilidade configurada, a justificativa torna-se obrigatória!
     const desvioAssistenteDetectado = useMemo(() => {
         if (horasEstimadas === '' || !recomendacaoAtual) return false;
-        const { nivelConfianca, quartil1, quartil3 } = recomendacaoAtual;
+        const { nivelConfianca, quartil1, quartil3, medianaHoras } = recomendacaoAtual;
         if (nivelConfianca !== 'MEDIA' && nivelConfianca !== 'ALTA') return false;
 
+        const sensibilidadeRatio = (configuracoes.sensibilidadeDesvioAssistente || 15) / 100;
+
         const h = Number(horasEstimadas);
-        return h < quartil1 || h > quartil3;
-    }, [horasEstimadas, recomendacaoAtual]);
+        const foraQuartis = h < quartil1 || h > quartil3;
+        const foraSensibilidade = medianaHoras > 0 && Math.abs(h - medianaHoras) / medianaHoras > sensibilidadeRatio;
+
+        return foraQuartis || foraSensibilidade;
+    }, [horasEstimadas, recomendacaoAtual, configuracoes]);
 
     const handleSalvar = async () => {
         if (!tipoServicoId) {
@@ -305,12 +319,9 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                     </button>
                 </div>
 
-                {/* Body em 2 Colunas */}
                 <div className="modal-criar-servico-body two-columns">
-                    {/* Coluna da Esquerda: Formulário de Orçamento */}
                     <div className="modal-col-form">
                         <div className="form-grid">
-                            {/* Tipo de Serviço */}
                             <div className="form-group">
                                 <label>Tipo de Serviço *</label>
                                 <select
@@ -324,7 +335,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 </select>
                             </div>
 
-                            {/* Recurso / Máquina (Condicional ao Serviço) */}
                             <div className="form-group">
                                 <label>
                                     Recurso / Máquina *
@@ -350,7 +360,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 </select>
                             </div>
 
-                            {/* Campo de Características: Multi-Select Consistente */}
                             <div className="form-group full-width">
                                 <VocabularioMultiSelect
                                     termos={caracteristicasTermosComClasse}
@@ -402,7 +411,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 </div>
                             </div>
 
-                            {/* Justificativa de Desvio Integrada (Obrigatória se desvioAssistenteDetectado) */}
                             {(desvioAssistenteDetectado || justificativaDesvioAssistente) && (
                                 <div className="form-group full-width justificativa-destaque-clean">
                                     <div className="label-row-compact">
@@ -418,7 +426,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 </div>
                             )}
 
-                            {/* Premissas Assumidas */}
                             <div className="form-group full-width">
                                 <label>Premissas Assumidas</label>
                                 <textarea
@@ -427,12 +434,12 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                     className="premissas-area"
                                     onChange={(e) => setPremissasAssumidas(e.target.value)}
                                     placeholder="Informações preliminares, tolerâncias exigidas, restrições e condições de contorno..."
+                                    style={{'minHeight': '120px'}}
                                 />
                             </div>
                         </div>
                     </div>
 
-                    {/* Coluna da Direita: Assistente de Inteligência em Tempo Real */}
                     <div className="modal-col-assistente">
                         <AssistenteOrcamento
                             tipoServicoId={tipoServicoId}
@@ -440,13 +447,19 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             caracteristicasIds={caracteristicasPecaIds}
                             caracteristicasNomes={caracteristicasNomesSelecionadas}
                             horasInformadas={horasEstimadas}
-                            onAplicarHoras={(horas) => setHorasEstimadas(horas)}
+                            onAplicarHoras={(horas, custoCalculado) => {
+                                setHorasEstimadas(horas);
+                                if (custoCalculado !== undefined && custoCalculado > 0) {
+                                    setCustoEstimado(custoCalculado.toFixed(2));
+                                } else if ((!custoEstimado || custoEstimado === '0') && configuracoes.valorHoraLaboratorio > 0) {
+                                    setCustoEstimado((horas * configuracoes.valorHoraLaboratorio).toFixed(2));
+                                }
+                            }}
                             onRecomendacaoAtualizada={setRecomendacaoAtual}
                         />
                     </div>
                 </div>
 
-                {/* Footer */}
                 <div className="modal-criar-servico-footer">
                     <button type="button" className="btn-secondary" onClick={onClose}>
                         Cancelar

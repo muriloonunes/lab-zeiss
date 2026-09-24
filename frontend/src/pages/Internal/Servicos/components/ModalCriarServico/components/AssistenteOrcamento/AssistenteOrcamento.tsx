@@ -5,6 +5,7 @@ import {
     isModoDemoAtivo,
     setModoDemoAtivo
 } from '../../../../../../../services/estatisticaServiceMock';
+import { obterConfiguracoes } from '../../../../../../../services/configuracaoService';
 import './AssistenteOrcamento.scss';
 
 export interface AssistenteOrcamentoProps {
@@ -13,7 +14,7 @@ export interface AssistenteOrcamentoProps {
     caracteristicasIds: number[];
     caracteristicasNomes?: string[];
     horasInformadas?: number | '';
-    onAplicarHoras?: (horas: number) => void;
+    onAplicarHoras?: (horas: number, custoCalculado?: number) => void;
     onRecomendacaoAtualizada?: (recomendacao: RecomendacaoOrcamento) => void;
 }
 
@@ -30,17 +31,24 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
     const [recomendacao, setRecomendacao] = useState<RecomendacaoOrcamento | null>(null);
     const [modalCasosAberto, setModalCasosAberto] = useState(false);
     const [modoDemo, setModoDemo] = useState(isModoDemoAtivo());
+    const [config, setConfig] = useState(obterConfiguracoes());
 
-    // Sincroniza estado de demonstração
+    // Sincroniza estado de demonstração e configurações
     useEffect(() => {
         const handleDemoAlterado = (e: Event) => {
             const custom = e as CustomEvent<{ ativo: boolean }>;
             setModoDemo(custom.detail?.ativo ?? isModoDemoAtivo());
         };
 
+        const handleConfigAlterada = () => {
+            setConfig(obterConfiguracoes());
+        };
+
         window.addEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        window.addEventListener('zeiss-configuracoes-alteradas', handleConfigAlterada);
         return () => {
             window.removeEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+            window.removeEventListener('zeiss-configuracoes-alteradas', handleConfigAlterada);
         };
     }, []);
 
@@ -112,7 +120,7 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
                         title="Alternar entre base estrita da API ou base expandida de demonstração"
                     >
                         <span className="demo-dot"></span>
-                        <span className="demo-txt">{modoDemo ? 'Demo: Ativo' : 'Apenas API'}</span>
+                        <span className="demo-txt">{modoDemo ? 'Demo' : 'Apenas API'}</span>
                     </button>
 
                     {!aguardandoGatilho && recomendacao && (
@@ -209,36 +217,99 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
                         {/* CENÁRIO 3 & 4: CONFIANÇA MÉDIA / ALTA (5+ Casos) */}
                         {(recomendacao.nivelConfianca === 'MEDIA' || recomendacao.nivelConfianca === 'ALTA') && (
                             <div className="secao-estimativa-clean">
-                                {/* Destaque da Mediana */}
-                                <div className="bloco-mediana-destaque">
-                                    <div className="mediana-esquerda">
-                                        <span className="mediana-caption">Mediana Sugerida</span>
-                                        <div className="mediana-valor-linha">
-                                            <span className="mediana-num">{recomendacao.medianaHoras}</span>
-                                            <span className="mediana-unidade">horas</span>
-                                        </div>
-                                    </div>
+                                {/* Bloco com Peso Igual: Horas Sugeridas & Custo Estimado */}
+                                {(() => {
+                                    const custoSugerido = config.valorHoraLaboratorio > 0
+                                        ? recomendacao.medianaHoras * config.valorHoraLaboratorio
+                                        : 0;
+                                    const formatarMoeda = (val: number) =>
+                                        val.toLocaleString('pt-BR', {
+                                            style: 'currency',
+                                            currency: 'BRL',
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        });
 
-                                    {onAplicarHoras && (
-                                        <button
-                                            type="button"
-                                            className="btn-usar-mediana"
-                                            onClick={() => onAplicarHoras(recomendacao.medianaHoras)}
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                                                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                <polyline points="20 6 9 17 4 12" />
-                                            </svg>
-                                            <span>Usar {recomendacao.medianaHoras}h</span>
-                                        </button>
-                                    )}
-                                </div>
+                                    return (
+                                        <div className="card-sugestao-dupla">
+                                            <div className="sugestao-metricas-grid">
+                                                {/* Métrica 1: Tempo / Esforço */}
+                                                <div className="metrica-card tempo">
+                                                    <span className="metrica-caption">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <circle cx="12" cy="12" r="10"/>
+                                                            <polyline points="12 6 12 12 16 14"/>
+                                                        </svg>
+                                                        Esforço Sugerido
+                                                    </span>
+                                                    <div className="metrica-valor-row">
+                                                        <span className="metrica-num">{recomendacao.medianaHoras}</span>
+                                                        <span className="metrica-unidade">horas</span>
+                                                    </div>
+                                                    <span className="metrica-detalhe">
+                                                        Mediana histórica ({recomendacao.casosBase.length} casos)
+                                                    </span>
+                                                </div>
+
+                                                {/* Métrica 2: Custo / Valor */}
+                                                <div className="metrica-card custo">
+                                                    <span className="metrica-caption">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                            <line x1="12" y1="1" x2="12" y2="23"/>
+                                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                                        </svg>
+                                                        Custo Estimado
+                                                    </span>
+                                                    <div className="metrica-valor-row">
+                                                        <span className="metrica-num">{formatarMoeda(custoSugerido)}</span>
+                                                    </div>
+                                                    <span className="metrica-detalhe">
+                                                        Taxa base: {formatarMoeda(config.valorHoraLaboratorio)}/h
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {onAplicarHoras && (
+                                                <button
+                                                    type="button"
+                                                    className="btn-aplicar-dupla"
+                                                    onClick={() => onAplicarHoras(recomendacao.medianaHoras, custoSugerido)}
+                                                    title="Preencher automaticamente as horas estimadas e o custo no orçamento"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                         stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                        <polyline points="20 6 9 17 4 12" />
+                                                    </svg>
+                                                    <span>
+                                                        Aplicar ao Orçamento ({recomendacao.medianaHoras}h • {formatarMoeda(custoSugerido)})
+                                                    </span>
+                                                </button>
+                                            )}
+                                        </div>
+                                    );
+                                })()}
 
                                 {/* Régua da Faixa Provável (Q1 a Q3) */}
                                 <div className="regua-faixa-container">
                                     <div className="regua-labels">
-                                        <span className="regua-label-q">Mín. provável (Q1): <strong>{recomendacao.quartil1}h</strong></span>
-                                        <span className="regua-label-q">Máx. provável (Q3): <strong>{recomendacao.quartil3}h</strong></span>
+                                        <span className="regua-label-q">
+                                            Mín. provável (Q1): <strong>{recomendacao.quartil1}h</strong>
+                                            {config.valorHoraLaboratorio > 0 && (
+                                                <span className="regua-sub-custo">
+                                                    {' '}({(recomendacao.quartil1 * config.valorHoraLaboratorio).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })})
+                                                </span>
+                                            )}
+                                        </span>
+                                        <span className="regua-label-q">
+                                            Máx. provável (Q3): <strong>{recomendacao.quartil3}h</strong>
+                                            {config.valorHoraLaboratorio > 0 && (
+                                                <span className="regua-sub-custo">
+                                                    {' '}({(recomendacao.quartil3 * config.valorHoraLaboratorio).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })})
+                                                </span>
+                                            )}
+                                        </span>
                                     </div>
                                     <div className="regua-trilho">
                                         <div className="regua-preenchimento"></div>
@@ -261,30 +332,41 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
                                 )}
 
                                 {/* Feedback Reativo às Horas Informadas no Formulário */}
-                                {horasInformadas !== '' && (
-                                    <>
-                                        {(Number(horasInformadas) < recomendacao.quartil1 || Number(horasInformadas) > recomendacao.quartil3) ? (
+                                {horasInformadas !== '' && (() => {
+                                    const h = Number(horasInformadas);
+                                    const sensibilidadeRatio = (config.sensibilidadeDesvioAssistente || 15) / 100;
+                                    const foraQuartis = h < recomendacao.quartil1 || h > recomendacao.quartil3;
+                                    const foraSensibilidade = recomendacao.medianaHoras > 0 && Math.abs(h - recomendacao.medianaHoras) / recomendacao.medianaHoras > sensibilidadeRatio;
+                                    const temDesvio = foraQuartis || foraSensibilidade;
+
+                                    if (temDesvio) {
+                                        return (
                                             <div className="card-feedback-horas desvio">
                                                 <div className="feedback-horas-head">
                                                     <span className="feedback-horas-icon">⚠️</span>
                                                     <strong>{horasInformadas}h informadas</strong>
-                                                    <span className="badge-tag-desvio">Fora da faixa</span>
+                                                    <span className="badge-tag-desvio">Divergente (±{config.sensibilidadeDesvioAssistente}%)</span>
                                                 </div>
                                                 <p>
-                                                    Diverge da faixa provável ({recomendacao.quartil1}h - {recomendacao.quartil3}h). A justificativa técnica é obrigatória para salvar.
+                                                    Fora da faixa provável ({recomendacao.quartil1}h - {recomendacao.quartil3}h) ou acima da tolerância configurada ({config.sensibilidadeDesvioAssistente}%). A justificativa técnica é obrigatória para salvar.
                                                 </p>
                                             </div>
-                                        ) : (
-                                            <div className="card-feedback-horas alinhado">
-                                                <div className="feedback-horas-head">
-                                                    <span className="feedback-horas-icon">✓</span>
-                                                    <strong>{horasInformadas}h informadas</strong>
-                                                    <span className="badge-tag-alinhado">Alinhado à faixa histórica</span>
-                                                </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div className="card-feedback-horas alinhado">
+                                            <div className="feedback-horas-head">
+                                                <span className="feedback-horas-icon">✓</span>
+                                                <strong>{horasInformadas}h informadas</strong>
+                                                <span className="badge-tag-alinhado">Alinhado à faixa histórica</span>
                                             </div>
-                                        )}
-                                    </>
-                                )}
+                                            <p>
+                                                O valor está condizente com a série histórica ({recomendacao.quartil1}h a {recomendacao.quartil3}h). Nenhuma justificativa necessária.
+                                            </p>
+                                        </div>
+                                    );
+                                })()}
 
                                 <p className="orientacao-texto-clean">{recomendacao.mensagemOrientacao}</p>
 

@@ -24,16 +24,27 @@ export const Dashboard: React.FC = () => {
 
     const isValidadorOuAdmin = usuario?.tipo === 'VALIDADOR' || usuario?.tipo === 'ADMINISTRADOR';
 
-    // Sincroniza estado de modo de demonstração via eventos globais
+    // Sincroniza estado de modo de demonstração e configurações via eventos globais
     useEffect(() => {
         const handleDemoAlterado = (e: Event) => {
             const custom = e as CustomEvent<{ ativo: boolean }>;
             setModoDemo(custom.detail?.ativo ?? isModoDemoAtivo());
         };
 
+        const handleConfigAlterada = () => {
+            // Recarrega os dados do dashboard imediatamente com a nova tolerância
+            setCarregandoDados(true);
+            obterDadosDashboard()
+                .then(setDadosDashboard)
+                .catch(console.error)
+                .finally(() => setCarregandoDados(false));
+        };
+
         window.addEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        window.addEventListener('zeiss-configuracoes-alteradas', handleConfigAlterada);
         return () => {
             window.removeEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+            window.removeEventListener('zeiss-configuracoes-alteradas', handleConfigAlterada);
         };
     }, []);
 
@@ -228,7 +239,7 @@ export const Dashboard: React.FC = () => {
                         </span>
                     </div>
                     <span className="kpi-footer-text">
-                        Serviços executados dentro da tolerância de ±15%
+                        Serviços executados dentro da tolerância de ±{dadosDashboard?.toleranciaAssertividade || 15}%
                     </span>
                 </div>
 

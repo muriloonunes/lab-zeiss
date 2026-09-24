@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { NavLink, Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { NotificacoesPopover } from '../Notificacoes/NotificacoesPopover';
+import React, {useState} from 'react';
+import {NavLink, Outlet, useNavigate, useLocation, Link} from 'react-router-dom';
+import {useAuth} from '../../context/AuthContext';
+import {NotificacoesPopover} from '../Notificacoes/NotificacoesPopover';
 import './InternalLayout.scss';
 
 export const InternalLayout: React.FC = () => {
-    const { usuario, logout, isAdmin } = useAuth();
+    const {usuario, logout, isAdmin} = useAuth();
     const [sidebarAberta, setSidebarAberta] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleLogout = async () => {
-        navigate('/login', { replace: true, state: { from: { pathname: '/interno' } } });
+        navigate('/login', {replace: true, state: {from: {pathname: '/interno'}}});
         await logout();
     };
 
@@ -44,6 +44,7 @@ export const InternalLayout: React.FC = () => {
         if (location.pathname === '/interno/licoes') return 'Base de Conhecimento & Lições';
         if (location.pathname === '/interno/solicitacoes') return 'Solicitações de Orçamento';
         if (location.pathname === '/interno/usuarios') return 'Gerenciamento de Usuários';
+        if (location.pathname === '/interno/configuracoes') return 'Configurações do Sistema';
         if (location.pathname === '/interno/vocabulario') return 'Vocabulário Controlado';
         if (location.pathname === '/interno/perfil') return 'Meu Perfil & Segurança';
         return 'Visão Geral';
@@ -53,9 +54,9 @@ export const InternalLayout: React.FC = () => {
 
     return (
         <div className="internal-app">
-            {/* Backdrop para mobile */}
             <div
-                className={`sidebar-backdrop ${sidebarAberta ? 'open' : ''}`}                onClick={fecharSidebar}
+                className={`sidebar-backdrop ${sidebarAberta ? 'open' : ''}`}
+                onClick={fecharSidebar}
                 aria-hidden="true"
             />
 
@@ -109,7 +110,7 @@ export const InternalLayout: React.FC = () => {
                         to="/interno"
                         end
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -126,12 +127,13 @@ export const InternalLayout: React.FC = () => {
                     <NavLink
                         to="/interno/servicos"
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                                <path
+                                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
                             </svg>
                             <span>Ordens de Serviço</span>
                         </div>
@@ -140,7 +142,7 @@ export const InternalLayout: React.FC = () => {
                     <NavLink
                         to="/interno/licoes"
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -156,7 +158,7 @@ export const InternalLayout: React.FC = () => {
                     <NavLink
                         to="/interno/solicitacoes"
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -174,14 +176,15 @@ export const InternalLayout: React.FC = () => {
                     <NavLink
                         to="/interno/vocabulario"
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="2" y1="12" x2="22" y2="12" />
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                             </svg>
                             <span>Vocabulário</span>
                         </div>
@@ -191,7 +194,7 @@ export const InternalLayout: React.FC = () => {
                         <NavLink
                             to="/interno/usuarios"
                             onClick={fecharSidebar}
-                            className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                            className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                         >
                             <div className="nav-link-content">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -209,7 +212,7 @@ export const InternalLayout: React.FC = () => {
                     <NavLink
                         to="/interno/perfil"
                         onClick={fecharSidebar}
-                        className={({ isActive }) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
                     >
                         <div className="nav-link-content">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -220,6 +223,24 @@ export const InternalLayout: React.FC = () => {
                             <span>Meu Perfil & Senha</span>
                         </div>
                     </NavLink>
+
+                    {isAdmin && (
+                        <NavLink
+                            to="/interno/configuracoes"
+                            onClick={fecharSidebar}
+                            className={({isActive}) => `nav-link-item ${isActive ? 'active' : ''}`}
+                        >
+                            <div className="nav-link-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                </svg>
+                                <span>Configurações</span>
+                            </div>
+                        </NavLink>
+                    )}
                 </nav>
 
                 <div className="sidebar-footer">
@@ -228,12 +249,14 @@ export const InternalLayout: React.FC = () => {
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <line x1="2" y1="12" x2="22" y2="12"/>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                         </svg>
                         <span>Portal Público</span>
                     </Link>
 
-                    <button onClick={handleLogout} className="footer-action-btn logout-btn" title="Encerrar sessão de acesso">
+                    <button onClick={handleLogout} className="footer-action-btn logout-btn"
+                            title="Encerrar sessão de acesso">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -269,7 +292,7 @@ export const InternalLayout: React.FC = () => {
                                     <Link to="/interno" className="breadcrumb-link" title="Voltar para Área Interna">
                                         Área Interna
                                     </Link>
-                                    <span className="breadcrumb-dot" />
+                                    <span className="breadcrumb-dot"/>
                                     <span className="breadcrumb-current">{getPageTitle()}</span>
                                 </>
                             )}
@@ -277,13 +300,13 @@ export const InternalLayout: React.FC = () => {
                     </div>
 
                     <div className="topbar-right">
-                        <NotificacoesPopover />
+                        <NotificacoesPopover/>
                     </div>
                 </header>
 
                 <main className="internal-page-container">
-                    <Outlet />
-                    </main>
+                    <Outlet/>
+                </main>
             </div>
         </div>
     );

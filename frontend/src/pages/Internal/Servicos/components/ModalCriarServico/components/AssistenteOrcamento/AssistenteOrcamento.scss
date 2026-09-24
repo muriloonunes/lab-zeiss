@@ -300,65 +300,116 @@
       flex-direction: column;
       gap: 0.85rem;
 
-      /* Bloco da Mediana */
-      .bloco-mediana-destaque {
+      /* Card de Sugestão Dupla (Horas e Custo com Peso Igual) */
+      .card-sugestao-dupla {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
-        padding: 0.85rem 1rem;
+        padding: 0.85rem;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 0.75rem;
 
-        .mediana-esquerda {
-          display: flex;
-          flex-direction: column;
+        .sugestao-metricas-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.65rem;
 
-          .mediana-caption {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #64748b;
-          }
-
-          .mediana-valor-linha {
+          .metrica-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0.65rem 0.75rem;
             display: flex;
-            align-items: baseline;
-            gap: 0.35rem;
+            flex-direction: column;
+            gap: 0.25rem;
+            transition: all 0.15s ease;
 
-            .mediana-num {
-              font-family: vars.$font-headline;
-              font-size: 1.75rem;
-              font-weight: 800;
-              color: #141e8c;
-              line-height: 1.1;
+            &:hover {
+              border-color: #cbd5e1;
+              background: #f1f5f9;
             }
 
-            .mediana-unidade {
-              font-size: 0.78rem;
+            .metrica-caption {
+              font-size: 0.68rem;
+              font-weight: 700;
+              text-transform: uppercase;
+              letter-spacing: 0.04em;
+              display: flex;
+              align-items: center;
+              gap: 0.35rem;
+            }
+
+            .metrica-valor-row {
+              display: flex;
+              align-items: baseline;
+              gap: 0.3rem;
+
+              .metrica-num {
+                font-family: vars.$font-headline;
+                font-size: clamp(1.1rem, 2.2vw, 1.25rem);
+                font-weight: 800;
+                line-height: 1.15;
+                letter-spacing: -0.01em;
+              }
+
+              .metrica-unidade {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #64748b;
+              }
+            }
+
+            .metrica-detalhe {
+              font-size: 0.68rem;
               color: #64748b;
-              font-weight: 600;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            &.tempo {
+              .metrica-caption {
+                color: #1e3a8a;
+              }
+              .metrica-num {
+                color: #141e8c;
+              }
+            }
+
+            &.custo {
+              .metrica-caption {
+                color: #065f46;
+              }
+              .metrica-num {
+                color: #047857;
+              }
             }
           }
         }
 
-        .btn-usar-mediana {
+        .btn-aplicar-dupla {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
-          padding: 0.45rem 0.85rem;
+          justify-content: center;
+          gap: 0.45rem;
+          width: 100%;
+          padding: 0.55rem 0.85rem;
           border-radius: 6px;
           background: #141e8c;
           color: #ffffff;
           border: none;
-          font-size: 0.75rem;
+          font-size: 0.76rem;
           font-weight: 700;
           cursor: pointer;
-          transition: background-color 0.15s ease;
+          transition: background-color 0.15s ease, transform 0.1s ease;
 
           &:hover {
             background: #0f1770;
+          }
+
+          &:active {
+            transform: scale(0.99);
           }
         }
       }
@@ -382,6 +433,12 @@
           .regua-label-q {
             strong {
               color: #0f172a;
+            }
+
+            .regua-sub-custo {
+              font-size: 0.68rem;
+              color: #059669;
+              font-weight: 600;
             }
           }
         }

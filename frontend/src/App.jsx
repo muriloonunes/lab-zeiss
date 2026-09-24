@@ -18,6 +18,7 @@ import { Vocabulario } from './pages/Internal/Vocabulario/Vocabulario';
 import { Solicitacoes } from './pages/Internal/Solicitacoes/Solicitacoes';
 import { Servicos } from './pages/Internal/Servicos/Servicos';
 import { Licoes } from './pages/Internal/Licoes/Licoes';
+import { Configuracoes } from './pages/Internal/Configuracoes/Configuracoes';
 
 function PublicLayout() {
     return (
@@ -70,6 +71,14 @@ export default function App() {
                         element={
                             <ProtectedRoute roles={['ADMINISTRADOR']}>
                                 <Usuarios />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="configuracoes"
+                        element={
+                            <ProtectedRoute roles={['ADMINISTRADOR']}>
+                                <Configuracoes />
                             </ProtectedRoute>
                         }
                     />
