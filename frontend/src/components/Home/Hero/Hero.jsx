@@ -44,7 +44,7 @@ export function HeroSection() {
                 <div className="hero-visual">
                     <div className="glass-image-wrapper">
                         <img
-                            src="/images/Senai-Laboratorio-2.jpg"
+                            src="/images/Senai-Laboratorio-1.jpg"
                             alt="Laboratório de Metrologia SENAI e ZEISS"
                             width="640"
                             height="460"
