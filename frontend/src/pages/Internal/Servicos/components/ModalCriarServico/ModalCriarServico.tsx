@@ -5,8 +5,6 @@ import { TermoVocabulario } from '../../../../../types/vocabulario';
 import { criarServico } from '../../../../../services/servicoService';
 import { listarClasses, listarTermosPorClasse } from '../../../../../services/vocabularioService';
 import { useToast } from '../../../../../components/Toast';
-import { VocabularioMultiSelect, TermoComClasse } from '../../../../../components/VocabularioMultiSelect/VocabularioMultiSelect';
-import { AssistenteOrcamento } from '../AssistenteOrcamento/AssistenteOrcamento';
 import './ModalCriarServico.scss';
 
 export interface ModalCriarServicoProps {
@@ -71,7 +69,9 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
     const [valorProposto, setValorProposto] = useState<number | ''>('');
     const [premissasAssumidas, setPremissasAssumidas] = useState('');
     const [justificativaDesvioAssistente, setJustificativaDesvioAssistente] = useState('');
-    const [temDivergenciaAssistente, setTemDivergenciaAssistente] = useState(false);
+
+    // Filtro de busca para a lista de características
+    const [filtroBuscaCaracteristica, setFiltroBuscaCaracteristica] = useState('');
     const [salvando, setSalvando] = useState(false);
 
     // Carregar Vocabulários
@@ -134,16 +134,21 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
         setCustoEstimado('');
         setValorProposto('');
         setJustificativaDesvioAssistente('');
-        setTemDivergenciaAssistente(false);
+        setFiltroBuscaCaracteristica('');
     }, [aberto, solicitacaoOrigem, tiposServico, totalServicos]);
 
-    // Mapeia as características da peça para o formato TermoComClasse do VocabularioMultiSelect
-    const termosCaracteristicas: TermoComClasse[] = useMemo(() => {
-        return caracteristicasPeca.map(c => ({
-            ...c,
-            classeNome: 'Características da Peça'
-        }));
-    }, [caracteristicasPeca]);
+    // Filtragem de características na busca
+    const caracteristicasFiltradas = useMemo(() => {
+        if (!filtroBuscaCaracteristica.trim()) return caracteristicasPeca;
+        const q = filtroBuscaCaracteristica.toLowerCase();
+        return caracteristicasPeca.filter(c => c.descricao.toLowerCase().includes(q));
+    }, [caracteristicasPeca, filtroBuscaCaracteristica]);
+
+    const toggleCaracteristica = (id: number) => {
+        setCaracteristicasPecaIds(prev =>
+            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+        );
+    };
 
     const handleSalvar = async () => {
         if (!tipoServicoId) {
@@ -163,11 +168,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
 
         if (horasEstimadas === '' || custoEstimado === '' || valorProposto === '') {
             mostrarToast('error', 'Preencha as horas estimadas, custo estimado e valor proposto.');
-            return;
-        }
-
-        if (temDivergenciaAssistente && !justificativaDesvioAssistente.trim()) {
-            mostrarToast('error', 'Justifique a divergência de horas em relação ao histórico do Assistente de Orçamento.');
             return;
         }
 
@@ -252,30 +252,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             </select>
                         </div>
 
-                        {/* Características da Peça com VocabularioMultiSelect */}
-                        <div className="form-group full-width">
-                            <VocabularioMultiSelect
-                                label={`Características da Peça * (${caracteristicasPecaIds.length} selecionada${caracteristicasPecaIds.length === 1 ? '' : 's'})`}
-                                termos={termosCaracteristicas}
-                                selecionadosIds={caracteristicasPecaIds}
-                                onChange={setCaracteristicasPecaIds}
-                                placeholder="Pesquisar e selecionar características da peça..."
-                            />
-                        </div>
-
-                        {/* Assistente Inteligente de Orçamento */}
-                        <div className="form-group full-width">
-                            <AssistenteOrcamento
-                                tipoServicoId={tipoServicoId}
-                                caracteristicasPecaIds={caracteristicasPecaIds}
-                                horasEstimadas={horasEstimadas}
-                                justificativa={justificativaDesvioAssistente}
-                                onJustificativaChange={setJustificativaDesvioAssistente}
-                                onAplicarHorasRecomendadas={(mediana) => setHorasEstimadas(mediana)}
-                                onDivergenciaChange={setTemDivergenciaAssistente}
-                            />
-                        </div>
-
                         {/* Linha com os 3 campos de estimativas lado a lado */}
                         <div className="form-row-3">
                             <div className="form-group">
@@ -312,6 +288,72 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             </div>
                         </div>
 
+                        {/* Características da Peça */}
+                        <div className="form-group full-width">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <label>
+                                    Características da Peça * ({caracteristicasPecaIds.length} selecionada{caracteristicasPecaIds.length === 1 ? '' : 's'})
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Filtrar características..."
+                                    value={filtroBuscaCaracteristica}
+                                    onChange={(e) => setFiltroBuscaCaracteristica(e.target.value)}
+                                    style={{
+                                        padding: '0.2rem 0.5rem',
+                                        border: '1px solid #cbd5e1',
+                                        borderRadius: '4px',
+                                        fontSize: '0.74rem',
+                                        width: '180px'
+                                    }}
+                                />
+                            </div>
+                            <div style={{
+                                maxHeight: '130px',
+                                overflowY: 'auto',
+                                background: '#f8fafc',
+                                padding: '0.6rem',
+                                borderRadius: '6px',
+                                border: '1px solid #cbd5e1',
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: '0.4rem'
+                            }}>
+                                {caracteristicasFiltradas.length === 0 ? (
+                                    <span style={{ fontSize: '0.76rem', color: '#94a3b8', fontStyle: 'italic' }}>
+                                        Nenhuma característica encontrada.
+                                    </span>
+                                ) : (
+                                    caracteristicasFiltradas.map(c => {
+                                        const selecionado = caracteristicasPecaIds.includes(c.id);
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={c.id}
+                                                onClick={() => toggleCaracteristica(c.id)}
+                                                style={{
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.35rem',
+                                                    padding: '0.25rem 0.6rem',
+                                                    borderRadius: '16px',
+                                                    fontSize: '0.76rem',
+                                                    cursor: 'pointer',
+                                                    border: selecionado ? '1px solid #141e8c' : '1px solid #cbd5e1',
+                                                    background: selecionado ? '#141e8c' : '#ffffff',
+                                                    color: selecionado ? '#ffffff' : '#334155',
+                                                    fontWeight: selecionado ? 600 : 400,
+                                                    transition: 'all 0.15s ease'
+                                                }}
+                                            >
+                                                <span>{selecionado ? '✓ ' : '+ '}{c.descricao}</span>
+                                            </button>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        </div>
+
                         {/* Premissas Assumidas */}
                         <div className="form-group full-width">
                             <label>Premissas Assumidas</label>
@@ -335,8 +377,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                         type="button"
                         className="btn-primary-action"
                         onClick={handleSalvar}
-                        disabled={salvando || (temDivergenciaAssistente && !justificativaDesvioAssistente.trim())}
-                        title={temDivergenciaAssistente && !justificativaDesvioAssistente.trim() ? 'Preencha a justificativa da divergência para habilitar a criação da OS' : ''}
+                        disabled={salvando}
                     >
                         {salvando ? 'Criando OS...' : 'Criar Ordem de Serviço'}
                     </button>
