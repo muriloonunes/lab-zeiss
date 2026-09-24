@@ -305,150 +305,153 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                     </button>
                 </div>
 
-                {/* Body */}
-                <div className="modal-criar-servico-body">
-                    <div className="form-grid">
-                        {/* Tipo de Serviço */}
-                        <div className="form-group">
-                            <label>Tipo de Serviço *</label>
-                            <select
-                                value={tipoServicoId}
-                                onChange={(e) => setTipoServicoId(e.target.value === '' ? '' : Number(e.target.value))}
-                            >
-                                <option value="">Selecione o Tipo de Serviço...</option>
-                                {tiposServico.map(t => (
-                                    <option key={t.id} value={t.id}>{t.descricao}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Recurso / Máquina (Condicional ao Serviço) */}
-                        <div className="form-group">
-                            <label>
-                                Recurso / Máquina *
-                                {tipoServicoId && (
-                                    <span style={{ fontWeight: 400, color: '#64748b', marginLeft: '4px' }}>
-                                        ({recursosFiltrados.length} disponível{recursosFiltrados.length === 1 ? '' : 'is'})
-                                    </span>
-                                )}
-                            </label>
-                            <select
-                                value={recursoId}
-                                onChange={(e) => setRecursoId(e.target.value === '' ? '' : Number(e.target.value))}
-                                disabled={!tipoServicoId}
-                            >
-                                <option value="">
-                                    {!tipoServicoId
-                                        ? 'Selecione primeiro o Tipo de Serviço'
-                                        : 'Selecione o equipamento adequado...'}
-                                </option>
-                                {recursosFiltrados.map(r => (
-                                    <option key={r.id} value={r.id}>{r.descricao}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Campo de Características: Multi-Select Consistente */}
-                        <div className="form-group full-width">
-                            <VocabularioMultiSelect
-                                termos={caracteristicasTermosComClasse}
-                                selecionadosIds={caracteristicasPecaIds}
-                                onChange={setCaracteristicasPecaIds}
-                                placeholder="Pesquisar e selecionar características da peça..."
-                                label="Características da Peça *"
-                            />
-                        </div>
-
-                        {/* ASSISTENTE DE ORÇAMENTO INTELIGENTE */}
-                        <div className="form-group full-width">
-                            <AssistenteOrcamento
-                                tipoServicoId={tipoServicoId}
-                                tipoServicoNome={tipoServicoNomeSelecionado}
-                                caracteristicasIds={caracteristicasPecaIds}
-                                caracteristicasNomes={caracteristicasNomesSelecionadas}
-                                onAplicarHoras={(horas) => setHorasEstimadas(horas)}
-                                onRecomendacaoAtualizada={setRecomendacaoAtual}
-                            />
-                        </div>
-
-                        {/* Linha com os 3 campos de estimativas lado a lado */}
-                        <div className="form-row-3">
+                {/* Body em 2 Colunas */}
+                <div className="modal-criar-servico-body two-columns">
+                    {/* Coluna da Esquerda: Formulário de Orçamento */}
+                    <div className="modal-col-form">
+                        <div className="form-grid">
+                            {/* Tipo de Serviço */}
                             <div className="form-group">
-                                <label>Horas Estimadas *</label>
-                                <input
-                                    type="number"
-                                    step="0.5"
-                                    min="0.5"
-                                    value={horasEstimadas}
-                                    onChange={(e) => setHorasEstimadas(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 18.5"
+                                <label>Tipo de Serviço *</label>
+                                <select
+                                    value={tipoServicoId}
+                                    onChange={(e) => setTipoServicoId(e.target.value === '' ? '' : Number(e.target.value))}
+                                >
+                                    <option value="">Selecione o Tipo de Serviço...</option>
+                                    {tiposServico.map(t => (
+                                        <option key={t.id} value={t.id}>{t.descricao}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Recurso / Máquina (Condicional ao Serviço) */}
+                            <div className="form-group">
+                                <label>
+                                    Recurso / Máquina *
+                                    {tipoServicoId && (
+                                        <span style={{ fontWeight: 400, color: '#64748b', marginLeft: '4px' }}>
+                                            ({recursosFiltrados.length} disponível{recursosFiltrados.length === 1 ? '' : 'is'})
+                                        </span>
+                                    )}
+                                </label>
+                                <select
+                                    value={recursoId}
+                                    onChange={(e) => setRecursoId(e.target.value === '' ? '' : Number(e.target.value))}
+                                    disabled={!tipoServicoId}
+                                >
+                                    <option value="">
+                                        {!tipoServicoId
+                                            ? 'Selecione primeiro o Tipo de Serviço'
+                                            : 'Selecione o equipamento adequado...'}
+                                    </option>
+                                    {recursosFiltrados.map(r => (
+                                        <option key={r.id} value={r.id}>{r.descricao}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Campo de Características: Multi-Select Consistente */}
+                            <div className="form-group full-width">
+                                <VocabularioMultiSelect
+                                    termos={caracteristicasTermosComClasse}
+                                    selecionadosIds={caracteristicasPecaIds}
+                                    onChange={setCaracteristicasPecaIds}
+                                    placeholder="Pesquisar e selecionar características da peça..."
+                                    label="Características da Peça *"
                                 />
                             </div>
 
-                            <div className="form-group">
-                                <label>Custo Estimado (R$) *</label>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    min="0"
-                                    value={custoEstimado}
-                                    onChange={(e) => setCustoEstimado(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 3800.00"
-                                />
-                            </div>
+                            {/* Linha com os 3 campos de estimativas lado a lado */}
+                            <div className="form-row-3">
+                                <div className="form-group">
+                                    <label>Horas Estimadas *</label>
+                                    <input
+                                        type="number"
+                                        step="0.5"
+                                        min="0.5"
+                                        value={horasEstimadas}
+                                        onChange={(e) => setHorasEstimadas(e.target.value === '' ? '' : Number(e.target.value))}
+                                        placeholder="Ex: 18.5"
+                                    />
+                                </div>
 
-                            <div className="form-group">
-                                <label>Valor Proposto (R$) *</label>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    min="0"
-                                    value={valorProposto}
-                                    onChange={(e) => setValorProposto(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 5500.00"
-                                />
-                            </div>
-                        </div>
+                                <div className="form-group">
+                                    <label>Custo Estimado (R$) *</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        min="0"
+                                        value={custoEstimado}
+                                        onChange={(e) => setCustoEstimado(e.target.value === '' ? '' : Number(e.target.value))}
+                                        placeholder="Ex: 3800.00"
+                                    />
+                                </div>
 
-                        {/* Alerta de Desvio da Faixa Sugerida */}
-                        {desvioAssistenteDetectado && (
-                            <div className="alerta-desvio-assistente full-width">
-                                <div className="alerta-desvio-icon">⚠️</div>
-                                <div className="alerta-desvio-texto">
-                                    <strong>Horas fora da faixa provável sugerida pelo assistente ({recomendacaoAtual?.quartil1}h - {recomendacaoAtual?.quartil3}h).</strong>
-                                    <p>
-                                        Para registrar um orçamento com esforço discrepante da mediana histórica, o preenchimento da <strong>Justificativa Técnica de Desvio</strong> é obrigatório.
-                                    </p>
+                                <div className="form-group">
+                                    <label>Valor Proposto (R$) *</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        min="0"
+                                        value={valorProposto}
+                                        onChange={(e) => setValorProposto(e.target.value === '' ? '' : Number(e.target.value))}
+                                        placeholder="Ex: 5500.00"
+                                    />
                                 </div>
                             </div>
-                        )}
 
-                        {/* Justificativa de Desvio (Obrigatória se desvioAssistenteDetectado) */}
-                        {(desvioAssistenteDetectado || justificativaDesvioAssistente) && (
-                            <div className="form-group full-width justificativa-destaque">
-                                <label>
-                                    Justificativa Técnica do Desvio {desvioAssistenteDetectado ? '*' : '(Opcional)'}
-                                </label>
+                            {/* Alerta de Desvio da Faixa Sugerida */}
+                            {desvioAssistenteDetectado && (
+                                <div className="alerta-desvio-assistente full-width">
+                                    <div className="alerta-desvio-icon">⚠️</div>
+                                    <div className="alerta-desvio-texto">
+                                        <strong>Horas fora da faixa provável sugerida ({recomendacaoAtual?.quartil1}h - {recomendacaoAtual?.quartil3}h).</strong>
+                                        <p>
+                                            Para registrar esforço discrepante da mediana histórica, o preenchimento da <strong>Justificativa Técnica de Desvio</strong> é obrigatório.
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Justificativa de Desvio (Obrigatória se desvioAssistenteDetectado) */}
+                            {(desvioAssistenteDetectado || justificativaDesvioAssistente) && (
+                                <div className="form-group full-width justificativa-destaque">
+                                    <label>
+                                        Justificativa Técnica do Desvio {desvioAssistenteDetectado ? '*' : '(Opcional)'}
+                                    </label>
+                                    <textarea
+                                        rows={2}
+                                        value={justificativaDesvioAssistente}
+                                        onChange={(e) => setJustificativaDesvioAssistente(e.target.value)}
+                                        placeholder="Explique tecnicamente por que o esforço desta OS difere da faixa histórica recomendada..."
+                                    />
+                                </div>
+                            )}
+
+                            {/* Premissas Assumidas */}
+                            <div className="form-group full-width">
+                                <label>Premissas Assumidas</label>
                                 <textarea
                                     rows={2}
-                                    value={justificativaDesvioAssistente}
-                                    onChange={(e) => setJustificativaDesvioAssistente(e.target.value)}
-                                    placeholder="Explique tecnicamente por que o esforço desta OS difere da faixa histórica recomendada (ex: geometria atípica, dispositivo especial, exigência de múltiplos setups)..."
+                                    value={premissasAssumidas}
+                                    className="premissas-area"
+                                    onChange={(e) => setPremissasAssumidas(e.target.value)}
+                                    placeholder="Informações preliminares, tolerâncias exigidas, restrições e condições de contorno..."
                                 />
                             </div>
-                        )}
-
-                        {/* Premissas Assumidas */}
-                        <div className="form-group full-width">
-                            <label>Premissas Assumidas</label>
-                            <textarea
-                                rows={2}
-                                value={premissasAssumidas}
-                                className="premissas-area"
-                                onChange={(e) => setPremissasAssumidas(e.target.value)}
-                                placeholder="Informações preliminares, tolerâncias exigidas, restrições e condições de contorno..."
-                            />
                         </div>
+                    </div>
+
+                    {/* Coluna da Direita: Assistente de Inteligência em Tempo Real */}
+                    <div className="modal-col-assistente">
+                        <AssistenteOrcamento
+                            tipoServicoId={tipoServicoId}
+                            tipoServicoNome={tipoServicoNomeSelecionado}
+                            caracteristicasIds={caracteristicasPecaIds}
+                            caracteristicasNomes={caracteristicasNomesSelecionadas}
+                            onAplicarHoras={(horas) => setHorasEstimadas(horas)}
+                            onRecomendacaoAtualizada={setRecomendacaoAtual}
+                        />
                     </div>
                 </div>
 

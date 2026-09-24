@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
     obterRecomendacaoOrcamento,
     RecomendacaoOrcamento,
-    CasoBase,
     isModoDemoAtivo,
     setModoDemoAtivo
 } from '../../../../../../../services/estatisticaServiceMock';
@@ -27,10 +26,10 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
 }) => {
     const [carregando, setCarregando] = useState(false);
     const [recomendacao, setRecomendacao] = useState<RecomendacaoOrcamento | null>(null);
-    const [tabelaExpandida, setTabelaExpandida] = useState(false);
+    const [modalCasosAberto, setModalCasosAberto] = useState(false);
     const [modoDemo, setModoDemo] = useState(isModoDemoAtivo());
 
-    // Sincroniza estado de modo de demonstração via eventos globais
+    // Sincroniza estado de demonstração
     useEffect(() => {
         const handleDemoAlterado = (e: Event) => {
             const custom = e as CustomEvent<{ ativo: boolean }>;
@@ -43,7 +42,12 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
         };
     }, []);
 
-    // Consulta reativa ao assistente
+    // Fecha o card sobreposto se os filtros mudarem
+    useEffect(() => {
+        setModalCasosAberto(false);
+    }, [tipoServicoId, caracteristicasIds]);
+
+    // Consulta reativa
     useEffect(() => {
         let isMounted = true;
 
@@ -63,7 +67,7 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
                     }
                 }
             } catch (err) {
-                console.error('Erro ao consultar assistente de orçamento:', err);
+                console.error('Erro ao consultar assistente:', err);
             } finally {
                 if (isMounted) {
                     setCarregando(false);
@@ -84,274 +88,276 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
         setModoDemoAtivo(novo);
     };
 
-    // 1. Estado de Espera Ativa (antes de selecionar Tipo E Característica)
     const aguardandoGatilho = !tipoServicoId || caracteristicasIds.length === 0;
 
-    if (aguardandoGatilho) {
-        return (
-            <div className="assistente-orcamento-container espera-ativa">
-                <div className="assistente-top-bar">
-                    <div className="assistente-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sparkle-icon">
-                            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
-                        </svg>
-                        <span>Assistente de Orçamento ZEISS</span>
-                    </div>
-                    <button
-                        type="button"
-                        className={`btn-toggle-demo ${modoDemo ? 'ativo' : ''}`}
-                        onClick={handleAlternarDemo}
-                        title="Alternar entre base estrita da API ou base expandida de demonstração"
-                    >
-                        <span className="dot"></span>
-                        <span className="label-demo">{modoDemo ? 'Dados de Demonstração: Ligado' : 'Apenas Dados da API'}</span>
-                    </button>
-                </div>
-                <div className="espera-mensagem">
-                    <div className="espera-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <line x1="12" y1="16" x2="12" y2="12" />
-                            <line x1="12" y1="8" x2="12.01" y2="8" />
-                        </svg>
-                    </div>
-                    <p>
-                        Selecione o <strong>Tipo de Serviço</strong> e ao menos uma <strong>Característica da Peça</strong> para carregar as recomendações históricas do laboratório.
-                    </p>
-                </div>
-            </div>
-        );
-    }
-
-    if (carregando) {
-        return (
-            <div className="assistente-orcamento-container carregando">
-                <div className="spinner-assistente"></div>
-                <span>Consultando acervo de lições formalizadas do laboratório...</span>
-            </div>
-        );
-    }
-
-    if (!recomendacao) return null;
-
-    const { nivelConfianca, quantidadeCasos, medianaHoras, quartil1, quartil3, fatorCorrecao, mensagemOrientacao, casosBase } = recomendacao;
-
     return (
-        <div className={`assistente-orcamento-container confianca-${nivelConfianca.toLowerCase()}`}>
-            {/* Top Bar */}
-            <div className="assistente-top-bar">
-                <div className="assistente-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+        <div className="assistente-minimalista">
+            {/* Header Limpo */}
+            <div className="assistente-header-clean">
+                <div className="assistente-brand">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sparkle-icon">
                         <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
                     </svg>
-                    <span>Assistente de Orçamento ZEISS</span>
+                    <span className="titulo-assistente">Assistente de Estimativa</span>
                 </div>
 
-                <div className="top-acoes">
+                <div className="assistente-header-right">
                     <button
                         type="button"
-                        className={`btn-toggle-demo ${modoDemo ? 'ativo' : ''}`}
+                        className={`toggle-demo-clean ${modoDemo ? 'ativo' : ''}`}
                         onClick={handleAlternarDemo}
                         title="Alternar entre base estrita da API ou base expandida de demonstração"
                     >
-                        <span className="dot"></span>
-                        <span className="label-demo">{modoDemo ? 'Dados de Demonstração: Ligado' : 'Apenas Dados da API'}</span>
+                        <span className="demo-dot"></span>
+                        <span className="demo-txt">{modoDemo ? 'Demo: Ativo' : 'Apenas API'}</span>
                     </button>
 
-                    {/* Badge da Escada de Confiança */}
-                    {nivelConfianca === 'SEM_HISTORICO' && (
-                        <span className="badge-confianca badge-sem-historico">
-                            Sem Histórico (0 casos)
-                        </span>
-                    )}
-                    {nivelConfianca === 'BAIXA' && (
-                        <span className="badge-confianca badge-baixa">
-                            Confiança Baixa ({quantidadeCasos} {quantidadeCasos === 1 ? 'caso' : 'casos'})
-                        </span>
-                    )}
-                    {nivelConfianca === 'MEDIA' && (
-                        <span className="badge-confianca badge-media">
-                            Confiança Média ({quantidadeCasos} casos)
-                        </span>
-                    )}
-                    {nivelConfianca === 'ALTA' && (
-                        <span className="badge-confianca badge-alta">
-                            Confiança Alta ({quantidadeCasos} casos)
+                    {!aguardandoGatilho && recomendacao && (
+                        <span className={`status-pill ${recomendacao.nivelConfianca.toLowerCase()}`}>
+                            {recomendacao.nivelConfianca === 'SEM_HISTORICO' && 'Sem Histórico'}
+                            {recomendacao.nivelConfianca === 'BAIXA' && `Baixa Confiança (${recomendacao.quantidadeCasos})`}
+                            {recomendacao.nivelConfianca === 'MEDIA' && `Média Confiança (${recomendacao.quantidadeCasos})`}
+                            {recomendacao.nivelConfianca === 'ALTA' && `Alta Confiança (${recomendacao.quantidadeCasos})`}
                         </span>
                     )}
                 </div>
             </div>
 
-            {/* Mensagem de Orientação */}
-            <div className="assistente-orientacao">
-                <p>{mensagemOrientacao}</p>
-            </div>
-
-            {/* CENÁRIO 0 CASOS: Roteiro Técnico Padrão de Estimativa */}
-            {nivelConfianca === 'SEM_HISTORICO' && (
-                <div className="roteiro-estimativa-padrao">
-                    <div className="roteiro-titulo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <polyline points="10 9 9 9 8 9"/>
-                        </svg>
-                        <span>Roteiro Padrão de Estimativa Técnica</span>
+            {/* Conteúdo Central */}
+            <div className="assistente-content-area">
+                {aguardandoGatilho ? (
+                    <div className="estado-espera-clean">
+                        <div className="espera-circulo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
+                        </div>
+                        <p className="espera-lead">Inteligência baseada no histórico</p>
+                        <p className="espera-sub">
+                            Defina o <strong>Tipo de Serviço</strong> e ao menos uma <strong>Característica da Peça</strong> para carregar as referências históricas do laboratório.
+                        </p>
                     </div>
-                    <ul className="roteiro-passos">
-                        <li>
-                            <strong>1. Análise Geométrica e Tolerâncias:</strong> Inspecione no modelo CAD/desenho o número de elementos dimensionais, complexidade de alinhamento e tolerâncias críticas GD&T.
-                        </li>
-                        <li>
-                            <strong>2. Preparação & Fixação:</strong> Considere o tempo de climatização da peça no laboratório (20°C ± 1°C), construção de dispositivos de fixação dedicados ou magnéticos e calibração das ponteiras/sensores.
-                        </li>
-                        <li>
-                            <strong>3. Ciclo de Medição & Relatório:</strong> Calcule o tempo de escaneamento/palpação por ciclo, repetibilidade exigida e elaboração do laudo final formalizado.
-                        </li>
-                    </ul>
-                </div>
-            )}
+                ) : carregando ? (
+                    <div className="estado-carregando-clean">
+                        <div className="spinner-clean"></div>
+                        <span>Consultando acervo de lições formalizadas...</span>
+                    </div>
+                ) : recomendacao ? (
+                    <>
+                        {/* CENÁRIO 1: SEM HISTÓRICO (0 Casos) */}
+                        {recomendacao.nivelConfianca === 'SEM_HISTORICO' && (
+                            <div className="secao-roteiro-clean">
+                                <p className="orientacao-texto-clean">{recomendacao.mensagemOrientacao}</p>
+                                <div className="checklist-passos">
+                                    <div className="passo-item">
+                                        <span className="passo-num">1</span>
+                                        <div className="passo-info">
+                                            <strong>Geometria & Tolerâncias</strong>
+                                            <p>Analise a quantidade de cotas críticas e alinhamento GD&T no desenho.</p>
+                                        </div>
+                                    </div>
+                                    <div className="passo-item">
+                                        <span className="passo-num">2</span>
+                                        <div className="passo-info">
+                                            <strong>Setup & Climatização</strong>
+                                            <p>Preveja estabilização térmica (20°C) e fixadores magnéticos/dedicados.</p>
+                                        </div>
+                                    </div>
+                                    <div className="passo-item">
+                                        <span className="passo-num">3</span>
+                                        <div className="passo-info">
+                                            <strong>Ciclo & Relatório</strong>
+                                            <p>Calcule tempo de apalpação/escaneamento e elaboração do laudo.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
-            {/* CENÁRIO 1 a 4 CASOS: Exibição Individual dos Casos Sem Faixa */}
-            {nivelConfianca === 'BAIXA' && casosBase.length > 0 && (
-                <div className="casos-individuais-bloco">
-                    <div className="subtitulo-secao">Casos Similares Encontrados no Acervo:</div>
-                    <div className="cards-casos-grid">
-                        {casosBase.map(c => (
-                            <div key={c.id} className="card-caso-simples">
-                                <div className="card-caso-head">
-                                    <span className="os-cod">{c.codigoOS}</span>
-                                    <span className={`desvio-pill ${c.desvioPercentual > 0 ? 'pos' : 'neg'}`}>
-                                        {c.desvioPercentual > 0 ? `+${c.desvioPercentual}%` : `${c.desvioPercentual}%`}
-                                    </span>
+                        {/* CENÁRIO 2: CONFIANÇA BAIXA (1 a 4 Casos) */}
+                        {recomendacao.nivelConfianca === 'BAIXA' && (
+                            <div className="secao-baixa-clean">
+                                <p className="orientacao-texto-clean">{recomendacao.mensagemOrientacao}</p>
+                                <div className="card-aviso-baixa">
+                                    <div className="aviso-icone">ℹ️</div>
+                                    <div className="aviso-conteudo">
+                                        <strong>Poucos registros prévios encontrados</strong>
+                                        <p>Para estimar com segurança, consulte os detalhes individuais dos casos similares.</p>
+                                    </div>
                                 </div>
-                                <div className="card-caso-body">
-                                    <div><strong>Horas Realizadas:</strong> {c.horasRealizadas}h (Orçado: {c.horasEstimadas}h)</div>
-                                    <div className="card-obs">{c.observacao}</div>
+                                <button
+                                    type="button"
+                                    className="btn-abrir-overlay-casos"
+                                    onClick={() => setModalCasosAberto(true)}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                    </svg>
+                                    <span>Visualizar os {recomendacao.casosBase.length} casos históricos</span>
+                                </button>
+                            </div>
+                        )}
+
+                        {/* CENÁRIO 3 & 4: CONFIANÇA MÉDIA / ALTA (5+ Casos) */}
+                        {(recomendacao.nivelConfianca === 'MEDIA' || recomendacao.nivelConfianca === 'ALTA') && (
+                            <div className="secao-estimativa-clean">
+                                {/* Destaque da Mediana */}
+                                <div className="bloco-mediana-destaque">
+                                    <div className="mediana-esquerda">
+                                        <span className="mediana-caption">Mediana Sugerida</span>
+                                        <div className="mediana-valor-linha">
+                                            <span className="mediana-num">{recomendacao.medianaHoras}</span>
+                                            <span className="mediana-unidade">horas</span>
+                                        </div>
+                                    </div>
+
+                                    {onAplicarHoras && (
+                                        <button
+                                            type="button"
+                                            className="btn-usar-mediana"
+                                            onClick={() => onAplicarHoras(recomendacao.medianaHoras)}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                 stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                            <span>Usar {recomendacao.medianaHoras}h</span>
+                                        </button>
+                                    )}
                                 </div>
+
+                                {/* Régua da Faixa Provável (Q1 a Q3) */}
+                                <div className="regua-faixa-container">
+                                    <div className="regua-labels">
+                                        <span className="regua-label-q">Mín. provável (Q1): <strong>{recomendacao.quartil1}h</strong></span>
+                                        <span className="regua-label-q">Máx. provável (Q3): <strong>{recomendacao.quartil3}h</strong></span>
+                                    </div>
+                                    <div className="regua-trilho">
+                                        <div className="regua-preenchimento"></div>
+                                        <div className="regua-marcador-mediana" title={`Mediana: ${recomendacao.medianaHoras}h`}></div>
+                                    </div>
+                                </div>
+
+                                {/* Fator de Correção (Apenas Alta Confiança) */}
+                                {recomendacao.nivelConfianca === 'ALTA' && (
+                                    <div className="tag-fator-correcao">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="12" y1="19" x2="12" y2="5"/>
+                                            <polyline points="5 12 12 5 19 12"/>
+                                        </svg>
+                                        <span>
+                                            Tendência histórica: <strong>+{Math.round((recomendacao.fatorCorrecao - 1) * 100)}% de esforço real</strong> vs. orçado.
+                                        </span>
+                                    </div>
+                                )}
+
+                                <p className="orientacao-texto-clean">{recomendacao.mensagemOrientacao}</p>
+
+                                {/* Botão para Abrir Card de Casos Sobreposto */}
+                                <div className="transparencia-clean">
+                                    <button
+                                        type="button"
+                                        className="btn-abrir-overlay-link"
+                                        onClick={() => setModalCasosAberto(true)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M15 3h6v6"/>
+                                            <path d="M10 14 21 3"/>
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                        </svg>
+                                        <span>Consultar os {recomendacao.casosBase.length} casos que geraram o cálculo</span>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </>
+                ) : null}
+            </div>
+
+            {/* CARD SOBREPOSTO DE CASOS HISTÓRICOS (OVERLAY CARD) */}
+            {modalCasosAberto && recomendacao && recomendacao.casosBase.length > 0 && (
+                <div className="card-sobreposto-casos">
+                    {/* Header do Card Sobreposto */}
+                    <div className="sobreposto-header">
+                        <div className="sobreposto-titulo-area">
+                            <span className="sobreposto-titulo">
+                                Casos Históricos de Referência ({recomendacao.casosBase.length})
+                            </span>
+                            <span className="sobreposto-subtitulo">
+                                {tipoServicoNome || 'Serviços'} • Lições formalizadas no encerramento
+                            </span>
+                        </div>
+                        <button
+                            type="button"
+                            className="btn-fechar-sobreposto"
+                            onClick={() => setModalCasosAberto(false)}
+                            title="Voltar ao Assistente"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {/* Lista com scroll dos casos */}
+                    <div className="sobreposto-lista-casos">
+                        {recomendacao.casosBase.map((c) => (
+                            <div key={c.id} className="card-caso-detalhe">
+                                <div className="caso-detalhe-topo">
+                                    <span className="os-badge">{c.codigoOS}</span>
+                                    <div className="caso-badges-right">
+                                        <span className={`pill-desvio-clean ${c.desvioPercentual > 0 ? 'pos' : 'neg'}`}>
+                                            {c.desvioPercentual > 0 ? `+${c.desvioPercentual}%` : `${c.desvioPercentual}%`}
+                                        </span>
+                                        <span className="data-conclusao">{c.dataConclusao}</span>
+                                    </div>
+                                </div>
+
+                                <div className="caso-metricas-row">
+                                    <div className="metrica-item">
+                                        <span className="m-label">Orçado:</span>
+                                        <span className="m-val">{c.horasEstimadas}h</span>
+                                    </div>
+                                    <div className="metrica-item destaque">
+                                        <span className="m-label">Realizado:</span>
+                                        <span className="m-val">{c.horasRealizadas}h</span>
+                                    </div>
+                                    <div className="metrica-item">
+                                        <span className="m-label">Faturado:</span>
+                                        <span className="m-val">R$ {c.valorFaturado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                    </div>
+                                </div>
+
+                                {c.observacao && (
+                                    <div className="caso-licao-box">
+                                        <span className="licao-tag">Lição / Observação:</span>
+                                        <p className="licao-texto">{c.observacao}</p>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
-                </div>
-            )}
 
-            {/* CENÁRIO 5+ CASOS: Faixa Provável (Quartis e Mediana) */}
-            {(nivelConfianca === 'MEDIA' || nivelConfianca === 'ALTA') && (
-                <div className="faixas-metricas-grid">
-                    <div className="metrica-box quartil">
-                        <span className="metrica-label">Quartil 1 (Q1)</span>
-                        <span className="metrica-valor">{quartil1}h</span>
-                        <span className="metrica-sub">Limite Mínimo Provável</span>
-                    </div>
-
-                    <div className="metrica-box mediana-destaque">
-                        <span className="metrica-label">Mediana Histórica</span>
-                        <span className="metrica-valor">{medianaHoras}h</span>
-                        <span className="metrica-sub">Tendência Central</span>
-                        {onAplicarHoras && (
-                            <button
-                                type="button"
-                                className="btn-aplicar-horas"
-                                onClick={() => onAplicarHoras(medianaHoras)}
-                                title="Preencher Horas Estimadas com a Mediana Histórica"
-                            >
-                                Aplicar {medianaHoras}h
-                            </button>
-                        )}
-                    </div>
-
-                    <div className="metrica-box quartil">
-                        <span className="metrica-label">Quartil 3 (Q3)</span>
-                        <span className="metrica-valor">{quartil3}h</span>
-                        <span className="metrica-sub">Limite Superior Provável</span>
-                    </div>
-
-                    {/* Exibe Fator de Correção APENAS se Confiança Alta (>= 15 casos) */}
-                    {nivelConfianca === 'ALTA' && (
-                        <div className="metrica-box fator-correcao">
-                            <span className="metrica-label">Fator de Correção</span>
-                            <span className="metrica-valor">{fatorCorrecao}x</span>
-                            <span className="metrica-sub">
-                                {fatorCorrecao > 1
-                                    ? `+${Math.round((fatorCorrecao - 1) * 100)}% de Esforço Real`
-                                    : 'Aderência Estável'}
-                            </span>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            {/* Transparência Total: Botão Expansor de Casos Passados */}
-            {casosBase.length > 0 && (
-                <div className="transparencia-secao">
-                    <button
-                        type="button"
-                        className="btn-expansor-casos"
-                        onClick={() => setTabelaExpandida(!tabelaExpandida)}
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className={`chevron-icon ${tabelaExpandida ? 'aberto' : ''}`}
+                    {/* Footer do Card Sobreposto */}
+                    <div className="sobreposto-footer">
+                        <button
+                            type="button"
+                            className="btn-fechar-rodape"
+                            onClick={() => setModalCasosAberto(false)}
                         >
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
-                        <span>
-                            {tabelaExpandida
-                                ? 'Ocultar casos que compuseram esta estimativa'
-                                : `Ver histórico completo de casos formalizados (${casosBase.length})`}
-                        </span>
-                    </button>
-
-                    {tabelaExpandida && (
-                        <div className="tabela-casos-wrapper">
-                            <table className="tabela-casos-base">
-                                <thead>
-                                    <tr>
-                                        <th>Código OS</th>
-                                        <th>Tipo Serviço</th>
-                                        <th>Horas Orçadas</th>
-                                        <th>Horas Reais</th>
-                                        <th>Desvio</th>
-                                        <th>Valor Faturado</th>
-                                        <th>Conclusão</th>
-                                        <th>Aprendizado / Observação</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {casosBase.map(c => (
-                                        <tr key={c.id}>
-                                            <td className="col-codigo">{c.codigoOS}</td>
-                                            <td>{c.tipoServico}</td>
-                                            <td>{c.horasEstimadas}h</td>
-                                            <td className="col-reais">{c.horasRealizadas}h</td>
-                                            <td>
-                                                <span className={`pill-desvio ${c.desvioPercentual > 0 ? 'pos' : 'neg'}`}>
-                                                    {c.desvioPercentual > 0 ? `+${c.desvioPercentual}%` : `${c.desvioPercentual}%`}
-                                                </span>
-                                            </td>
-                                            <td>R$ {c.valorFaturado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                                            <td>{c.dataConclusao}</td>
-                                            <td className="col-obs">{c.observacao || '—'}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+                            Voltar ao Assistente
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
