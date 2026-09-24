@@ -8,7 +8,7 @@
       "optica": "Inspeção Óptica & Multissensor",
       "raioX": "Inspeção por Raio-X (NDT)",
       "scan3d": "Digitalização Óptica 3D",
-      "reverseEng": "Engenharia Reversa & CAD",
+      "reverseEng": "Engenharia Reversa & Prototipagem",
       "mro": "Confiabilidade & Almoxarifado MRO"
     },
     "contact": "Contato",
@@ -207,7 +207,7 @@
     "leadership": {
       "subtitle": "Chancela Institucional",
       "title": "A visão dos realizadores da aliança",
-      "description": "Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a produtividade e competitividade fabril.",
+      "description": "Compromisso firmado entre o Sistema Indústria e a multinacional Carl Zeiss com a produtividade e a precisão metrológica.",
       "quotes": {
         "mabel": {
           "quote": "“A implantação do primeiro Centro de Excelência da Carl Zeiss no Brasil é um marco histórico. A iniciativa visa impulsionar a formação profissional, além de promover o avanço em pesquisa, desenvolvimento e inovação, atendendo às crescentes demandas da indústria nacional por inovação e precisão.”",
@@ -579,26 +579,29 @@
         ]
       },
       "engenharia-reversa": {
-        "title": "Engenharia Reversa, Reconstrução CAD & Nacionalização",
-        "headline": "Transformação de dados escaneados em sólidos paramétricos prontos para usinagem e fabricação nacional.",
-        "overview": "Processo completo de engenharia para reconstruir o modelo digital tridimensional de peças físicas que não possuem desenho técnico original, estão desgastadas, são importadas ou sofreram modificações empíricas de ferramentaria. Abrange desde a modelagem paramétrica precisa até o desenvolvimento e viabilização da nacionalização de componentes.",
+        "title": "Engenharia Reversa, Nacionalização & Prototipagem",
+        "headline": "Transformação de dados escaneados em sólidos paramétricos com validação por prototipagem rápida antes da fabricação final.",
+        "overview": "Processo completo de engenharia para reconstruir o modelo digital tridimensional de peças físicas que não possuem desenho técnico original, estão desgastadas, são importadas ou sofreram modificações de campo. Abrange desde a modelagem paramétrica precisa até a validação prévia por protótipo impresso em 3D e a viabilização da nacionalização de componentes.",
         "targetAudience": [
           "Manutenção industrial com necessidade de reposição de peças obsoletas e nacionalização de importados",
           "Empresas de mineração, agroindústria e energia com maquinário importado e lead time crítico",
-          "Desenvolvedores de produtos e protótipos de alta performance",
-          "Fabricantes de moldes e matrizes que precisam recuperar geometrias originais ou aprimoradas"
+          "Desenvolvedores de produtos mecânicos e protótipos de alta performance",
+          "Fabricantes de moldes e matrizes que precisam recuperar geometrias originais ou aprimoradas",
+          "Engenharias que necessitam de validação física prévia de montagem e folgas antes da usinagem"
         ],
         "applications": [
           "Modelagem CAD a partir de malhas poligonais (Mesh to CAD)",
           "Nacionalização e desenvolvimento de componentes para substituição de importações",
           "Recuperação de peças quebradas com reconstrução das partes ausentes",
           "Adaptação geométrica para modernização e melhoria de desempenho fabril",
+          "Prototipagem rápida aditiva para prova de conceito, teste de montagem e validação dimensional",
           "Extração de perfis, seções 2D e árvores de construção paramétricas"
         ],
         "deliverables": [
           "Modelos sólidos e de superfícies paramétricos em formatos STEP, IGES ou Parasolid",
           "Desenhos técnicos 2D em PDF e DWG com toleranciamento de fabricação",
           "Relatório de desvio de reconstrução comparando o CAD gerado com a malha real",
+          "Protótipo físico em manufatura aditiva 3D para validação geométrica de encaixe (sob demanda)",
           "Caderno de engenharia para viabilização de fabricação nacional"
         ],
         "machines": [
@@ -619,7 +622,7 @@
       "confiabilidade-mro": {
         "title": "Confiabilidade, Almoxarifado Virtual MRO & Capacitação Técnica",
         "headline": "Gestão estratégica de peças sobressalentes, árvore de ativos e confiabilidade operacional para a indústria.",
-        "overview": "Soluções integradas de engenharia de confiabilidade e prontidão digital para transformar a gestão de manutenção industrial (MRO). A partir da estruturação minuciosa de árvores de equipamentos e da aplicação de matrizes analíticas de criticidade e recorrência, identificamos artigos críticos de nível A com baixa recorrência de demanda, viabilizando sua catalogação digital no almoxarifado virtual para reposição ágil sob demanda sem o alto custo de estoque físico imobilizado. A frente contempla ainda a elaboração de planos de manutenção e lubrificação sob rigor tribológico, diagnóstico metalomecânico de falhas e capacitação técnica especializada com metodologia SENAI e tecnologia ZEISS.",
+        "overview": "Soluções para a gestão de MRO, estruturação de árvores de equipamentos, aplicação de matrizes de criticidade e recorrência, catalogação em almoxarifado virtual, elaboração de planos de manutenção e lubrificação e capacitação técnica especializada com metodologia SENAI e tecnologia ZEISS.",
         "trainingDirectNotice": "Aviso para Treinamentos Técnicos: Para solicitações de treinamentos técnicos nas áreas de metrologia, engenharia reversa, manutenção, lubrificação e análise de falhas, solicitamos entrar em contato diretamente com a coordenação do laboratório (via telefone, WhatsApp ou e-mail), facilitando o alinhamento do ensino e cronograma.",
         "subServices": [
           {

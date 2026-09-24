@@ -11,7 +11,10 @@ export function Services() {
     const {t} = useTranslation();
     const navigate = useNavigate();
 
-    const DuraMaxImages: CarouselImage[] = [{src: '/images/DuraMax1.jpg', alt: 'DuraMax'}, {
+    const DuraMaxImages: CarouselImage[] = [{
+        src: '/images/DuraMax1.jpg',
+        alt: 'DuraMax'
+    }, {
         src: '/images/DuraMax2.jpg',
         alt: 'DuraMax',
         objectPosition: 'center 70%'
@@ -38,7 +41,10 @@ export function Services() {
     const ReverseEngineeringImages: CarouselImage[] = [{
         src: '/images/ZRE1.png',
         alt: 'Engenharia Reversa'
-    }, {src: '/images/ZRE2.png', alt: 'Engenharia Reversa'},];
+    }, {
+        src: '/images/Impressao-3d.jpg',
+        alt: 'Prototipagem'
+    }];
 
     return (
         <div className="services-page">

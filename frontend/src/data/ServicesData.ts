@@ -72,7 +72,9 @@ export const servicesData: Record<string, ServiceMeta> = {
         id: 'engenharia-reversa',
         galleryImages: [
             { src: '/images/ZRE1.png', alt: 'Estação de Engenharia Reversa' },
-            { src: '/images/ZRE2.png', alt: 'Estação de Engenharia Reversa' }
+            { src: '/images/Impressao-3d.jpg', alt: 'Prototipagem', objectPosition: 'center 45%' },
+            { src: '/images/ZRE2.png', alt: 'Estação de Engenharia Reversa' },
+
         ]
     },
 

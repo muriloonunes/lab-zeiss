@@ -8,7 +8,7 @@
       "optica": "Optical & Multisensor Inspection",
       "raioX": "X-Ray Inspection (NDT)",
       "scan3d": "3D Optical Digitization",
-      "reverseEng": "Reverse Engineering & CAD",
+      "reverseEng": "Reverse Engineering & Prototyping",
       "mro": "Reliability & Virtual MRO Warehouse"
     },
     "contact": "Contact",
@@ -207,7 +207,7 @@
     "leadership": {
       "subtitle": "Institutional Endorsement",
       "title": "The vision behind the alliance",
-      "description": "A joint commitment between the Brazilian Industry System and multinational Carl Zeiss to boost manufacturing productivity and competitiveness.",
+      "description": "A joint commitment between the Brazilian Industry System and multinational Carl Zeiss to boost manufacturing productivity and metrological precision.",
       "quotes": {
         "mabel": {
           "quote": "“The establishment of Carl Zeiss’s first Center of Excellence in Brazil is a historic milestone. This initiative is designed to drive professional qualification while advancing research, development, and innovation to meet the Brazilian industry’s growing demand for precision and cutting-edge solutions.”",
@@ -579,26 +579,29 @@
         ]
       },
       "engenharia-reversa": {
-        "title": "Reverse Engineering, CAD Reconstruction & Local Manufacturing",
-        "headline": "Transforming raw scan data into production-ready parametric solid models for local manufacturing.",
-        "overview": "End-to-end engineering workflow to reconstruct 3D CAD models from physical parts lacking original drawings, exhibiting mechanical wear, or requiring domestic manufacturing substitution. Encompasses precision parametric modeling, optimization, and full technical documentation for component localization.",
+        "title": "Reverse Engineering, Local Manufacturing & 3D Prototyping",
+        "headline": "Transforming scanned data into parametric solids with rapid prototyping validation prior to final manufacturing.",
+        "overview": "End-to-end engineering process to reconstruct 3D digital models from physical parts lacking technical documentation, showing operational wear, or requiring domestic sourcing. Covers accurate parametric modeling, fit-and-function validation through 3D printed prototypes, and full production feasibility planning.",
         "targetAudience": [
           "Industrial plant maintenance needing replacement of obsolete legacy parts and localization of imports",
           "Mining, agribusiness, and energy operations with imported heavy machinery facing long lead times",
-          "High-performance product and prototype developers",
-          "Tool and mold manufacturers needing original or improved geometry recovery"
+          "Mechanical product designers and developers of high-performance prototypes",
+          "Tool and mold manufacturers needing original or improved geometry recovery",
+          "Engineering teams requiring physical assembly and clearance validation prior to CNC machining"
         ],
         "applications": [
           "Parametric CAD modeling from polygon meshes (Mesh to CAD)",
           "Localization and development of imported components for domestic sourcing",
           "Recovery of worn or broken components with missing geometry reconstruction",
           "Geometric adaptation for modernization and operational efficiency upgrades",
+          "Additive rapid prototyping for proof of concept, fit-up checks, and dimensional validation",
           "Extraction of design intents, 2D cross-sections, and parametric feature trees"
         ],
         "deliverables": [
           "Parametric solid and surface CAD models in STEP, IGES, or Parasolid formats",
           "2D manufacturing technical drawings in PDF and DWG with GD&T",
           "CAD deviation report comparing reconstructed model against measured scan mesh",
+          "3D-printed physical prototype for fit-and-clearance geometric verification (on demand)",
           "Engineering dossier to support domestic manufacturing feasibility"
         ],
         "machines": [
@@ -612,6 +615,7 @@
             "features": [
               "Automatic surface segmentation for regular geometric entities (planes, cylinders, cones)",
               "Precision freeform surface fitting with real-time residual deviation control",
+              "Direct generation and export of clean meshes optimized for 3D slicing and printing",
               "Native export compatibility with SolidWorks, Siemens NX, CATIA, and Autodesk Inventor"
             ]
           }
@@ -620,7 +624,7 @@
       "confiabilidade-mro": {
         "title": "Reliability, Virtual MRO Warehouse & Technical Training",
         "headline": "Strategic spare parts management, asset tree structuring, and operational reliability for industry.",
-        "overview": "Integrated reliability engineering and digital readiness solutions designed to transform industrial maintenance management (MRO). Through rigorous equipment asset tree structuring and analytical criticality and recurrence matrices, we identify critical Class A items with low demand recurrence, enabling their digital cataloging in virtual warehouses for rapid on-demand replacement without the prohibitive carrying costs of idle physical stock. This domain also encompasses tribology-driven maintenance and lubrication schedules, failure root cause diagnostics, and specialized technical qualification backed by SENAI methodology and ZEISS technology.",
+        "overview": "Solutions for MRO management, equipment tree structuring, application of criticality and recurrence matrices, virtual warehouse cataloging, development of maintenance and lubrication plans, and specialized technical training using the SENAI methodology and ZEISS technology.",
         "trainingDirectNotice": "Notice for Technical Training: For technical training proposals, professional development, or corporate in-company classes (in metrology, reverse engineering, maintenance, lubrication, and failure analysis), we recommend reaching out directly to laboratory management via phone, WhatsApp, or email for streamlined syllabus alignment and scheduling.",
         "subServices": [
           {

@@ -8,7 +8,7 @@
       "optica": "Optische & Multisensor-Prüfung",
       "raioX": "Röntgenprüfung (ZfP)",
       "scan3d": "Optische 3D-Digitalisierung",
-      "reverseEng": "Reverse Engineering & CAD",
+      "reverseEng": "Reverse Engineering & Prototyping",
       "mro": "Zuverlässigkeit & Virtuelles MRO-Lager"
     },
     "contact": "Kontakt",
@@ -207,7 +207,7 @@
     "leadership": {
       "subtitle": "Institutionelle Schirmherrschaft",
       "title": "Die Vision der Initiatoren dieser Allianz",
-      "description": "Gemeinsames Bekenntnis zwischen dem brasilianischen Industriesystem und dem Technologiekonzern Carl Zeiss zu industrieller Produktivität und Wettbewerbsfähigkeit.",
+      "description": "Gemeinsames Bekenntnis zwischen dem brasilianischen Industriesystem und dem Technologiekonzern Carl Zeiss zu industrieller Produktivität und metrologischer Präzision.",
       "quotes": {
         "mabel": {
           "quote": "„Die Errichtung des ersten Carl-Zeiss-Exzellenzzentrums in Brasilien ist ein historischer Meilenstein. Die Initiative zielt darauf ab, die berufliche Weiterbildung voranzutreiben sowie Spitzenforschung, Entwicklung und Innovation zu fördern – und damit die wachsende Nachfrage der heimischen Industrie nach Präzision und Spitzentechnologie zu erfüllen.“",
@@ -579,26 +579,29 @@
         ]
       },
       "engenharia-reversa": {
-        "title":"Reverse Engineering, CAD-Flächenrückführung & Inlandsfertigung",
-        "headline": "Umwandlung von 3D-Scandaten in fertigungsgerechte parametrische CAD-Volumenmodelle für die Inlandsfertigung.",
-        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung und Dokumentation.",
+        "title": "Reverse Engineering, Inlandsfertigung & 3D-Prototyping",
+        "headline": "Umwandlung von 3D-Scandaten in parametrische CAD-Volumenmodelle mit Absicherung durch Rapid Prototyping vor der Endfertigung.",
+        "overview": "Durchgängiger Ingenieurprozess zur Rekonstruktion digitaler 3D-Modelle anhand realer Bauteile, für die keine Originalzeichnungen vorliegen, die mechanischen Verschleiß aufweisen oder zur Vermeidung von Importabhängigkeiten lokal gefertigt werden sollen. Umfasst präzise parametrische Modellierung, Vorab-Validierung über 3D-gedruckte Funktionsprototypen und die fertigungstechnische Auslegung.",
         "targetAudience": [
           "Industrielle Instandhaltung mit Bedarf an Ersatzteilen für Altanlagen und Lokalisierung von Importteilen",
           "Bergbau-, Agrar- und Energieunternehmen mit importierten Maschinenkomponenten und langen Lieferzeiten",
-          "Entwickler von Hochleistungsprodukten und Prototypen",
-          "Formen- und Gesenkhersteller zur Wiederherstellung oder Optimierung von Ursprungsgeometrien"
+          "Entwickler von mechanischen Produkten und hochbelastbaren Prototypen",
+          "Formen- und Gesenkhersteller zur Wiederherstellung oder Optimierung von Ursprungsgeometrien",
+          "Konstruktionsteams, die vor der Zerspanung eine physische Montage- und Freigangsprüfung benötigen"
         ],
         "applications": [
           "Parametrische CAD-Modellierung aus Polygonnetzen (Mesh to CAD)",
           "Lokalisierung und Entwicklung importierter Komponenten für die Inlandsfertigung",
           "Instandsetzung beschädigter Bauteile durch Rekonstruktion fehlender Geometrien",
           "Geometrische Anpassung zur Modernisierung und Leistungssteigerung",
+          "Additive Prototypenfertigung für Machbarkeitsnachweise, Montageprüfungen und Maßkontrollen",
           "Ableitung von Konstruktionsabsichten, 2D-Schnittprofilen und parametrischen Konstruktionsbäumen"
         ],
         "deliverables": [
           "Parametrische Volumen- und Flächen-CAD-Modelle in STEP-, IGES- oder Parasolid-Formaten",
           "Technische 2D-Fertigungszeichnungen in PDF und DWG mit Form- und Lagetoleranzen",
           "CAD-Abweichungsbericht zum Soll-Ist-Vergleich zwischen rekonstruiertem CAD und realem Scan",
+          "Additiv gefertigter physischer 3D-Prototyp zur geometrischen Einbauprüfung (auf Anfrage)",
           "Technisches Dossier zur Absicherung der Fertigungsumsetzung"
         ],
         "machines": [
@@ -612,6 +615,7 @@
             "features": [
               "Automatische Segmentierung von Regelgeometrien (Ebenen, Zylinder, Kegel)",
               "Präzise Freiformflächenanpassung mit numerischer Restfehlerüberwachung",
+              "Direkte Generierung und Ausgabe optimierter Netze für Slicing und 3D-Druck",
               "Nativer CAD-Export kompatibel mit SolidWorks, Siemens NX, CATIA und Autodesk Inventor"
             ]
           }
@@ -620,7 +624,7 @@
       "confiabilidade-mro": {
         "title": "Zuverlässigkeit, Virtuelles MRO-Lager & Technische Fachschulungen",
         "headline": "Strategisches Ersatzteilmanagement, Anlagenbäume und betriebliche Zuverlässigkeit für die Industrie.",
-        "overview": "Integrierte Lösungen für Zuverlässigkeitstechnik und digitale Bereitschaft zur Transformation der industriellen Instandhaltung (MRO). Durch die systematische Strukturierung von Anlagenbäumen und die Anwendung analytischer Kritizitäts- und Wiederholungsmatrizen identifizieren wir kritische Klasse-A-Artikel mit geringer Bedarfshäufigkeit und erfassen diese digital im virtuellen Lager für die zügige bedarfsgerechte Fertigung – ohne kostspieliges gebundenes Lagerkapital. Der Bereich umfasst zudem tribologisch fundierte Instandhaltungs- und Schmierpläne, metallmechanische Schadensdiagnostik und spezialisierte Weiterbildung mit SENAI-Methodik und ZEISS-Technologie.",
+        "overview": "Lösungen für das MRO-Management, die Strukturierung von Anlagenbaumstrukturen, die Anwendung von Kritikalitäts- und Wiederkehrmatrizen, die Katalogisierung in einem virtuellen Lager, die Entwicklung von Wartungs- und Schmierplänen sowie spezialisierte technische Schulungen unter Verwendung der SENAI-Methodik und der ZEISS-Technologie",
         "trainingDirectNotice": "Hinweis für Fachschulungen: Für Schulungsanfragen, Fachausbildungen oder firmeninterne Inhouse-Schulungen (in Messtechnik, Reverse Engineering, Instandhaltung, Schmierung und Schadensanalyse) empfehlen wir, direkt mit der Laborleitung (telefonisch, per WhatsApp oder E-Mail) Kontakt aufzunehmen.",
         "subServices": [
           {

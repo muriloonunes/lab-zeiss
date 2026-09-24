@@ -27,19 +27,19 @@ export function HomeServices() {
             id: 'prototyping',
             title: t('home.services.items.prototyping.title'),
             description: t('home.services.items.prototyping.description'),
-            link: '/servicos/digitalizacao-3d',
+            link: '/servicos/engenharia-reversa',
         },
         {
             id: 'mro',
             title: t('home.services.items.mro.title'),
             description: t('home.services.items.mro.description'),
-            link: '/servicos',
+            link: '/servicos/confiabilidade-mro',
         },
         {
             id: 'training',
             title: t('home.services.items.training.title'),
             description: t('home.services.items.training.description'),
-            link: '/servicos',
+            link: '/servicos/confiabilidade-mro',
         },
     ];
 
