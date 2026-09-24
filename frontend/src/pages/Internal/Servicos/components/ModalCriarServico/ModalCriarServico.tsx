@@ -361,15 +361,17 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 />
                             </div>
 
-                            {/* Linha com os 3 campos de estimativas lado a lado */}
                             <div className="form-row-3">
-                                <div className="form-group">
-                                    <label>Horas Estimadas *</label>
+                                <div className={`form-group ${desvioAssistenteDetectado ? 'campo-com-desvio' : ''}`}>
+                                    <div className="label-row-compact">
+                                        <label>Horas Estimadas *</label>
+                                    </div>
                                     <input
                                         type="number"
                                         step="0.5"
                                         min="0.5"
                                         value={horasEstimadas}
+                                        className={desvioAssistenteDetectado ? 'input-alerta-desvio' : ''}
                                         onChange={(e) => setHorasEstimadas(e.target.value === '' ? '' : Number(e.target.value))}
                                         placeholder="Ex: 18.5"
                                     />
@@ -400,30 +402,18 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 </div>
                             </div>
 
-                            {/* Alerta de Desvio da Faixa Sugerida */}
-                            {desvioAssistenteDetectado && (
-                                <div className="alerta-desvio-assistente full-width">
-                                    <div className="alerta-desvio-icon">⚠️</div>
-                                    <div className="alerta-desvio-texto">
-                                        <strong>Horas fora da faixa provável sugerida ({recomendacaoAtual?.quartil1}h - {recomendacaoAtual?.quartil3}h).</strong>
-                                        <p>
-                                            Para registrar esforço discrepante da mediana histórica, o preenchimento da <strong>Justificativa Técnica de Desvio</strong> é obrigatório.
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Justificativa de Desvio (Obrigatória se desvioAssistenteDetectado) */}
+                            {/* Justificativa de Desvio Integrada (Obrigatória se desvioAssistenteDetectado) */}
                             {(desvioAssistenteDetectado || justificativaDesvioAssistente) && (
-                                <div className="form-group full-width justificativa-destaque">
-                                    <label>
-                                        Justificativa Técnica do Desvio {desvioAssistenteDetectado ? '*' : '(Opcional)'}
-                                    </label>
+                                <div className="form-group full-width justificativa-destaque-clean">
+                                    <div className="label-row-compact">
+                                        <label>Justificativa Técnica do Desvio *</label>
+                                        <span className="justificativa-hint-sub">Obrigatória para horas fora da faixa recomendada</span>
+                                    </div>
                                     <textarea
                                         rows={2}
                                         value={justificativaDesvioAssistente}
                                         onChange={(e) => setJustificativaDesvioAssistente(e.target.value)}
-                                        placeholder="Explique tecnicamente por que o esforço desta OS difere da faixa histórica recomendada..."
+                                        placeholder="Explique tecnicamente por que o esforço desta OS difere da faixa histórica sugerida..."
                                     />
                                 </div>
                             )}
@@ -449,6 +439,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             tipoServicoNome={tipoServicoNomeSelecionado}
                             caracteristicasIds={caracteristicasPecaIds}
                             caracteristicasNomes={caracteristicasNomesSelecionadas}
+                            horasInformadas={horasEstimadas}
                             onAplicarHoras={(horas) => setHorasEstimadas(horas)}
                             onRecomendacaoAtualizada={setRecomendacaoAtual}
                         />

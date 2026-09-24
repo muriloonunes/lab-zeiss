@@ -440,6 +440,83 @@
         }
       }
 
+      /* Card de Feedback de Horas Informadas */
+      .card-feedback-horas {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.55rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.73rem;
+
+        .feedback-horas-head {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+
+          .feedback-horas-icon {
+            font-size: 0.85rem;
+            line-height: 1;
+          }
+
+          strong {
+            font-size: 0.75rem;
+          }
+
+          .badge-tag-desvio {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.05rem 0.35rem;
+            border-radius: 4px;
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            margin-left: auto;
+          }
+
+          .badge-tag-alinhado {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.05rem 0.35rem;
+            border-radius: 4px;
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            margin-left: auto;
+          }
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.7rem;
+          line-height: 1.35;
+        }
+
+        &.desvio {
+          background: #fffdf7;
+          border: 1px solid #fde68a;
+          color: #78350f;
+
+          strong {
+            color: #92400e;
+          }
+
+          p {
+            color: #b45309;
+          }
+        }
+
+        &.alinhado {
+          background: #f0fdf4;
+          border: 1px solid #bbf7d0;
+          color: #166534;
+
+          strong {
+            color: #14532d;
+          }
+        }
+      }
+
       /* Link para abrir o Card Sobreposto */
       .transparencia-clean {
         margin-top: 0.2rem;

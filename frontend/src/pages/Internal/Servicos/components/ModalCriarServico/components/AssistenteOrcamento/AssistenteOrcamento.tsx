@@ -12,6 +12,7 @@ export interface AssistenteOrcamentoProps {
     tipoServicoNome?: string;
     caracteristicasIds: number[];
     caracteristicasNomes?: string[];
+    horasInformadas?: number | '';
     onAplicarHoras?: (horas: number) => void;
     onRecomendacaoAtualizada?: (recomendacao: RecomendacaoOrcamento) => void;
 }
@@ -21,6 +22,7 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
     tipoServicoNome = '',
     caracteristicasIds,
     caracteristicasNomes = [],
+    horasInformadas = '',
     onAplicarHoras,
     onRecomendacaoAtualizada
 }) => {
@@ -256,6 +258,32 @@ export const AssistenteOrcamento: React.FC<AssistenteOrcamentoProps> = ({
                                             Tendência histórica: <strong>+{Math.round((recomendacao.fatorCorrecao - 1) * 100)}% de esforço real</strong> vs. orçado.
                                         </span>
                                     </div>
+                                )}
+
+                                {/* Feedback Reativo às Horas Informadas no Formulário */}
+                                {horasInformadas !== '' && (
+                                    <>
+                                        {(Number(horasInformadas) < recomendacao.quartil1 || Number(horasInformadas) > recomendacao.quartil3) ? (
+                                            <div className="card-feedback-horas desvio">
+                                                <div className="feedback-horas-head">
+                                                    <span className="feedback-horas-icon">⚠️</span>
+                                                    <strong>{horasInformadas}h informadas</strong>
+                                                    <span className="badge-tag-desvio">Fora da faixa</span>
+                                                </div>
+                                                <p>
+                                                    Diverge da faixa provável ({recomendacao.quartil1}h - {recomendacao.quartil3}h). A justificativa técnica é obrigatória para salvar.
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div className="card-feedback-horas alinhado">
+                                                <div className="feedback-horas-head">
+                                                    <span className="feedback-horas-icon">✓</span>
+                                                    <strong>{horasInformadas}h informadas</strong>
+                                                    <span className="badge-tag-alinhado">Alinhado à faixa histórica</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
 
                                 <p className="orientacao-texto-clean">{recomendacao.mensagemOrientacao}</p>
