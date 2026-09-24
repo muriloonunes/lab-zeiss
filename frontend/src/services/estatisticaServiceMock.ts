@@ -1,22 +1,19 @@
-/**
- * Serviço de Mock para Estatísticas e Assistente de Orçamento (Laboratório SENAI/ZEISS)
- * 
- * Simula os cálculos de inteligência histórica e estatísticas enquanto o backend
- * finaliza os módulos matemáticos definitivos.
- */
+import { listarServicos } from './servicoService';
+import { RegistroServico } from '../types/servico';
 
 export type NivelConfianca = 'SEM_HISTORICO' | 'BAIXA' | 'MEDIA' | 'ALTA';
 
 export interface CasoBase {
     id: number;
     codigoOS: string;
-    tipoServico?: string;
+    tipoServico: string;
     horasEstimadas: number;
     horasRealizadas: number;
     desvioPercentual: number;
     valorFaturado: number;
     dataConclusao: string;
     observacao?: string;
+    caracteristicas?: string[];
 }
 
 export interface RecomendacaoOrcamento {
@@ -25,9 +22,10 @@ export interface RecomendacaoOrcamento {
     medianaHoras: number;
     quartil1: number;
     quartil3: number;
-    fatorCorrecao: number; // Ex: 1.15 representa +15% de esforço observado
+    fatorCorrecao: number; // Ex: 1.15 representa +15% de esforço real observado
     mensagemOrientacao: string;
     casosBase: CasoBase[];
+    modoDemoAtivo: boolean;
 }
 
 export interface IndicadoresDashboard {
@@ -56,48 +54,170 @@ export interface DadosDashboard {
     indicadores: IndicadoresDashboard;
     historicoMensal: HistoricoMensalHoras[];
     causasFrequentes: CausaDesvioFrequente[];
+    modoDemoAtivo: boolean;
 }
 
-const CASOS_MOCK_COMPLETOS: CasoBase[] = [
-    { id: 101, codigoOS: 'OS-2025-012', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3800, dataConclusao: '2025-11-10', observacao: 'Geometria complexa exigiu fixações auxiliares' },
-    { id: 102, codigoOS: 'OS-2025-019', horasEstimadas: 20, horasRealizadas: 23.0, desvioPercentual: 15.0, valorFaturado: 4500, dataConclusao: '2025-11-24', observacao: 'Calibração prévia do apalpador necessária' },
-    { id: 103, codigoOS: 'OS-2025-027', horasEstimadas: 14, horasRealizadas: 16.0, desvioPercentual: 14.3, valorFaturado: 3200, dataConclusao: '2025-12-05', observacao: 'Variação térmica no laboratório durante medição longa' },
-    { id: 104, codigoOS: 'OS-2025-034', horasEstimadas: 18, horasRealizadas: 21.0, desvioPercentual: 16.7, valorFaturado: 4100, dataConclusao: '2025-12-18', observacao: 'Rugosidade superficial gerou incerteza nos pontos de contato' },
-    { id: 105, codigoOS: 'OS-2026-003', horasEstimadas: 22, horasRealizadas: 25.5, desvioPercentual: 15.9, valorFaturado: 5100, dataConclusao: '2026-01-12', observacao: 'Setup complexo na placa magnética' },
-    { id: 106, codigoOS: 'OS-2026-008', horasEstimadas: 15, horasRealizadas: 17.5, desvioPercentual: 16.7, valorFaturado: 3500, dataConclusao: '2026-01-20', observacao: 'Alinhamento por 3 planos em peça flexível' },
-    { id: 107, codigoOS: 'OS-2026-015', horasEstimadas: 16, horasRealizadas: 18.0, desvioPercentual: 12.5, valorFaturado: 3700, dataConclusao: '2026-02-02', observacao: 'Rotina de medição automatizada CNC' },
-    { id: 108, codigoOS: 'OS-2026-021', horasEstimadas: 19, horasRealizadas: 22.0, desvioPercentual: 15.8, valorFaturado: 4400, dataConclusao: '2026-02-14', observacao: 'Necessário criar ponta especial estrela' },
-    { id: 109, codigoOS: 'OS-2026-029', horasEstimadas: 17, horasRealizadas: 19.5, desvioPercentual: 14.7, valorFaturado: 3950, dataConclusao: '2026-02-28', observacao: 'Desvio de forma em superfície livre' },
-    { id: 110, codigoOS: 'OS-2026-033', horasEstimadas: 24, horasRealizadas: 28.0, desvioPercentual: 16.7, valorFaturado: 5600, dataConclusao: '2026-03-05', observacao: 'Peça de grande porte exigiu reposicionamento' },
-    { id: 111, codigoOS: 'OS-2026-039', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3850, dataConclusao: '2026-03-12', observacao: 'Ajuste de filtros gaussianos no software ZEISS Calypso' },
-    { id: 112, codigoOS: 'OS-2026-042', horasEstimadas: 18, horasRealizadas: 20.5, desvioPercentual: 13.9, valorFaturado: 4200, dataConclusao: '2026-03-20', observacao: 'Inspeção de tolerâncias geométricas GD&T' },
-    { id: 113, codigoOS: 'OS-2026-048', horasEstimadas: 15, horasRealizadas: 17.0, desvioPercentual: 13.3, valorFaturado: 3600, dataConclusao: '2026-04-02', observacao: 'Padronização de fixador rápido' },
-    { id: 114, codigoOS: 'OS-2026-053', horasEstimadas: 20, horasRealizadas: 23.5, desvioPercentual: 17.5, valorFaturado: 4800, dataConclusao: '2026-04-15', observacao: 'Revisão de malha CAD x Malha escaneada' },
-    { id: 115, codigoOS: 'OS-2026-059', horasEstimadas: 17, horasRealizadas: 19.0, desvioPercentual: 11.8, valorFaturado: 3900, dataConclusao: '2026-05-03', observacao: 'Medição por apalpação contínua (scanning)' },
-    { id: 116, codigoOS: 'OS-2026-064', horasEstimadas: 21, horasRealizadas: 24.0, desvioPercentual: 14.3, valorFaturado: 4950, dataConclusao: '2026-05-18', observacao: 'Validação de repetibilidade e reprodutibilidade R&R' },
-    { id: 117, codigoOS: 'OS-2026-071', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3800, dataConclusao: '2026-06-01', observacao: 'Controle de temperatura do bloco padrão' },
-    { id: 118, codigoOS: 'OS-2026-077', horasEstimadas: 18, horasRealizadas: 21.0, desvioPercentual: 16.7, valorFaturado: 4300, dataConclusao: '2026-06-15', observacao: 'Dificuldade de acesso ótico em canal interno' },
-    { id: 119, codigoOS: 'OS-2026-083', horasEstimadas: 22, horasRealizadas: 25.0, desvioPercentual: 13.6, valorFaturado: 5200, dataConclusao: '2026-07-02', observacao: 'Calibração de padrão escalonado' },
-    { id: 120, codigoOS: 'OS-2026-089', horasEstimadas: 19, horasRealizadas: 22.0, desvioPercentual: 15.8, valorFaturado: 4600, dataConclusao: '2026-07-20', observacao: 'Programação de ciclo automático parametrizado' },
+const DEMO_STORAGE_KEY = 'zeiss_modo_demonstracao_ativo';
+
+/**
+ * Retorna se o modo de demonstração (dados mock somados) está ativo.
+ * Por padrão é true para que a apresentação do laboratório já tenha dados completos.
+ */
+export function isModoDemoAtivo(): boolean {
+    const salvo = localStorage.getItem(DEMO_STORAGE_KEY);
+    if (salvo === null) {
+        return true;
+    }
+    return salvo === 'true';
+}
+
+/**
+ * Altera o estado do modo de demonstração e notifica os ouvintes da aplicação.
+ */
+export function setModoDemoAtivo(ativo: boolean): void {
+    localStorage.setItem(DEMO_STORAGE_KEY, String(ativo));
+    window.dispatchEvent(new CustomEvent('zeiss-modo-demo-alterado', { detail: { ativo } }));
+}
+
+/**
+ * Base de casos mock estruturada exatamente com os tipos e características do vocabulário ZEISS.
+ * Permite demonstrar todas as faixas da escada de histórico (0, 1-4, 5-14, 15+ casos).
+ */
+const CASOS_MOCK_DEMO: CasoBase[] = [
+    // Casos para MMC (Coordenadas)
+    { id: 901, codigoOS: 'OS-2025-012', tipoServico: 'MMC', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3800, dataConclusao: '2025-11-10', observacao: 'Fixação complexa com placa magnética em peça flexível.', caracteristicas: ['Peça Complexa', 'Médio Porte'] },
+    { id: 902, codigoOS: 'OS-2025-019', tipoServico: 'MMC', horasEstimadas: 20, horasRealizadas: 23.0, desvioPercentual: 15.0, valorFaturado: 4500, dataConclusao: '2025-11-24', observacao: 'Calibração prévia do apalpador necessária para geometrias estreitas.', caracteristicas: ['Peça Complexa', 'Grande Porte'] },
+    { id: 903, codigoOS: 'OS-2025-027', tipoServico: 'MMC', horasEstimadas: 14, horasRealizadas: 16.0, desvioPercentual: 14.3, valorFaturado: 3200, dataConclusao: '2025-12-05', observacao: 'Variação térmica no laboratório durante ciclo longo.', caracteristicas: ['Médio Porte', 'Peça em Série'] },
+    { id: 904, codigoOS: 'OS-2025-034', tipoServico: 'MMC', horasEstimadas: 18, horasRealizadas: 21.0, desvioPercentual: 16.7, valorFaturado: 4100, dataConclusao: '2025-12-18', observacao: 'Rugosidade superficial gerou incerteza nos pontos de contato.', caracteristicas: ['Peça Complexa', 'Diâmetro Médio'] },
+    { id: 905, codigoOS: 'OS-2026-003', tipoServico: 'MMC', horasEstimadas: 22, horasRealizadas: 25.5, desvioPercentual: 15.9, valorFaturado: 5100, dataConclusao: '2026-01-12', observacao: 'Setup complexo para evitar deformação na fixação.', caracteristicas: ['Grande Porte', 'Peça Complexa'] },
+    { id: 906, codigoOS: 'OS-2026-008', tipoServico: 'MMC', horasEstimadas: 15, horasRealizadas: 17.5, desvioPercentual: 16.7, valorFaturado: 3500, dataConclusao: '2026-01-20', observacao: 'Alinhamento por 3 planos em peça de geometria livre.', caracteristicas: ['Peça Única', 'Peça Complexa'] },
+    { id: 907, codigoOS: 'OS-2026-015', tipoServico: 'MMC', horasEstimadas: 16, horasRealizadas: 18.0, desvioPercentual: 12.5, valorFaturado: 3700, dataConclusao: '2026-02-02', observacao: 'Rotina de medição CNC automatizada no software Calypso.', caracteristicas: ['Peça em Série', 'Médio Porte'] },
+    { id: 908, codigoOS: 'OS-2026-021', tipoServico: 'MMC', horasEstimadas: 19, horasRealizadas: 22.0, desvioPercentual: 15.8, valorFaturado: 4400, dataConclusao: '2026-02-14', observacao: 'Necessário criar ponta especial estrela para reentrância.', caracteristicas: ['Peça Complexa', 'Diâmetro Pequeno'] },
+    { id: 909, codigoOS: 'OS-2026-029', tipoServico: 'MMC', horasEstimadas: 17, horasRealizadas: 19.5, desvioPercentual: 14.7, valorFaturado: 3950, dataConclusao: '2026-02-28', observacao: 'Desvio de forma em superfície cilíndrica.', caracteristicas: ['Diâmetro Grande', 'Grande Porte'] },
+    { id: 910, codigoOS: 'OS-2026-033', tipoServico: 'MMC', horasEstimadas: 24, horasRealizadas: 28.0, desvioPercentual: 16.7, valorFaturado: 5600, dataConclusao: '2026-03-05', observacao: 'Peça de grande porte exigiu reposicionamento seguro.', caracteristicas: ['Grande Porte', 'Peça Única'] },
+    { id: 911, codigoOS: 'OS-2026-039', tipoServico: 'MMC', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3850, dataConclusao: '2026-03-12', observacao: 'Ajuste de filtros gaussianos para eliminar ruído.', caracteristicas: ['Peça Simples', 'Pequeno Porte'] },
+    { id: 912, codigoOS: 'OS-2026-042', tipoServico: 'MMC', horasEstimadas: 18, horasRealizadas: 20.5, desvioPercentual: 13.9, valorFaturado: 4200, dataConclusao: '2026-03-20', observacao: 'Inspeção de tolerâncias geométricas GD&T completas.', caracteristicas: ['Peça Complexa', 'Médio Porte'] },
+    { id: 913, codigoOS: 'OS-2026-048', tipoServico: 'MMC', horasEstimadas: 15, horasRealizadas: 17.0, desvioPercentual: 13.3, valorFaturado: 3600, dataConclusao: '2026-04-02', observacao: 'Padronização de fixador rápido modular.', caracteristicas: ['Peça em Série', 'Pequeno Porte'] },
+    { id: 914, codigoOS: 'OS-2026-053', tipoServico: 'MMC', horasEstimadas: 20, horasRealizadas: 23.5, desvioPercentual: 17.5, valorFaturado: 4800, dataConclusao: '2026-04-15', observacao: 'Revisão de alinhamento com referências parciais.', caracteristicas: ['Peça Complexa', 'Grande Porte'] },
+    { id: 915, codigoOS: 'OS-2026-059', tipoServico: 'MMC', horasEstimadas: 17, horasRealizadas: 19.0, desvioPercentual: 11.8, valorFaturado: 3900, dataConclusao: '2026-05-03', observacao: 'Medição por apalpação contínua (scanning de alta densidade).', caracteristicas: ['Médio Porte', 'Peça Única'] },
+    { id: 916, codigoOS: 'OS-2026-064', tipoServico: 'MMC', horasEstimadas: 21, horasRealizadas: 24.0, dataConclusao: '2026-05-18', desvioPercentual: 14.3, valorFaturado: 4950, observacao: 'Validação de repetibilidade e reprodutibilidade (R&R).', caracteristicas: ['Peça Complexa', 'Diâmetro Médio'] },
+    { id: 917, codigoOS: 'OS-2026-071', tipoServico: 'MMC', horasEstimadas: 16, horasRealizadas: 18.5, desvioPercentual: 15.6, valorFaturado: 3800, dataConclusao: '2026-06-01', observacao: 'Controle de temperatura do bloco padrão.', caracteristicas: ['Pequeno Porte', 'Peça Simples'] },
+    { id: 918, codigoOS: 'OS-2026-077', tipoServico: 'MMC', horasEstimadas: 18, horasRealizadas: 21.0, desvioPercentual: 16.7, valorFaturado: 4300, dataConclusao: '2026-06-15', observacao: 'Dificuldade de acesso em canal interno cego.', caracteristicas: ['Diâmetro Pequeno', 'Peça Complexa'] },
+
+    // Casos para Digitalização 3D
+    { id: 920, codigoOS: 'OS-2025-088', tipoServico: 'Digitalização 3D', horasEstimadas: 8, horasRealizadas: 10.0, desvioPercentual: 25.0, valorFaturado: 2400, dataConclusao: '2025-10-14', observacao: 'Aplicação de spray antirreflexo e pontos de referência ópticos.', caracteristicas: ['Grande Porte', 'Peça Complexa'] },
+    { id: 921, codigoOS: 'OS-2025-095', tipoServico: 'Digitalização 3D', horasEstimadas: 10, horasRealizadas: 12.0, desvioPercentual: 20.0, valorFaturado: 2900, dataConclusao: '2025-11-05', observacao: 'Mesclagem de múltiplas tomadas no Zeiss Inspect.', caracteristicas: ['Médio Porte', 'Peça Complexa'] },
+    { id: 922, codigoOS: 'OS-2026-004', tipoServico: 'Digitalização 3D', horasEstimadas: 6, horasRealizadas: 7.5, desvioPercentual: 25.0, valorFaturado: 1800, dataConclusao: '2026-01-18', observacao: 'Escaneamento com T-Scan em geometria orgânica.', caracteristicas: ['Pequeno Porte', 'Peça Única'] },
+    { id: 923, codigoOS: 'OS-2026-018', tipoServico: 'Digitalização 3D', horasEstimadas: 12, horasRealizadas: 14.5, desvioPercentual: 20.8, valorFaturado: 3500, dataConclusao: '2026-02-10', observacao: 'Peça com cavidades profundas exigiu ângulos adicionais.', caracteristicas: ['Grande Porte', 'Peça Complexa'] },
+    { id: 924, codigoOS: 'OS-2026-031', tipoServico: 'Digitalização 3D', horasEstimadas: 7, horasRealizadas: 8.5, desvioPercentual: 21.4, valorFaturado: 2100, dataConclusao: '2026-03-02', observacao: 'Geração de malha poligonal estanque (watertight).', caracteristicas: ['Médio Porte', 'Peça Única'] },
+    { id: 925, codigoOS: 'OS-2026-045', tipoServico: 'Digitalização 3D', horasEstimadas: 9, horasRealizadas: 11.0, desvioPercentual: 22.2, valorFaturado: 2600, dataConclusao: '2026-04-12', observacao: 'Inspeção de mapa de cores (Color Map Deviation).', caracteristicas: ['Peça Complexa', 'Médio Porte'] },
+
+    // Casos para Engenharia Reversa
+    { id: 930, codigoOS: 'OS-2025-102', tipoServico: 'Engenharia Reversa', horasEstimadas: 24, horasRealizadas: 28.0, desvioPercentual: 16.7, valorFaturado: 6200, dataConclusao: '2025-11-30', observacao: 'Reconstrução de superfícies paramétricas CAD a partir de malha STL.', caracteristicas: ['Peça Complexa', 'Médio Porte'] },
+    { id: 931, codigoOS: 'OS-2025-115', tipoServico: 'Engenharia Reversa', horasEstimadas: 30, horasRealizadas: 36.0, desvioPercentual: 20.0, valorFaturado: 7800, dataConclusao: '2025-12-22', observacao: 'Identificação de ângulos de saída e concordâncias originais de fundição.', caracteristicas: ['Grande Porte', 'Peça Complexa'] },
+    { id: 932, codigoOS: 'OS-2026-025', tipoServico: 'Engenharia Reversa', horasEstimadas: 18, horasRealizadas: 21.0, desvioPercentual: 16.7, valorFaturado: 4700, dataConclusao: '2026-02-18', observacao: 'Modelagem paramétrica em SolidWorks com base na nuvem de pontos.', caracteristicas: ['Pequeno Porte', 'Peça Única'] },
+
+    // Casos para Raio-X / Tomografia
+    { id: 940, codigoOS: 'OS-2026-011', tipoServico: 'Raio-X / Tomografia', horasEstimadas: 10, horasRealizadas: 11.5, desvioPercentual: 15.0, valorFaturado: 3100, dataConclusao: '2026-01-25', observacao: 'Análise não destrutiva de porosidade interna e trincas.', caracteristicas: ['Peça Complexa', 'Pequeno Porte'] },
+    { id: 941, codigoOS: 'OS-2026-028', tipoServico: 'Raio-X / Tomografia', horasEstimadas: 12, horasRealizadas: 14.0, desvioPercentual: 16.7, valorFaturado: 3700, dataConclusao: '2026-02-24', observacao: 'Ajuste de penetração kV e mA no Bosello para peça de alumínio fundido.', caracteristicas: ['Médio Porte', 'Peça Complexa'] },
+
+    // Casos para Elaboração de Laudo
+    { id: 950, codigoOS: 'OS-2026-006', tipoServico: 'Elaboração de Laudo', horasEstimadas: 4, horasRealizadas: 4.5, desvioPercentual: 12.5, valorFaturado: 1200, dataConclusao: '2026-01-15', observacao: 'Emissão de parecer de conformidade dimensional e incerteza de medição.', caracteristicas: ['Peça Simples', 'Pequeno Porte'] },
+    { id: 951, codigoOS: 'OS-2026-037', tipoServico: 'Elaboração de Laudo', horasEstimadas: 6, horasRealizadas: 7.0, desvioPercentual: 16.7, valorFaturado: 1800, dataConclusao: '2026-03-10', observacao: 'Laudo pericial com cálculo de capacidade de processo (Cp e Cpk).', caracteristicas: ['Peça em Série', 'Médio Porte'] }
 ];
 
 /**
- * Retorna a recomendação histórica com base no Tipo de Serviço e Características selecionadas.
- * 
- * Regras de Demonstração Inteligente:
- * - Se nenhum tipo for selecionado ou características vazias: retorna 0 casos (Sem histórico).
- * - Se selecionada 1 característica: retorna 3 casos (Confiança Baixa: 1 a 4 casos).
- * - Se selecionadas 2 características: retorna 8 casos (Confiança Média: 5 a 14 casos).
- * - Se selecionadas 3 ou mais características: retorna 20 casos (Confiança Alta: 15+ casos, com Fator de Correção).
+ * Normaliza strings para comparação flexível.
+ */
+function normalizar(texto?: string): string {
+    if (!texto) return '';
+    return texto
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+}
+
+/**
+ * Calcula Quartis (Q1, Mediana, Q3) segundo a regra estatística padrão.
+ */
+function calcularEstatisticas(valores: number[]): { mediana: number; q1: number; q3: number } {
+    if (valores.length === 0) {
+        return { mediana: 0, q1: 0, q3: 0 };
+    }
+
+    const ordenados = [...valores].sort((a, b) => a - b);
+    const n = ordenados.length;
+
+    const obterPercentil = (p: number): number => {
+        const index = (n - 1) * p;
+        const lower = Math.floor(index);
+        const upper = Math.ceil(index);
+        const weight = index - lower;
+        if (lower === upper) return ordenados[lower];
+        return Number((ordenados[lower] * (1 - weight) + ordenados[upper] * weight).toFixed(1));
+    };
+
+    return {
+        mediana: obterPercentil(0.5),
+        q1: obterPercentil(0.25),
+        q3: obterPercentil(0.75)
+    };
+}
+
+/**
+ * Converte um RegistroServico concluído com lição formalizada em CasoBase unificado.
+ */
+function converterServicoParaCasoBase(s: RegistroServico): CasoBase {
+    const horasEstimadas = s.blocoOrcamento.horasEstimadas || 1;
+    const horasRealizadas = s.blocoRealizado?.horasRealizadas ?? horasEstimadas;
+    const desvioPercentual = Number((((horasRealizadas - horasEstimadas) / horasEstimadas) * 100).toFixed(1));
+
+    return {
+        id: s.id,
+        codigoOS: s.codigo,
+        tipoServico: s.blocoOrcamento.tipoServico?.descricao || 'Serviço Metrológico',
+        horasEstimadas,
+        horasRealizadas,
+        desvioPercentual,
+        valorFaturado: s.blocoRealizado?.valorFaturado || s.blocoOrcamento.valorProposto || 0,
+        dataConclusao: s.blocoRealizado?.dataRealEntrega || s.dataAtualizacao || s.dataCriacao,
+        observacao: s.blocoAprendizado?.licaoAprendida || s.blocoOrcamento.premissasAssumidas || 'Lição formalizada registrada no encerramento.',
+        caracteristicas: s.blocoOrcamento.caracteristicasPeca?.map(c => c.descricao) || []
+    };
+}
+
+export interface FiltroOrcamentoParams {
+    tipoServicoId?: number | '';
+    tipoServicoNome?: string;
+    caracteristicasIds?: number[];
+    caracteristicasNomes?: string[];
+}
+
+/**
+ * Retorna a recomendação histórica com base nos critérios inegociáveis de negócio:
+ * 1. Gatilho: Tipo de Serviço E pelo menos 1 Característica da Peça.
+ * 2. Recurso NÃO entra no filtro histórico.
+ * 3. Apenas registros FORMALIZADOS são computados (SUPERADA e outros descartados).
+ * 4. Combina API + Mock se o Modo Demo estiver ativo. Se desativado, usa estritamente API.
+ * 5. Escada de histórico:
+ *    - 0 casos: Sem Histórico (Sem faixas, roteiro padrão)
+ *    - 1 a 4 casos: Confiança Baixa (Exibe casos, sem faixas, sem fator)
+ *    - 5 a 14 casos: Confiança Média (Mediana, Q1, Q3)
+ *    - 15+ casos: Confiança Alta (Mediana, Q1, Q3 + Fator de Correção)
  */
 export async function obterRecomendacaoOrcamento(
-    tipoServicoId: number | '',
-    caracteristicasIds: number[]
+    params: FiltroOrcamentoParams
 ): Promise<RecomendacaoOrcamento> {
-    // Simula uma pequena latência realista de cálculo assíncrono
-    await new Promise(resolve => setTimeout(resolve, 200));
+    const { tipoServicoId, tipoServicoNome = '', caracteristicasIds = [], caracteristicasNomes = [] } = params;
 
-    if (!tipoServicoId || caracteristicasIds.length === 0) {
+    const temTipo = Boolean(tipoServicoId) || Boolean(tipoServicoNome.trim());
+    const temCaracteristicas = caracteristicasIds.length > 0 || caracteristicasNomes.length > 0;
+
+    const modoDemo = isModoDemoAtivo();
+
+    // Se não atingiu o gatilho mínimo (Tipo E pelo menos 1 Característica), retorna estado inicial
+    if (!temTipo || !temCaracteristicas) {
         return {
             quantidadeCasos: 0,
             nivelConfianca: 'SEM_HISTORICO',
@@ -105,70 +225,279 @@ export async function obterRecomendacaoOrcamento(
             quartil1: 0,
             quartil3: 0,
             fatorCorrecao: 1.0,
-            mensagemOrientacao: 'Sem histórico formalizado suficiente para esta combinação. Siga o roteiro técnico padrão.',
-            casosBase: []
+            mensagemOrientacao: 'Aguardando seleção de Tipo de Serviço e ao menos uma Característica da Peça para consultar a base de conhecimento.',
+            casosBase: [],
+            modoDemoAtivo: modoDemo
         };
     }
 
-    const qtd = caracteristicasIds.length;
+    // 1. Busca dados reais da API
+    let servicosReais: RegistroServico[] = [];
+    try {
+        servicosReais = await listarServicos();
+    } catch (err) {
+        console.warn('Não foi possível carregar serviços reais da API, prosseguindo com fallback:', err);
+    }
 
-    // Cenário 1: 1 a 4 casos (Confiança Baixa)
-    if (qtd === 1) {
-        const casos = CASOS_MOCK_COMPLETOS.slice(0, 3);
+    const tipoNomeNorm = normalizar(tipoServicoNome);
+    const caracNomesNorm = caracteristicasNomes.map(normalizar);
+
+    // 2. Filtra serviços reais: APENAS CONCLUÍDOS e FORMALIZADOS (SUPERADA descartada)
+    const casosReaisValidos = servicosReais.filter(s => {
+        if (s.status !== 'CONCLUIDO') return false;
+        if (s.blocoAprendizado?.statusLicao !== 'FORMALIZADA') return false;
+
+        // Filtro por Tipo de Serviço
+        const sTipoId = s.blocoOrcamento?.tipoServico?.id;
+        const sTipoNome = normalizar(s.blocoOrcamento?.tipoServico?.descricao);
+        const tipoBate = (tipoServicoId && sTipoId === Number(tipoServicoId)) ||
+            (tipoNomeNorm && (sTipoNome.includes(tipoNomeNorm) || tipoNomeNorm.includes(sTipoNome)));
+
+        if (!tipoBate) return false;
+
+        // Filtro por Característica da Peça (ao menos uma em comum)
+        const sCaracs = s.blocoOrcamento?.caracteristicasPeca || [];
+        const temCaracComum = sCaracs.some(sc => {
+            if (caracteristicasIds.includes(sc.id)) return true;
+            const scNomeNorm = normalizar(sc.descricao);
+            return caracNomesNorm.some(cn => cn === scNomeNorm || scNomeNorm.includes(cn) || cn.includes(scNomeNorm));
+        });
+
+        return temCaracComum;
+    }).map(converterServicoParaCasoBase);
+
+    // 3. Casos mockados filtrados (apenas se Modo Demo estiver ativo)
+    let casosMockValidos: CasoBase[] = [];
+    if (modoDemo) {
+        casosMockValidos = CASOS_MOCK_DEMO.filter(cm => {
+            const cmTipoNorm = normalizar(cm.tipoServico);
+            const tipoBate = tipoNomeNorm && (cmTipoNorm.includes(tipoNomeNorm) || tipoNomeNorm.includes(cmTipoNorm));
+
+            if (!tipoBate) return false;
+
+            const cmCaracs = cm.caracteristicas?.map(normalizar) || [];
+            const temCaracComum = cmCaracs.some(cmc =>
+                caracNomesNorm.some(cn => cn === cmc || cmc.includes(cn) || cn.includes(cmc))
+            );
+
+            return temCaracComum;
+        });
+
+        // Caso a combinação específica no mock seja restrita, garantimos casos para demonstrar a escada
+        if (casosMockValidos.length === 0 && tipoNomeNorm) {
+            casosMockValidos = CASOS_MOCK_DEMO.filter(cm => normalizar(cm.tipoServico).includes(tipoNomeNorm));
+        }
+    }
+
+    // 4. Unificação dos dados (zero distinção visual, sem IDs duplicados)
+    const idsExistentes = new Set(casosReaisValidos.map(c => c.id));
+    const casosFinais: CasoBase[] = [
+        ...casosReaisValidos,
+        ...(modoDemo ? casosMockValidos.filter(cm => !idsExistentes.has(cm.id)) : [])
+    ];
+
+    const N = casosFinais.length;
+
+    // Escada de Histórico
+    if (N === 0) {
         return {
-            quantidadeCasos: 3,
-            nivelConfianca: 'BAIXA',
-            medianaHoras: 18.5, // Mantido internamente, mas na UI de Baixa Confiança não exibe faixas
-            quartil1: 16.0,
-            quartil3: 21.0,
+            quantidadeCasos: 0,
+            nivelConfianca: 'SEM_HISTORICO',
+            medianaHoras: 0,
+            quartil1: 0,
+            quartil3: 0,
             fatorCorrecao: 1.0,
-            mensagemOrientacao: 'Amostragem histórica reduzida (3 casos). Avalie os casos individualmente abaixo antes de fixar o orçamento.',
-            casosBase: casos
+            mensagemOrientacao: 'Sem histórico formalizado suficiente para esta combinação. Não há faixas sugeridas. Siga o roteiro técnico padrão para sua estimativa.',
+            casosBase: [],
+            modoDemoAtivo: modoDemo
         };
     }
 
-    // Cenário 2: 5 a 14 casos (Confiança Média)
-    if (qtd === 2) {
-        const casos = CASOS_MOCK_COMPLETOS.slice(0, 8);
+    if (N >= 1 && N <= 4) {
+        // Confiança Baixa: NÃO exibe faixas nem fator de correção na interface
         return {
-            quantidadeCasos: 8,
-            nivelConfianca: 'MEDIA',
-            medianaHoras: 19.5,
-            quartil1: 17.5,
-            quartil3: 22.5,
-            fatorCorrecao: 1.08,
-            mensagemOrientacao: 'Histórico consistente (8 casos). A faixa de esforço mais provável situa-se entre 17.5h e 22.5h.',
-            casosBase: casos
+            quantidadeCasos: N,
+            nivelConfianca: 'BAIXA',
+            medianaHoras: 0,
+            quartil1: 0,
+            quartil3: 0,
+            fatorCorrecao: 1.0,
+            mensagemOrientacao: `Amostragem histórica reduzida (${N} ${N === 1 ? 'caso encontrado' : 'casos encontrados'}). Não há densidade para sugerir faixa estatística. Avalie os casos individuais abaixo antes de arbitrar as horas.`,
+            casosBase: casosFinais,
+            modoDemoAtivo: modoDemo
         };
     }
 
-    // Cenário 3: 15+ casos (Confiança Alta com Fator de Correção)
-    const casos = CASOS_MOCK_COMPLETOS;
+    const horasRealizadasArr = casosFinais.map(c => c.horasRealizadas);
+    const { mediana, q1, q3 } = calcularEstatisticas(horasRealizadasArr);
+
+    if (N >= 5 && N <= 14) {
+        // Confiança Média: Exibe faixa provável (Q1 a Q3 e Mediana)
+        return {
+            quantidadeCasos: N,
+            nivelConfianca: 'MEDIA',
+            medianaHoras: mediana,
+            quartil1: q1,
+            quartil3: q3,
+            fatorCorrecao: 1.0,
+            mensagemOrientacao: `Histórico consistente (${N} casos formalizados). A faixa de esforço mais provável situa-se entre ${q1}h e ${q3}h (Mediana: ${mediana}h).`,
+            casosBase: casosFinais,
+            modoDemoAtivo: modoDemo
+        };
+    }
+
+    // N >= 15: Confiança Alta: Quartis + Fator de Correção
+    const totalEstimadas = casosFinais.reduce((acc, c) => acc + c.horasEstimadas, 0);
+    const totalRealizadas = casosFinais.reduce((acc, c) => acc + c.horasRealizadas, 0);
+    const fatorCorrecao = totalEstimadas > 0 ? Number((totalRealizadas / totalEstimadas).toFixed(2)) : 1.15;
+
+    const diffPercent = Math.round((fatorCorrecao - 1) * 100);
+    let orientacao = `Alta confiabilidade estatística (${N} casos formalizados). Faixa provável entre ${q1}h e ${q3}h (Mediana: ${mediana}h).`;
+    if (diffPercent > 0) {
+        orientacao += ` Alerta: serviços similares apresentam tendência histórica de +${diffPercent}% de esforço real em relação ao orçamento inicial.`;
+    } else if (diffPercent < 0) {
+        orientacao += ` Observação: histórico apresenta ligeira superestimação (${diffPercent}% de esforço real vs. estimado).`;
+    }
+
     return {
-        quantidadeCasos: 20,
+        quantidadeCasos: N,
         nivelConfianca: 'ALTA',
-        medianaHoras: 20.0,
-        quartil1: 18.0,
-        quartil3: 23.5,
-        fatorCorrecao: 1.15, // +15% de desvio observado recorrente
-        mensagemOrientacao: 'Alta confiabilidade estatística (20 casos). Alerta: serviços similares apresentam tendência de +15% de esforço real versus estimativa inicial.',
-        casosBase: casos
+        medianaHoras: mediana,
+        quartil1: q1,
+        quartil3: q3,
+        fatorCorrecao,
+        mensagemOrientacao: orientacao,
+        casosBase: casosFinais,
+        modoDemoAtivo: modoDemo
     };
 }
 
 /**
- * Retorna os indicadores e dados para o Dashboard gerencial (/interno).
+ * Retorna os dados executivos do Dashboard unificados (API + Mock se ativo).
  */
 export async function obterDadosDashboard(): Promise<DadosDashboard> {
-    await new Promise(resolve => setTimeout(resolve, 250));
+    const modoDemo = isModoDemoAtivo();
+
+    let servicosReais: RegistroServico[] = [];
+    try {
+        servicosReais = await listarServicos();
+    } catch (e) {
+        console.warn('Erro ao obter serviços para o dashboard:', e);
+    }
+
+    const concluidosReais = servicosReais.filter(s => s.status === 'CONCLUIDO');
+    const formalizadosReais = concluidosReais.filter(s => s.blocoAprendizado?.statusLicao === 'FORMALIZADA');
+
+    // Se o modo demo estiver desativado, calculamos tudo estritamente com base nos dados reais
+    if (!modoDemo) {
+        if (concluidosReais.length === 0) {
+            return {
+                indicadores: {
+                    indiceAssertividade: 0,
+                    desvioMedioEsforco: 0,
+                    margemOrcadaVsRealizada: 0,
+                    totalOSConcluidas: 0,
+                    licoesFormalizadas: formalizadosReais.length,
+                    mediaHorasPorOS: 0
+                },
+                historicoMensal: [],
+                causasFrequentes: [],
+                modoDemoAtivo: false
+            };
+        }
+
+        let somaHoras = 0;
+        let osDentroMargem = 0;
+        let somaDesvio = 0;
+        let somaMargem = 0;
+
+        const mesesMap = new Map<string, { orcadas: number; realizadas: number }>();
+        const causasMap = new Map<string, number>();
+
+        concluidosReais.forEach(s => {
+            const hEst = s.blocoOrcamento.horasEstimadas || 0;
+            const hReal = s.blocoRealizado?.horasRealizadas || hEst;
+            somaHoras += hReal;
+
+            const desvio = hEst > 0 ? ((hReal - hEst) / hEst) * 100 : 0;
+            somaDesvio += desvio;
+
+            if (Math.abs(desvio) <= 15) {
+                osDentroMargem++;
+            }
+
+            const cEst = s.blocoOrcamento.custoEstimado || 0;
+            const vFat = s.blocoRealizado?.valorFaturado || s.blocoOrcamento.valorProposto || 0;
+            if (vFat > 0) {
+                const margem = ((vFat - cEst) / vFat) * 100;
+                somaMargem += margem;
+            }
+
+            // Agrupamento mensal
+            const dataStr = s.blocoRealizado?.dataRealEntrega || s.dataAtualizacao || s.dataCriacao;
+            const d = new Date(dataStr);
+            const mesNome = isNaN(d.getTime())
+                ? 'Geral'
+                : d.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
+
+            const mesAtual = mesesMap.get(mesNome) || { orcadas: 0, realizadas: 0 };
+            mesAtual.orcadas += hEst;
+            mesAtual.realizadas += hReal;
+            mesesMap.set(mesNome, mesAtual);
+
+            // Causas de desvio
+            const causa = s.blocoAprendizado?.causaDesvio?.descricao || 'Nenhum Desvio';
+            causasMap.set(causa, (causasMap.get(causa) || 0) + 1);
+        });
+
+        const total = concluidosReais.length;
+        const indiceAssertividade = Number(((osDentroMargem / total) * 100).toFixed(1));
+        const desvioMedioEsforco = Number((somaDesvio / total).toFixed(1));
+        const margemOrcadaVsRealizada = Number((somaMargem / total).toFixed(1));
+        const mediaHorasPorOS = Number((somaHoras / total).toFixed(1));
+
+        const historicoMensal: HistoricoMensalHoras[] = Array.from(mesesMap.entries()).map(([mes, vals]) => ({
+            mes,
+            horasOrcadas: Math.round(vals.orcadas),
+            horasRealizadas: Math.round(vals.realizadas)
+        }));
+
+        const cores = ['#141e8c', '#3b82f6', '#0284c7', '#f59e0b', '#10b981', '#94a3b8'];
+        const causasFrequentes: CausaDesvioFrequente[] = Array.from(causasMap.entries())
+            .map(([causa, qtd], idx) => ({
+                causa,
+                quantidade: qtd,
+                percentual: Number(((qtd / total) * 100).toFixed(1)),
+                cor: cores[idx % cores.length]
+            }))
+            .sort((a, b) => b.quantidade - a.quantidade);
+
+        return {
+            indicadores: {
+                indiceAssertividade,
+                desvioMedioEsforco,
+                margemOrcadaVsRealizada,
+                totalOSConcluidas: total,
+                licoesFormalizadas: formalizadosReais.length,
+                mediaHorasPorOS
+            },
+            historicoMensal,
+            causasFrequentes,
+            modoDemoAtivo: false
+        };
+    }
+
+    // Modo Demonstração Ativo: combina dados reais com a base de demonstração
+    const totalOSConcluidas = 148 + concluidosReais.length;
+    const licoesFormalizadas = 52 + formalizadosReais.length;
 
     return {
         indicadores: {
-            indiceAssertividade: 84.5, // 84.5% das OSs dentro da margem esperada
-            desvioMedioEsforco: 13.2, // +13.2% média de tempo adicional
-            margemOrcadaVsRealizada: 29.4, // Margem média de lucro/contribuição realizada
-            totalOSConcluidas: 148,
-            licoesFormalizadas: 52,
+            indiceAssertividade: 84.5,
+            desvioMedioEsforco: 13.2,
+            margemOrcadaVsRealizada: 29.4,
+            totalOSConcluidas,
+            licoesFormalizadas,
             mediaHorasPorOS: 18.7
         },
         historicoMensal: [
@@ -180,11 +509,11 @@ export async function obterDadosDashboard(): Promise<DadosDashboard> {
             { mes: 'Mar/26', horasOrcadas: 390, horasRealizadas: 438 }
         ],
         causasFrequentes: [
-            { causa: 'Complexidade de Fixação da Peça', quantidade: 24, percentual: 38.5, cor: '#3b82f6' },
-            { causa: 'Variação Térmica / Estabilização', quantidade: 16, percentual: 25.6, cor: '#6366f1' },
-            { causa: 'Mudança de Escopo do Cliente', quantidade: 11, percentual: 17.6, cor: '#f59e0b' },
-            { causa: 'Incerteza em Rugosidade / Ponta', quantidade: 7, percentual: 11.2, cor: '#10b981' },
-            { causa: 'Outras Ocorrências Operacionais', quantidade: 4, percentual: 7.1, cor: '#94a3b8' }
-        ]
+            { causa: 'Fixação mais complexa', quantidade: 48, percentual: 39.0, cor: '#141e8c' },
+            { causa: 'Peça com geometria complexa', quantidade: 36, percentual: 29.3, cor: '#3b82f6' },
+            { causa: 'Mudança de escopo pelo cliente', quantidade: 24, percentual: 19.5, cor: '#f59e0b' },
+            { causa: 'Nenhum Desvio', quantidade: 15, percentual: 12.2, cor: '#10b981' }
+        ],
+        modoDemoAtivo: true
     };
 }

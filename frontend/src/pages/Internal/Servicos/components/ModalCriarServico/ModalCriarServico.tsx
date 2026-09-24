@@ -4,7 +4,10 @@ import { Solicitacao } from '../../../../../types/solicitacao';
 import { TermoVocabulario } from '../../../../../types/vocabulario';
 import { criarServico } from '../../../../../services/servicoService';
 import { listarClasses, listarTermosPorClasse } from '../../../../../services/vocabularioService';
+import { RecomendacaoOrcamento } from '../../../../../services/estatisticaServiceMock';
 import { useToast } from '../../../../../components/Toast';
+import { VocabularioMultiSelect, TermoComClasse } from '../../../../../components/VocabularioMultiSelect/VocabularioMultiSelect';
+import { AssistenteOrcamento } from './components/AssistenteOrcamento/AssistenteOrcamento';
 import './ModalCriarServico.scss';
 
 export interface ModalCriarServicoProps {
@@ -32,7 +35,6 @@ function encontrarTipoServicoInteligente(servicoSolicitacao: string, termos: Ter
         if (s === 'rugosidade' && (desc.includes('rugosidade') || desc.includes('rugosimetria') || desc.includes('perfilometria'))) return true;
         if (s === 'calibracao' && desc.includes('calibra')) return true;
         return s === 'treinamento' && (desc.includes('treinamento') || desc.includes('consultoria') || desc.includes('laudo'));
-
     });
 
     // 2. Fallback de substring direta
@@ -54,7 +56,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
 }) => {
     const { mostrarToast } = useToast();
 
-    // Vocabulários
+    // Vocabulários carregados da base
     const [tiposServico, setTiposServico] = useState<TermoVocabulario[]>([]);
     const [recursos, setRecursos] = useState<TermoVocabulario[]>([]);
     const [caracteristicasPeca, setCaracteristicasPeca] = useState<TermoVocabulario[]>([]);
@@ -70,9 +72,8 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
     const [premissasAssumidas, setPremissasAssumidas] = useState('');
     const [justificativaDesvioAssistente, setJustificativaDesvioAssistente] = useState('');
 
-    // Filtro de busca para a lista de características
-    const [filtroBuscaCaracteristica, setFiltroBuscaCaracteristica] = useState('');
     const [salvando, setSalvando] = useState(false);
+    const [recomendacaoAtual, setRecomendacaoAtual] = useState<RecomendacaoOrcamento | null>(null);
 
     // Carregar Vocabulários
     useEffect(() => {
@@ -110,7 +111,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
         const numAleatorio = Math.floor(100 + Math.random() * 900);
 
         if (solicitacaoOrigem) {
-            // Criando a partir de uma solicitação
             const sufixo = solicitacaoOrigem.codigo?.split('-').pop()?.replace(/\D/g, '') || numAleatorio;
             setCodigo(`OS-${anoAtual}-${sufixo}`);
 
@@ -121,7 +121,6 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                 `Cliente: ${solicitacaoOrigem.empresa || solicitacaoOrigem.nome}\nContato: ${solicitacaoOrigem.email} | ${solicitacaoOrigem.telefone}\nQtd Peças: ${solicitacaoOrigem.quantidadePecas || '1'}\nDetalhes da Demanda: ${solicitacaoOrigem.mensagem || 'Conforme especificação enviada.'}`
             );
         } else {
-            // Criando OS avulsa
             const sequencial = String(totalServicos + 1).padStart(3, '0');
             setCodigo(`OS-${anoAtual}-${sequencial}-${numAleatorio}`);
             setTipoServicoId('');
@@ -134,21 +133,95 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
         setCustoEstimado('');
         setValorProposto('');
         setJustificativaDesvioAssistente('');
-        setFiltroBuscaCaracteristica('');
+        setRecomendacaoAtual(null);
     }, [aberto, solicitacaoOrigem, tiposServico, totalServicos]);
 
-    // Filtragem de características na busca
-    const caracteristicasFiltradas = useMemo(() => {
-        if (!filtroBuscaCaracteristica.trim()) return caracteristicasPeca;
-        const q = filtroBuscaCaracteristica.toLowerCase();
-        return caracteristicasPeca.filter(c => c.descricao.toLowerCase().includes(q));
-    }, [caracteristicasPeca, filtroBuscaCaracteristica]);
+    // 1. RECURSOS CONDICIONAIS AO TIPO DE SERVIÇO
+    // - MMC → "Prismo", "DuraMax", "OInspect"
+    // - Digitalização 3D → "T-Scan", "ATOS Q", "Zeiss Inspect"
+    // - Raio-X / Tomografia → "Bosello", "Zeiss Inspect"
+    // - Engenharia Reversa → "ZRE"
+    // - Elaboração de Laudo → Todos os recursos disponíveis
+    const recursosFiltrados = useMemo(() => {
+        if (!tipoServicoId) return recursos;
+        const tipoObj = tiposServico.find(t => t.id === tipoServicoId);
+        if (!tipoObj) return recursos;
 
-    const toggleCaracteristica = (id: number) => {
-        setCaracteristicasPecaIds(prev =>
-            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-        );
-    };
+        const descTipo = tipoObj.descricao
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+
+        const atendeRecurso = (descricaoRecurso: string, permitidos: string[]) => {
+            const rNorm = descricaoRecurso
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
+            return permitidos.some(p => {
+                const pNorm = p.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                return rNorm.includes(pNorm) || pNorm.includes(rNorm);
+            });
+        };
+
+        if (descTipo.includes('mmc') || descTipo.includes('cmm') || descTipo.includes('coordenadas')) {
+            return recursos.filter(r => atendeRecurso(r.descricao, ['Prismo', 'DuraMax', 'OInspect']));
+        }
+        if (descTipo.includes('digitalizacao') || (descTipo.includes('3d') && !descTipo.includes('reversa'))) {
+            return recursos.filter(r => atendeRecurso(r.descricao, ['T-Scan', 'ATOS Q', 'Zeiss Inspect']));
+        }
+        if (descTipo.includes('raio') || descTipo.includes('tomografia') || descTipo.includes('rx')) {
+            return recursos.filter(r => atendeRecurso(r.descricao, ['Bosello', 'Zeiss Inspect']));
+        }
+        if (descTipo.includes('reversa')) {
+            return recursos.filter(r => atendeRecurso(r.descricao, ['ZRE']));
+        }
+        if (descTipo.includes('laudo')) {
+            return recursos; // Elaboração de laudo pode utilizar qualquer equipamento
+        }
+
+        return recursos;
+    }, [tipoServicoId, tiposServico, recursos]);
+
+    // Reseta recurso selecionado se não for compatível com o novo tipo de serviço
+    useEffect(() => {
+        if (recursoId && recursosFiltrados.length > 0) {
+            const compatível = recursosFiltrados.some(r => r.id === recursoId);
+            if (!compatível) {
+                setRecursoId('');
+            }
+        }
+    }, [recursosFiltrados, recursoId]);
+
+    // Termos de Características convertidos para o MultiSelect
+    const caracteristicasTermosComClasse: TermoComClasse[] = useMemo(() => {
+        return caracteristicasPeca.map(c => ({
+            ...c,
+            classeNome: 'Características da Peça'
+        }));
+    }, [caracteristicasPeca]);
+
+    // Metadados para o assistente
+    const tipoServicoNomeSelecionado = useMemo(() => {
+        return tiposServico.find(t => t.id === tipoServicoId)?.descricao || '';
+    }, [tiposServico, tipoServicoId]);
+
+    const caracteristicasNomesSelecionadas = useMemo(() => {
+        return caracteristicasPeca
+            .filter(c => caracteristicasPecaIds.includes(c.id))
+            .map(c => c.descricao);
+    }, [caracteristicasPeca, caracteristicasPecaIds]);
+
+    // REVERSÃO E VERIFICAÇÃO DE DESVIO DO ASSISTENTE
+    // Se a confiança for MÉDIA ou ALTA, e as horas estimadas estiverem fora do intervalo [Q1, Q3],
+    // a justificativa torna-se de preenchimento obrigatório!
+    const desvioAssistenteDetectado = useMemo(() => {
+        if (horasEstimadas === '' || !recomendacaoAtual) return false;
+        const { nivelConfianca, quartil1, quartil3 } = recomendacaoAtual;
+        if (nivelConfianca !== 'MEDIA' && nivelConfianca !== 'ALTA') return false;
+
+        const h = Number(horasEstimadas);
+        return h < quartil1 || h > quartil3;
+    }, [horasEstimadas, recomendacaoAtual]);
 
     const handleSalvar = async () => {
         if (!tipoServicoId) {
@@ -157,7 +230,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
         }
 
         if (!recursoId) {
-            mostrarToast('error', 'Selecione o Recurso / Máquina.');
+            mostrarToast('error', 'Selecione o Recurso / Máquina compatível.');
             return;
         }
 
@@ -168,6 +241,14 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
 
         if (horasEstimadas === '' || custoEstimado === '' || valorProposto === '') {
             mostrarToast('error', 'Preencha as horas estimadas, custo estimado e valor proposto.');
+            return;
+        }
+
+        if (desvioAssistenteDetectado && !justificativaDesvioAssistente.trim()) {
+            mostrarToast(
+                'error',
+                'O valor de esforço informado está fora da faixa recomendada. É obrigatório fornecer uma Justificativa de Desvio.'
+            );
             return;
         }
 
@@ -182,12 +263,13 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
             custoEstimado: Number(custoEstimado),
             valorProposto: Number(valorProposto),
             premissasAssumidas,
-            justificativaDesvioAssistente,
+            justificativaDesvioAssistente: justificativaDesvioAssistente.trim() || undefined,
         };
 
         setSalvando(true);
         try {
             const criado = await criarServico(payload);
+            mostrarToast('success', `Ordem de Serviço ${criado.codigo} criada com sucesso!`);
             onSucesso(criado);
             onClose();
         } catch (err: unknown) {
@@ -226,6 +308,7 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                 {/* Body */}
                 <div className="modal-criar-servico-body">
                     <div className="form-grid">
+                        {/* Tipo de Serviço */}
                         <div className="form-group">
                             <label>Tipo de Serviço *</label>
                             <select
@@ -239,17 +322,53 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                             </select>
                         </div>
 
+                        {/* Recurso / Máquina (Condicional ao Serviço) */}
                         <div className="form-group">
-                            <label>Recurso / Máquina *</label>
+                            <label>
+                                Recurso / Máquina *
+                                {tipoServicoId && (
+                                    <span style={{ fontWeight: 400, color: '#64748b', marginLeft: '4px' }}>
+                                        ({recursosFiltrados.length} disponível{recursosFiltrados.length === 1 ? '' : 'is'})
+                                    </span>
+                                )}
+                            </label>
                             <select
                                 value={recursoId}
                                 onChange={(e) => setRecursoId(e.target.value === '' ? '' : Number(e.target.value))}
+                                disabled={!tipoServicoId}
                             >
-                                <option value="">Selecione o equipamento...</option>
-                                {recursos.map(r => (
+                                <option value="">
+                                    {!tipoServicoId
+                                        ? 'Selecione primeiro o Tipo de Serviço'
+                                        : 'Selecione o equipamento adequado...'}
+                                </option>
+                                {recursosFiltrados.map(r => (
                                     <option key={r.id} value={r.id}>{r.descricao}</option>
                                 ))}
                             </select>
+                        </div>
+
+                        {/* Campo de Características: Multi-Select Consistente */}
+                        <div className="form-group full-width">
+                            <VocabularioMultiSelect
+                                termos={caracteristicasTermosComClasse}
+                                selecionadosIds={caracteristicasPecaIds}
+                                onChange={setCaracteristicasPecaIds}
+                                placeholder="Pesquisar e selecionar características da peça..."
+                                label="Características da Peça *"
+                            />
+                        </div>
+
+                        {/* ASSISTENTE DE ORÇAMENTO INTELIGENTE */}
+                        <div className="form-group full-width">
+                            <AssistenteOrcamento
+                                tipoServicoId={tipoServicoId}
+                                tipoServicoNome={tipoServicoNomeSelecionado}
+                                caracteristicasIds={caracteristicasPecaIds}
+                                caracteristicasNomes={caracteristicasNomesSelecionadas}
+                                onAplicarHoras={(horas) => setHorasEstimadas(horas)}
+                                onRecomendacaoAtualizada={setRecomendacaoAtual}
+                            />
                         </div>
 
                         {/* Linha com os 3 campos de estimativas lado a lado */}
@@ -259,9 +378,10 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 <input
                                     type="number"
                                     step="0.5"
+                                    min="0.5"
                                     value={horasEstimadas}
                                     onChange={(e) => setHorasEstimadas(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 4"
+                                    placeholder="Ex: 18.5"
                                 />
                             </div>
 
@@ -270,9 +390,10 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 <input
                                     type="number"
                                     step="0.01"
+                                    min="0"
                                     value={custoEstimado}
                                     onChange={(e) => setCustoEstimado(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 400.00"
+                                    placeholder="Ex: 3800.00"
                                 />
                             </div>
 
@@ -281,88 +402,51 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                                 <input
                                     type="number"
                                     step="0.01"
+                                    min="0"
                                     value={valorProposto}
                                     onChange={(e) => setValorProposto(e.target.value === '' ? '' : Number(e.target.value))}
-                                    placeholder="Ex: 800.00"
+                                    placeholder="Ex: 5500.00"
                                 />
                             </div>
                         </div>
 
-                        {/* Características da Peça */}
-                        <div className="form-group full-width">
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        {/* Alerta de Desvio da Faixa Sugerida */}
+                        {desvioAssistenteDetectado && (
+                            <div className="alerta-desvio-assistente full-width">
+                                <div className="alerta-desvio-icon">⚠️</div>
+                                <div className="alerta-desvio-texto">
+                                    <strong>Horas fora da faixa provável sugerida pelo assistente ({recomendacaoAtual?.quartil1}h - {recomendacaoAtual?.quartil3}h).</strong>
+                                    <p>
+                                        Para registrar um orçamento com esforço discrepante da mediana histórica, o preenchimento da <strong>Justificativa Técnica de Desvio</strong> é obrigatório.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Justificativa de Desvio (Obrigatória se desvioAssistenteDetectado) */}
+                        {(desvioAssistenteDetectado || justificativaDesvioAssistente) && (
+                            <div className="form-group full-width justificativa-destaque">
                                 <label>
-                                    Características da Peça * ({caracteristicasPecaIds.length} selecionada{caracteristicasPecaIds.length === 1 ? '' : 's'})
+                                    Justificativa Técnica do Desvio {desvioAssistenteDetectado ? '*' : '(Opcional)'}
                                 </label>
-                                <input
-                                    type="text"
-                                    placeholder="Filtrar características..."
-                                    value={filtroBuscaCaracteristica}
-                                    onChange={(e) => setFiltroBuscaCaracteristica(e.target.value)}
-                                    style={{
-                                        padding: '0.2rem 0.5rem',
-                                        border: '1px solid #cbd5e1',
-                                        borderRadius: '4px',
-                                        fontSize: '0.74rem',
-                                        width: '180px'
-                                    }}
+                                <textarea
+                                    rows={2}
+                                    value={justificativaDesvioAssistente}
+                                    onChange={(e) => setJustificativaDesvioAssistente(e.target.value)}
+                                    placeholder="Explique tecnicamente por que o esforço desta OS difere da faixa histórica recomendada (ex: geometria atípica, dispositivo especial, exigência de múltiplos setups)..."
                                 />
                             </div>
-                            <div style={{
-                                maxHeight: '130px',
-                                overflowY: 'auto',
-                                background: '#f8fafc',
-                                padding: '0.6rem',
-                                borderRadius: '6px',
-                                border: '1px solid #cbd5e1',
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: '0.4rem'
-                            }}>
-                                {caracteristicasFiltradas.length === 0 ? (
-                                    <span style={{ fontSize: '0.76rem', color: '#94a3b8', fontStyle: 'italic' }}>
-                                        Nenhuma característica encontrada.
-                                    </span>
-                                ) : (
-                                    caracteristicasFiltradas.map(c => {
-                                        const selecionado = caracteristicasPecaIds.includes(c.id);
-                                        return (
-                                            <button
-                                                type="button"
-                                                key={c.id}
-                                                onClick={() => toggleCaracteristica(c.id)}
-                                                style={{
-                                                    display: 'inline-flex',
-                                                    alignItems: 'center',
-                                                    gap: '0.35rem',
-                                                    padding: '0.25rem 0.6rem',
-                                                    borderRadius: '16px',
-                                                    fontSize: '0.76rem',
-                                                    cursor: 'pointer',
-                                                    border: selecionado ? '1px solid #141e8c' : '1px solid #cbd5e1',
-                                                    background: selecionado ? '#141e8c' : '#ffffff',
-                                                    color: selecionado ? '#ffffff' : '#334155',
-                                                    fontWeight: selecionado ? 600 : 400,
-                                                    transition: 'all 0.15s ease'
-                                                }}
-                                            >
-                                                <span>{selecionado ? '✓ ' : '+ '}{c.descricao}</span>
-                                            </button>
-                                        );
-                                    })
-                                )}
-                            </div>
-                        </div>
+                        )}
 
                         {/* Premissas Assumidas */}
                         <div className="form-group full-width">
                             <label>Premissas Assumidas</label>
                             <textarea
-                                rows={3}
+                                rows={2}
                                 value={premissasAssumidas}
                                 className="premissas-area"
                                 onChange={(e) => setPremissasAssumidas(e.target.value)}
-                                placeholder="Informações técnicas preliminares, tolerâncias exigidas, restrições..."
+                                placeholder="Informações preliminares, tolerâncias exigidas, restrições e condições de contorno..."
                             />
                         </div>
                     </div>
@@ -377,7 +461,12 @@ export const ModalCriarServico: React.FC<ModalCriarServicoProps> = ({
                         type="button"
                         className="btn-primary-action"
                         onClick={handleSalvar}
-                        disabled={salvando}
+                        disabled={salvando || (desvioAssistenteDetectado && !justificativaDesvioAssistente.trim())}
+                        title={
+                            desvioAssistenteDetectado && !justificativaDesvioAssistente.trim()
+                                ? 'Preencha a justificativa técnica de desvio para liberar o salvamento'
+                                : 'Criar e orçar Ordem de Serviço'
+                        }
                     >
                         {salvando ? 'Criando OS...' : 'Criar Ordem de Serviço'}
                     </button>

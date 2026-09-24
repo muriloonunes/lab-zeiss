@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { contarPendentesValidacao } from '../../../services/licaoService';
 import { listarServicos } from '../../../services/servicoService';
+import {
+    obterDadosDashboard,
+    DadosDashboard,
+    isModoDemoAtivo,
+    setModoDemoAtivo
+} from '../../../services/estatisticaServiceMock';
 import './Dashboard.scss';
 
 export const Dashboard: React.FC = () => {
@@ -11,8 +17,27 @@ export const Dashboard: React.FC = () => {
     const [totalPendentes, setTotalPendentes] = useState<number>(0);
     const [totalDevolvidas, setTotalDevolvidas] = useState<number>(0);
 
+    // Dados de Inteligência e Orçamento
+    const [dadosDashboard, setDadosDashboard] = useState<DadosDashboard | null>(null);
+    const [carregandoDados, setCarregandoDados] = useState<boolean>(true);
+    const [modoDemo, setModoDemo] = useState<boolean>(isModoDemoAtivo());
+
     const isValidadorOuAdmin = usuario?.tipo === 'VALIDADOR' || usuario?.tipo === 'ADMINISTRADOR';
 
+    // Sincroniza estado de modo de demonstração via eventos globais
+    useEffect(() => {
+        const handleDemoAlterado = (e: Event) => {
+            const custom = e as CustomEvent<{ ativo: boolean }>;
+            setModoDemo(custom.detail?.ativo ?? isModoDemoAtivo());
+        };
+
+        window.addEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        return () => {
+            window.removeEventListener('zeiss-modo-demo-alterado', handleDemoAlterado);
+        };
+    }, []);
+
+    // Carrega pendências e alertas
     useEffect(() => {
         let isMounted = true;
 
@@ -24,7 +49,6 @@ export const Dashboard: React.FC = () => {
                 .catch(() => {});
         }
 
-        // Verifica lições devolvidas atribuídas ao técnico ou no acervo
         listarServicos()
             .then((servicos) => {
                 if (isMounted) {
@@ -44,6 +68,37 @@ export const Dashboard: React.FC = () => {
         };
     }, [isValidadorOuAdmin]);
 
+    // Carrega dados analíticos do Dashboard unificado
+    useEffect(() => {
+        let isMounted = true;
+        setCarregandoDados(true);
+
+        obterDadosDashboard()
+            .then((dados) => {
+                if (isMounted) {
+                    setDadosDashboard(dados);
+                }
+            })
+            .catch((err) => {
+                console.error('Erro ao carregar dados analíticos do dashboard:', err);
+            })
+            .finally(() => {
+                if (isMounted) {
+                    setCarregandoDados(false);
+                }
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, [modoDemo]);
+
+    const handleAlternarDemo = () => {
+        const novo = !modoDemo;
+        setModoDemo(novo);
+        setModoDemoAtivo(novo);
+    };
+
     const getGreeting = () => {
         const hour = new Date().getHours();
         if (hour < 12) return 'Bom dia';
@@ -53,12 +108,37 @@ export const Dashboard: React.FC = () => {
 
     const primeiroNome = usuario?.nome ? usuario.nome.split(' ')[0] : 'Usuário';
 
+    // Determina o valor máximo de horas para normalização do gráfico de barras
+    const maxHorasMensal = dadosDashboard?.historicoMensal.reduce((max, h) => {
+        return Math.max(max, h.horasOrcadas, h.horasRealizadas);
+    }, 100) || 500;
+
     return (
         <div className="dashboard-page">
-            <div className="dashboard-header">
-                <h1 className="dashboard-greeting">
-                    {getGreeting()}, {primeiroNome}!
-                </h1>
+            {/* Header com Saudação e Toggle de Demonstração */}
+            <div className="dashboard-header-container">
+                <div className="dashboard-header">
+                    <h1 className="dashboard-greeting">
+                        {getGreeting()}, {primeiroNome}!
+                    </h1>
+                    <p className="dashboard-sub">
+                        Gestão do Conhecimento em Orçamentação e Desempenho Operacional do Laboratório
+                    </p>
+                </div>
+
+                <div className="dashboard-top-actions">
+                    <button
+                        type="button"
+                        className={`btn-toggle-demo-header ${modoDemo ? 'ativo' : ''}`}
+                        onClick={handleAlternarDemo}
+                        title="Alternar entre base estrita da API ou base expandida de demonstração"
+                    >
+                        <span className="dot"></span>
+                        <span className="label-demo">
+                            {modoDemo ? 'Dados de Demonstração: Ligado' : 'Apenas Dados Reais da API'}
+                        </span>
+                    </button>
+                </div>
             </div>
 
             {/* Alerta de Lições Devolvidas para o Técnico */}
@@ -124,6 +204,197 @@ export const Dashboard: React.FC = () => {
                             <polyline points="12 5 19 12 12 19" />
                         </svg>
                     </button>
+                </div>
+            )}
+
+            {/* SEÇÃO ANALÍTICA: KPIS DE ORÇAMENTAÇÃO & APRENDIZADO */}
+            <div className="dashboard-kpi-grid">
+                {/* KPI 1: Assertividade */}
+                <div className="kpi-card">
+                    <div className="kpi-header">
+                        <span className="kpi-label">Assertividade de Orçamento</span>
+                        <div className="kpi-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="kpi-value-row">
+                        <span className="kpi-value">
+                            {carregandoDados ? '—' : `${dadosDashboard?.indicadores.indiceAssertividade}%`}
+                        </span>
+                    </div>
+                    <span className="kpi-footer-text">
+                        Serviços executados dentro da tolerância de ±15%
+                    </span>
+                </div>
+
+                {/* KPI 2: Desvio Médio de Esforço */}
+                <div className="kpi-card">
+                    <div className="kpi-header">
+                        <span className="kpi-label">Desvio Médio de Esforço</span>
+                        <div className="kpi-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="kpi-value-row">
+                        <span className="kpi-value">
+                            {carregandoDados
+                                ? '—'
+                                : `${(dadosDashboard?.indicadores.desvioMedioEsforco ?? 0) > 0 ? '+' : ''}${dadosDashboard?.indicadores.desvioMedioEsforco}%`}
+                        </span>
+                    </div>
+                    <span className="kpi-footer-text">
+                        Variação histórica média entre horas reais e orçadas
+                    </span>
+                </div>
+
+                {/* KPI 3: Margem Realizada */}
+                <div className="kpi-card">
+                    <div className="kpi-header">
+                        <span className="kpi-label">Margem Média Realizada</span>
+                        <div className="kpi-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="kpi-value-row">
+                        <span className="kpi-value">
+                            {carregandoDados ? '—' : `${dadosDashboard?.indicadores.margemOrcadaVsRealizada}%`}
+                        </span>
+                    </div>
+                    <span className="kpi-footer-text">
+                        Contribuição média após encerramento financeiro
+                    </span>
+                </div>
+
+                {/* KPI 4: Conhecimento Formalizado */}
+                <div className="kpi-card">
+                    <div className="kpi-header">
+                        <span className="kpi-label">Lições Formalizadas</span>
+                        <div className="kpi-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div className="kpi-value-row">
+                        <span className="kpi-value">
+                            {carregandoDados
+                                ? '—'
+                                : `${dadosDashboard?.indicadores.licoesFormalizadas} / ${dadosDashboard?.indicadores.totalOSConcluidas}`}
+                        </span>
+                    </div>
+                    <span className="kpi-footer-text">
+                        Aprendizados validados ativos no Assistente
+                    </span>
+                </div>
+            </div>
+
+            {/* SEÇÃO DE GRÁFICOS: COMPARATIVO MENSAL E CAUSAS FREQUENTES */}
+            {dadosDashboard && (
+                <div className="dashboard-charts-grid">
+                    {/* Gráfico 1: Comparativo Mensal de Horas */}
+                    <div className="chart-card">
+                        <div className="chart-header">
+                            <div className="chart-title-area">
+                                <h3>Horas Orçadas vs. Realizadas</h3>
+                                <p>Histórico mensal comparativo de esforço metrológico</p>
+                            </div>
+                            <div className="chart-legenda">
+                                <span className="legenda-item">
+                                    <span className="cor-dot orcadas"></span> Orçadas
+                                </span>
+                                <span className="legenda-item">
+                                    <span className="cor-dot realizadas"></span> Realizadas
+                                </span>
+                            </div>
+                        </div>
+
+                        {dadosDashboard.historicoMensal.length === 0 ? (
+                            <div className="chart-vazio">Sem dados de histórico mensal no período selecionado.</div>
+                        ) : (
+                            <div className="bar-chart-container">
+                                {dadosDashboard.historicoMensal.map((item, idx) => {
+                                    const alturaOrcada = Math.round((item.horasOrcadas / maxHorasMensal) * 100);
+                                    const alturaRealizada = Math.round((item.horasRealizadas / maxHorasMensal) * 100);
+
+                                    return (
+                                        <div key={idx} className="bar-group">
+                                            <div className="bars-pair">
+                                                <div
+                                                    className="bar bar-orcada"
+                                                    style={{ height: `${alturaOrcada}%` }}
+                                                    title={`Orçado: ${item.horasOrcadas}h`}
+                                                >
+                                                    <span className="bar-tooltip">{item.horasOrcadas}h</span>
+                                                </div>
+                                                <div
+                                                    className="bar bar-realizada"
+                                                    style={{ height: `${alturaRealizada}%` }}
+                                                    title={`Realizado: ${item.horasRealizadas}h`}
+                                                >
+                                                    <span className="bar-tooltip">{item.horasRealizadas}h</span>
+                                                </div>
+                                            </div>
+                                            <span className="bar-label">{item.mes}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Gráfico 2: Causas Mais Frequentes de Desvio */}
+                    <div className="chart-card">
+                        <div className="chart-header">
+                            <div className="chart-title-area">
+                                <h3>Principais Causas de Desvio</h3>
+                                <p>Fatores que mais impactaram o tempo de execução</p>
+                            </div>
+                        </div>
+
+                        {dadosDashboard.causasFrequentes.length === 0 ? (
+                            <div className="chart-vazio">Nenhum desvio registrado até o momento.</div>
+                        ) : (
+                            <div className="causas-lista">
+                                {dadosDashboard.causasFrequentes.map((c, idx) => (
+                                    <div key={idx} className="causa-row">
+                                        <div className="causa-info">
+                                            <span className="causa-nome">{c.causa}</span>
+                                            <span className="causa-stats">
+                                                <strong>{c.quantidade}</strong> ({c.percentual}%)
+                                            </span>
+                                        </div>
+                                        <div className="causa-progress-bg">
+                                            <div
+                                                className="causa-progress-fill"
+                                                style={{
+                                                    width: `${c.percentual}%`,
+                                                    backgroundColor: c.cor || '#141e8c'
+                                                }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
 
