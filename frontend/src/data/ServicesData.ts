@@ -1,5 +1,12 @@
 import {CarouselImage} from "../components/ImageCarousel/CarouselImage";
 
+export interface MachineMedia {
+    src: string;
+    alt: string;
+    fit?: 'cover' | 'contain';
+    background?: string;
+}
+
 export interface MachineSpec {
     name: string;
     category: string;
@@ -8,7 +15,51 @@ export interface MachineSpec {
     sensor: string;
     software: string;
     features: string[];
+    image?: string;
+    imageAlt?: string;
+    imageFit?: 'cover' | 'contain';
+    imageBg?: string;
 }
+
+export const machineMediaMap: Record<string, MachineMedia> = {
+    'ZEISS DuraMax': {
+        src: '/images/DuraMaxOfc.png',
+        alt: 'ZEISS DuraMax - CMM de Chão de Fábrica e Laboratório',
+        fit: 'contain',
+        background: '#ffffff'
+    },
+    'ZEISS PRISMO': {
+        src: '/images/PrismoOfc.png',
+        alt: 'ZEISS PRISMO - CMM de Altíssima Exatidão',
+        fit: 'cover'
+    },
+    'ZEISS O-INSPECT': {
+        src: '/images/OInspectOfc.png',
+        alt: 'ZEISS O-INSPECT - Medição Óptica e Multissensor',
+        fit: 'cover'
+    },
+    'ZEISS BOSELLO MAX': {
+        src: '/images/BoselloOfc.png',
+        alt: 'ZEISS BOSELLO MAX - Sistema de Raio-X Industrial',
+        fit: 'cover'
+    },
+    'ZEISS ATOS Q': {
+        src: '/images/AtosQOfc.png',
+        alt: 'ZEISS ATOS Q - Digitalizador Óptico 3D',
+        fit: 'cover'
+    },
+    'ZEISS T-SCAN hawk 2': {
+        src: '/images/TScanOfc.png',
+        alt: 'ZEISS T-SCAN hawk 2 - Scanner 3D a Laser Portátil',
+        fit: 'cover'
+    },
+    'Ecossistema ZEISS Reverse Engineering': {
+        src: '/images/ZRE3.png',
+        alt: 'Ecossistema ZEISS Reverse Engineering - Software CAD 3D',
+        fit: 'contain',
+        background: '#0d1117'
+    }
+};
 
 export interface ServiceSubSection {
     index: string;

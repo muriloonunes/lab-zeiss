@@ -1,7 +1,7 @@
 import {MouseEvent} from "react";
 import {useScrollToTop} from "../../hooks/useScrollToTop";
 import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
-import {servicesData, ServiceDetailContent} from "../../data/ServicesData";
+import {servicesData, ServiceDetailContent, machineMediaMap} from "../../data/ServicesData";
 import {ImageCarousel} from "../../components/ImageCarousel/ImageCarousel";
 import {QuoteButton} from "../../components/QuoteButton/QuoteButton";
 import "./ServiceDetail.scss";
@@ -295,53 +295,82 @@ export function ServiceDetail() {
                             </p>
                         </div>
 
-                        <div className="machines-specs-list">
-                            {machines.map((mach, idx) => (
-                                <article key={idx} className="machine-spec-card glass-panel">
-                                    <div className="machine-header-strip">
-                                        <div className="machine-title-group">
-                                            <h3 className="machine-name">{mach.name}</h3>
-                                            <span className="machine-cat-badge">{mach.category}</span>
-                                        </div>
-                                    </div>
+                        <div className={`machines-grid ${machines.length === 1 ? 'machines-grid--single' : 'machines-grid--dual'}`}>
+                            {machines.map((mach, idx) => {
+                                const media = {
+                                    src: mach.image || machineMediaMap[mach.name]?.src || '/images/Lab-Fachada-3.jpg',
+                                    alt: mach.imageAlt || machineMediaMap[mach.name]?.alt || mach.name,
+                                    fit: mach.imageFit || machineMediaMap[mach.name]?.fit || 'cover',
+                                    background: mach.imageBg || machineMediaMap[mach.name]?.background || '#f8fafc'
+                                };
+                                const isSingle = machines.length === 1;
 
-                                    <div className="specs-parameters-grid">
-                                        <div className="param-item">
-                                            <span
-                                                className="param-label">{t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
-                                            <strong className="param-value">{mach.volume}</strong>
+                                return (
+                                    <article
+                                        key={idx}
+                                        className={`machine-spec-card ${isSingle ? 'machine-spec-card--horizontal' : 'machine-spec-card--vertical'} glass-panel`}
+                                    >
+                                        <div
+                                            className="machine-media-box"
+                                            style={{ backgroundColor: media.background }}
+                                        >
+                                            <img
+                                                src={media.src}
+                                                alt={media.alt}
+                                                style={{ objectFit: media.fit }}
+                                                loading="lazy"
+                                            />
                                         </div>
-                                        <div className="param-item">
-                                            <span
-                                                className="param-label">{t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
-                                            <strong className="param-value">{mach.accuracy}</strong>
-                                        </div>
-                                        <div className="param-item">
-                                            <span
-                                                className="param-label">{t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
-                                            <strong className="param-value">{mach.sensor}</strong>
-                                        </div>
-                                        <div className="param-item">
-                                            <span
-                                                className="param-label">{t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
-                                            <strong className="param-value">{mach.software}</strong>
-                                        </div>
-                                    </div>
 
-                                    <div className="machine-features-strip">
-                                        <span
-                                            className="features-label">{t('serviceDetail.sections.operationalDifferentiators', 'Diferenciais Operacionais:')}</span>
-                                        <ul className="features-list">
-                                            {mach.features?.map((feat, fIdx) => (
-                                                <li key={fIdx}>
-                                                    <span className="feature-check-icon" aria-hidden="true">✓</span>
-                                                    <span>{feat}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </article>
-                            ))}
+                                        <div className="machine-content-col">
+                                            <div className="machine-header-strip">
+                                                <div className="machine-title-group">
+                                                    <span className="machine-cat-eyebrow">{mach.category}</span>
+                                                    <h3 className="machine-name">{mach.name}</h3>
+                                                </div>
+                                            </div>
+
+                                            <div className="specs-parameters-grid">
+                                                <div className="param-item">
+                                                    <span
+                                                        className="param-label">{t('serviceDetail.specLabels.volume', 'Volume de Medição (X/Y/Z)')}</span>
+                                                    <strong className="param-value">{mach.volume}</strong>
+                                                </div>
+                                                <div className="param-item">
+                                                    <span
+                                                        className="param-label">{t('serviceDetail.specLabels.accuracy', 'Exatidão / Resolução (ISO 10360)')}</span>
+                                                    <strong className="param-value">{mach.accuracy}</strong>
+                                                </div>
+                                                <div className="param-item">
+                                                    <span
+                                                        className="param-label">{t('serviceDetail.specLabels.sensor', 'Sistema Sensor / Apalpador')}</span>
+                                                    <strong className="param-value">{mach.sensor}</strong>
+                                                </div>
+                                                <div className="param-item">
+                                                    <span
+                                                        className="param-label">{t('serviceDetail.specLabels.software', 'Software Metrológico')}</span>
+                                                    <strong className="param-value">{mach.software}</strong>
+                                                </div>
+                                            </div>
+
+                                            {mach.features && mach.features.length > 0 && (
+                                                <div className="machine-features-strip">
+                                                    <span
+                                                        className="features-label">{t('serviceDetail.sections.operationalDifferentiators', 'Diferenciais Operacionais:')}</span>
+                                                    <ul className="features-list">
+                                                        {mach.features.map((feat, fIdx) => (
+                                                            <li key={fIdx}>
+                                                                <span className="feature-check-icon" aria-hidden="true">✓</span>
+                                                                <span>{feat}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </article>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
