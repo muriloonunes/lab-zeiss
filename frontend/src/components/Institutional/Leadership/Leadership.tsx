@@ -11,6 +11,7 @@ interface LeaderData {
     tag: string;
     image: string;
     imageAlt: string;
+    objectPosition?: string;
 }
 
 const LEADERS: LeaderData[] = [
@@ -21,8 +22,9 @@ const LEADERS: LeaderData[] = [
         quoteKey: 'institutional.leadership.quotes.weinisch.quote',
         entity: 'Carl Zeiss AG',
         tag: 'Padrão Tecnológico Global',
-        image: '/images/OInspect1.jpg',
-        imageAlt: 'Equipamento de medição Carl Zeiss O-Inspect em operação no laboratório'
+        image: '/images/Jochen.jpg',
+        imageAlt: 'Jochen Weinisch, líder de vendas da Carl Zeiss AG na América Latina',
+        objectPosition: 'center 60%'
     },
     {
         id: 'mabel',
@@ -31,8 +33,9 @@ const LEADERS: LeaderData[] = [
         quoteKey: 'institutional.leadership.quotes.mabel.quote',
         entity: 'Sistema FIEG',
         tag: 'Inovação & Competitividade',
-        image: '/images/Lab-Fachada.jpg',
-        imageAlt: 'Complexo do Centro de Excelência em Metrologia SENAI ZEISS'
+        image: '/images/Mabel.jpg',
+        imageAlt: 'Imagem do Sandro Mabel, ex-presidente da FIEG',
+        objectPosition: 'center 15%'
     },
     {
         id: 'queija',
@@ -41,12 +44,13 @@ const LEADERS: LeaderData[] = [
         quoteKey: 'institutional.leadership.quotes.queija.quote',
         entity: 'Faculdade SENAI Ítalo Bologna',
         tag: 'Educação & Chão de Fábrica',
-        image: '/images/Senai-Laboratorio-3.jpg',
-        imageAlt: 'Ambiente técnico climatizado de metrologia dimensional'
+        image: '/images/Dario.jpg',
+        imageAlt: 'Dario Queija, diretor da Faculdade SENAI Ítalo Bologna',
+        objectPosition: 'center 10%'
     }
 ];
 
-const AUTOPLAY_DURATION = 7500; // 7.5 segundos por citação
+const AUTOPLAY_DURATION = 7500;
 
 export function Leadership() {
     const { t } = useTranslation();
@@ -124,25 +128,19 @@ export function Leadership() {
                     </div>
 
                     <div className="carousel-body">
-                        {/* Lado Esquerdo: Foto Contextual com Badge Institucional */}
                         <div className="carousel-visual-col">
                             <div className="visual-image-wrapper">
                                 <img
                                     key={activeLeader.image}
                                     src={activeLeader.image}
                                     alt={activeLeader.imageAlt}
+                                    style={{ objectPosition: activeLeader.objectPosition || 'center' }}
                                     className="visual-image"
                                 />
                                 <div className="visual-overlay" />
                             </div>
-
-                            <div className="visual-caption">
-                                <span className="entity-badge">{activeLeader.entity}</span>
-                                <span className="tag-pill">{activeLeader.tag}</span>
-                            </div>
                         </div>
 
-                        {/* Lado Direito: Palco da Citação */}
                         <div className="carousel-quote-col">
                             <div className="quote-header">
                                 <div className="quote-mark" aria-hidden="true">
