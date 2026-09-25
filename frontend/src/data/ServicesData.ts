@@ -133,6 +133,7 @@ export const servicesData: Record<string, ServiceMeta> = {
         id: 'confiabilidade-mro',
         galleryImages: [
             { src: '/images/CAD.png', alt: 'Análise de falhas em componentes' },
+            { src: '/images/treinamento.jpeg', alt: 'Treinamento oferecido pelo CEM' },
         ]
     }
 };
