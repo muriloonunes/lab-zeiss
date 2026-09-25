@@ -1,61 +1,346 @@
 @use '../../../styles/variables' as vars;
 
-.inst-quotes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-  align-items: stretch;
+.inst-leadership-section {
+  position: relative;
+}
 
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+.leadership-carousel {
+  position: relative;
+  border-radius: 20px;
+  padding: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 2px solid rgba(20, 30, 140, 0.2);
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 0.85rem;
+    border-radius: 16px;
   }
 
-  .quote-card {
-    padding: 2.25rem 2rem;
+  // Barras de progresso temporizadas (estilo Stories)
+  .carousel-progress-bars {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+    padding: 0.25rem 0.5rem 0;
+
+    .progress-bar-segment {
+      flex: 1;
+      height: 4px;
+      background: rgba(15, 23, 42, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(15, 23, 42, 0.2);
+      }
+
+      .progress-fill {
+        display: block;
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, vars.$color-primary, #0284c7);
+        transition: width 0.1s linear;
+      }
+
+      &.active {
+        .progress-fill {
+          animation-name: progressAnimation;
+          animation-timing-function: linear;
+          animation-fill-mode: forwards;
+        }
+
+        &.paused .progress-fill {
+          animation-play-state: paused;
+        }
+      }
+
+      &.completed {
+        .progress-fill {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  // Corpo principal do carrossel em 2 colunas
+  .carousel-body {
+    display: grid;
+    grid-template-columns: 0.95fr 1.3fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: stretch;
+    min-height: 460px;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+  }
+
+  // Coluna visual com a imagem e badges
+  .carousel-visual-col {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    @media (max-width: 992px) {
+      min-height: 280px;
+    }
+
+    .visual-image-wrapper {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+
+      .visual-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        animation: imgFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .visual-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(11, 17, 32, 0.05) 0%,
+          rgba(11, 17, 32, 0.4) 50%,
+          rgba(11, 17, 32, 0.92) 100%
+        );
+      }
+    }
+
+    .visual-caption {
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+
+      .entity-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        color: vars.$color-primary;
+        font-family: vars.$font-headline;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 0.4rem 0.85rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .tag-pill {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(2, 132, 199, 0.3);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  // Coluna da citação (texto, autor e controles)
+  .carousel-quote-col {
+    padding: 1.5rem 1.75rem 1.5rem 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 1.75rem;
 
-    @media (max-width: 600px) {
-      padding: 1.5rem 1.25rem;
+    @media (max-width: 992px) {
+      padding: 1rem 0.5rem;
+      gap: 1.25rem;
     }
 
-    .quote-text {
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: vars.$color-text-body;
-      font-style: italic;
-      margin-bottom: 2rem;
-      position: relative;
+    .quote-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      @media (max-width: 600px) {
+      .quote-mark {
+        color: rgba(20, 30, 140, 0.18);
+        display: flex;
+        align-items: center;
+      }
+
+      .carousel-counter {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.25rem;
+        font-family: vars.$font-headline;
+        font-weight: 800;
         font-size: 0.9rem;
-        line-height: 1.65;
-        margin-bottom: 1.25rem;
+        color: #94a3b8;
+        letter-spacing: 0.05em;
+
+        .counter-current {
+          color: vars.$color-primary;
+          font-size: 1.15rem;
+        }
+
+        .counter-sep {
+          color: #cbd5e1;
+        }
+
+        .counter-total {
+          color: #64748b;
+        }
       }
     }
 
-    .quote-author {
+    .quote-main {
+      margin: 0;
+      padding: 0;
+      border: none;
+
+      .quote-text {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.75;
+        color: #1e293b;
+        font-weight: 500;
+        font-style: normal;
+        margin: 0;
+        animation: quoteFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+        @media (max-width: 600px) {
+          font-size: 1rem;
+          line-height: 1.65;
+        }
+      }
+    }
+
+    .quote-footer {
       display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding-top: 1.25rem;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(15, 23, 42, 0.08);
 
-      strong {
-        font-family: vars.$font-headline;
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: vars.$color-text-dark;
-        letter-spacing: -0.015em;
+      @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
       }
 
-      span {
-        font-size: 0.82rem;
-        color: vars.$color-text-muted;
-        line-height: 1.45;
+      .author-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+
+        .author-name {
+          font-family: vars.$font-headline;
+          font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+          font-weight: 800;
+          color: vars.$color-text-dark;
+          letter-spacing: -0.015em;
+          margin: 0;
+        }
+
+        .author-role {
+          font-size: 0.88rem;
+          color: vars.$color-text-muted;
+          line-height: 1.45;
+          margin: 0;
+          max-width: 480px;
+        }
+      }
+
+      .carousel-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-shrink: 0;
+
+        .control-btn {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 1px solid rgba(15, 23, 42, 0.12);
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          color: vars.$color-text-dark;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+
+          &:hover {
+            background: vars.$color-primary;
+            color: #ffffff;
+            border-color: vars.$color-primary;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(20, 30, 140, 0.25);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
       }
     }
   }
 }
+
+// Animações
+@keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes imgFadeIn {
+  from {
+    opacity: 0.6;
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes quoteFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
