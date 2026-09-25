@@ -80,6 +80,8 @@ export const servicesData: Record<string, ServiceMeta> = {
 
     'confiabilidade-mro': {
         id: 'confiabilidade-mro',
-        galleryImages: []
+        galleryImages: [
+            { src: '/images/CAD.png', alt: 'Análise de falhas em componentes' },
+        ]
     }
 };

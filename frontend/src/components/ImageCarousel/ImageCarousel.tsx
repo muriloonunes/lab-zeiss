@@ -66,7 +66,12 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
         return (
             <div className="carousel-container">
                 <div className="service-img-wrapper img-frame">
-                    <img src={images[0].src} alt={images[0].alt} className="service-img"/>
+                    <img
+                        src={images[0].src}
+                        alt={images[0].alt}
+                        style={{objectPosition: images[0].objectPosition || 'center'}}
+                        className="service-img"
+                    />
                     <div className="service-img-overlay"/>
                 </div>
             </div>
@@ -85,7 +90,7 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
             <div className="service-img-wrapper img-frame">
                 <div
                     className="carousel-track"
-                    style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                    style={{transform: `translateX(-${currentIndex * 100}%)`}}
                 >
                     {images.map((img, idx) => (
                         <div key={idx} className="carousel-slide">
@@ -93,7 +98,7 @@ export function ImageCarousel({images, intervalTime = 4000, autoPlay = true}: Im
                                 src={img.src}
                                 alt={img.alt}
                                 className="service-img"
-                                style={{ objectPosition: img.objectPosition || 'center' }}
+                                style={{objectPosition: img.objectPosition || 'center'}}
                             />
                         </div>
                     ))}
