@@ -283,7 +283,7 @@ export const InternalLayout: React.FC = () => {
 
                 <main className="internal-page-container">
                     <Outlet />
-                </main>
+                    </main>
             </div>
         </div>
     );

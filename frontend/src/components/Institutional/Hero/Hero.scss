@@ -1,140 +1,202 @@
 @use '../../../styles/variables' as vars;
 
 .inst-hero-section {
-  padding: clamp(2rem, 4vw, 4.5rem) 0 clamp(2.5rem, 5vw, 5rem);
+  padding: clamp(1rem, 2.5vw, 2.5rem) 0 clamp(2.5rem, 4vw, 4rem);
 
-  .inst-hero-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: clamp(2.5rem, 4vw, 4.5rem);
+  .inst-hero-cinema-card {
+    position: relative;
+    width: 100%;
+    min-height: clamp(480px, 52vh, 620px);
+    border-radius: 26px;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
     align-items: center;
+    background: #0b1120;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2),
+                0 4px 16px rgba(15, 23, 42, 0.08);
 
     @media (max-width: 1024px) {
-      grid-template-columns: 1fr;
-      gap: 2.25rem;
+      min-height: 500px;
+      border-radius: 20px;
     }
-  }
-
-  .inst-hero-content {
-    max-width: 930px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .inst-hero-title {
-    font-family: vars.$font-headline;
-    font-size: clamp(1.85rem, 3.8vw, 3.2rem);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.18;
-    background: linear-gradient(135deg, vars.$color-bg-dark 15%, vars.$color-primary 65%, #0284c7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 10px rgba(15, 23, 42, 0.08));
-    margin: 0.5rem 0 1.5rem 0;
 
     @media (max-width: 600px) {
-      font-size: clamp(1.65rem, 6.5vw, 2.1rem);
-      line-height: 1.22;
-      margin: 0.25rem 0 1rem 0;
+      min-height: auto;
+      border-radius: 16px;
     }
-  }
 
-  .inst-hero-description {
-    color: vars.$color-text-body;
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
-    font-weight: 500;
-    line-height: 1.7;
-    margin: 0;
-
-    @media (max-width: 600px) {
-      font-size: 0.98rem;
-      line-height: 1.6;
-    }
-  }
-
-  .inst-hero-visual {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .inst-facade-card {
-      position: relative;
+    /* =========================================================
+       Camada de Mídia (Vídeo + Poster de Fallback)
+    ========================================================= */
+    .cinema-media-wrapper {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      max-width: 620px;
-      padding: 0.65rem;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12),
-        0 2px 6px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+      height: 100%;
       overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+      z-index: 0;
+      pointer-events: none;
 
-      @media (max-width: 600px) {
-        padding: 0.5rem;
-        border-radius: 18px;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-
-      &::before {
-        content: '';
+      .cinema-poster-img {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-        z-index: 2;
-        pointer-events: none;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 1;
+        transition: opacity 0.8s ease-in-out;
+        z-index: 1;
+
+        &.hidden {
+          opacity: 0;
+        }
       }
 
-      .facade-image-wrapper {
-        position: relative;
+      .cinema-video {
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: 380px;
-        overflow: hidden;
-        border-radius: 18px;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+        z-index: 2;
+
+        &.ready {
+          opacity: 1;
+        }
+      }
+
+      /* Vinheta cinematográfica garantindo contraste WCAG AAA para o texto */
+      .cinema-overlay-gradient {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        background: linear-gradient(
+          90deg,
+          rgba(11, 17, 32, 0.94) 0%,
+          rgba(11, 17, 32, 0.86) 38%,
+          rgba(11, 17, 32, 0.52) 65%,
+          rgba(11, 17, 32, 0.28) 100%
+        );
+
+        @media (max-width: 1024px) {
+          background: linear-gradient(
+            180deg,
+            rgba(11, 17, 32, 0.92) 0%,
+            rgba(11, 17, 32, 0.82) 55%,
+            rgba(11, 17, 32, 0.94) 100%
+          );
+        }
+      }
+    }
+
+    /* =========================================================
+       Conteúdo Sobreposto (Texto + Ações)
+    ========================================================= */
+    .cinema-content-overlay {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(2.5rem, 5vw, 4.5rem) clamp(2rem, 4.5vw, 4rem);
+      box-sizing: border-box;
+
+      @media (max-width: 768px) {
+        padding: 2.25rem 1.5rem 1.75rem;
+      }
+
+      @media (max-width: 480px) {
+        padding: 1.75rem 1.25rem 1.5rem;
+      }
+
+      .cinema-text-block {
+        max-width: 680px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        @media (min-width: 1600px) {
+          max-width: 760px;
+        }
+
+        .cinema-hero-title {
+          font-family: vars.$font-headline;
+          font-size: clamp(1.85rem, 3.4vw, 3.1rem);
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          line-height: 1.2;
+          color: #ffffff;
+          margin: 0 0 1.25rem 0;
+          text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+
+          @media (max-width: 600px) {
+            font-size: clamp(1.5rem, 6.5vw, 1.95rem);
+            line-height: 1.25;
+            margin-bottom: 1rem;
+          }
+        }
+
+        .cinema-hero-desc {
+          color: #cbd5e1;
+          font-size: clamp(0.98rem, 1.25vw, 1.12rem);
+          font-weight: 400;
+          line-height: 1.75;
+          margin: 0;
+          text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+
+          @media (max-width: 600px) {
+            font-size: 0.94rem;
+            line-height: 1.65;
+          }
+        }
+      }
+
+      /* Controle Discreto de Vídeo (Play / Pause) */
+      .cinema-controls-bottom {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 1.5rem;
 
         @media (max-width: 768px) {
-          height: clamp(220px, 50vw, 320px);
-          border-radius: 14px;
+          margin-top: 1.25rem;
         }
 
-        .facade-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .cinema-control-btn {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.14);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 
-        .facade-overlay-gradient {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg,
-              transparent 65%,
-              rgba(15, 23, 42, 0.35) 100%);
-          pointer-events: none;
-        }
-      }
+          &:hover {
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.08);
+          }
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.14),
-          inset 0 1px 0 rgba(255, 255, 255, 1);
-
-        .facade-image-wrapper .facade-img {
-          transform: scale(1.03);
+          &:active {
+            transform: scale(0.96);
+          }
         }
       }
     }
   }
-}
+}
